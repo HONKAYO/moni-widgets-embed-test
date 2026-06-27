@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tori Finance — Scenarios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#ffffff; --panel:#f7f7f9; --head:#14151a; --body:#3b4049; --muted:#8b8f99;
+    --border:#e8e8ed; --accent:#6c42eb; --accent-soft:#6c42eb14;
+    --pos:#10b981; --neg:#e24b4a; --warn:#f59e0b;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:"Geist",system-ui,sans-serif; background:var(--bg); color:var(--body);
+    -webkit-font-smoothing:antialiased; padding:28px 26px 22px; line-height:1.5}
+  .kicker{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--accent); font-weight:500; margin:0 0 10px}
+  h1{font-weight:800; letter-spacing:-.022em; color:var(--head); font-size:27px; line-height:1.12; margin:0 0 8px}
+  .sub{font-size:14.5px; color:var(--muted); max-width:660px; margin:0 0 22px}
+
+  .presets{display:flex; gap:8px; margin:0 0 18px; flex-wrap:wrap}
+  .preset{font-family:"Geist",sans-serif; font-weight:600; font-size:13px; color:var(--body);
+    background:var(--bg); border:1px solid var(--border); padding:8px 16px; cursor:pointer; transition:.12s;
+    display:flex; align-items:center; gap:8px}
+  .preset:hover{border-color:var(--accent)}
+  .preset .pdot{width:9px; height:9px; border-radius:50%; flex:none}
+  .preset.active{background:var(--accent-soft); border-color:var(--accent); color:var(--accent)}
+  .preset[data-s="bear"] .pdot{background:var(--neg)}
+  .preset[data-s="base"] .pdot{background:var(--accent)}
+  .preset[data-s="bull"] .pdot{background:var(--pos)}
+
+  .main{display:grid; grid-template-columns:1.45fr 1fr; gap:22px; align-items:stretch}
+  @media(max-width:700px){ .main{grid-template-columns:1fr} }
+  .chartwrap{border:1px solid var(--border); padding:16px 16px 8px; background:var(--bg)}
+  .chartwrap .ct{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin:0 0 4px}
+  .cv{position:relative; height:236px}
+
+  .side{display:flex; flex-direction:column; gap:0; border:1px solid var(--border)}
+  .stat{padding:13px 16px; border-bottom:1px solid var(--border)}
+  .stat:last-child{border-bottom:0}
+  .stat .s-l{font-family:"IBM Plex Mono",monospace; font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin:0 0 4px}
+  .stat .s-v{font-weight:700; font-size:20px; color:var(--head); letter-spacing:-.02em; transition:color .2s}
+  .stat .s-s{font-size:11.5px; color:var(--muted); margin-top:1px}
+
+  .narr{border:1px solid var(--border); padding:16px 18px; margin:18px 0 0; background:var(--panel)}
+  .narr h3{font-weight:700; color:var(--head); font-size:16px; margin:0 0 4px; letter-spacing:-.01em; display:flex; align-items:center; gap:9px}
+  .narr h3 .hd{width:9px; height:9px; border-radius:50%; flex:none}
+  .narr .row{display:grid; grid-template-columns:92px 1fr; gap:6px 14px; margin-top:10px; font-size:13px}
+  .narr .row .k{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding-top:2px}
+  .narr .row .v{color:var(--body)}
+  .narr .v b{color:var(--head)}
+  .foot{font-size:11px; color:var(--muted); margin:16px 0 0; font-family:"IBM Plex Mono",monospace; letter-spacing:.02em}
+</style>
+</head>
+<body>
+  <p class="kicker">Tori Finance · Scenarios</p>
+  <h1>Three ways this plays out</h1>
+  <p class="sub">From ~$46M in attested reserves and 0% realized yield today, where Tori lands depends on one thing: whether the yield turns real before the incentives fade. Illustrative TVL paths, not forecasts.</p>
+
+  <div class="presets" id="presets">
+    <button class="preset" data-s="bear"><span class="pdot"></span>Bear</button>
+    <button class="preset active" data-s="base"><span class="pdot"></span>Base</button>
+    <button class="preset" data-s="bull"><span class="pdot"></span>Bull</button>
+  </div>
+
+  <div class="main">
+    <div class="chartwrap">
+      <p class="ct">TVL trajectory · $M · Jun 2026 &rarr; end 2027</p>
+      <div class="cv"><canvas id="chart"></canvas></div>
+    </div>
+    <div class="side">
+      <div class="stat"><p class="s-l">Realized strUSD APY</p><div class="s-v" id="st-apy">—</div><div class="s-s" id="st-apys">—</div></div>
+      <div class="stat"><p class="s-l">Peak TVL</p><div class="s-v" id="st-peak">—</div><div class="s-s">across point seasons</div></div>
+      <div class="stat"><p class="s-l">End state</p><div class="s-v" id="st-end">—</div><div class="s-s" id="st-ends">—</div></div>
+    </div>
+  </div>
+
+  <div class="narr">
+    <h3 id="n-title"><span class="hd"></span><span id="n-name"></span></h3>
+    <div id="n-tag" style="font-size:13px;color:var(--muted)"></div>
+    <div class="row"><div class="k">What happens</div><div class="v" id="n-what"></div></div>
+    <div class="row"><div class="k">Signal</div><div class="v" id="n-sig"></div></div>
+    <div class="row"><div class="k">Outcome</div><div class="v" id="n-out"></div></div>
+  </div>
+
+  <p class="foot">Built from the research memo's scenario logic. Paths are illustrative shapes, not price or TVL predictions.</p>
+
+<script>
+  var COL={bear:'#e24b4a', base:'#6c42eb', bull:'#10b981'};
+  var months=['Jun 26','Jul','Aug','Sep','Oct','Nov','Dec','Jan 27','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var DATA={
+    bear:[46,90,160,230,260,238,180,120,80,60,46,38,34,32,31,30,30,30,30],
+    base:[46,95,172,250,322,360,378,360,342,330,322,312,302,296,292,290,288,286,285],
+    bull:[46,110,205,322,460,600,720,820,905,985,1055,1120,1185,1245,1305,1360,1420,1470,1520]
+  };
+  var META={
+    bear:{name:'Bear — quiet irrelevance', apy:'~3–4%', apys:'fades below net T-bills', peak:'~$260M', end:'~$30M', ends:'farmers rotate out',
+      tag:'Less a blow-up than a slow bleed once the airdrop lands.',
+      what:'Yield never clears T-bills by enough to matter. Points pull TVL to a peak, then it leaks as farmers rotate out and the headline 15% never shows up in <b>realized</b> numbers.',
+      sig:'Realized APY stuck near money-market rates; TVL falling after each season; no second-cohort retention.',
+      out:'<b>A $46M &rarr; few-hundred-million &rarr; near-zero arc.</b> Tori fades into the long tail of points-farmed dollars.'},
+    base:{name:'Base — credible mid-tier', apy:'~7–9%', apys:'wobbles with the market', peak:'~$380M', end:'~$285M', ends:'settles, sticky core',
+      tag:'A real product, just not a leader. The most likely path.',
+      what:'Token launches and rewards farmers; TVL grows across seasons and settles with a sticky core. Realized yield lands in the high single digits and moves with funding conditions.',
+      sig:'Realized APY consistently beats T-bills; a retained TVL floor after Cores ends; first integrations of strUSD as collateral.',
+      out:'<b>A credible #3–5 basis dollar.</b> Useful, durable, but living in Ethena&#39;s shadow rather than challenging it.'},
+    bull:{name:'Bull — real Ethena alternative', apy:'~10–12%', apys:'holds through a cooldown', peak:'$1.5B+', end:'still climbing', ends:'compounding adoption',
+      tag:'Needs the yield to survive a stress, and strUSD to become money.',
+      what:'strUSD becomes genuinely composable the way sUSDe is, accepted as collateral and inside vaults, and the yield holds through a market cooldown, which proves the multi-strategy claim.',
+      sig:'A negative-funding stretch survived with the peg intact and the queue clearing; deep integrations; smart-money TVL beyond the Delphi orbit.',
+      out:'<b>A genuine alternative in the basis-dollar category.</b> The sponsorship converts into a standalone franchise.'}
+  };
+
+  var ctx=document.getElementById('chart').getContext('2d');
+  function ds(key){
+    return {label:key, data:DATA[key], borderColor:COL[key], backgroundColor:'transparent',
+      borderWidth:key==='base'?3:1.5, pointRadius:0, pointHoverRadius:4, tension:.4,
+      borderCapStyle:'round'};
+  }
+  var chart=new Chart(ctx,{type:'line',
+    data:{labels:months, datasets:[ds('bear'),ds('base'),ds('bull')]},
+    options:{
+      responsive:true, maintainAspectRatio:false, animation:{duration:500},
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},
+        tooltip:{backgroundColor:'#14151a',padding:10,cornerRadius:0,titleFont:{family:'IBM Plex Mono',size:10},
+          bodyFont:{family:'Geist',size:12,weight:'600'},
+          callbacks:{label:function(c){return ' '+c.dataset.label+': $'+c.parsed.y+'M';}}}},
+      scales:{
+        x:{grid:{display:false},border:{color:'#e8e8ed'},
+           ticks:{color:'#8b8f99',font:{family:'IBM Plex Mono',size:9.5},maxRotation:0,autoSkip:true,maxTicksLimit:7}},
+        y:{grid:{color:'#f0f0f3'},border:{display:false},beginAtZero:true,
+           ticks:{color:'#8b8f99',font:{family:'IBM Plex Mono',size:9.5},callback:function(v){return '$'+v+'M';}}}
+      }
+    }
+  });
+
+  function select(key){
+    chart.data.datasets.forEach(function(d){
+      var on=d.label===key;
+      d.borderWidth=on?3:1.25;
+      d.borderColor=on?COL[d.label]:(COL[d.label]+'33');
+      d.order=on?0:1;
+    });
+    chart.update();
+    var m=META[key];
+    document.getElementById('st-apy').textContent=m.apy; document.getElementById('st-apy').style.color=COL[key];
+    document.getElementById('st-apys').textContent=m.apys;
+    document.getElementById('st-peak').textContent=m.peak;
+    document.getElementById('st-end').textContent=m.end; document.getElementById('st-ends').textContent=m.ends;
+    document.getElementById('n-name').textContent=m.name;
+    document.getElementById('n-tag').textContent=m.tag;
+    document.querySelector('#n-title .hd').style.background=COL[key];
+    document.getElementById('n-what').innerHTML=m.what;
+    document.getElementById('n-sig').innerHTML=m.sig;
+    document.getElementById('n-out').innerHTML=m.out;
+    document.querySelectorAll('.preset').forEach(function(b){b.classList.toggle('active',b.dataset.s===key);});
+  }
+  document.getElementById('presets').addEventListener('click',function(e){
+    var b=e.target.closest('.preset'); if(b) select(b.dataset.s);
+  });
+  select('base');
+</script>
+</body>
+</html>

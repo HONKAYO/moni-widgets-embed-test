@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tori Finance — Mechanism</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#ffffff; --panel:#f7f7f9; --head:#14151a; --body:#3b4049; --muted:#8b8f99;
+    --border:#e8e8ed; --accent:#6c42eb; --accent-soft:#6c42eb14;
+    --pos:#10b981; --neg:#e24b4a; --warn:#f59e0b;
+    --mm:#6c42eb; --fut:#9b7cf0; --cash:#cdbef7;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:"Geist",system-ui,sans-serif; background:var(--bg); color:var(--body);
+    -webkit-font-smoothing:antialiased; padding:28px 26px 22px; line-height:1.5;
+  }
+  .kicker{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--accent); font-weight:500; margin:0 0 10px}
+  h1{font-family:"Geist",sans-serif; font-weight:800; letter-spacing:-.022em; color:var(--head);
+    font-size:27px; line-height:1.12; margin:0 0 8px}
+  .sub{font-size:14.5px; color:var(--muted); max-width:660px; margin:0 0 24px}
+  .label{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--muted); font-weight:500; margin:0 0 11px}
+
+  /* flow */
+  .flow{display:flex; align-items:stretch; gap:0; flex-wrap:wrap; margin:0 0 28px}
+  .step{flex:1 1 0; min-width:150px; border:1px solid var(--border); background:var(--bg);
+    padding:14px 14px 13px; position:relative}
+  .step .n{font-family:"IBM Plex Mono",monospace; font-size:10px; color:var(--accent); font-weight:600; letter-spacing:.1em}
+  .step h3{font-family:"Geist",sans-serif; font-weight:700; color:var(--head); font-size:15px; margin:6px 0 4px; letter-spacing:-.01em}
+  .step p{font-size:12.5px; color:var(--muted); margin:0}
+  .arrow{display:flex; align-items:center; justify-content:center; padding:0 4px; color:var(--accent); font-size:18px; font-weight:700}
+  @media(max-width:620px){ .arrow{transform:rotate(90deg); padding:6px 0} .step{min-width:0} .flow{flex-direction:column} }
+
+  /* engine / allocation */
+  .grid{display:grid; grid-template-columns:1.25fr 1fr; gap:22px; margin:0 0 26px}
+  @media(max-width:680px){ .grid{grid-template-columns:1fr} }
+  .panel{border:1px solid var(--border); background:var(--panel); padding:18px}
+  .bar{display:flex; height:46px; width:100%; overflow:hidden; border:1px solid var(--border); cursor:pointer; margin:0 0 14px}
+  .seg{height:100%; transition:filter .15s, opacity .15s; display:flex; align-items:center; justify-content:center;
+    font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600; color:#fff}
+  .seg.mm{background:var(--mm)} .seg.fut{background:var(--fut)} .seg.cash{background:var(--cash); color:#3b2a6b}
+  .bar.dim .seg{opacity:.32} .bar.dim .seg.active{opacity:1}
+  .legend{display:flex; flex-direction:column; gap:9px}
+  .lg{display:flex; align-items:flex-start; gap:9px; cursor:pointer; padding:5px 6px; border:1px solid transparent}
+  .lg:hover,.lg.active{background:var(--accent-soft); border-color:var(--accent)}
+  .dot{width:11px; height:11px; border-radius:50%; margin-top:3px; flex:none}
+  .lg .nm{font-weight:600; color:var(--head); font-size:13px}
+  .lg .pct{font-family:"IBM Plex Mono",monospace; color:var(--accent); font-weight:600; font-size:13px; margin-left:auto; padding-left:8px}
+  .lg .ds{font-size:12px; color:var(--muted); margin-top:2px}
+  .engine-note{font-size:12.5px; color:var(--body); margin:2px 0 0; min-height:54px}
+  .engine-note b{color:var(--head)}
+
+  /* trust chips */
+  .chips{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+  @media(max-width:680px){ .chips{grid-template-columns:1fr} }
+  .chip{border:1px solid var(--border); padding:11px 12px; background:var(--bg)}
+  .chip .t{font-weight:600; color:var(--head); font-size:12.5px; margin:0 0 3px; display:flex; align-items:center; gap:7px}
+  .chip .t::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--pos); flex:none}
+  .chip.gap .t::before{background:var(--neg)}
+  .chip p{font-size:11.8px; color:var(--muted); margin:0; line-height:1.45}
+
+  /* metrics strip */
+  .metrics{display:grid; grid-template-columns:repeat(4,1fr); gap:0; border:1px solid var(--border); margin:24px 0 0}
+  @media(max-width:680px){ .metrics{grid-template-columns:1fr 1fr} }
+  .metric{padding:14px 16px; border-right:1px solid var(--border)}
+  .metric:last-child{border-right:0}
+  @media(max-width:680px){ .metric:nth-child(2){border-right:0} .metric:nth-child(1),.metric:nth-child(2){border-bottom:1px solid var(--border)} }
+  .metric .m-l{font-family:"IBM Plex Mono",monospace; font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin:0 0 5px}
+  .metric .m-v{font-family:"Geist",sans-serif; font-weight:700; font-size:21px; color:var(--head); letter-spacing:-.02em}
+  .metric .m-v.warn{color:var(--warn)} .metric .m-v.neg{color:var(--neg)} .metric .m-v.acc{color:var(--accent)}
+  .metric .m-s{font-size:11px; color:var(--muted); margin-top:1px}
+  .foot{font-size:11px; color:var(--muted); margin:16px 0 0; font-family:"IBM Plex Mono",monospace; letter-spacing:.02em}
+  .foot a{color:var(--accent)}
+</style>
+</head>
+<body>
+  <p class="kicker">Tori Finance · Mechanism</p>
+  <h1>How trUSD turns a deposit into yield</h1>
+  <p class="sub">A synthetic dollar minted from stablecoins, staked into a yield token, and backed by an off-chain delta-neutral trading book. The flow is simple; the question is where the yield comes from.</p>
+
+  <div class="flow">
+    <div class="step"><div class="n">01</div><h3>Deposit</h3><p>Swap USDC or USDT, 1:1, no verification.</p></div>
+    <div class="arrow">&rarr;</div>
+    <div class="step"><div class="n">02</div><h3>Mint trUSD</h3><p>The base synthetic dollar, backed by trading positions, not fiat.</p></div>
+    <div class="arrow">&rarr;</div>
+    <div class="step"><div class="n">03</div><h3>Stake &rarr; strUSD</h3><p>Yield accrues as the strUSD&#8202;/&#8202;trUSD rate rises. Composable ERC-20.</p></div>
+    <div class="arrow">&rarr;</div>
+    <div class="step"><div class="n">04</div><h3>Unstake</h3><p>7-day cooldown, then swap back to USDC&#8202;/&#8202;USDT.</p></div>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <p class="label">The engine: what actually backs trUSD <span style="color:var(--accent)">(live, 27 Jun 2026)</span></p>
+      <div class="bar" id="bar">
+        <div class="seg mm"   data-k="mm"   style="width:64.94%">64.9%</div>
+        <div class="seg fut"  data-k="fut"  style="width:20.55%">20.5%</div>
+        <div class="seg cash" data-k="cash" style="width:14.51%">14.5%</div>
+      </div>
+      <p class="engine-note" id="note"><b>Two-thirds money markets.</b> The live book leans on the steady, T-bill-like sleeve rather than the exotic engine the pitch leads with. Hover a strategy for detail.</p>
+    </div>
+    <div class="panel" style="background:var(--bg)">
+      <p class="label">Capital by strategy</p>
+      <div class="legend" id="legend">
+        <div class="lg" data-k="mm"><span class="dot" style="background:var(--mm)"></span><div><div class="nm">Money Markets</div><div class="ds">Short-duration institutional instruments, ~4–5%. The base of the book.</div></div><span class="pct">64.94%</span></div>
+        <div class="lg" data-k="fut"><span class="dot" style="background:var(--fut)"></span><div><div class="nm">Delta-Neutral Futures Arb</div><div class="ds">Spot-vs-futures basis. Rich when funding is high, compresses when markets cool.</div></div><span class="pct">20.55%</span></div>
+        <div class="lg" data-k="cash"><span class="dot" style="background:var(--cash)"></span><div><div class="nm">Cash &amp; Equivalents</div><div class="ds">Dry powder for redemptions and rebalancing. Earns ~0%.</div></div><span class="pct">14.51%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="label">The trust layer: solvency is attested, the strategy is not</p>
+  <div class="chips">
+    <div class="chip"><div class="t">Accountable · Proof of Reserves</div><p>Reserves and the 100.49% collateral ratio attested every 15 min via a Merkle Sum Tree, a TEE enclave, and ZK proofs. Balances come straight from custodians.</p></div>
+    <div class="chip"><div class="t">RockawayX · Curator</div><p>Independently monitors off-chain positions and published its own risk disclosure for the vault. Stronger than a partner logo.</p></div>
+    <div class="chip"><div class="t">Sherlock + Nethermind · Audits</div><p>Contest audit plus a bug bounty up to $1M; Hypernative for 24/7 runtime monitoring.</p></div>
+    <div class="chip gap"><div class="t">What you cannot see</div><p>The trading venues, counterparties, and live positions stay undisclosed. The attestation proves solvency at a moment in time, and says nothing about how the book holds up under stress.</p></div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><p class="m-l">APY · advertised</p><div class="m-v warn">15%</div><div class="m-s">marketing headline</div></div>
+    <div class="metric"><p class="m-l">APY · realized</p><div class="m-v neg">0.00%</div><div class="m-s">flat since mid-June</div></div>
+    <div class="metric"><p class="m-l">Collateral ratio</p><div class="m-v acc">100.49%</div><div class="m-s">~$223k buffer</div></div>
+    <div class="metric"><p class="m-l">Unstake cooldown</p><div class="m-v">7 days</div><div class="m-s">concentrates exits</div></div>
+  </div>
+
+  <p class="foot">Source: tori.accountable.capital + Etherscan, read 2026-06-27. Off-chain venues not named. Indicative sleeve yields are illustrative.</p>
+
+<script>
+  var notes = {
+    mm:'<b>Money Markets · 64.94%.</b> Short-duration institutional paper yielding roughly 4–5%. Steady, though it is the leg that makes the book look more like a T-bill fund than a 15% engine.',
+    fut:'<b>Delta-Neutral Futures Arbitrage · 20.55%.</b> The cash-and-carry basis trade the pitch is built around is only a fifth of the book. Yield here swings with the funding regime and compresses when markets cool.',
+    cash:'<b>Cash &amp; Equivalents · 14.51%.</b> Dry powder for redemptions and rebalancing, earning ~0%. A drag on blended yield, but the buffer for the 7-day exit queue.'
+  };
+  var dflt = document.getElementById('note').innerHTML;
+  var bar = document.getElementById('bar');
+  function setK(k){
+    document.getElementById('note').innerHTML = k ? notes[k] : dflt;
+    bar.classList.toggle('dim', !!k);
+    document.querySelectorAll('#bar .seg').forEach(function(s){ s.classList.toggle('active', s.dataset.k===k); });
+    document.querySelectorAll('#legend .lg').forEach(function(l){ l.classList.toggle('active', l.dataset.k===k); });
+  }
+  document.querySelectorAll('#bar .seg,#legend .lg').forEach(function(el){
+    el.addEventListener('mouseenter', function(){ setK(el.dataset.k); });
+    el.addEventListener('click', function(){ setK(el.dataset.k); });
+  });
+  document.querySelector('.grid').addEventListener('mouseleave', function(){ setK(null); });
+</script>
+</body>
+</html>
