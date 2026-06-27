@@ -36,11 +36,12 @@
   .step h3{font-family:"Geist",sans-serif; font-weight:700; color:var(--head); font-size:15px; margin:6px 0 4px; letter-spacing:-.01em}
   .step p{font-size:12.5px; color:var(--muted); margin:0}
   .arrow{display:flex; align-items:center; justify-content:center; padding:0 4px; color:var(--accent); font-size:18px; font-weight:700}
-  @media(max-width:620px){ .arrow{transform:rotate(90deg); padding:6px 0} .step{min-width:0} .flow{flex-direction:column} }
+  @media(max-width:760px){ .arrow{display:none} .step{flex:1 1 44%; min-width:0} }
+  @media(max-width:440px){ .step{flex:1 1 100%} }
 
   /* engine / allocation */
   .grid{display:grid; grid-template-columns:1.25fr 1fr; gap:22px; margin:0 0 26px}
-  @media(max-width:680px){ .grid{grid-template-columns:1fr} }
+  @media(max-width:560px){ .grid{grid-template-columns:1fr} }
   .panel{border:1px solid var(--border); background:var(--panel); padding:18px}
   .bar{display:flex; height:46px; width:100%; overflow:hidden; border:1px solid var(--border); cursor:pointer; margin:0 0 14px}
   .seg{height:100%; transition:filter .15s, opacity .15s; display:flex; align-items:center; justify-content:center;
@@ -59,7 +60,7 @@
 
   /* trust chips */
   .chips{display:grid; grid-template-columns:1fr 1fr; gap:10px}
-  @media(max-width:680px){ .chips{grid-template-columns:1fr} }
+  @media(max-width:520px){ .chips{grid-template-columns:1fr} }
   .chip{border:1px solid var(--border); padding:11px 12px; background:var(--bg)}
   .chip .t{font-weight:600; color:var(--head); font-size:12.5px; margin:0 0 3px; display:flex; align-items:center; gap:7px}
   .chip .t::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--pos); flex:none}
@@ -68,10 +69,10 @@
 
   /* metrics strip */
   .metrics{display:grid; grid-template-columns:repeat(4,1fr); gap:0; border:1px solid var(--border); margin:24px 0 0}
-  @media(max-width:680px){ .metrics{grid-template-columns:1fr 1fr} }
+  @media(max-width:560px){ .metrics{grid-template-columns:1fr 1fr} }
   .metric{padding:14px 16px; border-right:1px solid var(--border)}
   .metric:last-child{border-right:0}
-  @media(max-width:680px){ .metric:nth-child(2){border-right:0} .metric:nth-child(1),.metric:nth-child(2){border-bottom:1px solid var(--border)} }
+  @media(max-width:560px){ .metric:nth-child(2){border-right:0} .metric:nth-child(1),.metric:nth-child(2){border-bottom:1px solid var(--border)} }
   .metric .m-l{font-family:"IBM Plex Mono",monospace; font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin:0 0 5px}
   .metric .m-v{font-family:"Geist",sans-serif; font-weight:700; font-size:21px; color:var(--head); letter-spacing:-.02em}
   .metric .m-v.warn{color:var(--warn)} .metric .m-v.neg{color:var(--neg)} .metric .m-v.acc{color:var(--accent)}
@@ -151,6 +152,13 @@
     el.addEventListener('click', function(){ setK(el.dataset.k); });
   });
   document.querySelector('.grid').addEventListener('mouseleave', function(){ setK(null); });
+
+  // auto-height: report content height to the parent page so the iframe can resize to fit
+  function postHeight(){ try{ parent.postMessage({type:'tori-widget-height', id:'tori-mechanism', height:document.documentElement.scrollHeight}, '*'); }catch(e){} }
+  window.addEventListener('load', postHeight);
+  window.addEventListener('resize', postHeight);
+  if(window.ResizeObserver){ new ResizeObserver(postHeight).observe(document.body); }
+  setTimeout(postHeight, 400); setTimeout(postHeight, 1500);
 </script>
 </body>
 </html>
