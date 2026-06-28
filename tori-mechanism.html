@@ -82,9 +82,7 @@
 </style>
 </head>
 <body>
-  <p class="kicker">Tori Finance · Mechanism</p>
   <h1>How trUSD turns a deposit into yield</h1>
-  <p class="sub">A synthetic dollar minted from stablecoins, staked into a yield token, and backed by an off-chain delta-neutral trading book. The flow is simple; the question is where the yield comes from.</p>
 
   <div class="flow">
     <div class="step"><div class="n">01</div><h3>Deposit</h3><p>Swap USDC or USDT, 1:1, no verification.</p></div>
@@ -115,23 +113,6 @@
       </div>
     </div>
   </div>
-
-  <p class="label">The trust layer: solvency is attested, the strategy is not</p>
-  <div class="chips">
-    <div class="chip"><div class="t">Accountable · Proof of Reserves</div><p>Reserves and the 100.49% collateral ratio attested every 15 min via a Merkle Sum Tree, a TEE enclave, and ZK proofs. Balances come straight from custodians.</p></div>
-    <div class="chip"><div class="t">RockawayX · Curator</div><p>Independently monitors off-chain positions and published its own risk disclosure for the vault. Stronger than a partner logo.</p></div>
-    <div class="chip"><div class="t">Sherlock + Nethermind · Audits</div><p>Contest audit plus a bug bounty up to $1M; Hypernative for 24/7 runtime monitoring.</p></div>
-    <div class="chip gap"><div class="t">What you cannot see</div><p>The trading venues, counterparties, and live positions stay undisclosed. The attestation proves solvency at a moment in time, and says nothing about how the book holds up under stress.</p></div>
-  </div>
-
-  <div class="metrics">
-    <div class="metric"><p class="m-l">APY · advertised</p><div class="m-v warn">15%</div><div class="m-s">marketing headline</div></div>
-    <div class="metric"><p class="m-l">APY · realized</p><div class="m-v neg">0.00%</div><div class="m-s">flat since mid-June</div></div>
-    <div class="metric"><p class="m-l">Collateral ratio</p><div class="m-v acc">100.49%</div><div class="m-s">~$223k buffer</div></div>
-    <div class="metric"><p class="m-l">Unstake cooldown</p><div class="m-v">7 days</div><div class="m-s">concentrates exits</div></div>
-  </div>
-
-  <p class="foot">Source: tori.accountable.capital + Etherscan, read 2026-06-27. Off-chain venues not named. Indicative sleeve yields are illustrative.</p>
 
 <script>
   var notes = {
