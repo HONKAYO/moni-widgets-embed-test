@@ -96,29 +96,29 @@
 
   <div class="grid">
     <div class="panel">
-      <p class="label">The engine: what actually backs trUSD <span style="color:var(--accent)">(live, 27 Jun 2026)</span></p>
+      <p class="label">The engine: what actually backs trUSD <span style="color:var(--accent)">(live, 28 Jun 2026)</span></p>
       <div class="bar" id="bar">
-        <div class="seg mm"   data-k="mm"   style="width:64.94%">64.9%</div>
-        <div class="seg fut"  data-k="fut"  style="width:20.55%">20.5%</div>
-        <div class="seg cash" data-k="cash" style="width:14.51%">14.5%</div>
+        <div class="seg mm"   data-k="mm"   style="width:63.31%">63.3%</div>
+        <div class="seg fut"  data-k="fut"  style="width:20.04%">20.0%</div>
+        <div class="seg cash" data-k="cash" style="width:16.65%">16.7%</div>
       </div>
       <p class="engine-note" id="note"><b>Two-thirds money markets.</b> The live book leans on the steady, T-bill-like sleeve rather than the exotic engine the pitch leads with. Hover a strategy for detail.</p>
     </div>
     <div class="panel" style="background:var(--bg)">
       <p class="label">Capital by strategy</p>
       <div class="legend" id="legend">
-        <div class="lg" data-k="mm"><span class="dot" style="background:var(--mm)"></span><div><div class="nm">Money Markets</div><div class="ds">Short-duration institutional instruments, ~4–5%. The base of the book.</div></div><span class="pct">64.94%</span></div>
-        <div class="lg" data-k="fut"><span class="dot" style="background:var(--fut)"></span><div><div class="nm">Delta-Neutral Futures Arb</div><div class="ds">Spot-vs-futures basis. Rich when funding is high, compresses when markets cool.</div></div><span class="pct">20.55%</span></div>
-        <div class="lg" data-k="cash"><span class="dot" style="background:var(--cash)"></span><div><div class="nm">Cash &amp; Equivalents</div><div class="ds">Dry powder for redemptions and rebalancing. Earns ~0%.</div></div><span class="pct">14.51%</span></div>
+        <div class="lg" data-k="mm"><span class="dot" style="background:var(--mm)"></span><div><div class="nm">Money Markets</div><div class="ds">Short-duration institutional instruments, ~4–5%. The base of the book.</div></div><span class="pct">63.31%</span></div>
+        <div class="lg" data-k="fut"><span class="dot" style="background:var(--fut)"></span><div><div class="nm">Delta-Neutral Futures Arb</div><div class="ds">Spot-vs-futures basis. Rich when funding is high, compresses when markets cool.</div></div><span class="pct">20.04%</span></div>
+        <div class="lg" data-k="cash"><span class="dot" style="background:var(--cash)"></span><div><div class="nm">Cash &amp; Equivalents</div><div class="ds">Dry powder for redemptions and rebalancing. Earns ~0%.</div></div><span class="pct">16.65%</span></div>
       </div>
     </div>
   </div>
 
 <script>
   var notes = {
-    mm:'<b>Money Markets · 64.94%.</b> Short-duration institutional paper yielding roughly 4–5%. Steady, though it is the leg that makes the book look more like a T-bill fund than a 15% engine.',
-    fut:'<b>Delta-Neutral Futures Arbitrage · 20.55%.</b> The cash-and-carry basis trade the pitch is built around is only a fifth of the book. Yield here swings with the funding regime and compresses when markets cool.',
-    cash:'<b>Cash &amp; Equivalents · 14.51%.</b> Dry powder for redemptions and rebalancing, earning ~0%. A drag on blended yield, but the buffer for the 7-day exit queue.'
+    mm:'<b>Money Markets · 63.31%.</b> Short-duration institutional paper yielding roughly 4–5%. Steady, though it is the leg that makes the book look more like a T-bill fund than a 15% engine.',
+    fut:'<b>Delta-Neutral Futures Arbitrage · 20.04%.</b> The cash-and-carry basis trade the pitch is built around is only a fifth of the book. Yield here swings with the funding regime and compresses when markets cool.',
+    cash:'<b>Cash &amp; Equivalents · 16.65%.</b> Dry powder for redemptions and rebalancing, earning ~0%. A drag on blended yield, but the buffer for the 7-day exit queue.'
   };
   var dflt = document.getElementById('note').innerHTML;
   var bar = document.getElementById('bar');
