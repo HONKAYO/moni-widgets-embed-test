@@ -6,65 +6,67 @@
 <title>Moni widget - FWA house economics</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
-  html,body{margin:0;background:transparent}
-  body{padding:16px}
+  html,body{margin:0;background:transparent;width:100%;overflow-x:hidden}
+  body{padding:0}
   #fwa{--bg:#fff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#6c42eb14;--emerald:#0fa968;--amber:#f59e0b;--red:#e24b4a;--slate:#94a3b8;
-    max-width:980px;margin:0 auto;border:1px solid var(--line);background:var(--bg);color:var(--body);font-family:'Geist',system-ui,sans-serif;line-height:1.5}
+    width:100%;max-width:760px;margin:0 auto;border:1px solid var(--line);background:var(--bg);color:var(--body);font-family:'Geist',system-ui,sans-serif;line-height:1.45;overflow:hidden}
   #fwa *{box-sizing:border-box}
-  #fwa .hd{padding:24px 28px 18px;border-bottom:1px solid var(--line)}
+  #fwa .hd{padding:18px 20px 14px;border-bottom:1px solid var(--line)}
   #fwa .kick{font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
-  #fwa h2{margin:11px 0 8px;font:700 28px/1.08 'Geist',system-ui,sans-serif;letter-spacing:-.03em;color:var(--text)}
-  #fwa .sub{margin:0;max-width:68ch;font-size:13.5px;color:var(--muted)}
-  #fwa .main{display:grid;grid-template-columns:300px 1fr}
-  #fwa .side{padding:20px 22px;border-right:1px solid var(--line);background:var(--soft)}
-  #fwa .content{padding:20px 24px 14px}
-  #fwa .section{margin-bottom:18px}
-  #fwa .section h3{margin:0 0 14px;font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
-  #fwa .row{margin-bottom:18px}
-  #fwa .lab{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:7px;font-size:12.5px;color:var(--muted)}
-  #fwa .lab b{font:600 12.5px 'IBM Plex Mono',monospace;color:var(--text)}
+  #fwa h2{margin:9px 0 7px;font:700 24px/1.08 'Geist',system-ui,sans-serif;color:var(--text)}
+  #fwa .sub{margin:0;max-width:62ch;font-size:13px;color:var(--muted)}
+  #fwa .main{display:grid;grid-template-columns:1fr}
+  #fwa .side{padding:14px 16px;border-bottom:1px solid var(--line);background:var(--soft);min-width:0}
+  #fwa .content{padding:14px 16px 10px;min-width:0}
+  #fwa .section{margin-bottom:12px}
+  #fwa .section h3{margin:0 0 12px;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  #fwa .row{margin-bottom:14px}
+  #fwa .lab{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:10px;margin-bottom:7px;font-size:12px;color:var(--muted);min-width:0}
+  #fwa .lab span{min-width:0}
+  #fwa .lab b{font:600 12px 'IBM Plex Mono',monospace;color:var(--text);white-space:nowrap}
   #fwa input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:3px;background:var(--line);outline:none;cursor:pointer}
   #fwa input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--accent);border:3px solid var(--soft);box-shadow:0 0 0 1px var(--accent)}
   #fwa input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--accent);border:3px solid var(--soft);box-shadow:0 0 0 1px var(--accent)}
-  #fwa .micro{margin-top:6px;font-size:11.5px;color:var(--muted)}
-  #fwa .note{border:1px solid var(--line);background:var(--bg);padding:12px 13px;font-size:11.5px;color:var(--muted)}
+  #fwa .micro{margin-top:6px;font-size:11px;color:var(--muted)}
+  #fwa .note{border:1px solid var(--line);background:var(--bg);padding:10px 11px;font-size:11px;color:var(--muted);overflow-wrap:anywhere}
   #fwa .note b{color:var(--text)}
   #fwa .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   #fwa .chip{padding:7px 9px;border:1px solid var(--line);font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.04em;text-transform:uppercase;background:var(--bg);color:var(--muted);cursor:pointer}
   #fwa .chip.active{border-color:#6c42eb66;background:var(--accent-soft);color:var(--accent)}
-  #fwa .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}
-  #fwa .card{border:1px solid var(--line);padding:14px 15px;background:var(--bg)}
-  #fwa .card .l{font-size:11.5px;color:var(--muted)}
-  #fwa .card .n{margin-top:7px;font:700 24px/1 'Geist',system-ui,sans-serif;letter-spacing:-.02em;color:var(--text)}
+  #fwa .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:12px}
+  #fwa .card{border:1px solid var(--line);padding:11px 12px;background:var(--bg);min-width:0}
+  #fwa .card .l{font-size:11px;color:var(--muted)}
+  #fwa .card .n{margin-top:6px;font:700 21px/1 'Geist',system-ui,sans-serif;color:var(--text)}
   #fwa .card.hero{background:var(--accent-soft);border-color:#6c42eb44}
   #fwa .card.hero .l,#fwa .card.hero .n{color:var(--accent)}
   #fwa .card.wide{grid-column:span 2}
-  #fwa .stack{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:18px}
-  #fwa .panel{border:1px solid var(--line);background:var(--bg);padding:16px 18px}
-  #fwa .panel .k{font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
-  #fwa .chartcopy{margin-top:10px;font-size:12.5px;color:var(--body)}
+  #fwa .stack{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:12px}
+  #fwa .panel{border:1px solid var(--line);background:var(--bg);padding:13px 14px;min-width:0}
+  #fwa .panel .k{font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  #fwa .chartcopy{margin-top:9px;font-size:12px;color:var(--body)}
   #fwa .chartcopy b{color:var(--text)}
-  #fwa .chartwrap{position:relative;height:300px;margin-top:12px}
+  #fwa .chartwrap{position:relative;height:220px;margin-top:10px}
   #fwa .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
   #fwa .legend span{display:inline-flex;align-items:center;gap:7px}
   #fwa .legend i{width:16px;height:3px;display:inline-block}
   #fwa .verdict .headline{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:8px}
-  #fwa .verdict .q{font:700 26px/1.08 'Geist',system-ui,sans-serif;letter-spacing:-.025em;color:var(--text)}
-  #fwa .pill{padding:7px 12px;border:1px solid var(--line);font:600 12px 'Geist',system-ui,sans-serif}
+  #fwa .verdict .q{font:700 22px/1.08 'Geist',system-ui,sans-serif;color:var(--text)}
+  #fwa .pill{padding:6px 10px;border:1px solid var(--line);font:600 11px 'Geist',system-ui,sans-serif;white-space:nowrap}
   #fwa .pill.green{background:#0fa96814;border-color:#0fa968;color:var(--emerald)}
   #fwa .pill.amber{background:#f59e0b14;border-color:#f59e0b;color:var(--amber)}
   #fwa .pill.red{background:#e24b4a14;border-color:#e24b4a;color:var(--red)}
   #fwa .verdict .body{margin-top:12px;font-size:13px;color:var(--body)}
-  #fwa .ft{padding:12px 28px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:12px}
-  @media(max-width:840px){
-    #fwa .main{grid-template-columns:1fr}
-    #fwa .side{border-right:none;border-bottom:1px solid var(--line)}
-    #fwa .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
-    #fwa .card.wide{grid-column:span 2}
+  #fwa .ft{padding:8px 16px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:12px}
+  @media(min-width:540px){
+    #fwa .side .section:first-child{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
+    #fwa .side .section:first-child h3{grid-column:1/-1;margin-bottom:0}
+    #fwa .side .section:first-child .row{margin-bottom:0}
+    #fwa .side .section:first-child .chips{grid-column:1/-1;margin-top:0}
   }
-  @media(max-width:560px){
+  @media(max-width:520px){
     #fwa .cards{grid-template-columns:1fr}
     #fwa .card.wide{grid-column:auto}
+    #fwa .verdict .headline{align-items:flex-start;flex-direction:column}
   }
 </style>
 </head>
@@ -73,7 +75,7 @@
   <div class="hd">
     <div class="kick">FWA - house economics</div>
     <h2>Will anyone want to be the house?</h2>
-    <p class="sub">In FWA, backing is the whole trade. It funds the bid, changes how fast you get picked, and decides how much ETH you keep tied up while you wait. This widget shows where that trade starts to work and where it breaks.</p>
+    <p class="sub">In FWA, backing is the trade. It funds the bid, changes how fast you get picked, and decides how much ETH sits idle while you wait.</p>
   </div>
 
   <div class="main">
@@ -83,17 +85,17 @@
         <div class="row">
           <div class="lab"><span>ETH backing per NFT</span><b><span id="backing_v">2.00</span> ETH</b></div>
           <input type="range" id="backing" min="0.50" max="5.00" step="0.05" value="2.00">
-          <div class="micro">Display range only. Public docs do not show a hard protocol min or max backing band.</div>
+          <div class="micro">Display range only. Public docs do not show a hard min or max backing band.</div>
         </div>
         <div class="row">
           <div class="lab"><span>Pool activity</span><b><span id="activity_v">14</span> acq/day</b></div>
           <input type="range" id="activity" min="4" max="30" step="1" value="14">
-          <div class="micro">This is the main missing market variable. A good mechanism can still under-earn if the pool stays quiet.</div>
+          <div class="micro">The missing market variable. Quiet pools make even good mechanics under-earn.</div>
         </div>
         <div class="row">
           <div class="lab"><span>Pool crowding</span><b><span id="crowding_v">24</span> rest-weight</b></div>
           <input type="range" id="crowding" min="10" max="44" step="1" value="24">
-          <div class="micro">Higher crowding means more competing inventory sharing the same fee flow.</div>
+          <div class="micro">More competing inventory sharing the same fee flow.</div>
         </div>
         <div class="chips" id="regimes">
           <button class="chip active" type="button" data-regime="cold">Cold</button>
@@ -106,9 +108,9 @@
         <h3>What is fixed</h3>
         <div class="note">
           <b>Protocol facts</b><br>
-          Inverse weighting by backing. Default 10% acquisition surcharge. Fee split of 94% depositors / 5% crown / 1% protocol. Default standing-bid payout at 85% of backing. Crown threshold at 10% above the largest active deposit.<br><br>
+          Inverse weighting by backing. Default 10% acquisition surcharge. Fee split: 94% depositors, 5% crown, 1% protocol. Default bid payout: 85% of backing.<br><br>
           <b>Model choices</b><br>
-          Fair-value anchor, relist friction, reward support, and how crowding translates into fee-sharing positions are assumptions used to make the tradeoff visible.
+          Activity, crowding, relist friction, and reward support are assumptions.
         </div>
       </div>
     </div>
@@ -126,9 +128,9 @@
         <div class="panel">
           <div class="k">What the chart shows</div>
           <div class="chartcopy">
-            <b>Gray line:</b> selection speed relative to a 1 ETH deposit.<br>
-            <b>Purple line:</b> modeled return on locked ETH under the current activity and crowding assumptions.<br><br>
-            The point is not the exact purple number. The point is where the trade breaks: too thin and the position churns before fees compound; too heavy and too much capital sits idle for too little carry. If the purple line jumps at high backing, that is the crown-share threshold turning on, not organic market magic.
+            <b>Gray:</b> selection speed vs a 1 ETH deposit.<br>
+            <b>Purple:</b> modeled carry on locked ETH.<br><br>
+            Too thin, and the position churns before fees compound. Too heavy, and idle capital eats the trade. A purple jump at high backing is the crown threshold turning on.
           </div>
           <div class="chartwrap"><canvas id="houseChart" role="img" aria-label="Selection speed and modeled return as ETH backing changes."></canvas></div>
           <div class="legend" style="margin-top:12px">
@@ -300,7 +302,7 @@
             data:xs.map(x=>({x,y:metrics(x).edgePct})),
             borderColor:"#6c42eb",
             backgroundColor:"rgba(108,66,235,.10)",
-            borderWidth:2.5,
+            borderWidth:3,
             pointRadius:0,
             tension:.22,
             yAxisID:"y1"
@@ -318,7 +320,7 @@
             data:[{x:P.backing,y:metrics(P.backing).edgePct}],
             backgroundColor:"#6c42eb",
             borderColor:"#6c42eb",
-            pointRadius:4,
+            pointRadius:5,
             yAxisID:"y1"
           }
         ]
