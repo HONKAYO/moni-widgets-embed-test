@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moni widget - FWA house economics</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  html,body{margin:0;background:transparent}
+  body{padding:16px}
+  #fwa{--bg:#fff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#6c42eb14;--emerald:#0fa968;--amber:#f59e0b;--red:#e24b4a;--slate:#94a3b8;
+    max-width:980px;margin:0 auto;border:1px solid var(--line);background:var(--bg);color:var(--body);font-family:'Geist',system-ui,sans-serif;line-height:1.5}
+  #fwa *{box-sizing:border-box}
+  #fwa .hd{padding:24px 28px 18px;border-bottom:1px solid var(--line)}
+  #fwa .kick{font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  #fwa h2{margin:11px 0 8px;font:700 28px/1.08 'Geist',system-ui,sans-serif;letter-spacing:-.03em;color:var(--text)}
+  #fwa .sub{margin:0;max-width:68ch;font-size:13.5px;color:var(--muted)}
+  #fwa .main{display:grid;grid-template-columns:300px 1fr}
+  #fwa .side{padding:20px 22px;border-right:1px solid var(--line);background:var(--soft)}
+  #fwa .content{padding:20px 24px 14px}
+  #fwa .section{margin-bottom:18px}
+  #fwa .section h3{margin:0 0 14px;font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  #fwa .row{margin-bottom:18px}
+  #fwa .lab{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:7px;font-size:12.5px;color:var(--muted)}
+  #fwa .lab b{font:600 12.5px 'IBM Plex Mono',monospace;color:var(--text)}
+  #fwa input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:3px;background:var(--line);outline:none;cursor:pointer}
+  #fwa input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--accent);border:3px solid var(--soft);box-shadow:0 0 0 1px var(--accent)}
+  #fwa input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--accent);border:3px solid var(--soft);box-shadow:0 0 0 1px var(--accent)}
+  #fwa .micro{margin-top:6px;font-size:11.5px;color:var(--muted)}
+  #fwa .note{border:1px solid var(--line);background:var(--bg);padding:12px 13px;font-size:11.5px;color:var(--muted)}
+  #fwa .note b{color:var(--text)}
+  #fwa .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  #fwa .chip{padding:7px 9px;border:1px solid var(--line);font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.04em;text-transform:uppercase;background:var(--bg);color:var(--muted);cursor:pointer}
+  #fwa .chip.active{border-color:#6c42eb66;background:var(--accent-soft);color:var(--accent)}
+  #fwa .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:18px}
+  #fwa .card{border:1px solid var(--line);padding:14px 15px;background:var(--bg)}
+  #fwa .card .l{font-size:11.5px;color:var(--muted)}
+  #fwa .card .n{margin-top:7px;font:700 24px/1 'Geist',system-ui,sans-serif;letter-spacing:-.02em;color:var(--text)}
+  #fwa .card.hero{background:var(--accent-soft);border-color:#6c42eb44}
+  #fwa .card.hero .l,#fwa .card.hero .n{color:var(--accent)}
+  #fwa .card.wide{grid-column:span 2}
+  #fwa .stack{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:18px}
+  #fwa .panel{border:1px solid var(--line);background:var(--bg);padding:16px 18px}
+  #fwa .panel .k{font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  #fwa .chartcopy{margin-top:10px;font-size:12.5px;color:var(--body)}
+  #fwa .chartcopy b{color:var(--text)}
+  #fwa .chartwrap{position:relative;height:300px;margin-top:12px}
+  #fwa .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+  #fwa .legend span{display:inline-flex;align-items:center;gap:7px}
+  #fwa .legend i{width:16px;height:3px;display:inline-block}
+  #fwa .verdict .headline{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:8px}
+  #fwa .verdict .q{font:700 26px/1.08 'Geist',system-ui,sans-serif;letter-spacing:-.025em;color:var(--text)}
+  #fwa .pill{padding:7px 12px;border:1px solid var(--line);font:600 12px 'Geist',system-ui,sans-serif}
+  #fwa .pill.green{background:#0fa96814;border-color:#0fa968;color:var(--emerald)}
+  #fwa .pill.amber{background:#f59e0b14;border-color:#f59e0b;color:var(--amber)}
+  #fwa .pill.red{background:#e24b4a14;border-color:#e24b4a;color:var(--red)}
+  #fwa .verdict .body{margin-top:12px;font-size:13px;color:var(--body)}
+  #fwa .ft{padding:12px 28px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:12px}
+  @media(max-width:840px){
+    #fwa .main{grid-template-columns:1fr}
+    #fwa .side{border-right:none;border-bottom:1px solid var(--line)}
+    #fwa .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+    #fwa .card.wide{grid-column:span 2}
+  }
+  @media(max-width:560px){
+    #fwa .cards{grid-template-columns:1fr}
+    #fwa .card.wide{grid-column:auto}
+  }
+</style>
+</head>
+<body>
+<div id="fwa">
+  <div class="hd">
+    <div class="kick">FWA - house economics</div>
+    <h2>Will anyone want to be the house?</h2>
+    <p class="sub">In FWA, backing is the whole trade. It funds the bid, changes how fast you get picked, and decides how much ETH you keep tied up while you wait. This widget shows where that trade starts to work and where it breaks.</p>
+  </div>
+
+  <div class="main">
+    <div class="side">
+      <div class="section">
+        <h3>Controls</h3>
+        <div class="row">
+          <div class="lab"><span>ETH backing per NFT</span><b><span id="backing_v">2.00</span> ETH</b></div>
+          <input type="range" id="backing" min="0.50" max="5.00" step="0.05" value="2.00">
+          <div class="micro">Display range only. Public docs do not show a hard protocol min or max backing band.</div>
+        </div>
+        <div class="row">
+          <div class="lab"><span>Pool activity</span><b><span id="activity_v">14</span> acq/day</b></div>
+          <input type="range" id="activity" min="4" max="30" step="1" value="14">
+          <div class="micro">This is the main missing market variable. A good mechanism can still under-earn if the pool stays quiet.</div>
+        </div>
+        <div class="row">
+          <div class="lab"><span>Pool crowding</span><b><span id="crowding_v">24</span> rest-weight</b></div>
+          <input type="range" id="crowding" min="10" max="44" step="1" value="24">
+          <div class="micro">Higher crowding means more competing inventory sharing the same fee flow.</div>
+        </div>
+        <div class="chips" id="regimes">
+          <button class="chip active" type="button" data-regime="cold">Cold</button>
+          <button class="chip" type="button" data-regime="base">Base</button>
+          <button class="chip" type="button" data-regime="hot">Hot</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>What is fixed</h3>
+        <div class="note">
+          <b>Protocol facts</b><br>
+          Inverse weighting by backing. Default 10% acquisition surcharge. Fee split of 94% depositors / 5% crown / 1% protocol. Default standing-bid payout at 85% of backing. Crown threshold at 10% above the largest active deposit.<br><br>
+          <b>Model choices</b><br>
+          Fair-value anchor, relist friction, reward support, and how crowding translates into fee-sharing positions are assumptions used to make the tradeoff visible.
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="cards">
+        <div class="card"><div class="l">Selection speed</div><div class="n" id="m_speed">-</div></div>
+        <div class="card"><div class="l">Acquisitions before selection</div><div class="n" id="m_acqs">-</div></div>
+        <div class="card"><div class="l">Expected hold life</div><div class="n" id="m_life">-</div></div>
+        <div class="card"><div class="l">Bid payout if selected</div><div class="n" id="m_payout">-</div></div>
+        <div class="card hero wide"><div class="l">Modeled net carry / locked ETH</div><div class="n" id="m_edge">-</div></div>
+      </div>
+
+      <div class="stack">
+        <div class="panel">
+          <div class="k">What the chart shows</div>
+          <div class="chartcopy">
+            <b>Gray line:</b> selection speed relative to a 1 ETH deposit.<br>
+            <b>Purple line:</b> modeled return on locked ETH under the current activity and crowding assumptions.<br><br>
+            The point is not the exact purple number. The point is where the trade breaks: too thin and the position churns before fees compound; too heavy and too much capital sits idle for too little carry. If the purple line jumps at high backing, that is the crown-share threshold turning on, not organic market magic.
+          </div>
+          <div class="chartwrap"><canvas id="houseChart" role="img" aria-label="Selection speed and modeled return as ETH backing changes."></canvas></div>
+          <div class="legend" style="margin-top:12px">
+            <span><i style="background:#94a3b8"></i>selection speed</span>
+            <span><i style="background:#6c42eb"></i>modeled return</span>
+          </div>
+        </div>
+
+        <div class="panel verdict">
+          <div class="k">Current read</div>
+          <div class="headline">
+            <div class="q" id="verdict_title">-</div>
+            <div class="pill" id="verdict_pill">-</div>
+          </div>
+          <div class="body" id="verdict_body">-</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ft">
+    <span>research.moni.ai</span>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function(){
+  const P={backing:2.0,activity:14,crowding:24,regime:"cold"};
+
+  const ACQ_SURCHARGE=0.10;
+  const PROTOCOL_ACQ_CUT=0.01;
+  const CROWN_TITHE=0.05;
+  const CROWN_THRESHOLD=1.10;
+  const BID_PAYOUT_SHARE=0.85;
+
+  const REGIMES={
+    cold:{activity:8,crowding:18,fairValue:0.55,reward:0.00045,resetCost:0.12},
+    base:{activity:14,crowding:24,fairValue:0.65,reward:0.00075,resetCost:0.11},
+    hot:{activity:24,crowding:34,fairValue:0.8,reward:0.00105,resetCost:0.10}
+  };
+
+  let chart;
+
+  const fmtEth=v=>v.toFixed(2)+" ETH";
+  const fmtPct=v=>v.toFixed(1)+"%";
+  const fmtX=v=>v.toFixed(2)+"x";
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+  function syncRegime(){
+    const r=REGIMES[P.regime];
+    P.activity=r.activity;
+    P.crowding=r.crowding;
+    document.getElementById("activity").value=r.activity;
+    document.getElementById("crowding").value=r.crowding;
+  }
+
+  function fairValueRefEth(){ return REGIMES[P.regime].fairValue; }
+  function rewardPerDayEth(){ return REGIMES[P.regime].reward; }
+  function resetCostEth(){ return REGIMES[P.regime].resetCost; }
+
+  function activePositions(){
+    return Math.round(48 + P.crowding*4.2);
+  }
+
+  function crownLineEth(){
+    return 1.1 + P.crowding*0.08;
+  }
+
+  function selectionProb(backing){
+    const myWeight=1/backing;
+    return myWeight/(P.crowding+myWeight);
+  }
+
+  function expectedAcquisitions(backing){
+    return 1/selectionProb(backing);
+  }
+
+  function expectedDays(backing){
+    return expectedAcquisitions(backing)/P.activity;
+  }
+
+  function acquisitionFeeEth(){
+    return fairValueRefEth()*ACQ_SURCHARGE;
+  }
+
+  function equalSharePerAcquisition(){
+    const fee=acquisitionFeeEth();
+    return fee*(1-PROTOCOL_ACQ_CUT-CROWN_TITHE)/activePositions();
+  }
+
+  function isCrown(backing){
+    return backing>=crownLineEth()*CROWN_THRESHOLD;
+  }
+
+  function crownSharePerAcquisition(backing){
+    return isCrown(backing)?acquisitionFeeEth()*CROWN_TITHE:0;
+  }
+
+  function metrics(backing){
+    const prob=selectionProb(backing);
+    const acqs=expectedAcquisitions(backing);
+    const days=expectedDays(backing);
+    const feeIncome=acqs*equalSharePerAcquisition();
+    const crownIncome=acqs*crownSharePerAcquisition(backing);
+    const rewardIncome=days*rewardPerDayEth();
+    const gross=feeIncome+crownIncome+rewardIncome;
+    const net=gross-resetCostEth();
+    const edgePct=(net/backing)*100;
+    const bidPayout=backing*BID_PAYOUT_SHARE;
+    const speedIdx=(prob/selectionProb(1))*100;
+    return {prob,acqs,days,feeIncome,crownIncome,rewardIncome,gross,net,edgePct,bidPayout,speedIdx};
+  }
+
+  function verdict(m){
+    if(m.edgePct>=6 && m.acqs>=18 && m.acqs<=90){
+      return {
+        cls:"green",
+        pill:"balanced",
+        title:"This is where the trade starts to make sense.",
+        body:"Selection is still happening often enough to keep the position economically alive, but not so quickly that reset friction eats the carry. If real buyer demand exists, this is the most believable depositor zone."
+      };
+    }
+    if(m.acqs<18){
+      return {
+        cls:m.edgePct>=0?"amber":"red",
+        pill:"too thin",
+        title:"Fast churn is doing most of the damage.",
+        body:"Low backing makes the position easier to draw, which is good for throughput but rough for the house. The NFT keeps getting recycled before fees and rewards have much time to stack."
+      };
+    }
+    if(m.acqs>90 || m.days>10){
+      return {
+        cls:m.edgePct>=0?"amber":"red",
+        pill:"too heavy",
+        title:"Now the problem is idle capital.",
+        body:"The funded bid looks stronger, but the return on locked ETH compresses because the position sits around too long relative to the fee stream. This is where backing becomes patience more than edge."
+      };
+    }
+    return {
+      cls:"amber",
+      pill:"narrow",
+      title:"The structure works, but the edge is thin.",
+      body:"This part of the curve is not broken. It just depends too much on activity staying healthy and reward support staying credible. That is enough for a model, not enough for conviction."
+    };
+  }
+
+  function xSeries(){
+    const xs=[];
+    for(let x=0.5;x<=5.001;x+=0.05) xs.push(Number(x.toFixed(2)));
+    return xs;
+  }
+
+  function buildChart(){
+    const xs=xSeries();
+    chart=new Chart(document.getElementById("houseChart"),{
+      type:"line",
+      data:{
+        datasets:[
+          {
+            data:xs.map(x=>({x,y:metrics(x).speedIdx})),
+            borderColor:"#94a3b8",
+            borderWidth:2,
+            pointRadius:0,
+            tension:.22,
+            yAxisID:"y"
+          },
+          {
+            data:xs.map(x=>({x,y:metrics(x).edgePct})),
+            borderColor:"#6c42eb",
+            backgroundColor:"rgba(108,66,235,.10)",
+            borderWidth:2.5,
+            pointRadius:0,
+            tension:.22,
+            yAxisID:"y1"
+          },
+          {
+            type:"scatter",
+            data:[{x:P.backing,y:metrics(P.backing).speedIdx}],
+            backgroundColor:"#94a3b8",
+            borderColor:"#94a3b8",
+            pointRadius:4,
+            yAxisID:"y"
+          },
+          {
+            type:"scatter",
+            data:[{x:P.backing,y:metrics(P.backing).edgePct}],
+            backgroundColor:"#6c42eb",
+            borderColor:"#6c42eb",
+            pointRadius:4,
+            yAxisID:"y1"
+          }
+        ]
+      },
+      options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        animation:{duration:220},
+        plugins:{legend:{display:false},tooltip:{enabled:false}},
+        scales:{
+          x:{
+            type:"linear",
+            min:0.5,
+            max:5,
+            title:{display:true,text:"ETH backing per NFT (display range)",color:"#8b8f99",font:{size:11}},
+            ticks:{color:"#8b8f99",font:{family:"IBM Plex Mono",size:10},callback:v=>v.toFixed(1)},
+            grid:{color:"#eef0f3"}
+          },
+          y:{
+            position:"left",
+            title:{display:true,text:"selection speed vs 1 ETH",color:"#8b8f99",font:{size:11}},
+            ticks:{color:"#8b8f99",font:{family:"IBM Plex Mono",size:10},callback:v=>Math.round(v)+"%"},
+            grid:{color:"#eef0f3"}
+          },
+          y1:{
+            position:"right",
+            title:{display:true,text:"modeled net carry / locked ETH",color:"#8b8f99",font:{size:11}},
+            ticks:{color:"#8b8f99",font:{family:"IBM Plex Mono",size:10},callback:v=>v.toFixed(0)+"%"},
+            grid:{drawOnChartArea:false}
+          }
+        }
+      }
+    });
+  }
+
+  function updateChart(){
+    const xs=xSeries();
+    const m=metrics(P.backing);
+    chart.data.datasets[0].data=xs.map(x=>({x,y:metrics(x).speedIdx}));
+    chart.data.datasets[1].data=xs.map(x=>({x,y:metrics(x).edgePct}));
+    chart.data.datasets[2].data=[{x:P.backing,y:m.speedIdx}];
+    chart.data.datasets[3].data=[{x:P.backing,y:m.edgePct}];
+    chart.update();
+  }
+
+  function refresh(){
+    const m=metrics(P.backing);
+    document.getElementById("backing_v").textContent=P.backing.toFixed(2);
+    document.getElementById("activity_v").textContent=P.activity.toFixed(0);
+    document.getElementById("crowding_v").textContent=P.crowding.toFixed(0);
+    document.getElementById("m_speed").textContent=fmtX(m.speedIdx/100);
+    document.getElementById("m_acqs").textContent=m.acqs.toFixed(0);
+    document.getElementById("m_life").textContent=m.days.toFixed(1)+" d";
+    document.getElementById("m_payout").textContent=fmtEth(m.bidPayout);
+    document.getElementById("m_edge").textContent=fmtPct(m.edgePct);
+
+    const v=verdict(m);
+    const pill=document.getElementById("verdict_pill");
+    document.getElementById("verdict_title").textContent=v.title;
+    document.getElementById("verdict_body").textContent=v.body;
+    pill.textContent=v.pill;
+    pill.className="pill "+v.cls;
+  }
+
+  document.getElementById("backing").addEventListener("input",e=>{
+    P.backing=parseFloat(e.target.value);
+    refresh();
+    updateChart();
+  });
+
+  document.getElementById("activity").addEventListener("input",e=>{
+    P.activity=parseFloat(e.target.value);
+    refresh();
+    updateChart();
+  });
+
+  document.getElementById("crowding").addEventListener("input",e=>{
+    P.crowding=parseFloat(e.target.value);
+    refresh();
+    updateChart();
+  });
+
+  document.querySelectorAll("#regimes .chip").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      P.regime=btn.dataset.regime;
+      syncRegime();
+      document.querySelectorAll("#regimes .chip").forEach(x=>x.classList.toggle("active",x===btn));
+      refresh();
+      updateChart();
+    });
+  });
+
+  syncRegime();
+  buildChart();
+  refresh();
+  updateChart();
+})();
+</script>
+</body>
+</html>
