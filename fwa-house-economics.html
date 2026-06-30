@@ -79,7 +79,7 @@
   <div class="hd">
     <div class="kick">FWA - house economics</div>
     <h2>Will anyone want to be the house?</h2>
-    <p class="sub">In FWA, backing is the trade. It funds the bid, changes how fast you get picked, and decides how much ETH sits idle while you wait.</p>
+    <p class="sub">In FWA, backing is the trade. It funds the bid, changes how fast you get picked, and decides how much ETH sits idle while you wait. Deposits are visible, but protocol purchases are not live yet, so this is a pre-market tradeoff model.</p>
   </div>
 
   <div class="main">
@@ -92,9 +92,9 @@
           <div class="micro">Display range only. Public docs do not show a hard min or max backing band.</div>
         </div>
         <div class="row">
-          <div class="lab"><span>Pool activity</span><b><span id="activity_v">14</span> acq/day</b></div>
+          <div class="lab"><span>Assumed pool activity</span><b><span id="activity_v">14</span> acq/day</b></div>
           <input type="range" id="activity" min="4" max="30" step="1" value="14">
-          <div class="micro">The missing market variable. Quiet pools make even good mechanics under-earn.</div>
+          <div class="micro">The missing market variable. Until purchases begin, this is an assumption, not live throughput.</div>
         </div>
         <div class="row">
           <div class="lab"><span>Pool crowding</span><b><span id="crowding_v">24</span> rest-weight</b></div>
@@ -114,7 +114,7 @@
           <b>Protocol facts</b><br>
           Inverse weighting by backing. Default 10% acquisition surcharge. Fee split: 94% depositors, 5% crown, 1% protocol. Default bid payout: 85% of backing.<br><br>
           <b>Model choices</b><br>
-          Activity, crowding, relist friction, and reward support are assumptions.
+          Activity, crowding, relist friction, and reward support are assumptions. July 1 status: deposits are visible, protocol purchases have not started.
         </div>
       </div>
     </div>
@@ -122,7 +122,7 @@
     <div class="content">
       <div class="cards">
         <div class="card"><div class="l">Selection speed</div><div class="n" id="m_speed">-</div></div>
-        <div class="card"><div class="l">Acquisitions before selection</div><div class="n" id="m_acqs">-</div></div>
+        <div class="card"><div class="l">Modeled acquisitions before selection</div><div class="n" id="m_acqs">-</div></div>
         <div class="card"><div class="l">Expected hold life</div><div class="n" id="m_life">-</div></div>
         <div class="card"><div class="l">Bid payout if selected</div><div class="n" id="m_payout">-</div></div>
         <div class="card hero wide"><div class="l">Modeled net carry / locked ETH</div><div class="n" id="m_edge">-</div></div>
@@ -144,7 +144,7 @@
         </div>
 
         <div class="panel verdict">
-          <div class="k">Current read</div>
+          <div class="k">Model read</div>
           <div class="headline">
             <div class="q" id="verdict_title">-</div>
             <div class="pill" id="verdict_pill">-</div>
