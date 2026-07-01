@@ -58,7 +58,7 @@
   #fwa .verdict .body{margin-top:12px;font-size:13px;color:var(--body)}
   #fwa .ft{padding:8px 16px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:12px}
   @media(min-width:680px){
-    #fwa .side .section:first-child{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
+    #fwa .side .section:first-child{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
     #fwa .side .section:first-child h3{grid-column:1/-1;margin-bottom:0}
     #fwa .side .section:first-child .row{margin-bottom:0}
     #fwa .side .section:first-child .chips{grid-column:1/-1;margin-top:0}
@@ -78,8 +78,8 @@
 <div id="fwa">
   <div class="hd">
     <div class="kick">FWA - house economics</div>
-    <h2>Will anyone want to be the house?</h2>
-    <p class="sub">In FWA, backing is the trade. It funds the bid, changes how fast you get picked, and decides how much ETH sits idle while you wait. Deposits are visible, but protocol purchases are not live yet, so this is a pre-market tradeoff model.</p>
+    <h2>Will anyone want to fund the house?</h2>
+    <p class="sub">In FWA, the NFT price is only half the problem. The harder part is how much ETH someone will lock behind it. Set the NFT value, choose the backing multiple, and watch where the house trade starts to work or break.</p>
   </div>
 
   <div class="main">
@@ -87,9 +87,14 @@
       <div class="section">
         <h3>Controls</h3>
         <div class="row">
-          <div class="lab"><span>ETH backing per NFT</span><b><span id="backing_v">2.00</span> ETH</b></div>
-          <input type="range" id="backing" min="0.50" max="5.00" step="0.05" value="2.00">
-          <div class="micro">Display range only. Public docs do not show a hard min or max backing band.</div>
+          <div class="lab"><span>NFT reference value</span><b><span id="nft_value_v">1.00</span> ETH</b></div>
+          <input type="range" id="nft_value" min="-3" max="2" step="0.05" value="0">
+          <div class="micro">Log scale from tiny NFTs to blue-chip inventory. This is the value anchor for the model.</div>
+        </div>
+        <div class="row">
+          <div class="lab"><span>Backing multiple</span><b><span id="multiple_v">1.00</span>x = <span id="backing_v">1.00</span> ETH</b></div>
+          <input type="range" id="multiple" min="0.10" max="5.00" step="0.05" value="1.00">
+          <div class="micro">Backing is measured relative to the NFT. A 1x Punk is very different from a 1x cheap mint.</div>
         </div>
         <div class="row">
           <div class="lab"><span>Assumed pool activity</span><b><span id="activity_v">14</span> acq/day</b></div>
@@ -112,18 +117,18 @@
         <h3>What is fixed</h3>
         <div class="note">
           <b>Protocol facts</b><br>
-          Inverse weighting by backing. Default 10% acquisition surcharge. Fee split: 94% depositors, 5% crown, 1% protocol. Default bid payout: 85% of backing.<br><br>
+          Backing sets inverse selection weight. Default acquisition surcharge is 10%. Fee split: 94% depositors, 5% crown, 1% protocol. Default bid payout is 85% of backing.<br><br>
           <b>Model choices</b><br>
-          Activity, crowding, relist friction, and reward support are assumptions. July 1 status: deposits are visible, protocol purchases have not started.
+          NFT value, activity, crowding, relist friction, and reward support are assumptions. July 1 status: deposits are visible, protocol purchases have not started.
         </div>
       </div>
     </div>
 
     <div class="content">
       <div class="cards">
+        <div class="card"><div class="l">ETH locked behind NFT</div><div class="n" id="m_locked">-</div></div>
         <div class="card"><div class="l">Selection speed</div><div class="n" id="m_speed">-</div></div>
         <div class="card"><div class="l">Modeled acquisitions before selection</div><div class="n" id="m_acqs">-</div></div>
-        <div class="card"><div class="l">Expected hold life</div><div class="n" id="m_life">-</div></div>
         <div class="card"><div class="l">Bid payout if selected</div><div class="n" id="m_payout">-</div></div>
         <div class="card hero wide"><div class="l">Modeled net carry / locked ETH</div><div class="n" id="m_edge">-</div></div>
       </div>
@@ -132,11 +137,11 @@
         <div class="panel">
           <div class="k">What the chart shows</div>
           <div class="chartcopy">
-            <b>Gray:</b> selection speed vs a 1 ETH deposit.<br>
+            <b>Gray:</b> selection speed vs 1x backing.<br>
             <b>Purple:</b> modeled carry on locked ETH.<br><br>
-            Too thin, and the position churns before fees compound. Too heavy, and idle capital eats the trade. A purple jump at high backing is the crown threshold turning on.
+            Thin backing turns faster, but may not live long enough to earn. Heavy backing gives the position more room, but idle ETH starts eating the trade.
           </div>
-          <div class="chartwrap"><canvas id="houseChart" role="img" aria-label="Selection speed and modeled return as ETH backing changes."></canvas></div>
+          <div class="chartwrap"><canvas id="houseChart" role="img" aria-label="Selection speed and modeled return as backing multiple changes."></canvas></div>
           <div class="legend" style="margin-top:12px">
             <span><i style="background:#94a3b8"></i>selection speed</span>
             <span><i style="background:#6c42eb"></i>modeled return</span>
@@ -163,7 +168,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 (function(){
-  const P={backing:2.0,activity:14,crowding:24,regime:"cold"};
+  const P={nftPow:0,multiple:1.0,activity:14,crowding:24,regime:"cold"};
 
   const ACQ_SURCHARGE=0.10;
   const PROTOCOL_ACQ_CUT=0.01;
@@ -172,17 +177,16 @@
   const BID_PAYOUT_SHARE=0.85;
 
   const REGIMES={
-    cold:{activity:8,crowding:18,fairValue:0.55,reward:0.00045,resetCost:0.12},
-    base:{activity:14,crowding:24,fairValue:0.65,reward:0.00075,resetCost:0.11},
-    hot:{activity:24,crowding:34,fairValue:0.8,reward:0.00105,resetCost:0.10}
+    cold:{activity:8,crowding:18,rewardBase:0.00045,resetPct:0.05},
+    base:{activity:14,crowding:24,rewardBase:0.00075,resetPct:0.04},
+    hot:{activity:24,crowding:34,rewardBase:0.00105,resetPct:0.035}
   };
 
   let chart;
 
-  const fmtEth=v=>v.toFixed(2)+" ETH";
+  const fmtEth=v=>v<0.01?Number(v.toFixed(5))+" ETH":v.toFixed(2)+" ETH";
   const fmtPct=v=>v.toFixed(1)+"%";
   const fmtX=v=>v.toFixed(2)+"x";
-  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 
   function syncRegime(){
     const r=REGIMES[P.regime];
@@ -192,16 +196,17 @@
     document.getElementById("crowding").value=r.crowding;
   }
 
-  function fairValueRefEth(){ return REGIMES[P.regime].fairValue; }
-  function rewardPerDayEth(){ return REGIMES[P.regime].reward; }
-  function resetCostEth(){ return REGIMES[P.regime].resetCost; }
+  function nftValueEth(){ return Math.pow(10,P.nftPow); }
+  function backingEth(mult=P.multiple){ return nftValueEth()*mult; }
+  function rewardPerDayEth(){ return REGIMES[P.regime].rewardBase*Math.sqrt(nftValueEth()); }
+  function resetCostEth(){ return nftValueEth()*REGIMES[P.regime].resetPct; }
 
   function activePositions(){
     return Math.round(48 + P.crowding*4.2);
   }
 
-  function crownLineEth(){
-    return 1.1 + P.crowding*0.08;
+  function crownLineMultiple(){
+    return 1.0 + P.crowding*0.025;
   }
 
   function selectionProb(backing){
@@ -218,7 +223,7 @@
   }
 
   function acquisitionFeeEth(){
-    return fairValueRefEth()*ACQ_SURCHARGE;
+    return nftValueEth()*ACQ_SURCHARGE;
   }
 
   function equalSharePerAcquisition(){
@@ -226,31 +231,32 @@
     return fee*(1-PROTOCOL_ACQ_CUT-CROWN_TITHE)/activePositions();
   }
 
-  function isCrown(backing){
-    return backing>=crownLineEth()*CROWN_THRESHOLD;
+  function isCrown(mult){
+    return mult>=crownLineMultiple()*CROWN_THRESHOLD;
   }
 
-  function crownSharePerAcquisition(backing){
-    return isCrown(backing)?acquisitionFeeEth()*CROWN_TITHE:0;
+  function crownSharePerAcquisition(mult){
+    return isCrown(mult)?acquisitionFeeEth()*CROWN_TITHE:0;
   }
 
-  function metrics(backing){
+  function metrics(mult){
+    const backing=backingEth(mult);
     const prob=selectionProb(backing);
     const acqs=expectedAcquisitions(backing);
     const days=expectedDays(backing);
     const feeIncome=acqs*equalSharePerAcquisition();
-    const crownIncome=acqs*crownSharePerAcquisition(backing);
+    const crownIncome=acqs*crownSharePerAcquisition(mult);
     const rewardIncome=days*rewardPerDayEth();
     const gross=feeIncome+crownIncome+rewardIncome;
     const net=gross-resetCostEth();
     const edgePct=(net/backing)*100;
     const bidPayout=backing*BID_PAYOUT_SHARE;
-    const speedIdx=(prob/selectionProb(1))*100;
-    return {prob,acqs,days,feeIncome,crownIncome,rewardIncome,gross,net,edgePct,bidPayout,speedIdx};
+    const speedIdx=(prob/selectionProb(backingEth(1)))*100;
+    return {backing,prob,acqs,days,feeIncome,crownIncome,rewardIncome,gross,net,edgePct,bidPayout,speedIdx};
   }
 
   function verdict(m){
-    if(m.edgePct>=6 && m.acqs>=18 && m.acqs<=90){
+    if(m.edgePct>=6 && m.acqs>=18 && m.acqs<=120){
       return {
         cls:"green",
         pill:"balanced",
@@ -266,7 +272,7 @@
         body:"Low backing makes the position easier to draw, which is good for throughput but rough for the house. The NFT keeps getting recycled before fees and rewards have much time to stack."
       };
     }
-    if(m.acqs>90 || m.days>10){
+    if(m.acqs>120 || m.days>14){
       return {
         cls:m.edgePct>=0?"amber":"red",
         pill:"too heavy",
@@ -284,7 +290,7 @@
 
   function xSeries(){
     const xs=[];
-    for(let x=0.5;x<=5.001;x+=0.05) xs.push(Number(x.toFixed(2)));
+    for(let x=0.1;x<=5.001;x+=0.05) xs.push(Number(x.toFixed(2)));
     return xs;
   }
 
@@ -313,7 +319,7 @@
           },
           {
             type:"scatter",
-            data:[{x:P.backing,y:metrics(P.backing).speedIdx}],
+            data:[{x:P.multiple,y:metrics(P.multiple).speedIdx}],
             backgroundColor:"#94a3b8",
             borderColor:"#94a3b8",
             pointRadius:4,
@@ -321,7 +327,7 @@
           },
           {
             type:"scatter",
-            data:[{x:P.backing,y:metrics(P.backing).edgePct}],
+            data:[{x:P.multiple,y:metrics(P.multiple).edgePct}],
             backgroundColor:"#6c42eb",
             borderColor:"#6c42eb",
             pointRadius:5,
@@ -337,15 +343,15 @@
         scales:{
           x:{
             type:"linear",
-            min:0.5,
+            min:0.1,
             max:5,
-            title:{display:true,text:"ETH backing per NFT (display range)",color:"#8b8f99",font:{size:11}},
+            title:{display:true,text:"backing multiple vs NFT value",color:"#8b8f99",font:{size:11}},
             ticks:{color:"#8b8f99",font:{family:"IBM Plex Mono",size:10},callback:v=>v.toFixed(1)},
             grid:{color:"#eef0f3"}
           },
           y:{
             position:"left",
-            title:{display:true,text:"selection speed vs 1 ETH",color:"#8b8f99",font:{size:11}},
+            title:{display:true,text:"selection speed vs 1x backing",color:"#8b8f99",font:{size:11}},
             ticks:{color:"#8b8f99",font:{family:"IBM Plex Mono",size:10},callback:v=>Math.round(v)+"%"},
             grid:{color:"#eef0f3"}
           },
@@ -362,22 +368,24 @@
 
   function updateChart(){
     const xs=xSeries();
-    const m=metrics(P.backing);
+    const m=metrics(P.multiple);
     chart.data.datasets[0].data=xs.map(x=>({x,y:metrics(x).speedIdx}));
     chart.data.datasets[1].data=xs.map(x=>({x,y:metrics(x).edgePct}));
-    chart.data.datasets[2].data=[{x:P.backing,y:m.speedIdx}];
-    chart.data.datasets[3].data=[{x:P.backing,y:m.edgePct}];
+    chart.data.datasets[2].data=[{x:P.multiple,y:m.speedIdx}];
+    chart.data.datasets[3].data=[{x:P.multiple,y:m.edgePct}];
     chart.update();
   }
 
   function refresh(){
-    const m=metrics(P.backing);
-    document.getElementById("backing_v").textContent=P.backing.toFixed(2);
+    const m=metrics(P.multiple);
+    document.getElementById("nft_value_v").textContent=fmtEth(nftValueEth()).replace(" ETH","");
+    document.getElementById("multiple_v").textContent=P.multiple.toFixed(2);
+    document.getElementById("backing_v").textContent=fmtEth(m.backing).replace(" ETH","");
     document.getElementById("activity_v").textContent=P.activity.toFixed(0);
     document.getElementById("crowding_v").textContent=P.crowding.toFixed(0);
+    document.getElementById("m_locked").textContent=fmtEth(m.backing);
     document.getElementById("m_speed").textContent=fmtX(m.speedIdx/100);
     document.getElementById("m_acqs").textContent=m.acqs.toFixed(0);
-    document.getElementById("m_life").textContent=m.days.toFixed(1)+" d";
     document.getElementById("m_payout").textContent=fmtEth(m.bidPayout);
     document.getElementById("m_edge").textContent=fmtPct(m.edgePct);
 
@@ -389,8 +397,14 @@
     pill.className="pill "+v.cls;
   }
 
-  document.getElementById("backing").addEventListener("input",e=>{
-    P.backing=parseFloat(e.target.value);
+  document.getElementById("nft_value").addEventListener("input",e=>{
+    P.nftPow=parseFloat(e.target.value);
+    refresh();
+    updateChart();
+  });
+
+  document.getElementById("multiple").addEventListener("input",e=>{
+    P.multiple=parseFloat(e.target.value);
     refresh();
     updateChart();
   });
