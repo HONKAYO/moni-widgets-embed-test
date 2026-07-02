@@ -14,17 +14,17 @@
   #rcw .hd{padding:20px 24px 14px;border:1px solid var(--line);border-bottom:0;background:var(--bg)}
   #rcw .kick{font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
   #rcw h2{margin:10px 0 8px;font:700 24px/1.12 'Geist',system-ui,sans-serif;letter-spacing:-.025em;color:var(--text)}
-  #rcw .sub{margin:0;color:var(--muted);font-size:13px;max-width:70ch}
+  #rcw .sub{display:none}
   #rcw .shell{border:1px solid var(--line);background:var(--bg)}
-  #rcw .tabs{display:flex;gap:7px;flex-wrap:wrap;padding:14px 24px;border-bottom:1px solid var(--line)}
+  #rcw .tabs{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
   #rcw .tabs button{font:500 12.5px 'Geist',system-ui,sans-serif;padding:7px 13px;border:1px solid var(--line);background:var(--bg);color:var(--body);cursor:pointer;transition:.15s}
   #rcw .tabs button:hover{border-color:var(--accent);color:var(--accent)}
   #rcw .tabs button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
   #rcw .tag{display:inline-flex;align-items:center;margin-left:7px;padding:2px 6px;border:1px solid #6c42eb55;background:var(--accent-soft);font:600 9px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);vertical-align:middle}
   #rcw .boards{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--line)}
-  #rcw .board{padding:18px 20px;border-right:1px solid var(--line);background:var(--soft)}
+  #rcw .board{padding:18px 20px;border-right:1px solid var(--line);background:var(--soft);display:flex;flex-direction:column}
   #rcw .board:last-child{border-right:0;background:var(--bg)}
-  #rcw .boardHead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}
+  #rcw .boardHead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px;min-height:76px}
   #rcw .label{font:600 10px 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
   #rcw .name{font:700 25px/1.05 'Geist',system-ui,sans-serif;color:var(--text);letter-spacing:-.025em}
   #rcw .big{font:700 30px/1 'Geist',system-ui,sans-serif;color:var(--accent);letter-spacing:-.035em;text-align:right;white-space:nowrap}
@@ -38,14 +38,9 @@
   #rcw .segrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center}
   #rcw .segrow span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   #rcw .segrow span:last-child{font:600 11.5px 'IBM Plex Mono',monospace;color:var(--text);white-space:nowrap}
-  #rcw .read{padding:14px 24px;display:grid;grid-template-columns:minmax(0,1fr) minmax(170px,.35fr);gap:14px;align-items:center}
-  #rcw .read p{margin:0;font-size:13px;color:var(--body)}
-  #rcw .ratio{border:1px solid #6c42eb44;background:var(--accent-soft);padding:11px 13px}
-  #rcw .ratio .n{font:700 25px/1 'Geist',system-ui,sans-serif;color:var(--accent);letter-spacing:-.03em;margin-bottom:5px}
-  #rcw .ratio .s{font-size:11.5px;color:var(--body)}
   #rcw .ft{padding:11px 24px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-  @media(max-width:620px){#rcw .boards,#rcw .read{grid-template-columns:1fr}#rcw .board{border-right:0;border-bottom:1px solid var(--line)}#rcw .board:last-child{border-bottom:0}}
-  @media(max-width:520px){#rcw .hd,#rcw .tabs,#rcw .read,#rcw .ft{padding-left:18px;padding-right:18px}#rcw .board{padding-left:18px;padding-right:18px}#rcw h2{font-size:22px}#rcw .boardHead{display:block}#rcw .big{text-align:left;margin-top:9px}#rcw th,#rcw td{display:block;width:100%}#rcw th{border-bottom:0;padding-bottom:3px}#rcw td{padding-top:3px}}
+  @media(max-width:520px){#rcw .hd,#rcw .ft{padding-left:18px;padding-right:18px}#rcw .board{padding-left:16px;padding-right:16px}#rcw h2{font-size:22px}#rcw .big{font-size:25px}#rcw th,#rcw td{padding-left:9px;padding-right:9px}}
+  @media(max-width:420px){#rcw .boards{grid-template-columns:1fr}#rcw .board{border-right:0;border-bottom:1px solid var(--line)}#rcw .board:last-child{border-bottom:0}#rcw .boardHead{display:block;min-height:0}#rcw .big{text-align:left;margin-top:9px}#rcw th,#rcw td{display:block;width:100%}#rcw th{border-bottom:0;padding-bottom:3px}#rcw td{padding-top:3px}}
 </style>
 </head>
 <body>
@@ -53,10 +48,8 @@
   <div class="hd">
     <div class="kick">Robinhood Chain / network benchmark</div>
     <h2>Robinhood Chain, pinned against the networks it has to measure up to.</h2>
-    <p class="sub">Left side stays fixed. Switch the right side to see whether Robinhood Chain is being compared to the target chain, the liquidity base, the retail-native chain, or the new EVM benchmark.</p>
   </div>
   <div class="shell">
-    <div class="tabs" id="tabs"></div>
     <div class="boards">
       <div class="board">
         <div class="boardHead">
@@ -75,7 +68,7 @@
       </div>
       <div class="board">
         <div class="boardHead">
-          <div><div class="label">Compare to</div><div class="name"><span id="c_name">Base</span><span class="tag" id="c_tag">target</span></div></div>
+          <div><div class="label">Compare to</div><div class="name"><span id="c_name">Base</span><span class="tag" id="c_tag">target</span></div><div class="tabs" id="tabs"></div></div>
           <div class="big" id="c_tvl">$4.26B</div>
         </div>
         <table>
@@ -88,10 +81,6 @@
           <tr><th>Read</th><td id="row_read">Base is the practical target: exchange distribution turned into real onchain behavior.</td></tr>
         </table>
       </div>
-    </div>
-    <div class="read">
-      <p id="summary">Base is not the exact same lane, but it is the closest live benchmark for what a distribution-led chain has to become.</p>
-      <div class="ratio"><div class="n" id="ratio">0.4%</div><div class="s" id="ratioText">Robinhood TVL as a share of Base.</div></div>
     </div>
     <div class="ft"><span>Data: DefiLlama chain + protocol APIs, retrieved 2 Jul 2026. Segment TVL can overlap across categories.</span><span>research.moni.ai</span></div>
   </div>
@@ -122,9 +111,6 @@
     document.getElementById('row_protocols').textContent=d.protocols;
     document.getElementById('row_lane').textContent=d.lane;
     document.getElementById('row_read').textContent=d.read;
-    document.getElementById('summary').textContent=d.summary;
-    document.getElementById('ratio').textContent=pct(RH_TVL,d.tvl);
-    document.getElementById('ratioText').textContent='Robinhood TVL as a share of '+name+'.';
     document.getElementById('row_segments').innerHTML=d.segments.map(x=>'<div class="segrow"><span>'+x[0]+'</span><span>'+x[1]+'</span></div>').join('');
   }
   select('Base');
