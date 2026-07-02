@@ -27,10 +27,13 @@
   #ecw .filters button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
   #ecw .filters button .c{font:600 11px 'IBM Plex Mono',monospace;opacity:.7;margin-left:5px}
   #ecw .grid{padding:14px 26px 8px;display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-  #ecw .chip{border:1px solid var(--line);background:var(--bg);padding:9px 11px;display:flex;flex-direction:column;gap:2px;transition:.12s}
-  #ecw .chip:hover{border-color:var(--accent)}
+  #ecw a.chip{border:1px solid var(--line);background:var(--bg);padding:9px 11px;display:flex;flex-direction:column;gap:2px;transition:.12s;text-decoration:none;cursor:pointer}
+  #ecw a.chip:hover{border-color:var(--accent)}
+  #ecw .chip .ext{opacity:0;color:var(--accent);font:600 11px 'IBM Plex Mono',monospace;margin-left:auto;transition:.12s}
+  #ecw a.chip:hover .ext{opacity:.9}
   #ecw .chip.star{background:var(--accent-soft);border-color:#6c42eb44}
   #ecw .chip .nm{font:600 13px 'Geist',system-ui,sans-serif;color:var(--text);display:flex;align-items:center;gap:5px}
+  #ecw a.chip{color:inherit}
   #ecw .chip .nm .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex:none}
   #ecw .chip .ct{font:500 10px 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
   #ecw .chip.star .ct{color:var(--accent)}
@@ -59,41 +62,108 @@
 <script>
 (function(){
   const D=[
-    // Trading / DEX / MM
-    ["Uniswap","Trading",1],["1inch","Trading",0],["0x","Trading",0],["dYdX / Arcus","Trading",1,"stocks + perps, up to 50x"],
-    ["Lighter","Trading",0],["Rialto","Trading",0],["Camelot","Trading",1,"Sheriff on RH Chain"],["Ekubo","Trading",0],
-    ["Arrakis","Trading",0],["Native","Trading",0],["Cube Exchange","Trading",0],["Doppler","Trading",1,"launch any tokenized market"],
-    ["Meridian","Trading",1,"prediction markets + derivs"],["Virtuals","Trading",1,"AI-agent economy"],["Bankr.bot","Trading",1,"agents that self-fund"],
-    ["Glider","Trading",0],["Bitstamp","Trading",0],["IMC","Trading",0,"market maker"],["Flow Traders","Trading",0,"market maker"],
-    ["Tokka Labs","Trading",0,"market maker"],["Mobula","Trading",0],["OpenSea","Trading",0],
-    // Lending / Yield
-    ["Morpho","Lending",1,"powers Robinhood Earn ~7%"],["Spark","Lending",0],["Steakhouse","Lending",0],["Maple","Lending",0],
-    ["Ethena","Lending",0],["EtherFi","Lending",0],["Lido","Lending",0],["Midas","Lending",0],["Merkl","Lending",0],
-    ["Metalend","Lending",0],["Tenor","Lending",0],["Tilt Protocol","Lending",0],["Vaults.fyi","Lending",0],
-    ["Yield.xyz","Lending",0],["Kiln","Lending",0],
-    // Stable / RWA issuers
-    ["Circle","RWA · Stable",0],["Paxos","RWA · Stable",0],["Eco","RWA · Stable",0],["RWA.xyz","RWA · Stable",0],
-    // Bridge / interop
-    ["LayerZero","Bridge",0],["Across","Bridge",0],["Hyperlane","Bridge",0],["Relay","Bridge",0],["LI.FI","Bridge",0],["Polymer","Bridge",0],
-    // Wallets
-    ["MetaMask","Wallet",0],["Ledger","Wallet",0],["Trust Wallet","Wallet",0],["Rabby","Wallet",0],["SafePal","Wallet",0],
-    ["TokenPocket","Wallet",0],["imToken","Wallet",0],["Bitget Wallet","Wallet",0],["Zerion","Wallet",0],["GK8","Wallet",0],
-    // Custody / infra / AA
-    ["BitGo","Infra · Custody",0],["Fireblocks","Infra · Custody",0],["Safe","Infra · Custody",0],["Turnkey","Infra · Custody",0],
-    ["Utila","Infra · Custody",0],["DFNS","Infra · Custody",0],["Fordefi","Infra · Custody",0],["Privy","Infra · Custody",0],
-    ["Pimlico","Infra · Custody",0],["Crossmint","Infra · Custody",0],["Alchemy","Infra · Custody",0],["QuickNode","Infra · Custody",0],
-    ["Blockdaemon","Infra · Custody",0],["dRPC","Infra · Custody",0],["Validation Cloud","Infra · Custody",0],["P2P","Infra · Custody",0],
-    ["Tenderly","Infra · Custody",0],["Blockscout","Infra · Custody",0],["Offchain","Infra · Custody",0],["Chainlink","Infra · Custody",0,"oracles"],["Arbitrum","Infra · Custody",0,"the stack"],
-    // Data / analytics
-    ["DefiLlama","Data",0],["Dune","Data",0],["Token Terminal","Data",0],["L2Beat","Data",0],["CoinGecko","Data",0],
-    ["Allium","Data",0],["Goldsky","Data",0],["Codex","Data",0],["Subsquid","Data",0],["Pinax","Data",0],
-    ["DeBank","Data",0],["Tres Finance","Data",0],["Entropy","Data",0],
-    // Compliance / security
-    ["TRM Labs","Compliance",0],["Chainalysis","Compliance",0],["Elliptic","Compliance",0],["Blockaid","Compliance",0],["CipherOwl","Compliance",0],
-    // Onramp / payments
-    ["MoonPay","Onramp",0],["Mercuryo","Onramp",0],["Fun","Onramp",0],["Unifold","Onramp",0]
+    ["Uniswap","Trading",1,"","https://uniswap.org"],
+    ["1inch","Trading",0,"","https://1inch.io"],
+    ["0x","Trading",0,"","https://0x.org"],
+    ["dYdX / Arcus","Trading",1,"stocks + perps, up to 50x","https://www.dydx.xyz"],
+    ["Lighter","Trading",0,"","https://lighter.xyz"],
+    ["Rialto","Trading",0,"","https://www.rialto.xyz/"],
+    ["Camelot","Trading",1,"Sheriff on RH Chain","https://camelot.exchange"],
+    ["Ekubo","Trading",0,"","https://ekubo.org"],
+    ["Arrakis","Trading",0,"","https://arrakis.finance"],
+    ["Native","Trading",0,"","https://native.org"],
+    ["Cube Exchange","Trading",0,"","https://www.cube.exchange"],
+    ["Doppler","Trading",1,"launch any tokenized market","https://www.doppler.lol"],
+    ["Meridian","Trading",1,"prediction markets + derivs","https://meridian.xyz"],
+    ["Virtuals","Trading",1,"AI-agent economy","https://www.virtuals.io"],
+    ["Bankr.bot","Trading",1,"agents that self-fund","https://bankr.bot"],
+    ["Glider","Trading",0,"","https://glider.fi"],
+    ["Bitstamp","Trading",0,"","https://www.bitstamp.net"],
+    ["IMC","Trading",0,"market maker","https://www.imc.com"],
+    ["Flow Traders","Trading",0,"market maker","https://www.flowtraders.com"],
+    ["Tokka Labs","Trading",0,"market maker","https://tokkalabs.com"],
+    ["Mobula","Trading",0,"","https://mobula.io"],
+    ["OpenSea","Trading",0,"","https://opensea.io"],
+    ["Morpho","Lending",1,"powers Robinhood Earn ~7%","https://morpho.org"],
+    ["Spark","Lending",0,"","https://spark.fi"],
+    ["Steakhouse","Lending",0,"","https://www.steakhouse.financial"],
+    ["Maple","Lending",0,"","https://maple.finance"],
+    ["Ethena","Lending",0,"","https://ethena.fi"],
+    ["EtherFi","Lending",0,"","https://ether.fi"],
+    ["Lido","Lending",0,"","https://lido.fi"],
+    ["Midas","Lending",0,"","https://midas.app"],
+    ["Merkl","Lending",0,"","https://merkl.xyz"],
+    ["Metalend","Lending",0,"","https://metalend.tech"],
+    ["Tenor","Lending",0,"","https://tenor.finance"],
+    ["Tilt Protocol","Lending",0,"","https://tiltprotocol.com"],
+    ["Vaults.fyi","Lending",0,"","https://vaults.fyi"],
+    ["Yield.xyz","Lending",0,"","https://yield.xyz"],
+    ["Kiln","Lending",0,"","https://www.kiln.fi"],
+    ["Circle","RWA / Stable",0,"","https://www.circle.com"],
+    ["Paxos","RWA / Stable",0,"","https://www.paxos.com"],
+    ["Eco","RWA / Stable",0,"","https://eco.com"],
+    ["RWA.xyz","RWA / Stable",0,"","https://www.rwa.xyz"],
+    ["LayerZero","Bridge",0,"","https://layerzero.network"],
+    ["Across","Bridge",0,"","https://across.to"],
+    ["Hyperlane","Bridge",0,"","https://www.hyperlane.xyz"],
+    ["Relay","Bridge",0,"","https://relay.link"],
+    ["LI.FI","Bridge",0,"","https://li.fi"],
+    ["Polymer","Bridge",0,"","https://polymerlabs.org"],
+    ["MetaMask","Wallet",0,"","https://metamask.io"],
+    ["Ledger","Wallet",0,"","https://www.ledger.com"],
+    ["Trust Wallet","Wallet",0,"","https://trustwallet.com"],
+    ["Rabby","Wallet",0,"","https://rabby.io"],
+    ["SafePal","Wallet",0,"","https://www.safepal.com"],
+    ["TokenPocket","Wallet",0,"","https://www.tokenpocket.pro"],
+    ["imToken","Wallet",0,"","https://token.im"],
+    ["Bitget Wallet","Wallet",0,"","https://web3.bitget.com/en"],
+    ["Zerion","Wallet",0,"","https://zerion.io"],
+    ["GK8","Wallet",0,"","https://www.gk8.io"],
+    ["BitGo","Infra / Custody",0,"","https://www.bitgo.com"],
+    ["Fireblocks","Infra / Custody",0,"","https://www.fireblocks.com"],
+    ["Safe","Infra / Custody",0,"","https://safe.global"],
+    ["Turnkey","Infra / Custody",0,"","https://www.turnkey.com"],
+    ["Utila","Infra / Custody",0,"","https://utila.io"],
+    ["DFNS","Infra / Custody",0,"","https://www.dfns.co"],
+    ["Fordefi","Infra / Custody",0,"","https://fordefi.com"],
+    ["Privy","Infra / Custody",0,"","https://www.privy.io"],
+    ["Pimlico","Infra / Custody",0,"","https://www.pimlico.io"],
+    ["Crossmint","Infra / Custody",0,"","https://www.crossmint.com"],
+    ["Alchemy","Infra / Custody",0,"","https://www.alchemy.com"],
+    ["QuickNode","Infra / Custody",0,"","https://www.quicknode.com"],
+    ["Blockdaemon","Infra / Custody",0,"","https://www.blockdaemon.com"],
+    ["dRPC","Infra / Custody",0,"","https://drpc.org"],
+    ["Validation Cloud","Infra / Custody",0,"","https://www.validationcloud.io"],
+    ["P2P","Infra / Custody",0,"","https://www.p2p.org"],
+    ["Tenderly","Infra / Custody",0,"","https://tenderly.co"],
+    ["Blockscout","Infra / Custody",0,"","https://www.blockscout.com"],
+    ["Offchain","Infra / Custody",0,"","https://www.offchain.io/"],
+    ["Chainlink","Infra / Custody",0,"oracles","https://chain.link"],
+    ["Arbitrum","Infra / Custody",0,"the stack","https://arbitrum.io"],
+    ["DefiLlama","Data",0,"","https://defillama.com"],
+    ["Dune","Data",0,"","https://dune.com"],
+    ["Token Terminal","Data",0,"","https://tokenterminal.com"],
+    ["L2Beat","Data",0,"","https://l2beat.com"],
+    ["CoinGecko","Data",0,"","https://www.coingecko.com"],
+    ["Allium","Data",0,"","https://www.allium.so"],
+    ["Goldsky","Data",0,"","https://goldsky.com"],
+    ["Codex","Data",0,"","https://www.codex.io"],
+    ["Subsquid","Data",0,"","https://sqd.ai"],
+    ["Pinax","Data",0,"","https://pinax.network"],
+    ["DeBank","Data",0,"","https://debank.com"],
+    ["Tres Finance","Data",0,"","https://tres.finance"],
+    ["Entropy","Data",0,"","https://entropyadvisors.com"],
+    ["TRM Labs","Compliance",0,"","https://www.trmlabs.com"],
+    ["Chainalysis","Compliance",0,"","https://www.chainalysis.com"],
+    ["Elliptic","Compliance",0,"","https://www.elliptic.co"],
+    ["Blockaid","Compliance",0,"","https://www.blockaid.io"],
+    ["CipherOwl","Compliance",0,"","https://cipherowl.com"],
+    ["MoonPay","Onramp",0,"","https://www.moonpay.com"],
+    ["Mercuryo","Onramp",0,"","https://mercuryo.io"],
+    ["Fun","Onramp",0,"","https://fun.xyz"],
+    ["Unifold","Onramp",0,"","https://unifold.io"]
   ];
-  const cats=["All","Trading","Lending","RWA · Stable","Bridge","Wallet","Infra · Custody","Data","Compliance","Onramp"];
+  const cats=["All","Trading","Lending","RWA / Stable","Bridge","Wallet","Infra / Custody","Data","Compliance","Onramp"];
   const counts={};D.forEach(d=>counts[d[1]]=(counts[d[1]]||0)+1);
   let active="All", q="";
   const fEl=document.getElementById('filters');
@@ -113,8 +183,9 @@
     let stars=0;
     list.forEach(d=>{
       const star=d[2]===1;if(star)stars++;
-      const el=document.createElement('div');el.className='chip'+(star?' star':'');
-      el.innerHTML='<div class="nm">'+(star?'<span class="dot"></span>':'')+d[0]+'</div><div class="ct">'+(d[3]?d[3]:d[1])+'</div>';
+      const el=document.createElement('a');el.className='chip'+(star?' star':'');
+      if(d[4]){el.href=d[4];el.target='_blank';el.rel='noopener noreferrer';}
+      el.innerHTML='<div class="nm">'+(star?'<span class="dot"></span>':'')+d[0]+'<span class="ext">↗</span></div><div class="ct">'+(d[3]?d[3]:d[1])+'</div>';
       grid.appendChild(el);
     });
     document.getElementById('shown').textContent=list.length;
