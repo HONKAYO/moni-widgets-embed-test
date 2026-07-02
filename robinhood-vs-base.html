@@ -3,128 +3,135 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Robinhood Chain vs Base · two-pool TVL model</title>
+<title>Robinhood Chain vs Base - conversion model</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
   html,body{margin:0;background:transparent}
-  body{padding:16px}
-  #lpw{--bg:#ffffff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#6c42eb14;--slate:#94a3b8;--emerald:#0fa968;
-    font-family:'Geist',system-ui,sans-serif;color:var(--body);background:var(--bg);
-    border:1px solid var(--line);width:100%;max-width:none;margin:0 auto;overflow:hidden;line-height:1.5}
+  body{padding:0}
+  #lpw{--bg:#ffffff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#6c42eb14;--slate:#94a3b8;--pale:#d8cfff;
+    font-family:'Geist',system-ui,sans-serif;color:var(--body);background:var(--bg);width:100%;max-width:none;margin:0;overflow:hidden;line-height:1.5}
   #lpw *{box-sizing:border-box;min-width:0}
-  #lpw .hd{padding:22px 26px 16px;border-bottom:1px solid var(--line)}
+  #lpw .hd{padding:22px 26px 16px;border:1px solid var(--line);border-bottom:0;background:var(--bg)}
   #lpw .kick{font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
-  #lpw h2{margin:11px 0 8px;font:700 25px/1.13 'Geist',system-ui,sans-serif;letter-spacing:-.025em;color:var(--text)}
-  #lpw .sub{margin:0;color:var(--muted);font-size:13.5px;max-width:62ch}
-  #lpw .spec{width:100%;border-collapse:collapse;font-size:13px}
-  #lpw .spec th,#lpw .spec td{border-bottom:1px solid var(--line);padding:9px 26px;text-align:left;vertical-align:top}
-  #lpw .spec thead th{font:600 10.5px 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding-top:13px;padding-bottom:9px}
-  #lpw .spec thead th.rh{color:var(--accent)}
-  #lpw .spec td.k{color:var(--muted);width:32%;font-size:12.5px}
-  #lpw .spec td.rh{color:var(--text);font-weight:600}
-  #lpw .spec td.bs{color:var(--body)}
-  #lpw .calc{padding:20px 26px 6px}
-  #lpw .calc h3{margin:0 0 4px;font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
-  #lpw .calc .lead{margin:0 0 14px;font-size:13px;color:var(--body);max-width:64ch}
-  #lpw .pool{border:1px solid var(--line);padding:14px 15px;margin-bottom:12px;background:var(--soft)}
-  #lpw .pool .ph{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:11px}
-  #lpw .pool .ph .t{font:600 12.5px 'Geist',system-ui,sans-serif;color:var(--text)}
-  #lpw .pool .ph .t small{display:block;font:500 11px 'Geist',system-ui,sans-serif;color:var(--muted);margin-top:2px}
-  #lpw .pool .ph .out{font:600 18px 'Geist',system-ui,sans-serif;color:var(--accent);white-space:nowrap}
-  #lpw .row{margin-bottom:12px}
-  #lpw .row:last-child{margin-bottom:2px}
-  #lpw .row .lab{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;color:var(--muted);margin-bottom:7px}
-  #lpw .row .lab b{font:600 12.5px 'IBM Plex Mono',monospace;color:var(--text)}
-  #lpw input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:3px;background:var(--line);outline:none;cursor:pointer}
-  #lpw input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 0 0 1px var(--accent)}
-  #lpw input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 0 0 1px var(--accent)}
-  #lpw .presets{display:flex;gap:7px;margin-bottom:16px;flex-wrap:wrap}
+  #lpw h2{margin:11px 0 8px;font:700 25px/1.12 'Geist',system-ui,sans-serif;letter-spacing:-.025em;color:var(--text)}
+  #lpw .sub{margin:0;color:var(--muted);font-size:13.5px;max-width:65ch}
+  #lpw .shell{border:1px solid var(--line);background:var(--bg)}
+  #lpw .facts{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line)}
+  #lpw .fact{padding:14px 18px;border-right:1px solid var(--line);background:var(--soft)}
+  #lpw .fact:last-child{border-right:0}
+  #lpw .fact .l{font:600 10.5px 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+  #lpw .fact .v{font:700 22px/1.05 'Geist',system-ui,sans-serif;color:var(--text);letter-spacing:-.02em}
+  #lpw .fact .s{margin-top:5px;font-size:12px;color:var(--muted)}
+  #lpw .calc{padding:18px 26px 8px}
+  #lpw .calc h3{margin:0 0 5px;font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  #lpw .lead{margin:0 0 14px;font-size:13px;color:var(--body);max-width:64ch}
+  #lpw .presets{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap}
   #lpw .presets button{font:500 12.5px 'Geist',system-ui,sans-serif;padding:6px 14px;border:1px solid var(--line);background:var(--bg);color:var(--body);cursor:pointer;transition:.15s}
   #lpw .presets button:hover{border-color:var(--accent);color:var(--accent)}
   #lpw .presets button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
-  #lpw .hero{background:var(--accent-soft);border:1px solid #6c42eb44;padding:14px 16px;margin:2px 0 16px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
-  #lpw .hero .l{font:500 12px 'Geist',system-ui,sans-serif;color:var(--accent)}
-  #lpw .hero .n{font:600 30px 'Geist',system-ui,sans-serif;letter-spacing:-.02em;color:var(--accent)}
-  #lpw .hero .sub2{font:500 12px 'IBM Plex Mono',monospace;color:var(--accent)}
-  #lpw .bars{display:flex;flex-direction:column;gap:11px;margin-bottom:6px}
-  #lpw .bar .bl{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;margin-bottom:5px}
-  #lpw .bar .bl .nm{color:var(--text);font-weight:600}
-  #lpw .bar .bl .vl{font:600 12.5px 'IBM Plex Mono',monospace;color:var(--body)}
-  #lpw .bar .track{height:17px;background:var(--soft);border:1px solid var(--line);position:relative;overflow:hidden}
-  #lpw .bar .fill{height:100%;width:0;transition:width .35s cubic-bezier(.4,0,.2,1);display:flex}
-  #lpw .bar.rh .fill .p1{background:var(--accent)}
-  #lpw .bar.rh .fill .p2{background:#b49cf3}
-  #lpw .bar.base .fill{background:var(--slate)}
-  #lpw .bar.arb .fill{background:#c7ccd6}
-  #lpw .bar.rhnow .fill{background:#6c42eb44}
-  #lpw .legend{display:flex;gap:16px;font-size:11.5px;color:var(--muted);margin:2px 0 4px;flex-wrap:wrap}
+  #lpw .model{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,.8fr);gap:14px;align-items:start}
+  #lpw .controls{display:flex;flex-direction:column;gap:11px}
+  #lpw .control{border:1px solid var(--line);background:var(--soft);padding:13px 14px}
+  #lpw .control .top{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:8px}
+  #lpw .control .name{font:600 13px 'Geist',system-ui,sans-serif;color:var(--text)}
+  #lpw .control .val{font:600 13px 'IBM Plex Mono',monospace;color:var(--accent);white-space:nowrap}
+  #lpw .control .hint{font-size:11.5px;color:var(--muted);margin-top:8px}
+  #lpw input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:3px;background:var(--line);outline:none;cursor:pointer}
+  #lpw input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 0 0 1px var(--accent)}
+  #lpw input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 0 0 1px var(--accent)}
+  #lpw .result{border:1px solid #6c42eb44;background:var(--accent-soft);padding:16px}
+  #lpw .result .label{font:600 11px 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+  #lpw .result .num{font:700 36px/1 'Geist',system-ui,sans-serif;letter-spacing:-.035em;color:var(--accent);margin-bottom:7px}
+  #lpw .result .read{font-size:13px;color:var(--body)}
+  #lpw .result .read b{color:var(--text)}
+  #lpw .bars{padding:4px 26px 20px;display:flex;flex-direction:column;gap:11px}
+  #lpw .bar .bl{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;margin-bottom:5px;gap:10px}
+  #lpw .bar .nm{color:var(--text);font-weight:600}
+  #lpw .bar .vl{font:600 12.5px 'IBM Plex Mono',monospace;color:var(--body);white-space:nowrap}
+  #lpw .track{height:18px;background:var(--soft);border:1px solid var(--line);position:relative;overflow:hidden}
+  #lpw .fill{height:100%;width:0;transition:width .3s cubic-bezier(.4,0,.2,1);display:flex}
+  #lpw .rh .p1{background:var(--accent)}
+  #lpw .rh .p2{background:var(--pale)}
+  #lpw .base .fill{background:var(--slate)}
+  #lpw .now .fill{background:#6c42eb44}
+  #lpw .legend{padding:0 26px 14px;display:flex;gap:14px;font-size:11.5px;color:var(--muted);flex-wrap:wrap}
   #lpw .legend span{display:inline-flex;align-items:center;gap:6px}
   #lpw .legend i{width:11px;height:11px;display:inline-block}
   #lpw .ft{padding:12px 26px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-  @media(max-width:520px){#lpw .spec th,#lpw .spec td{padding-left:18px;padding-right:18px}#lpw .hd,#lpw .calc,#lpw .ft{padding-left:18px;padding-right:18px}}
+  @media(max-width:680px){#lpw .model{grid-template-columns:1fr}#lpw .facts{grid-template-columns:1fr}#lpw .fact{border-right:0;border-bottom:1px solid var(--line)}#lpw .fact:last-child{border-bottom:0}}
+  @media(max-width:520px){#lpw .hd,#lpw .calc,#lpw .bars,#lpw .legend,#lpw .ft{padding-left:18px;padding-right:18px}#lpw h2{font-size:22px}#lpw .result .num{font-size:32px}}
 </style>
 </head>
 <body>
 <div id="lpw">
   <div class="hd">
-    <div class="kick">Robinhood Chain · two-pool TVL model</div>
-    <h2>How a rounding error becomes a rival</h2>
-    <p class="sub">Robinhood Chain launched at ~$15M against Base's ~$4.3B. It won't close that gap by "converting 10% of Robinhood users" — no chain grows that way. It fills from two real pools: existing onchain capital that rotates in, and net-new retail the brokerage funnel brings that wasn't onchain before.</p>
+    <div class="kick">Robinhood Chain / TVL model</div>
+    <h2>What would make Robinhood Chain matter?</h2>
+    <p class="sub">Day-one TVL is tiny: about $15M against Base at about $4.26B. This widget asks what has to show up before the comparison stops being a joke.</p>
   </div>
 
-  <table class="spec">
-    <thead><tr><th>Metric (DefiLlama, 1 Jul 2026)</th><th class="rh">Robinhood Chain</th><th>Base</th></tr></thead>
-    <tbody>
-      <tr><td class="k">TVL</td><td class="rh">~$15M · day one</td><td class="bs">~$4.26B</td></tr>
-      <tr><td class="k">Rollup stack</td><td class="rh">Arbitrum Orbit</td><td class="bs">OP Stack · Superchain</td></tr>
-      <tr><td class="k">Lane it's chasing</td><td class="rh">Tokenized equities / RWA + retail funnel</td><td class="bs">Consumer / social / crypto-native</td></tr>
-      <tr><td class="k">Chain token</td><td class="rh">None (value → HOOD)</td><td class="bs">None (value → Coinbase)</td></tr>
-      <tr><td class="k">Ecosystem, day one</td><td class="rh">100 listed projects</td><td class="bs">Thousands (matured)</td></tr>
-    </tbody>
-  </table>
-
-  <div class="calc">
-    <h3>Where the TVL comes from</h3>
-    <p class="lead">Two <b>non-overlapping</b> pools. Pool 1 is measured in dollars of existing capital (so a Robinhood user who's already onchain isn't double-counted); Pool 2 is strictly net-new users the funnel pulls onchain for the first time.</p>
-    <div class="presets">
-      <button data-p="cons">Conservative</button>
-      <button data-p="base" class="on">Base case</button>
-      <button data-p="bull">Bull</button>
+  <div class="shell">
+    <div class="facts">
+      <div class="fact"><div class="l">Starting point</div><div class="v">$15M</div><div class="s">Robinhood Chain TVL at launch.</div></div>
+      <div class="fact"><div class="l">Benchmark</div><div class="v">$4.26B</div><div class="s">Base TVL on the same read.</div></div>
+      <div class="fact"><div class="l">Why anyone cares</div><div class="v">25M+</div><div class="s">Robinhood funded accounts.</div></div>
     </div>
 
-    <div class="pool">
-      <div class="ph"><div class="t">Pool 1 · rotation of existing onchain capital<small>Share of the ~$52B of DeFi TVL on Ethereum · Solana · BSC · Base that rotates in for tokenized-equity / RWA exposure</small></div><div class="out" id="o1">$416M</div></div>
-      <div class="row"><div class="lab"><span>Capture of major-chain DeFi capital</span><b><span id="cap_v">0.8</span>%</b></div><input type="range" id="cap" min="0.1" max="5" step="0.1" value="0.8"></div>
-    </div>
+    <div class="calc">
+      <h3>Move the two sources of capital</h3>
+      <p class="lead">Robinhood Chain can grow from two places: existing DeFi money that rotates in, and new retail money from Robinhood users who were not onchain before.</p>
+      <div class="presets">
+        <button data-p="cons">Quiet</button>
+        <button data-p="base" class="on">Reasonable</button>
+        <button data-p="bull">Aggressive</button>
+      </div>
 
-    <div class="pool">
-      <div class="ph"><div class="t">Pool 2 · net-new retail via the funnel<small>Robinhood's ~25M funded accounts — the slice that wasn't onchain before, bringing fresh capital</small></div><div class="out" id="o2">$500M</div></div>
-      <div class="row"><div class="lab"><span>Net-new users onboarded (of 25M)</span><b><span id="pct_v">2.0</span>%</b></div><input type="range" id="pct" min="0.5" max="6" step="0.1" value="2"></div>
-      <div class="row"><div class="lab"><span>Average deposit / new user</span><b>$<span id="dep_v">1,000</span></b></div><input type="range" id="dep" min="250" max="5000" step="50" value="1000"></div>
-    </div>
+      <div class="model">
+        <div class="controls">
+          <div class="control">
+            <div class="top"><span class="name">Existing DeFi money rotates in</span><span class="val"><span id="cap_v">0.8</span>%</span></div>
+            <input type="range" id="cap" min="0.1" max="5" step="0.1" value="0.8">
+            <div class="hint">Share of major-chain DeFi TVL moving over for tokenized-equity / RWA markets.</div>
+          </div>
+          <div class="control">
+            <div class="top"><span class="name">Robinhood users actually show up</span><span class="val"><span id="pct_v">2.0</span>%</span></div>
+            <input type="range" id="pct" min="0.5" max="6" step="0.1" value="2">
+            <div class="hint">New users from the brokerage funnel, not existing crypto users counted twice.</div>
+          </div>
+          <div class="control">
+            <div class="top"><span class="name">Average onchain deposit</span><span class="val">$<span id="dep_v">1,000</span></span></div>
+            <input type="range" id="dep" min="250" max="5000" step="50" value="1000">
+            <div class="hint">How much each converted user brings onto the chain.</div>
+          </div>
+        </div>
 
-    <div class="hero">
-      <span class="l">Projected Robinhood Chain TVL</span>
-      <span class="n" id="m_tvl">$916M</span>
-      <span class="sub2" id="m_rel">≈ 22% of Base</span>
+        <div class="result">
+          <div class="label">Modeled TVL</div>
+          <div class="num" id="m_tvl">$916M</div>
+          <div class="read" id="m_read">That is <b>22% of Base</b>. Still not Base, but no longer a rounding error.</div>
+        </div>
+      </div>
     </div>
 
     <div class="legend">
-      <span><i style="background:var(--accent)"></i>Pool 1 · rotated capital</span>
-      <span><i style="background:#b49cf3"></i>Pool 2 · net-new retail</span>
+      <span><i style="background:var(--accent)"></i>Existing DeFi money</span>
+      <span><i style="background:var(--pale)"></i>New Robinhood retail</span>
+      <span><i style="background:var(--slate)"></i>Base today</span>
     </div>
+
     <div class="bars">
-      <div class="bar rh"><div class="bl"><span class="nm">Robinhood Chain — projected</span><span class="vl" id="b_rh_v">$916M</span></div><div class="track"><div class="fill" id="b_rh"><span class="p1" id="b_p1" style="width:45%"></span><span class="p2" id="b_p2" style="width:55%"></span></div></div></div>
-      <div class="bar base"><div class="bl"><span class="nm">Base — today</span><span class="vl">$4.26B</span></div><div class="track"><div class="fill" id="b_base"></div></div></div>
-      <div class="bar arb"><div class="bl"><span class="nm">Arbitrum One — settlement layer</span><span class="vl">$1.22B</span></div><div class="track"><div class="fill" id="b_arb"></div></div></div>
-      <div class="bar rhnow"><div class="bl"><span class="nm">Robinhood Chain — day one</span><span class="vl">$15M</span></div><div class="track"><div class="fill" id="b_now"></div></div></div>
+      <div class="bar rh"><div class="bl"><span class="nm">Robinhood Chain - modeled</span><span class="vl" id="b_rh_v">$916M</span></div><div class="track"><div class="fill" id="b_rh"><span class="p1" id="b_p1" style="width:45%"></span><span class="p2" id="b_p2" style="width:55%"></span></div></div></div>
+      <div class="bar base"><div class="bl"><span class="nm">Base - today</span><span class="vl">$4.26B</span></div><div class="track"><div class="fill" id="b_base"></div></div></div>
+      <div class="bar now"><div class="bl"><span class="nm">Robinhood Chain - launch</span><span class="vl">$15M</span></div><div class="track"><div class="fill" id="b_now"></div></div></div>
     </div>
+
+    <div class="ft"><span>Illustrative model, not a forecast. TVL anchors: DefiLlama, 1 Jul 2026.</span><span>research.moni.ai</span></div>
   </div>
-  <div class="ft"><span>Illustrative model, not a forecast. Anchors: DefiLlama chain TVL, 1 Jul 2026 (ETH $38B · SOL $5B · BSC $4.9B · Base $4.3B).</span><span>research.moni.ai</span></div>
 </div>
+
 <script>
 (function(){
-  const POOL1=52e9, USERS=25000000, BASE=4.26e9, ARB=1.22e9, NOW=15e6;
+  const POOL1=52e9, USERS=25000000, BASE=4.26e9, NOW=15e6;
   const P={cap:0.8,pct:2,dep:1000};
   const presets={cons:{cap:0.3,pct:1,dep:500},base:{cap:0.8,pct:2,dep:1000},bull:{cap:2,pct:4,dep:2000}};
   const fmt=n=>{
@@ -136,20 +143,23 @@
   const fInt=n=>Math.round(n).toLocaleString('en-US');
   const p1=()=>POOL1*(P.cap/100);
   const p2=()=>USERS*(P.pct/100)*P.dep;
+  function read(t){
+    const pct=Math.round(t/BASE*100);
+    if(t < 250e6) return 'Still tiny next to Base. The funnel has not changed the story yet.';
+    if(t < 1e9) return 'That is <b>'+pct+'% of Base</b>. Still not Base, but no longer a rounding error.';
+    if(t < BASE) return 'That is <b>'+pct+'% of Base</b>. At this point the chain is visible on the map.';
+    return 'That is <b>'+(t/BASE).toFixed(1)+'x Base</b>. This is the version where the funnel clearly worked.';
+  }
   function refresh(){
     const a=p1(),b=p2(),t=a+b;
-    document.getElementById('o1').textContent=fmt(a);
-    document.getElementById('o2').textContent=fmt(b);
     document.getElementById('m_tvl').textContent=fmt(t);
     document.getElementById('b_rh_v').textContent=fmt(t);
-    document.getElementById('m_rel').textContent = t>=BASE ? '≈ '+(t/BASE).toFixed(1)+'× Base' : '≈ '+Math.round(t/BASE*100)+'% of Base';
+    document.getElementById('m_read').innerHTML=read(t);
     const scale=Math.max(BASE,t);
-    // split the projected bar into the two pools
     document.getElementById('b_rh').style.width=(t/scale*100)+'%';
     document.getElementById('b_p1').style.width=(t>0?a/t*100:0)+'%';
     document.getElementById('b_p2').style.width=(t>0?b/t*100:0)+'%';
     document.getElementById('b_base').style.width=(BASE/scale*100)+'%';
-    document.getElementById('b_arb').style.width=(ARB/scale*100)+'%';
     document.getElementById('b_now').style.width=Math.max(0.4,NOW/scale*100)+'%';
   }
   function sync(){
