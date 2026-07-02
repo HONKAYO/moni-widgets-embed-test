@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robinhood Chain vs Base · funnel model</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  html,body{margin:0;background:transparent}
+  body{padding:16px}
+  #lpw{--bg:#ffffff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#6c42eb14;--slate:#94a3b8;--emerald:#0fa968;
+    font-family:'Geist',system-ui,sans-serif;color:var(--body);background:var(--bg);
+    border:1px solid var(--line);width:100%;max-width:none;margin:0 auto;overflow:hidden;line-height:1.5}
+  #lpw *{box-sizing:border-box;min-width:0}
+  #lpw .hd{padding:22px 26px 16px;border-bottom:1px solid var(--line)}
+  #lpw .kick{font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  #lpw h2{margin:11px 0 8px;font:700 25px/1.13 'Geist',system-ui,sans-serif;letter-spacing:-.025em;color:var(--text)}
+  #lpw .sub{margin:0;color:var(--muted);font-size:13.5px;max-width:60ch}
+  /* spec table */
+  #lpw .spec{width:100%;border-collapse:collapse;font-size:13px}
+  #lpw .spec th,#lpw .spec td{border-bottom:1px solid var(--line);padding:10px 26px;text-align:left;vertical-align:top}
+  #lpw .spec thead th{font:600 10.5px 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding-top:14px;padding-bottom:10px}
+  #lpw .spec thead th.rh{color:var(--accent)}
+  #lpw .spec td.k{color:var(--muted);width:32%;font-size:12.5px}
+  #lpw .spec td.rh{color:var(--text);font-weight:600}
+  #lpw .spec td.bs{color:var(--body)}
+  /* calculator */
+  #lpw .calc{padding:20px 26px 6px}
+  #lpw .calc h3{margin:0 0 4px;font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  #lpw .calc .lead{margin:0 0 16px;font-size:13px;color:var(--body);max-width:62ch}
+  #lpw .ctlrow{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+  #lpw .row .lab{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;color:var(--muted);margin-bottom:7px}
+  #lpw .row .lab b{font:600 12.5px 'IBM Plex Mono',monospace;color:var(--text)}
+  #lpw input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:3px;background:var(--line);outline:none;cursor:pointer}
+  #lpw input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 0 0 1px var(--accent)}
+  #lpw input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 0 0 1px var(--accent)}
+  #lpw .presets{display:flex;gap:7px;margin-bottom:18px;flex-wrap:wrap}
+  #lpw .presets button{font:500 12.5px 'Geist',system-ui,sans-serif;padding:6px 14px;border:1px solid var(--line);background:var(--bg);color:var(--body);cursor:pointer;transition:.15s}
+  #lpw .presets button:hover{border-color:var(--accent);color:var(--accent)}
+  #lpw .presets button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+  /* hero */
+  #lpw .hero{background:var(--accent-soft);border:1px solid #6c42eb44;padding:14px 16px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  #lpw .hero .l{font:500 12px 'Geist',system-ui,sans-serif;color:var(--accent)}
+  #lpw .hero .n{font:600 30px 'Geist',system-ui,sans-serif;letter-spacing:-.02em;color:var(--accent)}
+  #lpw .hero .sub2{font:500 12px 'IBM Plex Mono',monospace;color:var(--accent)}
+  /* bars */
+  #lpw .bars{display:flex;flex-direction:column;gap:12px;margin-bottom:6px}
+  #lpw .bar .bl{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;margin-bottom:5px}
+  #lpw .bar .bl .nm{color:var(--text);font-weight:600}
+  #lpw .bar .bl .vl{font:600 12.5px 'IBM Plex Mono',monospace;color:var(--body)}
+  #lpw .bar .track{height:18px;background:var(--soft);border:1px solid var(--line);position:relative;overflow:hidden}
+  #lpw .bar .fill{height:100%;width:0;transition:width .35s cubic-bezier(.4,0,.2,1)}
+  #lpw .bar.rh .fill{background:var(--accent)}
+  #lpw .bar.base .fill{background:var(--slate)}
+  #lpw .bar.arb .fill{background:#c7ccd6}
+  #lpw .bar.rhnow .fill{background:#6c42eb55}
+  #lpw .ft{padding:12px 26px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  @media(max-width:520px){#lpw .ctlrow{grid-template-columns:1fr}#lpw .spec th,#lpw .spec td{padding-left:18px;padding-right:18px}#lpw .hd,#lpw .calc,#lpw .ft{padding-left:18px;padding-right:18px}}
+</style>
+</head>
+<body>
+<div id="lpw">
+  <div class="hd">
+    <div class="kick">Robinhood Chain · funnel model</div>
+    <h2>How a rounding error becomes a rival</h2>
+    <p class="sub">Robinhood Chain launched at ~$15M of TVL against Base's ~$4.2B. The gap isn't the story — the 25M funded accounts sitting one integration upstream are. Drag the two assumptions and watch a small conversion close it.</p>
+  </div>
+
+  <table class="spec">
+    <thead><tr><th>Metric</th><th class="rh">Robinhood Chain</th><th>Base</th></tr></thead>
+    <tbody>
+      <tr><td class="k">TVL (1 Jul 2026, DefiLlama)</td><td class="rh">~$15.1M · day one</td><td class="bs">~$4.23B</td></tr>
+      <tr><td class="k">Rollup stack</td><td class="rh">Arbitrum Orbit (Nitro)</td><td class="bs">OP Stack · Superchain</td></tr>
+      <tr><td class="k">Settles to</td><td class="rh">Arbitrum L2 (L3-style)</td><td class="bs">Ethereum L1</td></tr>
+      <tr><td class="k">Lane it's chasing</td><td class="rh">Tokenized equities / RWA + retail funnel</td><td class="bs">Consumer / social / crypto-native</td></tr>
+      <tr><td class="k">Chain token</td><td class="rh">None (value → HOOD equity)</td><td class="bs">None (value → Coinbase)</td></tr>
+      <tr><td class="k">Ecosystem, day one</td><td class="rh">100 listed projects</td><td class="bs">Thousands (matured)</td></tr>
+      <tr><td class="k">Funded users upstream</td><td class="rh">25M+ brokerage accounts</td><td class="bs">Coinbase base</td></tr>
+    </tbody>
+  </table>
+
+  <div class="calc">
+    <h3>The funnel calculator</h3>
+    <p class="lead">Projected TVL = <b>25M funded users</b> × <b>% who go onchain</b> × <b>average deposit</b>. Nothing here requires beating Base at Base's game — only converting users Robinhood already has.</p>
+    <div class="presets">
+      <button data-p="toe" >Toe in · 0.5% × $500</button>
+      <button data-p="base" class="on">Base case · 2% × $1,000</button>
+      <button data-p="bull">Bull · 5% × $2,000</button>
+    </div>
+    <div class="ctlrow">
+      <div class="row"><div class="lab"><span>Share of 25M users onchain</span><b><span id="pct_v">2.0</span>%</b></div><input type="range" id="pct" min="0.5" max="10" step="0.1" value="2"></div>
+      <div class="row"><div class="lab"><span>Average deposit / user</span><b>$<span id="dep_v">1,000</span></b></div><input type="range" id="dep" min="250" max="5000" step="50" value="1000"></div>
+    </div>
+    <div class="hero">
+      <span class="l">Projected Robinhood Chain TVL</span>
+      <span class="n" id="m_tvl">$500M</span>
+      <span class="sub2" id="m_rel">≈ 12% of Base</span>
+    </div>
+    <div class="bars">
+      <div class="bar rh"><div class="bl"><span class="nm">Robinhood Chain — projected</span><span class="vl" id="b_rh_v">$500M</span></div><div class="track"><div class="fill" id="b_rh"></div></div></div>
+      <div class="bar base"><div class="bl"><span class="nm">Base — today</span><span class="vl">$4.23B</span></div><div class="track"><div class="fill" id="b_base"></div></div></div>
+      <div class="bar arb"><div class="bl"><span class="nm">Arbitrum One — settlement layer</span><span class="vl">$1.21B</span></div><div class="track"><div class="fill" id="b_arb"></div></div></div>
+      <div class="bar rhnow"><div class="bl"><span class="nm">Robinhood Chain — day one</span><span class="vl">$15.1M</span></div><div class="track"><div class="fill" id="b_now"></div></div></div>
+    </div>
+  </div>
+  <div class="ft"><span>Illustrative model, not a forecast. TVL figures: DefiLlama, 1 Jul 2026.</span><span>research.moni.ai</span></div>
+</div>
+<script>
+(function(){
+  const USERS=25000000, BASE=4.23e9, ARB=1.21e9, NOW=15.1e6;
+  const P={pct:2,dep:1000};
+  const presets={toe:{pct:0.5,dep:500},base:{pct:2,dep:1000},bull:{pct:5,dep:2000}};
+  const fmtUSD=n=>{
+    if(n>=1e9)return '$'+(n/1e9).toFixed(n/1e9>=10?0:2)+'B';
+    if(n>=1e6)return '$'+(n/1e6).toFixed(n/1e6>=100?0:0)+'M';
+    if(n>=1e3)return '$'+Math.round(n/1e3)+'K';
+    return '$'+Math.round(n);
+  };
+  const fmtInt=n=>Math.round(n).toLocaleString('en-US');
+  function tvl(){return USERS*(P.pct/100)*P.dep;}
+  function refresh(){
+    const t=tvl();
+    document.getElementById('m_tvl').textContent=fmtUSD(t);
+    document.getElementById('b_rh_v').textContent=fmtUSD(t);
+    const relPct=t/BASE*100;
+    document.getElementById('m_rel').textContent = t>=BASE ? '≈ '+(t/BASE).toFixed(1)+'× Base' : '≈ '+(relPct<1?relPct.toFixed(1):Math.round(relPct))+'% of Base';
+    const scale=Math.max(BASE,t);
+    document.getElementById('b_rh').style.width=(t/scale*100)+'%';
+    document.getElementById('b_base').style.width=(BASE/scale*100)+'%';
+    document.getElementById('b_arb').style.width=(ARB/scale*100)+'%';
+    document.getElementById('b_now').style.width=Math.max(0.4,(NOW/scale*100))+'%';
+  }
+  function syncInputs(){
+    document.getElementById('pct').value=P.pct;
+    document.getElementById('dep').value=P.dep;
+    document.getElementById('pct_v').textContent=P.pct.toFixed(1);
+    document.getElementById('dep_v').textContent=fmtInt(P.dep);
+  }
+  function mark(p){document.querySelectorAll('.presets button').forEach(b=>b.classList.toggle('on',b.dataset.p===p));}
+  document.getElementById('pct').addEventListener('input',e=>{P.pct=parseFloat(e.target.value);document.getElementById('pct_v').textContent=P.pct.toFixed(1);refresh();mark(null);});
+  document.getElementById('dep').addEventListener('input',e=>{P.dep=parseFloat(e.target.value);document.getElementById('dep_v').textContent=fmtInt(P.dep);refresh();mark(null);});
+  document.querySelectorAll('.presets button').forEach(b=>b.addEventListener('click',()=>{Object.assign(P,presets[b.dataset.p]);syncInputs();refresh();mark(b.dataset.p);}));
+  syncInputs();refresh();
+})();
+</script>
+</body>
+</html>
