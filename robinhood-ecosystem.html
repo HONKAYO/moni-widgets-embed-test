@@ -16,7 +16,6 @@
   #ecw h2{margin:11px 0 8px;font:700 25px/1.13 'Geist',system-ui,sans-serif;letter-spacing:-.025em;color:var(--text)}
   #ecw .sub{margin:0;color:var(--muted);font-size:13.5px;max-width:62ch}
   #ecw .tools{padding:16px 26px 6px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-  #ecw .cnt{font:600 13px 'IBM Plex Mono',monospace;color:var(--accent)}
   #ecw .search{flex:1;min-width:150px}
   #ecw .search input{width:100%;font:400 13px 'Geist',system-ui,sans-serif;padding:8px 12px;border:1px solid var(--line);background:var(--bg);color:var(--text);outline:none}
   #ecw .search input:focus{border-color:var(--accent)}
@@ -26,7 +25,10 @@
   #ecw .filters button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
   #ecw .filters button .c{font:600 11px 'IBM Plex Mono',monospace;opacity:.7;margin-left:5px}
   #ecw .note{padding:2px 26px 0;font-size:11.5px;color:var(--muted)}
-  #ecw .grid{padding:16px 24px 10px;display:grid;grid-template-columns:repeat(5,1fr);gap:16px 8px}
+  #ecw .grid{padding:16px 24px 10px;display:grid;grid-template-columns:repeat(5,1fr);gap:16px 8px;height:560px;overflow-y:auto;overscroll-behavior:contain;align-content:start}
+  #ecw .grid::-webkit-scrollbar{width:6px}
+  #ecw .grid::-webkit-scrollbar-track{background:transparent}
+  #ecw .grid::-webkit-scrollbar-thumb{background:#d8d8e2;border-radius:999px}
   #ecw a.cell{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;text-decoration:none;padding:4px 2px;transition:.12s}
   #ecw a.cell .badge{width:52px;height:52px;border-radius:50%;background:var(--badge);display:flex;align-items:center;justify-content:center;transition:.15s;position:relative}
   #ecw a.cell .badge img{width:30px;height:30px;object-fit:contain}
@@ -46,10 +48,8 @@
   <div class="hd">
     <div class="kick">Robinhood Chain / ecosystem</div>
     <h2>Explore apps &amp; tools: 100 projects</h2>
-    <p class="sub">The day-one roster, the whole top of DeFi in one room. Filter by category, search a name, tap any logo to open its X. <b style="color:#6c42eb">Purple ring</b> = native / degen-facing primitive.</p>
   </div>
   <div class="tools">
-    <span class="cnt"><span id="shown">100</span> / 100 projects</span>
     <div class="search"><input id="q" type="text" placeholder="Search a project..." autocomplete="off"></div>
   </div>
   <div class="filters" id="filters"></div>
@@ -74,7 +74,6 @@
       a.innerHTML='<div class="badge">'+img+'</div><div class="nm">'+d[0]+'</div><div class="ct">'+(d[3]?d[3]:d[1])+'</div>';
       grid.appendChild(a);
     });
-    document.getElementById('shown').textContent=list.length;
     if(!list.length)grid.innerHTML='<div class="note" style="padding:14px 2px;grid-column:1/-1">No match.</div>';
   }
   render();
