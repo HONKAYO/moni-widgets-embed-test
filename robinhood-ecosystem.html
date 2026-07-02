@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robinhood Chain ecosystem · 100 projects</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  html,body{margin:0;background:transparent}
+  body{padding:16px}
+  #ecw{--bg:#ffffff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#6c42eb14;
+    font-family:'Geist',system-ui,sans-serif;color:var(--body);background:var(--bg);
+    border:1px solid var(--line);width:100%;max-width:none;margin:0 auto;overflow:hidden;line-height:1.5}
+  #ecw *{box-sizing:border-box;min-width:0}
+  #ecw .hd{padding:22px 26px 16px;border-bottom:1px solid var(--line)}
+  #ecw .kick{font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  #ecw h2{margin:11px 0 8px;font:700 25px/1.13 'Geist',system-ui,sans-serif;letter-spacing:-.025em;color:var(--text)}
+  #ecw .sub{margin:0;color:var(--muted);font-size:13.5px;max-width:62ch}
+  #ecw .tools{padding:16px 26px 6px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  #ecw .cnt{font:600 13px 'IBM Plex Mono',monospace;color:var(--accent)}
+  #ecw .search{flex:1;min-width:150px}
+  #ecw .search input{width:100%;font:400 13px 'Geist',system-ui,sans-serif;padding:8px 12px;border:1px solid var(--line);background:var(--bg);color:var(--text);outline:none}
+  #ecw .search input:focus{border-color:var(--accent)}
+  #ecw .filters{padding:8px 26px 4px;display:flex;gap:7px;flex-wrap:wrap}
+  #ecw .filters button{font:500 12px 'Geist',system-ui,sans-serif;padding:6px 12px;border:1px solid var(--line);background:var(--bg);color:var(--body);cursor:pointer;transition:.15s;white-space:nowrap}
+  #ecw .filters button:hover{border-color:var(--accent);color:var(--accent)}
+  #ecw .filters button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+  #ecw .filters button .c{font:600 11px 'IBM Plex Mono',monospace;opacity:.7;margin-left:5px}
+  #ecw .grid{padding:14px 26px 8px;display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+  #ecw .chip{border:1px solid var(--line);background:var(--bg);padding:9px 11px;display:flex;flex-direction:column;gap:2px;transition:.12s}
+  #ecw .chip:hover{border-color:var(--accent)}
+  #ecw .chip.star{background:var(--accent-soft);border-color:#6c42eb44}
+  #ecw .chip .nm{font:600 13px 'Geist',system-ui,sans-serif;color:var(--text);display:flex;align-items:center;gap:5px}
+  #ecw .chip .nm .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex:none}
+  #ecw .chip .ct{font:500 10px 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  #ecw .chip.star .ct{color:var(--accent)}
+  #ecw .note{padding:2px 26px 0;font-size:11.5px;color:var(--muted)}
+  #ecw .ft{margin-top:12px;padding:12px 26px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  @media(max-width:620px){#ecw .grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:400px){#ecw .grid{grid-template-columns:1fr}#ecw .hd,#ecw .tools,#ecw .filters,#ecw .grid,#ecw .ft,#ecw .note{padding-left:18px;padding-right:18px}}
+</style>
+</head>
+<body>
+<div id="ecw">
+  <div class="hd">
+    <div class="kick">Robinhood Chain · ecosystem</div>
+    <h2>100 projects, wired in on day one</h2>
+    <p class="sub">The launch roster is not a wishlist — it is the top of DeFi in one room. Filter by category, search a name, or spot the <b style="color:#6c42eb">native primitives</b> a degen actually cares about.</p>
+  </div>
+  <div class="tools">
+    <span class="cnt"><span id="shown">100</span> / 100 projects</span>
+    <div class="search"><input id="q" type="text" placeholder="Search a project…" autocomplete="off"></div>
+  </div>
+  <div class="filters" id="filters"></div>
+  <div class="note" id="starnote" style="display:none">★ = native / degen-facing primitive (launchpad, agents, perps, prediction markets).</div>
+  <div class="grid" id="grid"></div>
+  <div class="ft"><span>Source: robinhood.com/chain ecosystem page, 1 Jul 2026. Listed ≠ live usage.</span><span>research.moni.ai</span></div>
+</div>
+<script>
+(function(){
+  const D=[
+    // Trading / DEX / MM
+    ["Uniswap","Trading",1],["1inch","Trading",0],["0x","Trading",0],["dYdX / Arcus","Trading",1,"stocks + perps, up to 50x"],
+    ["Lighter","Trading",0],["Rialto","Trading",0],["Camelot","Trading",1,"Sheriff on RH Chain"],["Ekubo","Trading",0],
+    ["Arrakis","Trading",0],["Native","Trading",0],["Cube Exchange","Trading",0],["Doppler","Trading",1,"launch any tokenized market"],
+    ["Meridian","Trading",1,"prediction markets + derivs"],["Virtuals","Trading",1,"AI-agent economy"],["Bankr.bot","Trading",1,"agents that self-fund"],
+    ["Glider","Trading",0],["Bitstamp","Trading",0],["IMC","Trading",0,"market maker"],["Flow Traders","Trading",0,"market maker"],
+    ["Tokka Labs","Trading",0,"market maker"],["Mobula","Trading",0],["OpenSea","Trading",0],
+    // Lending / Yield
+    ["Morpho","Lending",1,"powers Robinhood Earn ~7%"],["Spark","Lending",0],["Steakhouse","Lending",0],["Maple","Lending",0],
+    ["Ethena","Lending",0],["EtherFi","Lending",0],["Lido","Lending",0],["Midas","Lending",0],["Merkl","Lending",0],
+    ["Metalend","Lending",0],["Tenor","Lending",0],["Tilt Protocol","Lending",0],["Vaults.fyi","Lending",0],
+    ["Yield.xyz","Lending",0],["Kiln","Lending",0],
+    // Stable / RWA issuers
+    ["Circle","RWA · Stable",0],["Paxos","RWA · Stable",0],["Eco","RWA · Stable",0],["RWA.xyz","RWA · Stable",0],
+    // Bridge / interop
+    ["LayerZero","Bridge",0],["Across","Bridge",0],["Hyperlane","Bridge",0],["Relay","Bridge",0],["LI.FI","Bridge",0],["Polymer","Bridge",0],
+    // Wallets
+    ["MetaMask","Wallet",0],["Ledger","Wallet",0],["Trust Wallet","Wallet",0],["Rabby","Wallet",0],["SafePal","Wallet",0],
+    ["TokenPocket","Wallet",0],["imToken","Wallet",0],["Bitget Wallet","Wallet",0],["Zerion","Wallet",0],["GK8","Wallet",0],
+    // Custody / infra / AA
+    ["BitGo","Infra · Custody",0],["Fireblocks","Infra · Custody",0],["Safe","Infra · Custody",0],["Turnkey","Infra · Custody",0],
+    ["Utila","Infra · Custody",0],["DFNS","Infra · Custody",0],["Fordefi","Infra · Custody",0],["Privy","Infra · Custody",0],
+    ["Pimlico","Infra · Custody",0],["Crossmint","Infra · Custody",0],["Alchemy","Infra · Custody",0],["QuickNode","Infra · Custody",0],
+    ["Blockdaemon","Infra · Custody",0],["dRPC","Infra · Custody",0],["Validation Cloud","Infra · Custody",0],["P2P","Infra · Custody",0],
+    ["Tenderly","Infra · Custody",0],["Blockscout","Infra · Custody",0],["Offchain","Infra · Custody",0],["Chainlink","Infra · Custody",0,"oracles"],["Arbitrum","Infra · Custody",0,"the stack"],
+    // Data / analytics
+    ["DefiLlama","Data",0],["Dune","Data",0],["Token Terminal","Data",0],["L2Beat","Data",0],["CoinGecko","Data",0],
+    ["Allium","Data",0],["Goldsky","Data",0],["Codex","Data",0],["Subsquid","Data",0],["Pinax","Data",0],
+    ["DeBank","Data",0],["Tres Finance","Data",0],["Entropy","Data",0],
+    // Compliance / security
+    ["TRM Labs","Compliance",0],["Chainalysis","Compliance",0],["Elliptic","Compliance",0],["Blockaid","Compliance",0],["CipherOwl","Compliance",0],
+    // Onramp / payments
+    ["MoonPay","Onramp",0],["Mercuryo","Onramp",0],["Fun","Onramp",0],["Unifold","Onramp",0]
+  ];
+  const cats=["All","Trading","Lending","RWA · Stable","Bridge","Wallet","Infra · Custody","Data","Compliance","Onramp"];
+  const counts={};D.forEach(d=>counts[d[1]]=(counts[d[1]]||0)+1);
+  let active="All", q="";
+  const fEl=document.getElementById('filters');
+  cats.forEach(c=>{
+    const b=document.createElement('button');b.dataset.c=c;
+    const n=c==="All"?D.length:(counts[c]||0);
+    b.innerHTML=(c==="All"?"All":c)+'<span class="c">'+n+'</span>';
+    if(c==="All")b.classList.add('on');
+    b.addEventListener('click',()=>{active=c;document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x.dataset.c===c));render();});
+    fEl.appendChild(b);
+  });
+  document.getElementById('q').addEventListener('input',e=>{q=e.target.value.trim().toLowerCase();render();});
+  const grid=document.getElementById('grid');
+  function render(){
+    const list=D.filter(d=>(active==="All"||d[1]===active)&&(!q||d[0].toLowerCase().includes(q)||(d[3]||'').toLowerCase().includes(q)));
+    grid.innerHTML='';
+    let stars=0;
+    list.forEach(d=>{
+      const star=d[2]===1;if(star)stars++;
+      const el=document.createElement('div');el.className='chip'+(star?' star':'');
+      el.innerHTML='<div class="nm">'+(star?'<span class="dot"></span>':'')+d[0]+'</div><div class="ct">'+(d[3]?d[3]:d[1])+'</div>';
+      grid.appendChild(el);
+    });
+    document.getElementById('shown').textContent=list.length;
+    document.getElementById('starnote').style.display=stars?'block':'none';
+    if(!list.length){grid.innerHTML='<div class="note" style="padding:14px 0">No match.</div>';}
+  }
+  render();
+})();
+</script>
+</body>
+</html>
