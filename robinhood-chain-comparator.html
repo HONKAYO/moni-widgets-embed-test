@@ -16,18 +16,18 @@
   #rcw h2{margin:10px 0 6px;font:700 22px/1.12 'Geist',system-ui,sans-serif;letter-spacing:-.025em;color:var(--text)}
   #rcw .sub{display:none}
   #rcw .shell{border:1px solid var(--line);background:var(--bg)}
-  #rcw .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-  #rcw .tabs button{font:500 12px 'Geist',system-ui,sans-serif;padding:6px 10px;border:1px solid var(--line);background:var(--bg);color:var(--body);cursor:pointer;transition:.15s}
+  #rcw .tabs{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+  #rcw .tabs button{font:500 11.5px 'Geist',system-ui,sans-serif;padding:6px 9px;border:1px solid var(--line);background:var(--bg);color:var(--body);cursor:pointer;transition:.15s}
   #rcw .tabs button:hover{border-color:var(--accent);color:var(--accent)}
   #rcw .tabs button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
   #rcw .tag{display:inline-flex;align-items:center;margin-left:7px;padding:2px 6px;border:1px solid #6c42eb55;background:var(--accent-soft);font:600 9px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);vertical-align:middle}
   #rcw .boards{display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--line)}
   #rcw .board{padding:16px 18px;border-right:1px solid var(--line);background:var(--soft);display:flex;flex-direction:column}
   #rcw .board:last-child{border-right:0;background:var(--bg)}
-  #rcw .boardHead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px;min-height:76px}
+  #rcw .boardHead{display:grid;grid-template-columns:minmax(0,1fr) max-content;gap:10px;align-items:start;margin-bottom:10px;min-height:76px}
   #rcw .label{font:600 9.5px 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
   #rcw .name{font:700 23px/1.05 'Geist',system-ui,sans-serif;color:var(--text);letter-spacing:-.025em}
-  #rcw .big{font:700 28px/1 'Geist',system-ui,sans-serif;color:var(--accent);letter-spacing:-.035em;text-align:right;white-space:nowrap}
+  #rcw .big{font:700 clamp(21px,4vw,28px)/1 'Geist',system-ui,sans-serif;color:var(--accent);letter-spacing:-.035em;text-align:right;white-space:nowrap;max-width:100%}
   #rcw table{width:100%;border-collapse:collapse;background:var(--bg);border:1px solid var(--line)}
   #rcw th,#rcw td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
   #rcw tr:last-child th,#rcw tr:last-child td{border-bottom:0}
@@ -39,7 +39,8 @@
   #rcw .segrow span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   #rcw .segrow span:last-child{font:600 11.5px 'IBM Plex Mono',monospace;color:var(--text);white-space:nowrap}
   #rcw .ft{padding:10px 20px;border-top:1px solid var(--line);font-size:10.5px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-  @media(max-width:520px){#rcw .hd,#rcw .ft{padding-left:18px;padding-right:18px}#rcw .board{padding-left:16px;padding-right:16px}#rcw h2{font-size:22px}#rcw .big{font-size:25px}#rcw th,#rcw td{padding-left:9px;padding-right:9px}}
+  @media(max-width:620px){#rcw .boards{grid-template-columns:.94fr 1.06fr}#rcw .board{padding-left:14px;padding-right:14px}#rcw .tabs button{padding-left:8px;padding-right:8px}#rcw .tag{margin-left:5px;padding-left:5px;padding-right:5px}}
+  @media(max-width:520px){#rcw .hd,#rcw .ft{padding-left:18px;padding-right:18px}#rcw .board{padding-left:14px;padding-right:14px}#rcw h2{font-size:22px}#rcw .boardHead{grid-template-columns:minmax(0,1fr) auto;gap:8px}#rcw .big{font-size:22px}#rcw th,#rcw td{padding-left:9px;padding-right:9px}#rcw .tabs{gap:4px}#rcw .tabs button{font-size:11px;padding:5px 7px}}
   @media(max-width:420px){#rcw .boards{grid-template-columns:1fr}#rcw .board{border-right:0;border-bottom:1px solid var(--line)}#rcw .board:last-child{border-bottom:0}#rcw .boardHead{display:block;min-height:0}#rcw .big{text-align:left;margin-top:9px}#rcw th,#rcw td{display:block;width:100%}#rcw th{border-bottom:0;padding-bottom:3px}#rcw td{padding-top:3px}}
 </style>
 </head>
