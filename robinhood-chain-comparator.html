@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robinhood Chain comparator</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  html,body{margin:0;background:transparent}
+  body{padding:0}
+  #rcw{--bg:#fff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#6c42eb14;--slate:#94a3b8;--green:#0fa968;
+    font-family:'Geist',system-ui,sans-serif;color:var(--body);background:var(--bg);width:100%;max-width:none;margin:0;overflow:hidden;line-height:1.5}
+  #rcw *{box-sizing:border-box;min-width:0}
+  #rcw .hd{padding:22px 26px 16px;border:1px solid var(--line);border-bottom:0;background:var(--bg)}
+  #rcw .kick{font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  #rcw h2{margin:11px 0 8px;font:700 25px/1.12 'Geist',system-ui,sans-serif;letter-spacing:-.025em;color:var(--text)}
+  #rcw .sub{margin:0;color:var(--muted);font-size:13.5px;max-width:67ch}
+  #rcw .shell{border:1px solid var(--line);background:var(--bg)}
+  #rcw .tabs{display:flex;gap:7px;flex-wrap:wrap;padding:16px 26px 10px;border-bottom:1px solid var(--line)}
+  #rcw .tabs button{font:500 12.5px 'Geist',system-ui,sans-serif;padding:7px 14px;border:1px solid var(--line);background:var(--bg);color:var(--body);cursor:pointer;transition:.15s}
+  #rcw .tabs button:hover{border-color:var(--accent);color:var(--accent)}
+  #rcw .tabs button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+  #rcw .compare{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)}
+  #rcw .card{padding:18px 20px;border-right:1px solid var(--line);background:var(--soft)}
+  #rcw .card:last-child{border-right:0;background:var(--bg)}
+  #rcw .label{font:600 10.5px 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  #rcw .name{font:700 24px/1.05 'Geist',system-ui,sans-serif;color:var(--text);letter-spacing:-.025em;margin-bottom:8px}
+  #rcw .tvl{font:700 34px/1 'Geist',system-ui,sans-serif;color:var(--accent);letter-spacing:-.035em;margin-bottom:8px}
+  #rcw .desc{font-size:13px;color:var(--body);max-width:34ch}
+  #rcw .mini{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+  #rcw .mini div{border:1px solid var(--line);background:var(--bg);padding:9px 10px}
+  #rcw .mini b{display:block;font:600 10px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  #rcw .mini span{display:block;font:600 13px 'Geist',system-ui,sans-serif;color:var(--text)}
+  #rcw .read{padding:16px 26px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,.45fr);gap:16px;align-items:center}
+  #rcw .read p{margin:0;font-size:13.5px;color:var(--body)}
+  #rcw .ratio{border:1px solid #6c42eb44;background:var(--accent-soft);padding:12px 14px}
+  #rcw .ratio .n{font:700 26px/1 'Geist',system-ui,sans-serif;color:var(--accent);letter-spacing:-.03em;margin-bottom:5px}
+  #rcw .ratio .s{font-size:12px;color:var(--body)}
+  #rcw .segments{padding:18px 26px 10px}
+  #rcw .segments h3{margin:0 0 5px;font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  #rcw .segments .hint{margin:0 0 14px;font-size:12px;color:var(--muted)}
+  #rcw .seggrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  #rcw .segbox{border:1px solid var(--line);padding:13px 14px;background:var(--soft)}
+  #rcw .segtitle{font:600 13px 'Geist',system-ui,sans-serif;color:var(--text);margin-bottom:10px}
+  #rcw .bar{margin-bottom:9px}
+  #rcw .bar:last-child{margin-bottom:0}
+  #rcw .bar .top{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-bottom:4px}
+  #rcw .bar .top span:first-child{font-weight:600;color:var(--body)}
+  #rcw .bar .top span:last-child{font:600 11.5px 'IBM Plex Mono',monospace;color:var(--muted);white-space:nowrap}
+  #rcw .track{height:15px;border:1px solid var(--line);background:var(--bg);overflow:hidden}
+  #rcw .fill{height:100%;background:var(--accent);width:0;transition:width .25s}
+  #rcw .segbox.comp .fill{background:var(--slate)}
+  #rcw .ft{padding:12px 26px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  @media(max-width:680px){#rcw .compare,#rcw .read,#rcw .seggrid{grid-template-columns:1fr}#rcw .card{border-right:0;border-bottom:1px solid var(--line)}#rcw .card:last-child{border-bottom:0}#rcw .mini{grid-template-columns:1fr}}
+  @media(max-width:520px){#rcw .hd,#rcw .tabs,#rcw .read,#rcw .segments,#rcw .ft{padding-left:18px;padding-right:18px}#rcw h2{font-size:22px}#rcw .tvl{font-size:31px}}
+</style>
+</head>
+<body>
+<div id="rcw">
+  <div class="hd">
+    <div class="kick">Robinhood Chain / network comparator</div>
+    <h2>Robinhood Chain is tiny. The useful question is tiny against what?</h2>
+    <p class="sub">Keep Robinhood Chain fixed, then switch the comparison network. The point is not to make launch TVL look good. It is to show which benchmark Robinhood is really trying to grow into.</p>
+  </div>
+  <div class="shell">
+    <div class="tabs" id="tabs"></div>
+    <div class="compare">
+      <div class="card">
+        <div class="label">Pinned network</div>
+        <div class="name">Robinhood Chain</div>
+        <div class="tvl">$17.7M</div>
+        <div class="desc">Arbitrum Orbit chain for tokenized equities, RWA, brokerage distribution, and day-one DeFi integrations.</div>
+        <div class="mini">
+          <div><b>Stack</b><span>Arbitrum Orbit</span></div>
+          <div><b>Token</b><span>None</span></div>
+          <div><b>Protocols</b><span>4 tracked</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="label">Comparison network</div>
+        <div class="name" id="c_name">Base</div>
+        <div class="tvl" id="c_tvl">$4.26B</div>
+        <div class="desc" id="c_desc">OP Stack chain with mature crypto-native, consumer, social, and DeFi activity.</div>
+        <div class="mini">
+          <div><b>Stack</b><span id="c_stack">OP Stack</span></div>
+          <div><b>Token</b><span id="c_token">None</span></div>
+          <div><b>Protocols</b><span id="c_proto">707 tracked</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="read">
+      <p id="read">Against Base, Robinhood Chain is still a rounding error. The bullish read is not today's TVL. It is whether Robinhood can turn brokerage distribution into repeat onchain behavior.</p>
+      <div class="ratio">
+        <div class="n" id="ratio">0.4%</div>
+        <div class="s" id="ratioText">Robinhood Chain TVL as a share of Base.</div>
+      </div>
+    </div>
+    <div class="segments">
+      <h3>Main tracked segments</h3>
+      <p class="hint">Category TVL is from DefiLlama protocol data and can overlap. Use it as a rough activity map, not an additive accounting table.</p>
+      <div class="seggrid">
+        <div class="segbox">
+          <div class="segtitle">Robinhood Chain</div>
+          <div id="rhSeg"></div>
+        </div>
+        <div class="segbox comp">
+          <div class="segtitle" id="compSegTitle">Base</div>
+          <div id="compSeg"></div>
+        </div>
+      </div>
+    </div>
+    <div class="ft"><span>Data: DefiLlama chain + protocol APIs, retrieved 2 Jul 2026. Segment categories are tracked protocol TVL, not clean market share.</span><span>research.moni.ai</span></div>
+  </div>
+</div>
+<script>
+(function(){
+  const RH={name:'Robinhood Chain',tvl:17657645,segments:[['Lending',11164346],['Dexs',6493299]]};
+  const DATA={
+    Base:{tvl:4261595734,stack:'OP Stack',token:'None',protocols:707,desc:'OP Stack chain with mature crypto-native, consumer, social, and DeFi activity.',read:'Against Base, Robinhood Chain is still a rounding error. The bullish read is not today\\'s TVL. It is whether Robinhood can turn brokerage distribution into repeat onchain behavior.',segments:[['Lending',3333196837],['Risk Curators',1871408141],['Dexs',747950186],['RWA',120457991]]},
+    Ethereum:{tvl:38405294756,stack:'Ethereum L1',token:'ETH',protocols:1512,desc:'The settlement and liquidity base for the largest DeFi, staking, RWA, and bridge markets.',read:'Against Ethereum, Robinhood Chain is not a competitor yet. It is a product-distribution experiment sitting on the edge of the broader Ethereum economy.',segments:[['Liquid Staking',24766002005],['Lending',22154564099],['RWA',13558911389],['Bridge',14845956567]]},
+    Solana:{tvl:5013464205,stack:'Solana L1',token:'SOL',protocols:361,desc:'High-throughput L1 with large liquid-staking, lending, DEX, RWA, and derivatives activity.',read:'Against Solana, the gap is less about raw infrastructure and more about behavior. Solana already has native onchain users. Robinhood has to bring users across.',segments:[['Liquid Staking',4945691457],['Lending',2239527919],['Dexs',1916814885],['RWA',1661052204]]},
+    Monad:{tvl:409175351,stack:'EVM L1',token:'MON',protocols:109,desc:'Parallel EVM L1 with early DeFi activity and a growing protocol set.',read:'Against Monad, Robinhood Chain looks less tiny but more specialized. Monad is selling performance and developer energy. Robinhood is selling distribution.',segments:[['Lending',343763986],['Risk Curators',170361332],['Yield',62441055],['Dexs',53447730]]}
+  };
+  const order=['Base','Ethereum','Solana','Monad'];
+  const fmt=n=>n>=1e9?'$'+(n/1e9).toFixed(n>=10e9?1:2)+'B':n>=1e6?'$'+(n/1e6).toFixed(n>=100e6?0:1)+'M':'$'+Math.round(n).toLocaleString('en-US');
+  const pct=(a,b)=>{const p=a/b*100; return p<1?p.toFixed(1)+'%':Math.round(p)+'%';};
+  const tabs=document.getElementById('tabs');
+  order.forEach((name,i)=>{const b=document.createElement('button');b.textContent=name;b.dataset.name=name;if(i===0)b.className='on';b.onclick=()=>select(name);tabs.appendChild(b);});
+  function bars(el,segments,max,accent){
+    el.innerHTML='';
+    segments.forEach(([name,val])=>{
+      const d=document.createElement('div');d.className='bar';
+      d.innerHTML='<div class="top"><span>'+name+'</span><span>'+fmt(val)+'</span></div><div class="track"><div class="fill" style="width:'+Math.max(2,Math.min(100,val/max*100))+'%"></div></div>';
+      el.appendChild(d);
+    });
+  }
+  function select(name){
+    const d=DATA[name];
+    document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.name===name));
+    document.getElementById('c_name').textContent=name;
+    document.getElementById('c_tvl').textContent=fmt(d.tvl);
+    document.getElementById('c_desc').textContent=d.desc;
+    document.getElementById('c_stack').textContent=d.stack;
+    document.getElementById('c_token').textContent=d.token;
+    document.getElementById('c_proto').textContent=d.protocols+' tracked';
+    document.getElementById('read').textContent=d.read;
+    document.getElementById('ratio').textContent=pct(RH.tvl,d.tvl);
+    document.getElementById('ratioText').textContent='Robinhood Chain TVL as a share of '+name+'.';
+    document.getElementById('compSegTitle').textContent=name;
+    bars(document.getElementById('rhSeg'),RH.segments,Math.max(...RH.segments.map(x=>x[1])));
+    bars(document.getElementById('compSeg'),d.segments,Math.max(...d.segments.map(x=>x[1])));
+  }
+  select('Base');
+})();
+</script>
+</body>
+</html>
