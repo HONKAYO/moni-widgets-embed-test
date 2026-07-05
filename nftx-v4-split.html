@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NFTX v4 — cash now, bonus later</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  html,body{margin:0;background:transparent}
+  body{padding:0}
+  #nfx{--bg:#ffffff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#6c42eb14;
+    font-family:'Geist',system-ui,sans-serif;color:var(--body);background:var(--bg);border:1px solid var(--line);width:100%;max-width:none;margin:0 auto;line-height:1.5}
+  #nfx *{box-sizing:border-box;min-width:0}
+  #nfx .hd{padding:22px 26px 16px;border-bottom:1px solid var(--line)}
+  #nfx .kick{font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  #nfx h2{margin:11px 0 8px;font:700 26px/1.12 'Geist',system-ui,sans-serif;letter-spacing:-.025em;color:var(--text)}
+  #nfx .sub{margin:0;color:var(--muted);font-size:13.5px;max-width:60ch}
+  /* steps */
+  #nfx .steps{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:6px;padding:16px 26px 4px}
+  #nfx .step{display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px}
+  #nfx .step .ic{width:38px;height:38px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--accent)}
+  #nfx .step .t{font:600 12px 'Geist',system-ui,sans-serif;color:var(--text);line-height:1.25}
+  #nfx .arw{color:var(--muted);font-size:16px;padding-bottom:18px}
+  /* body */
+  #nfx .main{padding:16px 26px 8px}
+  #nfx .ctl .lab{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:var(--muted);margin-bottom:8px}
+  #nfx .ctl .lab b{font:600 13px 'IBM Plex Mono',monospace;color:var(--accent)}
+  #nfx input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:3px;background:var(--line);outline:none;cursor:pointer}
+  #nfx input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 0 0 1px var(--accent)}
+  #nfx input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 0 0 1px var(--accent)}
+  #nfx .floornote{font:500 11.5px 'IBM Plex Mono',monospace;color:var(--muted);margin-top:7px}
+  /* two big outputs */
+  #nfx .outs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0 14px}
+  #nfx .out{border:1px solid var(--line);padding:15px 16px;background:var(--bg)}
+  #nfx .out.now{background:var(--accent-soft);border-color:#6c42eb44}
+  #nfx .out .cap{font:600 10.5px 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  #nfx .out.now .cap{color:var(--accent)}
+  #nfx .out .n{font:700 30px 'Geist',system-ui,sans-serif;letter-spacing:-.02em;margin:6px 0 4px;color:var(--text)}
+  #nfx .out.now .n{color:var(--accent)}
+  #nfx .out .d{font-size:12px;color:var(--muted);line-height:1.35}
+  /* split bar */
+  #nfx .barwrap{margin:6px 0 4px}
+  #nfx .barhd{display:flex;justify-content:space-between;font:600 11px 'IBM Plex Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px}
+  #nfx .bar{display:flex;height:34px;border:1px solid var(--line);overflow:hidden}
+  #nfx .bar .now{background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font:600 12px 'Geist',system-ui,sans-serif;transition:flex-basis .3s;white-space:nowrap;min-width:0;overflow:hidden}
+  #nfx .bar .later{background:repeating-linear-gradient(45deg,#fff,#fff 6px,#f0ecff 6px,#f0ecff 12px);border-left:1px dashed var(--accent);display:flex;align-items:center;justify-content:center;color:var(--accent);font:600 12px 'Geist',system-ui,sans-serif;transition:flex-basis .3s;white-space:nowrap;min-width:0;overflow:hidden}
+  #nfx .fee{margin-top:14px;font-size:12.5px;color:var(--body);background:var(--soft);border:1px solid var(--line);padding:10px 13px}
+  #nfx .fee b{color:var(--text)}
+  #nfx .ft{padding:12px 26px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  @media(max-width:520px){#nfx .steps{grid-template-columns:1fr auto 1fr auto 1fr}#nfx .step .t{font-size:11px}#nfx .hd,#nfx .main,#nfx .ft,#nfx .steps{padding-left:18px;padding-right:18px}}
+</style>
+</head>
+<body>
+<div id="nfx">
+  <div class="hd">
+    <div class="kick">NFTX v4 · how it works</div>
+    <h2>Cash now, bonus later</h2>
+    <p class="sub">Old NFTX only made the cheapest NFTs liquid. v4 lets you deposit <b>any</b> NFT, take the floor value as cash instantly, and keep the premium for later. Drag the slider.</p>
+  </div>
+
+  <div class="steps">
+    <div class="step"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="M21 15l-5-5L5 21"/></svg></div><div class="t">Deposit<br>any NFT</div></div>
+    <div class="arw">→</div>
+    <div class="step"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9.5h4.2a1.8 1.8 0 010 3.6H9m0 0h4.5"/></svg></div><div class="t">Get floor<br>value now</div></div>
+    <div class="arw">→</div>
+    <div class="step"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div><div class="t">Premium later<br>if it sells</div></div>
+  </div>
+
+  <div class="main">
+    <div class="ctl">
+      <div class="lab"><span>How much is your NFT worth?</span><b><span id="mult">1.5</span>× floor</b></div>
+      <input type="range" id="m" min="1" max="5" step="0.1" value="1.5">
+      <div class="floornote">Floor price = 1 ETH · your price = <span id="price">1.5</span> ETH</div>
+    </div>
+
+    <div class="outs">
+      <div class="out now"><div class="cap">You get NOW</div><div class="n" id="nowv">1.0 ETH</div><div class="d">Instant &amp; liquid — a floor-token you can sell right away.</div></div>
+      <div class="out"><div class="cap">You get LATER</div><div class="n" id="latev">0.5 ETH</div><div class="d">Only if a buyer takes your listing at your price.</div></div>
+    </div>
+
+    <div class="barwrap">
+      <div class="barhd"><span>Your NFT's value, split</span><span id="totlab">= 1.5 ETH</span></div>
+      <div class="bar"><div class="now" id="bnow">now</div><div class="later" id="blater">later</div></div>
+    </div>
+
+    <div class="fee" id="fee">Aim higher and you keep more upside — but v4 charges a small <b>listing fee</b> (paid up front) to keep an above-floor price live, so fantasy prices bleed. <i>Illustrative.</i></div>
+  </div>
+
+  <div class="ft"><span>Illustrative model to explain the mechanism, not exact protocol fees.</span><span>research.moni.ai</span></div>
+</div>
+<script>
+(function(){
+  const floor=1;
+  const m=document.getElementById('m');
+  function upd(){
+    const mult=parseFloat(m.value);
+    const price=mult*floor;
+    const now=floor;              // always the floor, instant
+    const later=price-floor;      // premium, only on sale
+    document.getElementById('mult').textContent=mult.toFixed(1);
+    document.getElementById('price').textContent=price.toFixed(1);
+    document.getElementById('nowv').textContent=now.toFixed(1)+' ETH';
+    document.getElementById('latev').textContent=later.toFixed(1)+' ETH';
+    document.getElementById('totlab').textContent='= '+price.toFixed(1)+' ETH';
+    // bar split proportional to price
+    const nowPct=now/price*100, latePct=later/price*100;
+    const bn=document.getElementById('bnow'), bl=document.getElementById('blater');
+    bn.style.flexBasis=nowPct+'%'; bl.style.flexBasis=latePct+'%';
+    bn.textContent = nowPct>22 ? now.toFixed(1)+' now' : '';
+    bl.textContent = latePct>22 ? later.toFixed(1)+' later' : '';
+    // fee tone (illustrative)
+    const feeEl=document.getElementById('fee');
+    let tone;
+    if(mult<=1.05) tone='At floor price there is nothing to wait for — you just take <b>1 ETH now</b>, no premium, no listing fee.';
+    else if(mult<=2) tone='You take <b>'+now.toFixed(1)+' ETH now</b> and keep <b>'+later.toFixed(1)+' ETH</b> of upside. A <b>small listing fee</b> keeps the price live.';
+    else if(mult<=3.5) tone='More upside kept for later (<b>'+later.toFixed(1)+' ETH</b>) — but v4 charges a <b>bigger listing fee</b> the higher you price.';
+    else tone='Pricing this far above floor keeps <b>'+later.toFixed(1)+' ETH</b> of upside, but the <b>listing fee is steep</b>, so overpricing bleeds until it sells or decays.';
+    feeEl.innerHTML=tone+' <i>Illustrative.</i>';
+  }
+  m.addEventListener('input',upd); upd();
+})();
+</script>
+</body>
+</html>
