@@ -13,24 +13,25 @@
   #nfx *{box-sizing:border-box;min-width:0}
   #nfx .hd{padding:22px 26px 16px;border-bottom:1px solid var(--line)}
   #nfx .kick{font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
-  #nfx h2{margin:11px 0 8px;font:700 26px/1.12 'Geist',system-ui,sans-serif;letter-spacing:-.025em;color:var(--text)}
-  #nfx .sub{margin:0;color:var(--muted);font-size:13.5px;max-width:60ch}
+  #nfx h2{margin:11px 0 10px;font:700 26px/1.12 'Geist',system-ui,sans-serif;letter-spacing:-.025em;color:var(--text)}
+  #nfx .sub{margin:0;color:var(--body);font-size:13.5px;max-width:62ch;border-left:3px solid var(--accent);padding:2px 0 2px 14px}
+  #nfx .sub .sub2{display:block;margin-top:5px;color:var(--muted)}
   /* progress */
-  #nfx .prog{display:flex;align-items:center;justify-content:space-between;padding:16px 26px 0;gap:12px}
-  #nfx .prog .lbl{font:600 11px 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  #nfx .prog{display:flex;align-items:center;justify-content:center;padding:18px 26px 0;gap:12px}
   #nfx .dots{display:flex;gap:7px}
   #nfx .dots button{width:9px;height:9px;border-radius:50%;border:1px solid var(--line);background:var(--bg);padding:0;cursor:pointer;transition:.15s}
   #nfx .dots button.on{background:var(--accent);border-color:var(--accent)}
   /* card */
-  #nfx .stage{padding:14px 26px 6px;min-height:198px}
+  #nfx .stage{padding:14px 26px 6px;min-height:230px}
   #nfx .step{display:none}
   #nfx .step.on{display:block}
-  #nfx .step .top{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+  #nfx .step .top{display:flex;align-items:center;justify-content:center;text-align:center;gap:13px;margin-bottom:14px}
   #nfx .step .ic{width:46px;height:46px;flex:none;border:1px solid #6c42eb44;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;color:var(--accent)}
   #nfx .step .num{font:600 11px 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
   #nfx .step h3{margin:2px 0 0;font:700 19px/1.2 'Geist',system-ui,sans-serif;letter-spacing:-.02em;color:var(--text)}
-  #nfx .step p{margin:0;font-size:14px;color:var(--body);max-width:64ch}
+  #nfx .step p{margin:0;font-size:14px;color:var(--body);text-align:center;border:1px solid var(--line);background:var(--soft);padding:15px 18px}
   #nfx .step p b{color:var(--text)}
+  #nfx .step p .note{display:block;margin-top:9px;font:500 11.5px 'IBM Plex Mono',monospace;color:var(--muted)}
   /* mini split bar (step 2) */
   #nfx .split{margin:16px 0 4px}
   #nfx .split .bar{display:flex;height:34px;border:1px solid var(--line);overflow:hidden}
@@ -54,11 +55,10 @@
   <div class="hd">
     <div class="kick">NFTX v4 · how it works</div>
     <h2>One NFT's journey</h2>
-    <p class="sub">The whole v4 mechanism, one step at a time. Say the collection floor is <b>1 ETH</b> and your NFT is worth <b>1.5</b>.</p>
+    <blockquote class="sub">The whole v4 mechanism, one step at a time.<span class="sub2">Say the collection floor is <b>1 ETH</b> and your NFT is worth <b>1.5</b>.</span></blockquote>
   </div>
 
   <div class="prog">
-    <span class="lbl">Step <span id="cur">1</span> of 4</span>
     <div class="dots" id="dots"></div>
   </div>
 
@@ -69,7 +69,7 @@
         <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18"/><circle cx="8.5" cy="8.5" r="1.6"/><path d="M21 15l-5-5L5 21"/></svg></div>
         <div><div class="num">Step 1</div><h3>Deposit any NFT, name your price</h3></div>
       </div>
-      <p>Old NFTX only worked for floor pieces. In v4 you drop <b>any</b> NFT into the collection pool and <b>set your own price</b>, here 1.5 ETH. You don't have to wait for a buyer to get moving.</p>
+      <p>Old NFTX only worked for floor pieces. In v4 you drop <b>any</b> NFT into the collection pool and <b>set your own price</b>, here 1.5 ETH. You don't have to wait for a buyer to get moving.<span class="note">Illustrative example to explain the mechanism · floor = 1 ETH</span></p>
     </div>
     <!-- STEP 2 -->
     <div class="step">
@@ -105,13 +105,13 @@
     <button id="prev" disabled>← Back</button>
     <button id="next" class="primary">Next →</button>
   </div>
-  <div class="ft"><span>Illustrative example to explain the mechanism (floor = 1 ETH), not exact protocol fees.</span><span>research.moni.ai</span></div>
+  <div class="ft"><span></span><span>research.moni.ai</span></div>
 </div>
 <script>
 (function(){
   const steps=[...document.querySelectorAll('.step')];
   const dotsWrap=document.getElementById('dots');
-  const prev=document.getElementById('prev'), next=document.getElementById('next'), cur=document.getElementById('cur');
+  const prev=document.getElementById('prev'), next=document.getElementById('next');
   let i=0;
   steps.forEach((_,k)=>{const b=document.createElement('button');if(k===0)b.classList.add('on');b.addEventListener('click',()=>go(k));dotsWrap.appendChild(b);});
   const dots=[...dotsWrap.children];
@@ -119,7 +119,6 @@
     i=Math.max(0,Math.min(steps.length-1,k));
     steps.forEach((s,x)=>s.classList.toggle('on',x===i));
     dots.forEach((d,x)=>d.classList.toggle('on',x===i));
-    cur.textContent=i+1;
     prev.disabled=i===0;
     next.textContent = i===steps.length-1 ? 'Start over ↺' : 'Next →';
   }
