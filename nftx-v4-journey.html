@@ -14,15 +14,16 @@
   #nfx .hd{padding:16px 22px 12px;border-bottom:1px solid var(--line)}
   #nfx .kick{font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
   #nfx h2{margin:8px 0 8px;font:700 24px/1.08 'Geist',system-ui,sans-serif;letter-spacing:-.025em;color:var(--text)}
-  #nfx .sub{margin:0;color:var(--accent);font-size:13.5px;max-width:60ch;border-left:3px solid var(--accent);padding:1px 0 1px 12px}
-  #nfx .sub .sub2{display:block;margin-top:4px;color:var(--accent)}
+  #nfx .sub{margin:0;color:var(--text);font-size:13.5px;max-width:60ch;border-left:3px solid var(--accent);padding:1px 0 1px 12px}
+  #nfx .sub .sub2{display:block;margin-top:4px;color:var(--text)}
+  #nfx .sub b{color:var(--accent)}
   /* progress */
   #nfx .prog{display:flex;align-items:center;justify-content:center;padding:12px 22px 0;gap:10px}
   #nfx .dots{display:flex;gap:7px}
   #nfx .dots button{width:9px;height:9px;border-radius:50%;border:1px solid var(--line);background:var(--bg);padding:0;cursor:pointer;transition:.15s}
   #nfx .dots button.on{background:var(--accent);border-color:var(--accent)}
   /* card */
-  #nfx .stage{padding:10px 22px 4px;min-height:196px}
+  #nfx .stage{padding:10px 22px 2px;min-height:0}
   #nfx .step{display:none}
   #nfx .step.on{display:block}
   #nfx .step .top{display:flex;align-items:flex-start;justify-content:flex-start;gap:11px;margin-bottom:10px}
@@ -40,14 +41,17 @@
   #nfx .split .cap{display:flex;justify-content:space-between;font:600 10px 'IBM Plex Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:6px}
   #nfx .split .cap .l{color:var(--accent)}
   /* nav */
-  #nfx .nav{display:flex;justify-content:space-between;gap:10px;padding:10px 22px 2px}
+  #nfx .nav{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 22px 8px}
   #nfx .nav button{font:600 12px 'Geist',system-ui,sans-serif;padding:8px 16px;border:1px solid var(--line);background:var(--bg);color:var(--body);cursor:pointer;transition:.15s}
   #nfx .nav button:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
   #nfx .nav button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
   #nfx .nav button.primary:hover{opacity:.9;color:#fff}
   #nfx .nav button:disabled{opacity:.4;cursor:default}
-  #nfx .ft{margin-top:4px;padding:10px 22px;border-top:1px solid var(--line);font-size:10px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-  @media(max-width:520px){#nfx .hd,#nfx .prog,#nfx .stage,#nfx .nav,#nfx .ft{padding-left:16px;padding-right:16px}#nfx .step h3{font-size:16px}#nfx .step p{font-size:13.5px;padding:12px 14px}#nfx .stage{min-height:184px}}
+  #nfx .ft{margin-top:2px;padding:8px 22px 10px;border-top:1px solid var(--line);display:flex;justify-content:flex-start;align-items:center}
+  #nfx .brand{display:inline-flex;align-items:center;gap:4px;color:var(--muted);white-space:nowrap}
+  #nfx .brand .m1{font:700 12px/1 'Geist',system-ui,sans-serif;color:var(--accent)}
+  #nfx .brand .m2{font:700 italic 12px/1 'Geist',system-ui,sans-serif;color:var(--text)}
+  @media(max-width:520px){#nfx .hd,#nfx .prog,#nfx .stage,#nfx .nav,#nfx .ft{padding-left:16px;padding-right:16px}#nfx .step h3{font-size:16px}#nfx .step p{font-size:13.5px;padding:12px 14px}#nfx .nav{padding-top:10px;padding-bottom:8px}#nfx .ft{padding-top:8px;padding-bottom:12px}}
 </style>
 </head>
 <body>
@@ -105,7 +109,12 @@
     <button id="prev" disabled>&lt; Back</button>
     <button id="next" class="primary">Next &gt;</button>
   </div>
-  <div class="ft"><span></span><span>research.moni.ai</span></div>
+  <div class="ft">
+    <div class="brand" aria-label="moni research">
+      <span class="m1">moni</span>
+      <span class="m2">research</span>
+    </div>
+  </div>
 </div>
 <script>
 (function(){
