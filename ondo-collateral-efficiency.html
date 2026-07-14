@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ondo Perps collateral efficiency calculator</title>
+<title>Ondo Perps collateral comparison</title>
 <link rel="icon" href="data:,">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
@@ -16,183 +16,124 @@
   #ocw .kick{font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
   #ocw h2{margin:10px 0 7px;font:700 25px/1.12 'Geist',system-ui,sans-serif;letter-spacing:-.025em;color:var(--text)}
   #ocw .sub{margin:0;max-width:68ch;color:var(--muted);font-size:13.5px}
-  #ocw .mode{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-bottom:0}
-  #ocw .mode button{padding:11px 14px;border:0;border-right:1px solid var(--line);background:var(--bg);color:var(--body);font:600 13px/1 'Geist',system-ui,sans-serif;cursor:pointer}
-  #ocw .mode button:last-child{border-right:0}
-  #ocw .mode button:hover{color:var(--accent)}
-  #ocw .mode button.on{background:var(--accent-soft);color:var(--accent);box-shadow:inset 0 -2px 0 var(--accent)}
-  #ocw .grid{display:grid;grid-template-columns:250px 1fr;border:1px solid var(--line)}
-  #ocw .ctl{padding:19px 20px;background:var(--soft);border-right:1px solid var(--line)}
-  #ocw .ctl h3,#ocw .viz h3{margin:0 0 15px;font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
-  #ocw .row{margin-bottom:18px}
-  #ocw .lab{display:flex;justify-content:space-between;gap:12px;align-items:baseline;margin-bottom:8px;color:var(--muted);font-size:12.5px}
-  #ocw .lab b{font:600 12px 'IBM Plex Mono',monospace;color:var(--text);white-space:nowrap}
-  #ocw input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:3px;background:var(--line);outline:none;cursor:pointer}
-  #ocw input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--accent);border:3px solid var(--soft);box-shadow:0 0 0 1px var(--accent)}
-  #ocw input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--accent);border:3px solid var(--soft);box-shadow:0 0 0 1px var(--accent)}
-  #ocw .assume{margin-top:4px;padding:11px 12px;border:1px solid var(--line);background:var(--bg);font-size:11.5px;color:var(--muted)}
-  #ocw .assume b{color:var(--text);font-weight:600}
-  #ocw .viz{padding:19px 21px 16px}
-  #ocw .mets{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
-  #ocw .met{padding:12px 13px;border:1px solid var(--line);background:var(--bg)}
-  #ocw .met .l{font-size:11.5px;color:var(--muted)}
-  #ocw .met .n{margin-top:4px;color:var(--text);font:600 22px/1.2 'Geist',system-ui,sans-serif;letter-spacing:-.02em}
-  #ocw .met .x{margin-top:3px;color:var(--muted);font-size:10.5px}
-  #ocw .met.hero{border-color:#6c42eb44;background:var(--accent-soft)}
-  #ocw .met.hero .l,#ocw .met.hero .n{color:var(--accent)}
-  #ocw .charthead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin:0 0 5px}
-  #ocw .charthead h3{margin:4px 0 0}
-  #ocw .legend{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px 14px;color:var(--muted);font-size:11px}
-  #ocw .legend span{display:inline-flex;align-items:center;gap:6px}
-  #ocw .legend i{width:14px;height:3px;display:inline-block}
-  #ocw .chartwrap{position:relative;height:176px}
-  #ocw .readout{margin-top:12px;padding:11px 12px;border-left:3px solid var(--accent);background:var(--accent-soft);color:var(--body);font-size:12.5px}
-  #ocw .risk{margin-top:8px;padding:10px 12px;border:1px solid #f59e0b55;background:#f59e0b0d;color:#7b5607;font-size:11.5px}
+  #ocw .case{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-bottom:0;background:var(--soft)}
+  #ocw .case div{padding:12px 15px;border-right:1px solid var(--line)}
+  #ocw .case div:last-child{border-right:0}
+  #ocw .case span{display:block;color:var(--muted);font-size:10.5px}
+  #ocw .case b{display:block;margin-top:3px;color:var(--text);font:600 17px/1.2 'Geist',system-ui,sans-serif;letter-spacing:-.015em}
+  #ocw .compare{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line)}
+  #ocw .model{padding:20px 21px 18px}
+  #ocw .model+.model{border-left:1px solid var(--line)}
+  #ocw .model.ondo{background:var(--bg);box-shadow:inset 0 3px 0 var(--accent)}
+  #ocw .modelhead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding-bottom:14px;border-bottom:1px solid var(--line)}
+  #ocw .eyebrow{font:600 10.5px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  #ocw .ondo .eyebrow{color:var(--accent)}
+  #ocw h3{margin:7px 0 0;color:var(--text);font:700 20px/1.15 'Geist',system-ui,sans-serif;letter-spacing:-.02em}
+  #ocw .badge{padding:6px 8px;border:1px solid var(--line);color:var(--muted);font:600 10.5px/1 'IBM Plex Mono',monospace;white-space:nowrap}
+  #ocw .ondo .badge{border-color:#6c42eb55;color:var(--accent);background:var(--accent-soft)}
+  #ocw .hero{padding:16px 0 13px}
+  #ocw .hero span{display:block;color:var(--muted);font-size:11.5px}
+  #ocw .hero strong{display:block;margin-top:3px;color:var(--text);font:700 34px/1.05 'Geist',system-ui,sans-serif;letter-spacing:-.035em}
+  #ocw .ondo .hero strong{color:var(--accent)}
+  #ocw .hero small{display:block;margin-top:5px;color:var(--muted);font-size:11px}
+  #ocw .flow{margin:2px 0 15px;padding:12px;border:1px solid var(--line);background:var(--soft);font-size:12px;color:var(--body)}
+  #ocw .flow b{color:var(--text);font-weight:600}
+  #ocw .flow .arrow{display:inline-block;padding:0 5px;color:var(--muted)}
+  #ocw .ondo .flow{border-color:#6c42eb33;background:var(--accent-soft)}
+  #ocw .rows{margin:0}
+  #ocw .row{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-top:1px solid var(--line);font-size:12px}
+  #ocw .row dt{color:var(--muted)}
+  #ocw .row dd{margin:0;color:var(--text);font-weight:600;text-align:right}
+  #ocw .row dd.good{color:var(--emerald)}
+  #ocw .delta{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;padding:16px 20px;border:1px solid var(--line);border-top:0;background:var(--soft)}
+  #ocw .delta .label{font-size:11.5px;color:var(--muted)}
+  #ocw .delta p{margin:3px 0 0;color:var(--body);font-size:12.5px}
+  #ocw .delta strong{color:var(--accent);font:700 30px/1 'Geist',system-ui,sans-serif;letter-spacing:-.03em;white-space:nowrap}
+  #ocw .bars{padding:17px 20px;border:1px solid var(--line);border-top:0}
+  #ocw .bars h4{margin:0 0 13px;font:600 10.5px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  #ocw .barrow{display:grid;grid-template-columns:96px 1fr 54px;gap:11px;align-items:center;margin-top:10px;font-size:11.5px}
+  #ocw .barrow span{color:var(--body);font-weight:600}
+  #ocw .track{height:10px;background:#eef0f3;position:relative;overflow:hidden}
+  #ocw .fill{height:100%;background:var(--slate)}
+  #ocw .fill.ondo{background:var(--accent)}
+  #ocw .barrow b{text-align:right;color:var(--text);font-size:12px}
+  #ocw .risk{padding:12px 20px;border:1px solid #f59e0b55;border-top:0;background:#f59e0b0d;color:#7b5607;font-size:11.5px}
+  #ocw .risk b{font-weight:700}
   #ocw .ft{display:flex;justify-content:space-between;gap:16px;padding:10px 14px;border:1px solid var(--line);border-top:0;color:var(--muted);font-size:10.5px}
   #ocw .brand{white-space:nowrap;color:var(--text);font-weight:600}
   #ocw .brand i{font-style:normal;color:var(--accent)}
-  @media(max-width:680px){
+  @media(max-width:620px){
     #ocw .hd{padding:20px 19px 15px}#ocw h2{font-size:23px}
-    #ocw .grid{grid-template-columns:1fr}#ocw .ctl{border-right:0;border-bottom:1px solid var(--line)}
-    #ocw .ctl{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}#ocw .ctl h3,#ocw .assume{grid-column:1/-1}
-    #ocw .viz{padding:17px 18px 14px}
+    #ocw .case{grid-template-columns:1fr 1fr}#ocw .case div:nth-child(2){border-right:0}#ocw .case div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+    #ocw .compare{grid-template-columns:1fr}#ocw .model+.model{border-left:0;border-top:1px solid var(--line)}
+    #ocw .delta{grid-template-columns:1fr auto}
   }
-  @media(max-width:500px){
-    #ocw .mode button{padding:10px 8px;font-size:12px}#ocw .ctl{display:block}
-    #ocw .mets{grid-template-columns:1fr 1fr;gap:8px}#ocw .met{padding:11px}#ocw .met .n{font-size:20px}
-    #ocw .charthead{display:block}#ocw .legend{justify-content:flex-start;margin:8px 0 0}
-    #ocw .chartwrap{height:190px}#ocw .ft{display:block}#ocw .brand{display:block;margin-top:4px}
+  @media(max-width:440px){
+    #ocw .case b{font-size:15px}#ocw .model{padding:18px 17px 16px}
+    #ocw .delta{display:block}#ocw .delta strong{display:block;margin-top:9px}
+    #ocw .bars{padding:15px 17px}#ocw .barrow{grid-template-columns:82px 1fr 48px;gap:8px}
+    #ocw .risk{padding:11px 17px}#ocw .ft{display:block}#ocw .brand{display:block;margin-top:4px}
   }
 </style>
 </head>
 <body>
 <div id="ocw">
   <div class="hd">
-    <div class="kick">Ondo Perps / collateral efficiency</div>
-    <h2>How much separate USDC does the hedge need?</h2>
-    <p class="sub">Compare stablecoin-only margin with an illustrative Ondo setup where eligible tokenized stock can provide collateral credit.</p>
+    <div class="kick">Ondo Perps / collateral comparison</div>
+    <h2>One hedge, two ways to fund the margin</h2>
+    <p class="sub">The same tokenized NVDA position and the same perp hedge. The difference is whether margin needs a separate pool of USDC.</p>
   </div>
 
-  <div class="mode" role="group" aria-label="Collateral model">
-    <button type="button" data-mode="usdc">USDC-only</button>
-    <button type="button" data-mode="ondo" class="on">Ondo collateral</button>
+  <div class="case" aria-label="Illustrative trade assumptions">
+    <div><span>Tokenized NVDA position</span><b>$50,000</b></div>
+    <div><span>Desired perp hedge</span><b>$40,000</b></div>
+    <div><span>Initial margin</span><b>10% / $4,000</b></div>
+    <div><span>Collateral haircut</span><b>20%</b></div>
   </div>
 
-  <div class="grid">
-    <div class="ctl">
-      <h3>Position assumptions</h3>
-      <div class="row">
-        <div class="lab"><span>Tokenized stock position</span><b id="stock_v">$50,000</b></div>
-        <input type="range" id="stock" min="0" max="250000" step="5000" value="50000" aria-label="Tokenized stock position">
+  <div class="compare">
+    <section class="model" aria-labelledby="usdc-title">
+      <div class="modelhead">
+        <div><div class="eyebrow">Standard model</div><h3 id="usdc-title">USDC-only</h3></div>
+        <div class="badge">2 capital pools</div>
       </div>
-      <div class="row">
-        <div class="lab"><span>Desired perp hedge</span><b id="hedge_v">$40,000</b></div>
-        <input type="range" id="hedge" min="0" max="200000" step="5000" value="40000" aria-label="Desired perpetual hedge">
-      </div>
-      <div class="row">
-        <div class="lab"><span>Collateral haircut</span><b id="haircut_v">20%</b></div>
-        <input type="range" id="haircut" min="0" max="50" step="1" value="20" aria-label="Collateral haircut">
-      </div>
-      <div class="assume"><b>Fixed model assumptions</b><br>10% initial margin (10x) and a $100k credited-margin cap per tokenized asset.</div>
-    </div>
+      <div class="hero"><span>Separate USDC needed</span><strong>$4,000</strong><small>New stablecoin capital posted as margin</small></div>
+      <div class="flow"><b>Buy hedge</b><span class="arrow">+</span><b>fund USDC margin separately</b></div>
+      <dl class="rows">
+        <div class="row"><dt>Tokenized NVDA collateral credit</dt><dd>$0</dd></div>
+        <div class="row"><dt>Additional cash locked</dt><dd>$4,000</dd></div>
+        <div class="row"><dt>Existing NVDA position sold?</dt><dd>No</dd></div>
+      </dl>
+    </section>
 
-    <div class="viz">
-      <div class="mets">
-        <div class="met hero"><div class="l">Separate USDC needed</div><div class="n" id="m_usdc">$0</div><div class="x" id="m_req">$4,000 margin required</div></div>
-        <div class="met"><div class="l">Margin capital committed</div><div class="n" id="m_locked">$5,000</div><div class="x">Market value encumbered + USDC</div></div>
-        <div class="met"><div class="l">Collateral credit used</div><div class="n" id="m_credit">$4,000</div><div class="x" id="m_available">$40,000 available after haircut</div></div>
-        <div class="met"><div class="l">USDC capital released</div><div class="n" id="m_released">$4,000</div><div class="x">Versus a USDC-only venue</div></div>
+    <section class="model ondo" aria-labelledby="ondo-title">
+      <div class="modelhead">
+        <div><div class="eyebrow">Integrated model</div><h3 id="ondo-title">Ondo collateral</h3></div>
+        <div class="badge">1 existing asset</div>
       </div>
-
-      <div class="charthead">
-        <h3>How initial margin is funded</h3>
-        <div class="legend" aria-label="Chart legend">
-          <span><i style="background:#94a3b8"></i>Separate USDC</span>
-          <span><i style="background:#6c42eb"></i>Tokenized collateral credit</span>
-        </div>
-      </div>
-      <div class="chartwrap"><canvas id="marginChart" role="img" aria-label="Comparison of USDC-only initial margin with Ondo tokenized collateral funding.">Initial margin funding comparison.</canvas></div>
-      <div class="readout" id="readout"></div>
-      <div class="risk" id="risk"></div>
-    </div>
+      <div class="hero"><span>Separate USDC needed</span><strong>$0</strong><small>Eligible tokenized NVDA covers the requirement</small></div>
+      <div class="flow"><b>Buy hedge</b><span class="arrow">+</span><b>pledge the same tokenized stock</b></div>
+      <dl class="rows">
+        <div class="row"><dt>Credit available after haircut</dt><dd>$40,000</dd></div>
+        <div class="row"><dt>Collateral credit applied</dt><dd>$4,000</dd></div>
+        <div class="row"><dt>Additional cash locked</dt><dd class="good">$0</dd></div>
+      </dl>
+    </section>
   </div>
 
-  <div class="ft"><span>Illustrative only. Actual eligibility, haircuts, fees and margin rules may change. Maintenance margin and liquidation price are not modeled.</span><span class="brand"><i>moni</i> research</span></div>
+  <div class="delta">
+    <div><div class="label">Capital-efficiency difference</div><p>Ondo reuses an existing asset instead of requiring a second pool of stablecoin margin.</p></div>
+    <strong>$4,000 released</strong>
+  </div>
+
+  <div class="bars" aria-label="Separate USDC margin comparison">
+    <h4>Separate USDC required</h4>
+    <div class="barrow"><span>USDC-only</span><div class="track"><div class="fill" style="width:100%"></div></div><b>$4,000</b></div>
+    <div class="barrow"><span>Ondo</span><div class="track"><div class="fill ondo" style="width:0%"></div></div><b>$0</b></div>
+  </div>
+
+  <div class="risk"><b>What the comparison leaves out:</b> Ondo uses cross margin. If tokenized NVDA falls, the account's collateral value falls with it. Negative USDC debt may trigger auto-conversion, and actual eligibility, haircuts and access can change.</div>
+  <div class="ft"><span>Illustrative example using 10% initial margin. Maintenance margin, fees and liquidation price are not modeled.</span><span class="brand"><i>moni</i> research</span></div>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script>
-(function(){
-  const P={stock:50000,hedge:40000,haircut:20,mode:'ondo'};
-  const INITIAL_MARGIN=0.10;
-  const CREDIT_CAP=100000;
-  const money=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
-  const short=n=>n>=1000000?'$'+(n/1000000).toFixed(n%1000000?1:0)+'M':n>=1000?'$'+(n/1000).toFixed(n%1000?1:0)+'k':money.format(n);
-
-  function model(){
-    const required=P.hedge*INITIAL_MARGIN;
-    const eligible=Math.min(P.stock*(1-P.haircut/100),CREDIT_CAP);
-    const ondoCredit=Math.min(required,eligible);
-    const selectedCredit=P.mode==='ondo'?ondoCredit:0;
-    const usdc=Math.max(0,required-selectedCredit);
-    const pledgeValue=selectedCredit>0?selectedCredit/(1-P.haircut/100):0;
-    return {required,eligible,ondoCredit,selectedCredit,usdc,pledgeValue,committed:usdc+pledgeValue,released:required-usdc};
-  }
-
-  const chart=new Chart(document.getElementById('marginChart'),{
-    type:'bar',
-    data:{labels:['USDC-only','Ondo'],datasets:[
-      {label:'Separate USDC',data:[0,0],backgroundColor:'#94a3b8',borderWidth:0,barThickness:24},
-      {label:'Tokenized collateral credit',data:[0,0],backgroundColor:'#6c42eb',borderWidth:0,barThickness:24}
-    ]},
-    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,animation:{duration:220},
-      scales:{
-        x:{stacked:true,beginAtZero:true,ticks:{color:'#8b8f99',font:{family:'IBM Plex Mono',size:10},callback:v=>short(v)},grid:{color:'#eef0f3'},border:{display:false}},
-        y:{stacked:true,ticks:{color:'#3b4049',font:{family:'Geist',size:11,weight:'600'}},grid:{display:false},border:{display:false}}
-      },
-      plugins:{legend:{display:false},tooltip:{enabled:false}}
-    }
-  });
-
-  function refresh(){
-    const m=model();
-    document.getElementById('stock_v').textContent=money.format(P.stock);
-    document.getElementById('hedge_v').textContent=money.format(P.hedge);
-    document.getElementById('haircut_v').textContent=P.haircut+'%';
-    document.getElementById('m_usdc').textContent=money.format(m.usdc);
-    document.getElementById('m_req').textContent=money.format(m.required)+' margin required';
-    document.getElementById('m_locked').textContent=money.format(m.committed);
-    document.getElementById('m_credit').textContent=money.format(m.selectedCredit);
-    document.getElementById('m_available').textContent=money.format(m.eligible)+' available after haircut';
-    document.getElementById('m_released').textContent=money.format(m.released);
-
-    chart.data.datasets[0].data=[m.required,Math.max(0,m.required-m.ondoCredit)];
-    chart.data.datasets[1].data=[0,m.ondoCredit];
-    chart.options.scales.x.suggestedMax=Math.max(1000,m.required*1.12);
-    chart.update();
-
-    const readout=document.getElementById('readout');
-    const risk=document.getElementById('risk');
-    if(P.mode==='ondo'){
-      if(m.required===0){
-        readout.textContent='Set a hedge size to compare its margin funding.';
-      }else if(m.usdc===0){
-        readout.textContent='Existing tokenized stock covers the full '+money.format(m.required)+' initial-margin requirement, releasing up to '+money.format(m.released)+' of separate USDC.';
-      }else{
-        readout.textContent='Tokenized stock covers '+money.format(m.selectedCredit)+'. The remaining '+money.format(m.usdc)+' must still be posted as USDC.';
-      }
-      risk.textContent='Cross-margin warning: a fall in the stock collateral can weaken the whole account. Negative USDC debt may trigger auto-conversion. Actual asset eligibility and haircut can change.';
-    }else{
-      readout.textContent='The USDC-only model requires '+money.format(m.required)+' of separate stablecoin margin for this hedge.';
-      risk.textContent='USDC-only margin avoids stock-collateral price risk, but the hedge and its margin must be funded from separate pools of capital.';
-    }
-    document.querySelectorAll('.mode button').forEach(b=>b.classList.toggle('on',b.dataset.mode===P.mode));
-  }
-
-  ['stock','hedge','haircut'].forEach(id=>document.getElementById(id).addEventListener('input',e=>{P[id]=Number(e.target.value);refresh();}));
-  document.querySelectorAll('.mode button').forEach(b=>b.addEventListener('click',()=>{P.mode=b.dataset.mode;refresh();}));
-  refresh();
-})();
-</script>
 </body>
 </html>
