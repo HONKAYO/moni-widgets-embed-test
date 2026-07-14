@@ -9,131 +9,75 @@
 <style>
   html,body{margin:0;background:transparent}
   body{padding:0}
-  #ocw{--bg:#fff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#6c42eb14;--emerald:#0fa968;--amber:#f59e0b;--slate:#94a3b8;
+  #ocw{--bg:#fff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#6c42eb14;--amber:#f59e0b;
     width:100%;max-width:none;overflow:hidden;background:var(--bg);color:var(--body);font-family:'Geist',system-ui,sans-serif;line-height:1.45}
   #ocw *{box-sizing:border-box;min-width:0}
-  #ocw .hd{padding:22px 24px 17px;border:1px solid var(--line);border-bottom:0}
-  #ocw .kick{font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
-  #ocw h2{margin:10px 0 7px;font:700 25px/1.12 'Geist',system-ui,sans-serif;letter-spacing:-.025em;color:var(--text)}
-  #ocw .sub{margin:0;max-width:68ch;color:var(--muted);font-size:13.5px}
-  #ocw .case{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-bottom:0;background:var(--soft)}
-  #ocw .case div{padding:12px 15px;border-right:1px solid var(--line)}
-  #ocw .case div:last-child{border-right:0}
-  #ocw .case span{display:block;color:var(--muted);font-size:10.5px}
-  #ocw .case b{display:block;margin-top:3px;color:var(--text);font:600 17px/1.2 'Geist',system-ui,sans-serif;letter-spacing:-.015em}
+  #ocw .hd{padding:21px 23px 16px;border:1px solid var(--line);border-bottom:0}
+  #ocw .kick{font:600 10.5px/1 'IBM Plex Mono',monospace;letter-spacing:.15em;text-transform:uppercase;color:var(--accent)}
+  #ocw h2{margin:9px 0 6px;font:700 24px/1.12 'Geist',system-ui,sans-serif;letter-spacing:-.025em;color:var(--text)}
+  #ocw .sub{margin:0;color:var(--muted);font-size:13px}
+  #ocw .case{padding:10px 23px;border:1px solid var(--line);border-bottom:0;background:var(--soft);color:var(--muted);font:500 11px/1.5 'IBM Plex Mono',monospace}
+  #ocw .case b{color:var(--text);font-weight:600}
   #ocw .compare{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line)}
-  #ocw .model{padding:20px 21px 18px}
-  #ocw .model+.model{border-left:1px solid var(--line)}
-  #ocw .model.ondo{background:var(--bg);box-shadow:inset 0 3px 0 var(--accent)}
-  #ocw .modelhead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding-bottom:14px;border-bottom:1px solid var(--line)}
-  #ocw .eyebrow{font:600 10.5px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
-  #ocw .ondo .eyebrow{color:var(--accent)}
-  #ocw h3{margin:7px 0 0;color:var(--text);font:700 20px/1.15 'Geist',system-ui,sans-serif;letter-spacing:-.02em}
-  #ocw .badge{padding:6px 8px;border:1px solid var(--line);color:var(--muted);font:600 10.5px/1 'IBM Plex Mono',monospace;white-space:nowrap}
-  #ocw .ondo .badge{border-color:#6c42eb55;color:var(--accent);background:var(--accent-soft)}
-  #ocw .hero{padding:16px 0 13px}
-  #ocw .hero span{display:block;color:var(--muted);font-size:11.5px}
-  #ocw .hero strong{display:block;margin-top:3px;color:var(--text);font:700 34px/1.05 'Geist',system-ui,sans-serif;letter-spacing:-.035em}
-  #ocw .ondo .hero strong{color:var(--accent)}
-  #ocw .hero small{display:block;margin-top:5px;color:var(--muted);font-size:11px}
-  #ocw .flow{margin:2px 0 15px;padding:12px;border:1px solid var(--line);background:var(--soft);font-size:12px;color:var(--body)}
-  #ocw .flow b{color:var(--text);font-weight:600}
-  #ocw .flow .arrow{display:inline-block;padding:0 5px;color:var(--muted)}
-  #ocw .ondo .flow{border-color:#6c42eb33;background:var(--accent-soft)}
-  #ocw .rows{margin:0}
-  #ocw .row{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-top:1px solid var(--line);font-size:12px}
-  #ocw .row dt{color:var(--muted)}
-  #ocw .row dd{margin:0;color:var(--text);font-weight:600;text-align:right}
-  #ocw .row dd.good{color:var(--emerald)}
-  #ocw .delta{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;padding:16px 20px;border:1px solid var(--line);border-top:0;background:var(--soft)}
-  #ocw .delta .label{font-size:11.5px;color:var(--muted)}
-  #ocw .delta p{margin:3px 0 0;color:var(--body);font-size:12.5px}
-  #ocw .delta strong{color:var(--accent);font:700 30px/1 'Geist',system-ui,sans-serif;letter-spacing:-.03em;white-space:nowrap}
-  #ocw .bars{padding:17px 20px;border:1px solid var(--line);border-top:0}
-  #ocw .bars h4{margin:0 0 13px;font:600 10.5px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
-  #ocw .barrow{display:grid;grid-template-columns:96px 1fr 54px;gap:11px;align-items:center;margin-top:10px;font-size:11.5px}
-  #ocw .barrow span{color:var(--body);font-weight:600}
-  #ocw .track{height:10px;background:#eef0f3;position:relative;overflow:hidden}
-  #ocw .fill{height:100%;background:var(--slate)}
-  #ocw .fill.ondo{background:var(--accent)}
-  #ocw .barrow b{text-align:right;color:var(--text);font-size:12px}
-  #ocw .risk{padding:12px 20px;border:1px solid #f59e0b55;border-top:0;background:#f59e0b0d;color:#7b5607;font-size:11.5px}
+  #ocw .model{padding:20px 22px 18px}
+  #ocw .model+.model{border-left:1px solid var(--line);box-shadow:inset 0 3px 0 var(--accent)}
+  #ocw .label{font:600 10.5px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  #ocw .model.ondo .label{color:var(--accent)}
+  #ocw h3{margin:7px 0 16px;color:var(--text);font:700 19px/1.15 'Geist',system-ui,sans-serif;letter-spacing:-.02em}
+  #ocw .metric{color:var(--text);font:700 38px/1 'Geist',system-ui,sans-serif;letter-spacing:-.04em}
+  #ocw .ondo .metric{color:var(--accent)}
+  #ocw .metric-label{margin-top:6px;color:var(--muted);font-size:11.5px}
+  #ocw .mechanic{margin:17px 0 0;padding-top:13px;border-top:1px solid var(--line);color:var(--body);font-size:12.5px}
+  #ocw .mechanic b{color:var(--text);font-weight:600}
+  #ocw .delta{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:15px 22px;border:1px solid var(--line);border-top:0;background:var(--accent-soft)}
+  #ocw .delta span{color:var(--body);font-size:12.5px}
+  #ocw .delta strong{color:var(--accent);font:700 25px/1 'Geist',system-ui,sans-serif;letter-spacing:-.025em;white-space:nowrap}
+  #ocw .risk{padding:11px 22px;border:1px solid #f59e0b55;border-top:0;background:#f59e0b0d;color:#7b5607;font-size:11px}
   #ocw .risk b{font-weight:700}
-  #ocw .ft{display:flex;justify-content:space-between;gap:16px;padding:10px 14px;border:1px solid var(--line);border-top:0;color:var(--muted);font-size:10.5px}
+  #ocw .ft{display:flex;justify-content:space-between;gap:14px;padding:9px 13px;border:1px solid var(--line);border-top:0;color:var(--muted);font-size:10px}
   #ocw .brand{white-space:nowrap;color:var(--text);font-weight:600}
   #ocw .brand i{font-style:normal;color:var(--accent)}
-  @media(max-width:620px){
-    #ocw .hd{padding:20px 19px 15px}#ocw h2{font-size:23px}
-    #ocw .case{grid-template-columns:1fr 1fr}#ocw .case div:nth-child(2){border-right:0}#ocw .case div:nth-child(-n+2){border-bottom:1px solid var(--line)}
-    #ocw .compare{grid-template-columns:1fr}#ocw .model+.model{border-left:0;border-top:1px solid var(--line)}
-    #ocw .delta{grid-template-columns:1fr auto}
-  }
-  @media(max-width:440px){
-    #ocw .case b{font-size:15px}#ocw .model{padding:18px 17px 16px}
-    #ocw .delta{display:block}#ocw .delta strong{display:block;margin-top:9px}
-    #ocw .bars{padding:15px 17px}#ocw .barrow{grid-template-columns:82px 1fr 48px;gap:8px}
-    #ocw .risk{padding:11px 17px}#ocw .ft{display:block}#ocw .brand{display:block;margin-top:4px}
+  @media(max-width:560px){
+    #ocw .hd{padding:19px 18px 15px}#ocw h2{font-size:22px}
+    #ocw .case{padding:10px 18px}
+    #ocw .compare{grid-template-columns:1fr}#ocw .model{padding:18px}
+    #ocw .model+.model{border-left:0;border-top:1px solid var(--line)}
+    #ocw .delta{display:block;padding:14px 18px}#ocw .delta strong{display:block;margin-top:8px}
+    #ocw .risk{padding:10px 18px}#ocw .ft{display:block}#ocw .brand{display:block;margin-top:4px}
   }
 </style>
 </head>
 <body>
 <div id="ocw">
-  <div class="hd">
+  <header class="hd">
     <div class="kick">Ondo Perps / collateral comparison</div>
-    <h2>One hedge, two ways to fund the margin</h2>
-    <p class="sub">The same tokenized NVDA position and the same perp hedge. The difference is whether margin needs a separate pool of USDC.</p>
-  </div>
+    <h2>Same hedge. Different margin requirement.</h2>
+    <p class="sub">Can an existing tokenized stock position replace a separate pool of USDC?</p>
+  </header>
 
-  <div class="case" aria-label="Illustrative trade assumptions">
-    <div><span>Tokenized NVDA position</span><b>$50,000</b></div>
-    <div><span>Desired perp hedge</span><b>$40,000</b></div>
-    <div><span>Initial margin</span><b>10% / $4,000</b></div>
-    <div><span>Collateral haircut</span><b>20%</b></div>
-  </div>
+  <div class="case"><b>$50k</b> tokenized NVDA&nbsp;&nbsp;/&nbsp;&nbsp;<b>$40k</b> perp hedge&nbsp;&nbsp;/&nbsp;&nbsp;<b>10%</b> initial margin&nbsp;&nbsp;/&nbsp;&nbsp;<b>20%</b> haircut</div>
 
-  <div class="compare">
-    <section class="model" aria-labelledby="usdc-title">
-      <div class="modelhead">
-        <div><div class="eyebrow">Standard model</div><h3 id="usdc-title">USDC-only</h3></div>
-        <div class="badge">2 capital pools</div>
-      </div>
-      <div class="hero"><span>Separate USDC needed</span><strong>$4,000</strong><small>New stablecoin capital posted as margin</small></div>
-      <div class="flow"><b>Buy hedge</b><span class="arrow">+</span><b>fund USDC margin separately</b></div>
-      <dl class="rows">
-        <div class="row"><dt>Tokenized NVDA collateral credit</dt><dd>$0</dd></div>
-        <div class="row"><dt>Additional cash locked</dt><dd>$4,000</dd></div>
-        <div class="row"><dt>Existing NVDA position sold?</dt><dd>No</dd></div>
-      </dl>
+  <main class="compare">
+    <section class="model">
+      <div class="label">Standard model</div>
+      <h3>USDC-only</h3>
+      <div class="metric">$4,000</div>
+      <div class="metric-label">separate USDC required</div>
+      <p class="mechanic"><b>Two pools of capital:</b> the NVDA hedge plus separately funded stablecoin margin.</p>
     </section>
 
-    <section class="model ondo" aria-labelledby="ondo-title">
-      <div class="modelhead">
-        <div><div class="eyebrow">Integrated model</div><h3 id="ondo-title">Ondo collateral</h3></div>
-        <div class="badge">1 existing asset</div>
-      </div>
-      <div class="hero"><span>Separate USDC needed</span><strong>$0</strong><small>Eligible tokenized NVDA covers the requirement</small></div>
-      <div class="flow"><b>Buy hedge</b><span class="arrow">+</span><b>pledge the same tokenized stock</b></div>
-      <dl class="rows">
-        <div class="row"><dt>Credit available after haircut</dt><dd>$40,000</dd></div>
-        <div class="row"><dt>Collateral credit applied</dt><dd>$4,000</dd></div>
-        <div class="row"><dt>Additional cash locked</dt><dd class="good">$0</dd></div>
-      </dl>
+    <section class="model ondo">
+      <div class="label">Integrated model</div>
+      <h3>Ondo collateral</h3>
+      <div class="metric">$0</div>
+      <div class="metric-label">separate USDC required</div>
+      <p class="mechanic"><b>One existing asset:</b> eligible tokenized NVDA supplies the $4,000 collateral credit.</p>
     </section>
-  </div>
+  </main>
 
-  <div class="delta">
-    <div><div class="label">Capital-efficiency difference</div><p>Ondo reuses an existing asset instead of requiring a second pool of stablecoin margin.</p></div>
-    <strong>$4,000 released</strong>
-  </div>
-
-  <div class="bars" aria-label="Separate USDC margin comparison">
-    <h4>Separate USDC required</h4>
-    <div class="barrow"><span>USDC-only</span><div class="track"><div class="fill" style="width:100%"></div></div><b>$4,000</b></div>
-    <div class="barrow"><span>Ondo</span><div class="track"><div class="fill ondo" style="width:0%"></div></div><b>$0</b></div>
-  </div>
-
-  <div class="risk"><b>What the comparison leaves out:</b> Ondo uses cross margin. If tokenized NVDA falls, the account's collateral value falls with it. Negative USDC debt may trigger auto-conversion, and actual eligibility, haircuts and access can change.</div>
-  <div class="ft"><span>Illustrative example using 10% initial margin. Maintenance margin, fees and liquidation price are not modeled.</span><span class="brand"><i>moni</i> research</span></div>
+  <div class="delta"><span>The hedge no longer needs a second pool of stablecoin capital.</span><strong>$4,000 released</strong></div>
+  <div class="risk"><b>Trade-off:</b> cross margin links the hedge to the stock collateral. A falling collateral value or negative USDC debt can trigger account-wide pressure or auto-conversion.</div>
+  <footer class="ft"><span>Illustrative. Actual eligibility, haircuts and access may vary.</span><span class="brand"><i>moni</i> research</span></footer>
 </div>
 </body>
 </html>
