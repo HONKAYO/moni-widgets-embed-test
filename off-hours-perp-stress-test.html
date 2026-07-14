@@ -3,200 +3,117 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Off-hours perp stress test</title>
+<title>What happens when the cash market closes?</title>
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  html,body{margin:0;background:transparent}
-  body{padding:0}
-  #opw{--bg:#fff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--grid:#eef0f3;--accent:#6c42eb;--accent-soft:#6c42eb14;--emerald:#0fa968;--red:#e24b4a;--amber:#f59e0b;--slate:#94a3b8;
+  html,body{margin:0;background:transparent}body{padding:0}
+  #opw{--bg:#fff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#6c42eb14;--green:#0fa968;--red:#e24b4a;--amber:#f59e0b;--slate:#94a3b8;
     width:100%;max-width:none;overflow:hidden;background:var(--bg);color:var(--body);font-family:'Geist',system-ui,sans-serif;line-height:1.45}
   #opw *{box-sizing:border-box;min-width:0}
-  #opw .head{padding:22px 23px 17px;border:1px solid var(--line);border-bottom:0}
+  #opw .head{padding:21px 23px 17px;border:1px solid var(--line);border-bottom:0}
   #opw .kick{font:600 10.5px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
   #opw h2{margin:9px 0 6px;color:var(--text);font:700 24px/1.13 'Geist',system-ui,sans-serif;letter-spacing:-.025em}
-  #opw .sub{margin:0;max-width:700px;color:var(--muted);font-size:13px}
-  #opw .tabs{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-bottom:0}
-  #opw .tab{appearance:none;border:0;border-right:1px solid var(--line);background:var(--bg);padding:11px 12px;color:var(--body);font:600 12px/1.2 'Geist',system-ui,sans-serif;cursor:pointer;text-align:center;transition:background .15s,color .15s,border-color .15s}
-  #opw .tab:last-child{border-right:0}
-  #opw .tab:hover{color:var(--accent)}
-  #opw .tab.active{background:var(--accent-soft);box-shadow:inset 0 -2px 0 var(--accent);color:var(--accent)}
-  #opw .main{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(205px,.8fr);border:1px solid var(--line)}
-  #opw .chart-panel{padding:16px 17px 13px;border-right:1px solid var(--line)}
-  #opw .panel-label{margin:0 0 8px;color:var(--muted);font:600 9.5px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
-  #opw .chart-shell{position:relative;width:100%;height:270px;background:var(--bg)}
-  #opw svg{display:block;width:100%;height:100%;overflow:visible}
-  #opw .axis,#opw .grid,#opw .marker,#opw .bound{fill:none;vector-effect:non-scaling-stroke}
-  #opw .axis{stroke:var(--line);stroke-width:1}
-  #opw .grid{stroke:var(--grid);stroke-width:1}
-  #opw .marker{stroke:var(--slate);stroke-width:1;stroke-dasharray:4 4}
-  #opw .bound{stroke:var(--accent);stroke-width:1;stroke-dasharray:4 5;opacity:0}
-  #opw .cash,#opw .perp{fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;transition:d .38s ease,opacity .2s ease}
-  #opw .cash{stroke:var(--slate);stroke-width:2.2}
-  #opw .perp{stroke:var(--accent);stroke-width:3}
-  #opw .gap{stroke:var(--red);stroke-width:1.5;opacity:0;transition:opacity .2s ease}
-  #opw .gap-text{fill:var(--red);opacity:0;transition:opacity .2s ease}
-  #opw .liq{fill:var(--red);opacity:0;transition:opacity .2s ease}
-  #opw .svg-label{fill:var(--muted);font:500 10px 'IBM Plex Mono',monospace}
-  #opw .svg-note{fill:var(--body);font:600 10px 'IBM Plex Mono',monospace}
-  #opw .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;color:var(--muted);font-size:10.5px}
-  #opw .legend span{display:flex;align-items:center;gap:6px}
-  #opw .legend i{display:block;width:16px;height:2px;background:var(--slate)}
-  #opw .legend span:last-child i{height:3px;background:var(--accent)}
-  #opw .status{display:grid;grid-template-columns:1fr;background:var(--soft)}
-  #opw .row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 13px;border-bottom:1px solid var(--line)}
-  #opw .row:last-child{border-bottom:0}
-  #opw .r-label{color:var(--muted);font:500 9px/1.2 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
-  #opw .r-value{display:flex;align-items:center;justify-content:flex-end;gap:7px;color:var(--text);font-size:12px;font-weight:700;text-align:right}
+  #opw .sub{margin:0;color:var(--muted);font-size:13px}
+  #opw .steps{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-bottom:0}
+  #opw .step{position:relative;appearance:none;border:0;border-right:1px solid var(--line);background:var(--bg);padding:12px 13px;color:var(--body);font:600 12px/1.25 'Geist',system-ui,sans-serif;cursor:pointer;text-align:left}
+  #opw .step:last-child{border-right:0}
+  #opw .step b{display:inline-grid;place-items:center;width:19px;height:19px;margin-right:7px;border:1px solid var(--line);border-radius:50%;color:var(--muted);font:600 9px/1 'IBM Plex Mono',monospace}
+  #opw .step.active{background:var(--accent-soft);box-shadow:inset 0 -2px 0 var(--accent);color:var(--accent)}
+  #opw .step.active b{border-color:var(--accent);color:var(--accent)}
+  #opw .stage{padding:20px 22px 18px;border:1px solid var(--line)}
+  #opw .stage-top{display:flex;justify-content:space-between;gap:15px;align-items:flex-start;margin-bottom:17px}
+  #opw .phase{color:var(--accent);font:600 9.5px/1.2 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+  #opw h3{margin:5px 0 0;color:var(--text);font:700 19px/1.2 'Geist',system-ui,sans-serif;letter-spacing:-.02em}
+  #opw .clock{color:var(--muted);font:500 10px/1 'IBM Plex Mono',monospace;white-space:nowrap;padding-top:3px}
+  #opw .flow{display:grid;grid-template-columns:1fr 58px 1fr;align-items:center;gap:10px}
+  #opw .node{min-height:128px;padding:16px;border:1px solid var(--line);background:var(--soft);display:flex;flex-direction:column;justify-content:space-between}
+  #opw .node-label{color:var(--muted);font:600 9px/1.25 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+  #opw .node-value{margin:8px 0 5px;color:var(--text);font-size:18px;font-weight:700;letter-spacing:-.02em}
+  #opw .node-note{color:var(--muted);font-size:11.5px}
+  #opw .node.primary{border-color:var(--accent);box-shadow:inset 0 3px 0 var(--accent);background:var(--bg)}
+  #opw .node.primary .node-value{color:var(--accent)}
+  #opw .connector{text-align:center;color:var(--accent);font-size:28px;font-weight:500}
+  #opw .connector small{display:block;margin-top:3px;color:var(--muted);font:500 8.5px/1.2 'IBM Plex Mono',monospace;text-transform:uppercase}
+  #opw .facts{display:grid;grid-template-columns:repeat(3,1fr);margin-top:14px;border:1px solid var(--line)}
+  #opw .fact{padding:11px 13px;border-right:1px solid var(--line)}
+  #opw .fact:last-child{border-right:0}
+  #opw .fact-label{color:var(--muted);font:500 8.5px/1.2 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+  #opw .fact-value{display:flex;align-items:center;gap:7px;margin-top:4px;color:var(--text);font-size:12px;font-weight:700}
   #opw .dot{width:7px;height:7px;border-radius:50%;background:var(--slate);flex:none}
-  #opw .takeaway{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:15px 18px;border:1px solid var(--line);border-top:0;background:var(--accent-soft)}
-  #opw .take-label{padding-top:2px;color:var(--accent);font:600 9.5px/1.2 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
-  #opw .take-text{color:var(--text);font-size:13px;font-weight:600}
-  #opw .foot{display:flex;justify-content:space-between;gap:16px;padding:9px 12px;border:1px solid var(--line);border-top:0;color:var(--muted);font-size:9.5px}
-  #opw .method{max-width:620px}
-  #opw .brand{white-space:nowrap;color:var(--text);font-weight:600}
-  #opw .brand i{font-style:normal;color:var(--accent)}
-  @media(max-width:660px){
-    #opw .main{grid-template-columns:1fr}
-    #opw .chart-panel{border-right:0;border-bottom:1px solid var(--line)}
-    #opw .status{grid-template-columns:1fr 1fr}
-    #opw .row:nth-child(odd){border-right:1px solid var(--line)}
-    #opw .row:nth-last-child(-n+2){border-bottom:0}
-    #opw .chart-shell{height:250px}
+  #opw .why{display:grid;grid-template-columns:92px 1fr;gap:15px;padding:14px 17px;border:1px solid var(--line);border-top:0;background:var(--accent-soft)}
+  #opw .why-label{padding-top:2px;color:var(--accent);font:600 9px/1.2 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+  #opw .why-text{color:var(--text);font-size:13px;font-weight:600}
+  #opw .foot{display:flex;justify-content:space-between;gap:15px;padding:9px 12px;border:1px solid var(--line);border-top:0;color:var(--muted);font-size:9.5px}
+  #opw .brand{white-space:nowrap;color:var(--text);font-weight:600}#opw .brand i{font-style:normal;color:var(--accent)}
+  @media(max-width:560px){
+    #opw .head{padding:18px 17px 15px}#opw h2{font-size:21px}
+    #opw .steps{grid-template-columns:1fr}.step{border-right:0!important;border-bottom:1px solid var(--line)!important;padding:10px 13px!important}.step:last-child{border-bottom:0!important}.step.active{box-shadow:inset 3px 0 0 var(--accent)!important}
+    #opw .stage{padding:17px 15px 15px}#opw .stage-top{display:block}#opw .clock{margin-top:8px;white-space:normal}
+    #opw .flow{grid-template-columns:1fr;gap:8px}.node{min-height:108px}.connector{height:30px;line-height:30px}.connector span,.connector small{display:none}.connector:after{content:'↓';color:var(--accent);font-size:24px}
+    #opw .facts{grid-template-columns:1fr}.fact{border-right:0;border-bottom:1px solid var(--line)}.fact:last-child{border-bottom:0}
+    #opw .why{grid-template-columns:1fr;gap:4px;padding:13px 15px}.foot{display:block}.brand{display:block;margin-top:5px}
   }
-  @media(max-width:500px){
-    #opw .head{padding:19px 17px 15px}
-    #opw h2{font-size:21px}
-    #opw .tabs{grid-template-columns:1fr}
-    #opw .tab{border-right:0;border-bottom:1px solid var(--line);text-align:left;padding:10px 14px}
-    #opw .tab:last-child{border-bottom:0}
-    #opw .tab.active{box-shadow:inset 3px 0 0 var(--accent)}
-    #opw .chart-panel{padding:14px 12px 12px}
-    #opw .chart-shell{height:220px}
-    #opw .status{grid-template-columns:1fr}
-    #opw .row:nth-child(odd){border-right:0}
-    #opw .row:nth-last-child(2){border-bottom:1px solid var(--line)}
-    #opw .takeaway{grid-template-columns:1fr;gap:5px;padding:13px 15px}
-    #opw .foot{display:block}
-    #opw .brand{display:block;margin-top:5px}
-  }
-  @media(prefers-reduced-motion:reduce){#opw *{transition:none!important}}
 </style>
 </head>
 <body>
 <div id="opw">
   <header class="head">
-    <div class="kick">RWA perps / off-hours risk</div>
-    <h2>What changes when the cash market closes?</h2>
-    <p class="sub">The venue can keep trading. The external price and the market maker's cash hedge cannot keep updating on the same terms.</p>
+    <div class="kick">RWA perps / closed-market risk</div>
+    <h2>Why 24/7 trading is not 24/7 liquidity</h2>
+    <p class="sub">Follow the same stock perp from the cash session, through the weekend, and into the market reopen.</p>
   </header>
 
-  <nav class="tabs" aria-label="Market scenario" id="tabs">
-    <button class="tab active" type="button" data-s="open" aria-pressed="true">Cash market open</button>
-    <button class="tab" type="button" data-s="mild" aria-pressed="false">Mild weekend gap</button>
-    <button class="tab" type="button" data-s="severe" aria-pressed="false">Severe reopening gap</button>
+  <nav class="steps" aria-label="Market phase" id="steps">
+    <button class="step active" type="button" data-s="open" aria-pressed="true"><b>1</b>Market open</button>
+    <button class="step" type="button" data-s="weekend" aria-pressed="false"><b>2</b>Weekend</button>
+    <button class="step" type="button" data-s="reopen" aria-pressed="false"><b>3</b>Market reopens</button>
   </nav>
 
-  <main class="main">
-    <section class="chart-panel">
-      <p class="panel-label">Relative price path / qualitative</p>
-      <div class="chart-shell">
-        <svg viewBox="0 0 620 270" role="img" aria-labelledby="chart-title chart-desc">
-          <title id="chart-title">External cash price and internal perp price</title>
-          <desc id="chart-desc">A qualitative comparison of price behavior while the cash market is open, closed, and reopening.</desc>
-          <path class="grid" d="M45 54H598 M45 108H598 M45 162H598 M45 216H598"/>
-          <path class="axis" d="M45 28V232H598"/>
-          <path class="marker" d="M235 28V232 M500 28V232"/>
-          <text class="svg-label" x="208" y="18">Market close</text>
-          <text class="svg-label" x="468" y="18">Market reopen</text>
-          <text class="svg-label" x="6" y="43">Relative</text>
-          <text class="svg-label" x="16" y="55">price</text>
-          <text class="svg-label" x="553" y="252">Time</text>
-          <path id="upper" class="bound" d="M235 72H500"/>
-          <path id="lower" class="bound" d="M235 188H500"/>
-          <path id="cash" class="cash" d="M45 190 C95 176 124 151 165 159 S210 120 255 127 S312 93 356 106 S412 76 455 90 S530 58 598 68"/>
-          <path id="perp" class="perp" d="M45 188 C95 174 124 149 165 157 S210 118 255 125 S312 91 356 104 S412 74 455 88 S530 57 598 67"/>
-          <path id="gap" class="gap" d="M500 74V142 M493 74H507 M493 142H507"/>
-          <text id="gapText" class="svg-label gap-text" x="511" y="111">Reopening gap</text>
-          <g id="liqs">
-            <circle class="liq" cx="520" cy="162" r="4"/><circle class="liq" cx="541" cy="146" r="4"/><circle class="liq" cx="562" cy="132" r="4"/>
-          </g>
-          <text id="cashLabel" class="svg-note" x="64" y="207">External cash price</text>
-          <text id="perpLabel" class="svg-note" x="64" y="137">Internal perp price</text>
-        </svg>
-      </div>
-      <div class="legend" aria-hidden="true"><span><i></i>External cash price</span><span><i></i>Internal perp price</span></div>
-    </section>
-
-    <aside class="status" aria-live="polite">
-      <div class="row"><span class="r-label">Reference price</span><span class="r-value"><i class="dot"></i><b id="reference">Live</b></span></div>
-      <div class="row"><span class="r-label">Spread</span><span class="r-value"><i class="dot"></i><b id="spread">Normal</b></span></div>
-      <div class="row"><span class="r-label">Cash hedge</span><span class="r-value"><i class="dot"></i><b id="hedge">Available</b></span></div>
-      <div class="row"><span class="r-label">Funding</span><span class="r-value"><i class="dot"></i><b id="funding">Active</b></span></div>
-      <div class="row"><span class="r-label">Liquidation risk</span><span class="r-value"><i class="dot"></i><b id="liquidation">Normal</b></span></div>
-      <div class="row"><span class="r-label">Reopening gap</span><span class="r-value"><i class="dot"></i><b id="reopening">None</b></span></div>
-    </aside>
+  <main class="stage" aria-live="polite">
+    <div class="stage-top">
+      <div><div class="phase" id="phase">Step 1 / Cash session</div><h3 id="headline">The perp follows a live stock price.</h3></div>
+      <div class="clock" id="clock">Cash market: OPEN</div>
+    </div>
+    <div class="flow">
+      <section class="node" id="leftNode">
+        <div class="node-label" id="leftLabel">Cash market</div>
+        <div class="node-value" id="leftValue">Live stock price</div>
+        <div class="node-note" id="leftNote">The underlying stock is trading.</div>
+      </section>
+      <div class="connector"><span id="arrow">↔</span><small id="arrowLabel">tracks + hedges</small></div>
+      <section class="node primary" id="rightNode">
+        <div class="node-label" id="rightLabel">Perp venue</div>
+        <div class="node-value" id="rightValue">Perp price tracks it</div>
+        <div class="node-note" id="rightNote">Market makers can hedge in the stock.</div>
+      </section>
+    </div>
+    <div class="facts">
+      <div class="fact"><div class="fact-label">Price anchor</div><div class="fact-value"><i class="dot" id="anchorDot"></i><span id="anchor">Live cash market</span></div></div>
+      <div class="fact"><div class="fact-label">Cash hedge</div><div class="fact-value"><i class="dot" id="hedgeDot"></i><span id="hedge">Available</span></div></div>
+      <div class="fact"><div class="fact-label">Main risk</div><div class="fact-value"><i class="dot" id="riskDot"></i><span id="risk">Normal trading risk</span></div></div>
+    </div>
   </main>
 
-  <section class="takeaway">
-    <div class="take-label">What changes</div>
-    <div class="take-text" id="takeaway">The perp can anchor to a live market and market makers can hedge externally.</div>
-  </section>
-  <footer class="foot">
-    <span class="method">Qualitative scenarios, not price forecasts. Exact spreads, margin rules and liquidation outcomes vary by venue and market.</span>
-    <span class="brand"><i>moni</i> research</span>
-  </footer>
+  <section class="why"><div class="why-label">Why it matters</div><div class="why-text" id="why">Both prices update together, and the cash market absorbs the hedge.</div></section>
+  <footer class="foot"><span>Conceptual walkthrough. Exact pricing, funding and liquidation rules vary by venue.</span><span class="brand"><i>moni</i> research</span></footer>
 </div>
 
 <script>
 (function(){
-  var colors={good:'#0fa968',neutral:'#6c42eb',warn:'#f59e0b',bad:'#e24b4a',slate:'#94a3b8'};
-  var commonCashOpen='M45 190 C95 176 124 151 165 159 S210 120 235 127';
+  var colors={good:'#0fa968',accent:'#6c42eb',warn:'#f59e0b',bad:'#e24b4a',slate:'#94a3b8'};
   var states={
-    open:{
-      cash:'M45 190 C95 176 124 151 165 159 S210 120 255 127 S312 93 356 106 S412 76 455 90 S530 58 598 68',
-      perp:'M45 188 C95 174 124 149 165 157 S210 118 255 125 S312 91 356 104 S412 74 455 88 S530 57 598 67',
-      bounds:false,gap:false,liqs:false,
-      values:[['reference','Live','good'],['spread','Normal','good'],['hedge','Available','good'],['funding','Active','neutral'],['liquidation','Normal','good'],['reopening','None','slate']],
-      takeaway:'The perp can anchor to a live market and market makers can hedge externally.'
-    },
-    mild:{
-      cash:commonCashOpen+' L500 127 C525 126 552 113 598 105',
-      perp:'M45 188 C95 174 124 149 165 157 S210 118 235 126 C275 118 305 138 338 120 S395 109 430 116 S472 103 500 111 C530 112 556 108 598 105',
-      bounds:true,gap:true,liqs:false,
-      values:[['reference','Paused','warn'],['spread','Wider','warn'],['hedge','Limited','warn'],['funding','Continues','neutral'],['liquidation','Elevated','warn'],['reopening','Possible','warn']],
-      takeaway:"Trading continues, but price discovery now depends more on the venue's own order book."
-    },
-    severe:{
-      cash:commonCashOpen+' L500 127 L500 171 C530 160 557 139 598 128',
-      perp:'M45 188 C95 174 124 149 165 157 S210 118 235 126 C280 112 310 88 349 98 S410 68 450 77 S482 70 500 72 C525 86 552 110 598 128',
-      bounds:true,gap:true,liqs:true,
-      values:[['reference','Reconnecting','warn'],['spread','Wide','bad'],['hedge','Returns at reopen','neutral'],['funding','Continued off-hours','neutral'],['liquidation','High','bad'],['reopening','Material','bad']],
-      takeaway:'Always-on access does not remove closed-market risk. It transfers that risk into pricing, spreads and liquidations.'
-    }
+    open:{phase:'Step 1 / Cash session',headline:'The perp follows a live stock price.',clock:'Cash market: OPEN',leftLabel:'Cash market',leftValue:'Live stock price',leftNote:'The underlying stock is trading.',arrow:'↔',arrowLabel:'tracks + hedges',rightLabel:'Perp venue',rightValue:'Perp price tracks it',rightNote:'Market makers can hedge in the stock.',anchor:'Live cash market',anchorColor:'good',hedge:'Available',hedgeColor:'good',risk:'Normal trading risk',riskColor:'good',why:'Both prices update together, and the cash market absorbs the hedge.'},
+    weekend:{phase:'Step 2 / After the close',headline:'The cash price stops. The perp keeps moving.',clock:'Cash market: CLOSED',leftLabel:'Last cash price',leftValue:'Frozen at the close',leftNote:'No new stock trades update this price.',arrow:'→',arrowLabel:'weaker anchor',rightLabel:'Perp order book',rightValue:'Still trading',rightNote:'Buyers and sellers now move the internal price.',anchor:'Last closing price',anchorColor:'warn',hedge:'Unavailable',hedgeColor:'bad',risk:'Wider spreads',riskColor:'warn',why:'The venue is open, but price discovery now depends on its own order book and limited hedge inventory.'},
+    reopen:{phase:'Step 3 / Cash market returns',headline:'The cash price returns and the gap has to close.',clock:'Cash market: REOPENING',leftLabel:'Reopening stock price',leftValue:'A new cash price',leftNote:'News is finally reflected in the underlying stock.',arrow:'⇢',arrowLabel:'gap closes',rightLabel:'Weekend perp price',rightValue:'Must reconnect',rightNote:'The adjustment can trigger fast liquidations.',anchor:'Live again',anchorColor:'accent',hedge:'Returns',hedgeColor:'accent',risk:'Reopening gap',riskColor:'bad',why:'24/7 access does not remove closed-market risk. It moves that risk into the reopening adjustment.'}
   };
-  var cash=document.getElementById('cash'),perp=document.getElementById('perp'),upper=document.getElementById('upper'),lower=document.getElementById('lower'),gap=document.getElementById('gap'),gapText=document.getElementById('gapText');
-  function select(key){
-    var s=states[key];
-    cash.setAttribute('d',s.cash);perp.setAttribute('d',s.perp);
-    upper.style.opacity=lower.style.opacity=s.bounds?'0.42':'0';
-    gap.style.opacity=gapText.style.opacity=s.gap?'1':'0';
-    document.querySelectorAll('#liqs .liq').forEach(function(el){el.style.opacity=s.liqs?'1':'0';});
-    s.values.forEach(function(v){
-      document.getElementById(v[0]).textContent=v[1];
-      var dot=document.getElementById(v[0]).parentElement.querySelector('.dot');dot.style.background=colors[v[2]];
-    });
-    document.getElementById('takeaway').textContent=s.takeaway;
-    document.querySelectorAll('.tab').forEach(function(btn){var on=btn.dataset.s===key;btn.classList.toggle('active',on);btn.setAttribute('aria-pressed',String(on));});
-    postHeight();
-  }
-  document.getElementById('tabs').addEventListener('click',function(e){var btn=e.target.closest('.tab');if(btn)select(btn.dataset.s);});
+  function setText(id,value){document.getElementById(id).textContent=value;}
+  function select(key){var s=states[key];['phase','headline','clock','leftLabel','leftValue','leftNote','arrow','arrowLabel','rightLabel','rightValue','rightNote','anchor','hedge','risk','why'].forEach(function(id){setText(id,s[id]);});document.getElementById('anchorDot').style.background=colors[s.anchorColor];document.getElementById('hedgeDot').style.background=colors[s.hedgeColor];document.getElementById('riskDot').style.background=colors[s.riskColor];document.querySelectorAll('.step').forEach(function(btn){var on=btn.dataset.s===key;btn.classList.toggle('active',on);btn.setAttribute('aria-pressed',String(on));});postHeight();}
+  document.getElementById('steps').addEventListener('click',function(e){var btn=e.target.closest('.step');if(btn)select(btn.dataset.s);});
   function postHeight(){try{parent.postMessage({type:'moni-widget-height',id:'off-hours-perp-stress-test',height:document.documentElement.scrollHeight},'*');}catch(e){}}
-  window.addEventListener('load',postHeight);window.addEventListener('resize',postHeight);
-  if(window.ResizeObserver){new ResizeObserver(postHeight).observe(document.body);}
-  select('open');setTimeout(postHeight,400);setTimeout(postHeight,1400);
+  window.addEventListener('load',postHeight);window.addEventListener('resize',postHeight);if(window.ResizeObserver){new ResizeObserver(postHeight).observe(document.body);}select('open');setTimeout(postHeight,400);setTimeout(postHeight,1400);
 })();
 </script>
 </body>
