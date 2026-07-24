@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Axis · Transparency snapshot</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  html,body{margin:0;background:transparent} body{padding:0}
+  #axw{--bg:#ffffff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#6c42eb14;--emerald:#0fa968;
+    font-family:'Geist',system-ui,sans-serif;color:var(--body);background:var(--bg);border:1px solid var(--line);box-sizing:border-box;width:100%;max-width:none;line-height:1.5}
+  #axw *{box-sizing:border-box;min-width:0}
+  #axw .mono{font-family:'IBM Plex Mono',monospace}
+  #axw .hd{padding:22px 24px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+  #axw .kick{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
+  #axw h2{font-size:19px;font-weight:700;letter-spacing:-.025em;color:var(--text);margin:0;line-height:1.25}
+  #axw .updated{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-align:right;white-space:nowrap}
+  #axw .updated b{display:block;color:var(--text);font-size:15px;font-weight:600;margin-bottom:2px}
+  #axw .updated .apy{color:var(--emerald)}
+  /* cards */
+  #axw .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-bottom:1px solid var(--line)}
+  #axw .card{background:var(--bg);padding:16px 20px}
+  #axw .card .lbl{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+  #axw .card .val{font-size:24px;font-weight:700;letter-spacing:-.03em;color:var(--text);line-height:1}
+  #axw .card .val.ok{color:var(--emerald)}
+  #axw .card .val.pp{color:var(--accent)}
+  #axw .card .sub{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:7px}
+  /* charts */
+  #axw .charts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}
+  #axw .panel{background:var(--bg);padding:18px 20px 14px}
+  #axw .ptitle{font-size:14px;font-weight:600;letter-spacing:-.02em;color:var(--text);margin:0 0 2px}
+  #axw .psub{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);margin:0 0 12px}
+  #axw .cw{position:relative;height:210px}
+  /* asset breakdown */
+  #axw .assets{padding:18px 20px 20px;border-top:1px solid var(--line)}
+  #axw .abar{display:flex;height:26px;width:100%;overflow:hidden;border:1px solid var(--line)}
+  #axw .abar span{height:100%}
+  #axw .alegend{display:flex;flex-wrap:wrap;gap:14px 22px;margin-top:14px}
+  #axw .alegend .it{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--body)}
+  #axw .alegend .dot{width:9px;height:9px;border-radius:50%;flex:none}
+  #axw .alegend .pct{font-family:'IBM Plex Mono',monospace;color:var(--text);font-weight:600}
+  #axw .alegend .amt{font-family:'IBM Plex Mono',monospace;color:var(--muted);font-size:11px}
+  /* footer */
+  #axw .ft{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 24px;border-top:1px solid var(--line);flex-wrap:wrap}
+  #axw .ft a{color:var(--accent);text-decoration:none}
+  #axw .ft .src{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted)}
+  #axw .mr{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.02em;display:inline-flex;align-items:center;gap:6px}
+  #axw .mr b{color:var(--text);font-weight:600}
+  #axw .mr .eye{flex:none;display:block}
+  @media(max-width:640px){
+    #axw .cards{grid-template-columns:repeat(2,1fr)}
+    #axw .charts{grid-template-columns:1fr}
+    #axw .card .val{font-size:21px}
+    #axw h2{font-size:17px}
+  }
+</style>
+</head>
+<body>
+<div id="axw">
+  <div class="hd">
+    <div>
+      <p class="kick">Axis · Transparency</p>
+      <h2>Reserves, backing &amp; yield — live snapshot</h2>
+    </div>
+    <div class="updated">
+      <b>TVL $33.3M</b>
+      <span class="apy">ITD APY 10.30%</span><br>
+      Last updated Jul 24, 08:01 UTC
+    </div>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="lbl">Total Backing</div>
+      <div class="val">$33,366,513</div>
+      <div class="sub">NAV snapshot · Jul 24</div>
+    </div>
+    <div class="card">
+      <div class="lbl">Backing Ratio</div>
+      <div class="val ok">100.20%</div>
+      <div class="sub">Over-collateralized</div>
+    </div>
+    <div class="card">
+      <div class="lbl">USDx Total Supply</div>
+      <div class="val">33.30M</div>
+      <div class="sub">33,298,502 · Jul 23</div>
+    </div>
+    <div class="card">
+      <div class="lbl">sUSDx Rate</div>
+      <div class="val pp">1.02665</div>
+      <div class="sub">per USDx · Jul 23</div>
+    </div>
+  </div>
+
+  <div class="charts">
+    <div class="panel">
+      <p class="ptitle">System Backing</p>
+      <p class="psub">Daily reserve NAV · Apr 9 – Jul 23</p>
+      <div class="cw"><canvas id="cBacking"></canvas></div>
+    </div>
+    <div class="panel">
+      <p class="ptitle">sUSDx value per USDx</p>
+      <p class="psub">Yield accrual since inception</p>
+      <div class="cw"><canvas id="cRate"></canvas></div>
+    </div>
+  </div>
+
+  <div class="assets">
+    <p class="ptitle" style="margin-bottom:12px">Asset breakdown · $33.37M</p>
+    <div class="abar" id="abar"></div>
+    <div class="alegend" id="alegend"></div>
+  </div>
+
+  <div class="ft">
+    <span class="src">Source: Axis <a href="https://app.axis.to/transparency" target="_blank" rel="noopener">transparency dashboard</a> · snapshot Jul 24, 2026</span>
+    <span class="mr"><svg class="eye" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M1.5 12S5.5 5 12 5s10.5 7 10.5 7-4 7-10.5 7S1.5 12 1.5 12Z" fill="none" stroke="#6c42eb" stroke-width="1.6"/><circle cx="12" cy="12" r="3.1" fill="#6c42eb"/></svg><b>moni</b> research</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  var PURPLE='#6c42eb', GRID='#eef0f3', TICK='#8b8f99';
+  Chart.defaults.font.family="'IBM Plex Mono', monospace";
+  Chart.defaults.font.size=10;
+  Chart.defaults.color=TICK;
+
+  // ---- real data pulled from app.axis.to/transparency (Jul 24 snapshot) ----
+  var backing=[10001347,10001347,10001424,10002063,10003170,10005615,10007941,14813243,14813184,14817840,14826180,14835491,14846294,14848836,14853841,14845829,14853841,14861696,14871161,14875932,14881831,16025587,16023977,16181612,16186111,16189313,16220600,16237609,16261604,16752937,17989914,18060905,18072912,18086897,18106913,18126912,18139712,20375205,30377211,30387220,30390207,30393214,32400213,32390710,32644862,32648877,33210504,33262545,33268539,33275541,33283939,33285937,39785935,40787942,40792946,40815931,41323946,41830933,41822864,41820866,41818869,41830875,40955780,40985787,40979774,41479778,41524778,41534786,41534786,41550789,39523015,39530017,39529028,42411356,42420065,42426058,42472571,42488573,42489834,42488806,42494567,42500560,42519569,41513761,41476480,41511491,41618386,41531489,41850524,41857254,39358532,39364778,39367784,39375776,39389780,39393776,33268500,33350625,33350877,33362631,33372639,33372505,33346494,33357492,33366491];
+  var rate=[1,1,1,1.00038,1.00073,1.0014,1.00984,1.01127,1.01206,1.01284,1.01358,1.01405,1.01432,1.0146,1.01489,1.01517,1.01545,1.01574,1.016,1.01627,1.01654,1.01682,1.01719,1.01755,1.01791,1.0184,1.01897,1.01964,1.02012,1.02039,1.02068,1.021,1.02161,1.02227,1.02293,1.02354,1.02403,1.02453,1.02502,1.02556,1.02611,1.02665];
+
+  function fmt(d){return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});}
+  function dates(start, n){var out=[],d0=new Date(start+'T12:00:00');for(var i=0;i<n;i++){out.push(fmt(new Date(d0.getTime()+i*86400000)));}return out;}
+  var backLabels=dates('2026-04-09', backing.length);
+  // rate line spans Apr 20 -> Jul 23 (94 days across 42 points)
+  var rateLabels=[]; var rs=new Date('2026-04-20T12:00:00').getTime(), rspan=(new Date('2026-07-23T12:00:00').getTime()-rs)/(rate.length-1);
+  for(var i=0;i<rate.length;i++){rateLabels.push(new Date(rs+i*rspan).toLocaleDateString('en-US',{month:'short',day:'numeric'}));}
+
+  var usd=function(v){return '$'+(v/1e6).toFixed(0)+'M';};
+
+  var c1=new Chart(document.getElementById('cBacking'),{
+    type:'bar',
+    data:{labels:backLabels,datasets:[{data:backing,backgroundColor:PURPLE,borderWidth:0,barPercentage:1,categoryPercentage:0.86}]},
+    options:{responsive:true,maintainAspectRatio:false,animation:false,
+      plugins:{legend:{display:false},tooltip:{enabled:false}},
+      scales:{
+        x:{grid:{display:false},border:{color:GRID},ticks:{maxRotation:0,autoSkip:false,callback:function(v,i){return (i%21===0||i===backing.length-1)?backLabels[i]:'';}}},
+        y:{beginAtZero:true,max:45000000,grid:{color:GRID},border:{display:false},ticks:{stepSize:15000000,callback:usd}}
+      }}
+  });
+
+  var c2=new Chart(document.getElementById('cRate'),{
+    type:'line',
+    data:{labels:rateLabels,datasets:[{data:rate,borderColor:PURPLE,backgroundColor:'rgba(108,66,235,0.08)',borderWidth:2,fill:true,pointRadius:0,tension:.25}]},
+    options:{responsive:true,maintainAspectRatio:false,animation:false,
+      plugins:{legend:{display:false},tooltip:{enabled:false}},
+      scales:{
+        x:{grid:{display:false},border:{color:GRID},ticks:{maxRotation:0,autoSkip:false,callback:function(v,i){return ((i%8===0&&i<rate.length-3)||i===rate.length-1)?rateLabels[i]:'';}}},
+        y:{min:1.0,max:1.03,grid:{color:GRID},border:{display:false},ticks:{stepSize:0.01,callback:function(v){return v.toFixed(3);}}}
+      }}
+  });
+
+  // asset breakdown
+  var seg=[
+    {n:'Stablecoins', p:37.91, a:'$12.62M', c:'#6c42eb'},
+    {n:'CMC Top 50', p:24.83, a:'$8.26M', c:'#8f6ef0'},
+    {n:'Others', p:24.26, a:'$8.08M', c:'#b3a0f6'},
+    {n:'Top 100–200', p:9.03, a:'$3.01M', c:'#94a3b8'},
+    {n:'Top 50–100', p:3.96, a:'$1.32M', c:'#cfd3da'}
+  ];
+  var bar=document.getElementById('abar'), leg=document.getElementById('alegend');
+  seg.forEach(function(s){
+    var e=document.createElement('span'); e.style.width=s.p+'%'; e.style.background=s.c; bar.appendChild(e);
+    var it=document.createElement('div'); it.className='it';
+    it.innerHTML='<span class="dot" style="background:'+s.c+'"></span><span>'+s.n+'</span> <span class="pct">'+s.p.toFixed(2)+'%</span> <span class="amt">'+s.a+'</span>';
+    leg.appendChild(it);
+  });
+
+  function fix(){ try{ c1.resize(); c2.resize(); }catch(e){} }
+  window.addEventListener('load', function(){ requestAnimationFrame(fix); setTimeout(fix,120); });
+  setTimeout(fix,60);
+})();
+</script>
+</body>
+</html>
