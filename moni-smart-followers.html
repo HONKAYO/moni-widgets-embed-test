@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart followers · Moni</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  html,body{margin:0;background:transparent} body{padding:0}
+  #lpw{--bg:#ffffff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#6c42eb14;
+    font-family:'Geist',system-ui,sans-serif;color:var(--body);background:var(--bg);border:1px solid var(--line);box-sizing:border-box;width:100%;max-width:none;line-height:1.5}
+  #lpw *{box-sizing:border-box;min-width:0}
+  #lpw .hd{padding:20px 24px 15px;border-bottom:1px solid var(--line)}
+  #lpw .kick{font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  #lpw h2{margin:10px 0 7px;font:700 23px/1.14 'Geist',system-ui,sans-serif;letter-spacing:-.025em;color:var(--text)}
+  #lpw .sub{margin:0;color:var(--muted);font-size:13px;line-height:1.45;max-width:64ch}
+  #lpw .cols{display:grid;grid-template-columns:28px 40px 1fr auto auto 14px;gap:12px;align-items:center;padding:10px 24px 8px;border-bottom:1px solid var(--line);font:600 10px 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  #lpw .cols .r{text-align:right}
+  #lpw a.row{display:grid;grid-template-columns:28px 40px 1fr auto auto 14px;gap:12px;align-items:center;padding:9px 24px;border-bottom:1px solid var(--line);text-decoration:none;color:inherit;transition:.12s}
+  #lpw a.row:last-child{border-bottom:none}
+  #lpw a.row:hover{background:var(--accent-soft)}
+  #lpw .rk{font:600 13px 'IBM Plex Mono',monospace;color:var(--muted);text-align:center}
+  #lpw .av{position:relative;width:40px;height:40px}
+  #lpw .av img{width:40px;height:40px;border-radius:50%;object-fit:cover;display:block;background:var(--soft)}
+  #lpw .av .mono{display:none;position:absolute;inset:0;border-radius:50%;background:var(--accent-soft);color:var(--accent);align-items:center;justify-content:center;font:700 16px 'Geist',sans-serif}
+  #lpw .who{display:flex;flex-direction:column;min-width:0;gap:1px}
+  #lpw .who .nm{font:600 14px/1.2 'Geist',sans-serif;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #lpw .who .hd{font:500 12px/1.2 'IBM Plex Mono',monospace;color:var(--muted);padding:0;border:0}
+  #lpw a.row:hover .who .nm{color:var(--accent)}
+  #lpw .fol{text-align:right;font:600 13px/1.15 'Geist',sans-serif;color:var(--body);white-space:nowrap;display:flex;flex-direction:column;gap:2px}
+  #lpw .fol small{font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  #lpw .sc{text-align:right;font:700 18px/1.1 'Geist',sans-serif;letter-spacing:-.02em;color:var(--accent);white-space:nowrap;display:flex;flex-direction:column;gap:2px}
+  #lpw .sc em{font:600 9px/1 'IBM Plex Mono',monospace;font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);opacity:.65}
+  #lpw .go{color:var(--muted);font-size:13px;opacity:0;transition:.12s}
+  #lpw a.row:hover .go{opacity:.85;color:var(--accent)}
+  #lpw .ft{padding:11px 24px;border-top:1px solid var(--line);font:500 11px 'IBM Plex Mono',monospace;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  #lpw .ft b{color:var(--text);font-weight:700}
+  @media(max-width:520px){
+    #lpw .cols,#lpw a.row{grid-template-columns:22px 34px 1fr auto 12px}
+    #lpw .fol,#lpw .cols .r-fol{display:none}
+    #lpw .av,#lpw .av img{width:34px;height:34px}
+    #lpw .hd,#lpw .cols,#lpw a.row,#lpw .ft{padding-left:16px;padding-right:16px}
+  }
+</style></head><body>
+<div id="lpw">
+  <div class="hd">
+    <div class="kick">Smart followers · via Moni</div>
+    <h2>Who actually follows this project</h2>
+    <p class="sub">Top followers ranked by MoniScore: Solana and crypto OGs plus faces from Delphi, a16z and Paradigm. Tap any name for the full Moni profile.</p>
+  </div>
+  <div class="cols"><span>#</span><span></span><span>Profile</span><span class="r r-fol">Followers</span><span class="r">MoniScore</span><span></span></div>
+    <a class="row" href="https://discover.getmoni.io/blknoiz06" target="_blank" rel="noopener noreferrer">
+      <span class="rk">1</span>
+      <span class="av"><img src="https://pbs.twimg.com/profile_images/2052070109758226438/xlyPdLmn_400x400.jpg" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="mono">A</span></span>
+      <span class="who"><span class="nm">Ansem 🐂🀄️</span><span class="hd">@blknoiz06</span></span>
+      <span class="fol">1.2M<small>followers</small></span>
+      <span class="sc">34.8K<em>S-tier</em></span>
+      <span class="go">&#8599;</span>
+    </a>
+    <a class="row" href="https://discover.getmoni.io/toly" target="_blank" rel="noopener noreferrer">
+      <span class="rk">2</span>
+      <span class="av"><img src="https://pbs.twimg.com/profile_images/2075257710715781123/74AtQPd6_400x400.jpg" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="mono">T</span></span>
+      <span class="who"><span class="nm">toly 🇺🇸</span><span class="hd">@toly</span></span>
+      <span class="fol">1.9M<small>followers</small></span>
+      <span class="sc">32.7K<em>S-tier</em></span>
+      <span class="go">&#8599;</span>
+    </a>
+    <a class="row" href="https://discover.getmoni.io/solana" target="_blank" rel="noopener noreferrer">
+      <span class="rk">3</span>
+      <span class="av"><img src="https://pbs.twimg.com/profile_images/2069156164118761472/1JvlRfZB_400x400.jpg" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="mono">S</span></span>
+      <span class="who"><span class="nm">Solana</span><span class="hd">@solana</span></span>
+      <span class="fol">4M<small>followers</small></span>
+      <span class="sc">30.2K<em>S-tier</em></span>
+      <span class="go">&#8599;</span>
+    </a>
+    <a class="row" href="https://discover.getmoni.io/Icebergy" target="_blank" rel="noopener noreferrer">
+      <span class="rk">4</span>
+      <span class="av"><img src="https://pbs.twimg.com/profile_images/1758646426840584192/x0ZLPgjw_400x400.jpg" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="mono">I</span></span>
+      <span class="who"><span class="nm">icebergy ❄️</span><span class="hd">@Icebergy</span></span>
+      <span class="fol">174.4K<small>followers</small></span>
+      <span class="sc">25.4K<em>S-tier</em></span>
+      <span class="go">&#8599;</span>
+    </a>
+    <a class="row" href="https://discover.getmoni.io/dcfgod" target="_blank" rel="noopener noreferrer">
+      <span class="rk">5</span>
+      <span class="av"><img src="https://pbs.twimg.com/profile_images/1856079545780125696/JQkZlaHt_400x400.jpg" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="mono">D</span></span>
+      <span class="who"><span class="nm">DCF GOD</span><span class="hd">@dcfgod</span></span>
+      <span class="fol">102.9K<small>followers</small></span>
+      <span class="sc">23.4K<em>S-tier</em></span>
+      <span class="go">&#8599;</span>
+    </a>
+    <a class="row" href="https://discover.getmoni.io/tarunchitra" target="_blank" rel="noopener noreferrer">
+      <span class="rk">6</span>
+      <span class="av"><img src="https://pbs.twimg.com/profile_images/1587539091444432897/Z6_nmrCB_400x400.jpg" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="mono">T</span></span>
+      <span class="who"><span class="nm">Tarun Chitra</span><span class="hd">@tarunchitra</span></span>
+      <span class="fol">82.5K<small>followers</small></span>
+      <span class="sc">19.4K<em>S-tier</em></span>
+      <span class="go">&#8599;</span>
+    </a>
+    <a class="row" href="https://discover.getmoni.io/Shaughnessy119" target="_blank" rel="noopener noreferrer">
+      <span class="rk">7</span>
+      <span class="av"><img src="https://pbs.twimg.com/profile_images/1976669967694118912/T1EnJx6f_400x400.jpg" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="mono">T</span></span>
+      <span class="who"><span class="nm">Tommy</span><span class="hd">@Shaughnessy119</span></span>
+      <span class="fol">68.9K<small>followers</small></span>
+      <span class="sc">18.5K<em>S-tier</em></span>
+      <span class="go">&#8599;</span>
+    </a>
+    <a class="row" href="https://discover.getmoni.io/knowerofmarkets" target="_blank" rel="noopener noreferrer">
+      <span class="rk">8</span>
+      <span class="av"><img src="https://pbs.twimg.com/profile_images/2002210312309657600/gFW8c9Q0_400x400.jpg" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="mono">K</span></span>
+      <span class="who"><span class="nm">knower</span><span class="hd">@knowerofmarkets</span></span>
+      <span class="fol">70.8K<small>followers</small></span>
+      <span class="sc">18.4K<em>S-tier</em></span>
+      <span class="go">&#8599;</span>
+    </a>
+    <a class="row" href="https://discover.getmoni.io/tomhschmidt" target="_blank" rel="noopener noreferrer">
+      <span class="rk">9</span>
+      <span class="av"><img src="https://pbs.twimg.com/profile_images/2013720250395537408/tK6EbZvJ_400x400.jpg" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="mono">T</span></span>
+      <span class="who"><span class="nm">Tom Schmidt ＞|＜</span><span class="hd">@tomhschmidt</span></span>
+      <span class="fol">40.7K<small>followers</small></span>
+      <span class="sc">18.4K<em>S-tier</em></span>
+      <span class="go">&#8599;</span>
+    </a>
+  <div class="ft"><span>Live via <b>Moni Discover</b> · click a row to open the profile</span><span><b>moni</b> research</span></div>
+</div>
+</body></html>
