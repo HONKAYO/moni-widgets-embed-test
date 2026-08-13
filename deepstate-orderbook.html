@@ -57,7 +57,7 @@
   <div class="hd">
     <p class="kick">Deepstate · what it is</p>
     <h2>It's an orderbook. Onchain.</h2>
-    <p class="sub">Buyers post the price they'll pay. Sellers post the price they'll take. When the two meet, Deepstate pairs them and settles the trade — no liquidity pool in the middle.</p>
+    <p class="sub">Buyers post the price they'll pay. Sellers post the price they'll take. When the two meet, Deepstate pairs them and settles the trade, with no liquidity pool in between.</p>
   </div>
 
   <div class="wrap">
@@ -74,7 +74,7 @@
   </div>
 
   <div class="note">
-    <b>That's the whole idea.</b> A book of real buy and sell orders, matched onchain. The clever engineering makes it cheap enough to run on Ethereum. The open question isn't the matching — it's whether enough buyers <i>and</i> sellers show up to fill the book.
+    <b>That's the whole idea.</b> A book of real buy and sell orders, matched onchain. The clever part is making it cheap enough to run on Ethereum. The uncertain part is whether enough buyers <i>and</i> sellers show up to fill the book.
   </div>
 
   <div class="ft">
@@ -117,8 +117,10 @@
     el.classList.add('hit');
     setTimeout(function(){
       tape.innerHTML='<b>✓ matched</b> '+best.s.toFixed(1)+' ETH @ $'+fmt(best.p);
-      asks.pop();                         // that ask is filled and gone
-      if(asks.length<4){ asks.unshift({p:asks[0].p+1,s:rng(2,9)}); } // book refills to full
+      // that offer is taken; a new maker refills the same best price. prices stay anchored, mid stays $2,000.
+      best.s=rng(3,13);
+      asks[0].s=rng(2,9);
+      bids[Math.floor(Math.random()*bids.length)].s=rng(3,13);
       render(); busy=false;
     },560);
   });
