@@ -7,44 +7,56 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
   html,body{margin:0;background:transparent} body{padding:0}
-  #dsw{--bg:#ffffff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#6c42eb14;--red:#e24b4a;--redsoft:#e24b4a12;
+  #dsw{--bg:#ffffff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#6c42eb14;--red:#e24b4a;--redsoft:#e24b4a12;--emerald:#0fa968;
     font-family:'Geist',system-ui,sans-serif;color:var(--body);background:var(--bg);border:1px solid var(--line);box-sizing:border-box;width:100%;max-width:none;line-height:1.5}
   #dsw *{box-sizing:border-box;min-width:0}
   #dsw .hd{padding:22px 24px 16px;border-bottom:1px solid var(--line)}
   #dsw .kick{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
   #dsw h2{font-size:21px;font-weight:700;letter-spacing:-.025em;color:var(--text);margin:0 0 6px;line-height:1.2}
-  #dsw .sub{font-size:13.5px;color:var(--body);margin:0;max-width:52ch}
-  #dsw .sub b{color:var(--text);font-weight:600}
+  #dsw .sub{font-size:13.5px;color:var(--body);margin:0;max-width:54ch}
 
-  #dsw .wrap{padding:18px 24px 8px}
+  #dsw .wrap{padding:16px 24px 4px}
   #dsw .side-h{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:0 2px 6px}
   #dsw .book{display:flex;flex-direction:column;gap:3px}
-  #dsw .row{position:relative;display:flex;justify-content:space-between;align-items:center;padding:7px 10px;font-family:'IBM Plex Mono',monospace;font-size:13px;overflow:hidden;border:1px solid transparent}
-  #dsw .row .bar{position:absolute;top:0;bottom:0;right:0;z-index:0}
+  #dsw .row{position:relative;display:flex;justify-content:space-between;align-items:center;padding:7px 10px;font-family:'IBM Plex Mono',monospace;font-size:13px;overflow:hidden;border:1px solid transparent;transition:transform .12s}
+  #dsw .row .bar{position:absolute;top:0;bottom:0;right:0;z-index:0;transition:width .3s}
   #dsw .row .px,#dsw .row .sz{position:relative;z-index:1}
   #dsw .row .px{font-weight:600}
   #dsw .ask .bar{background:var(--redsoft)} #dsw .ask .px{color:var(--red)}
   #dsw .bid .bar{background:var(--accent-soft)} #dsw .bid .px{color:var(--accent)}
   #dsw .row .sz{color:var(--muted)}
   #dsw .row.best{border-color:var(--line)}
-  #dsw .row.hit{animation:flash .5s ease}
-  @keyframes flash{0%{background:var(--accent);}100%{background:transparent;}}
-  #dsw .row.hit .px,#dsw .row.hit .sz{color:#fff;transition:color .1s}
+  #dsw .row.hit{animation:flash .45s ease}
+  @keyframes flash{0%{background:var(--accent)}100%{background:transparent}}
+  #dsw .row.hit .px,#dsw .row.hit .sz{color:#fff}
 
   #dsw .spread{display:flex;justify-content:center;align-items:center;gap:10px;margin:8px 0;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)}
   #dsw .spread .mid{color:var(--text);font-weight:600;font-size:13px}
   #dsw .spread .ln{flex:1;height:1px;background:var(--line)}
 
-  #dsw .controls{display:flex;align-items:center;gap:14px;padding:6px 24px 4px;flex-wrap:wrap}
+  #dsw .controls{padding:12px 24px 4px}
+  #dsw .clabel{display:flex;justify-content:space-between;align-items:baseline;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:8px}
+  #dsw .clabel b{font-family:'Geist';font-size:15px;font-weight:700;color:var(--accent);letter-spacing:-.02em}
+  #dsw input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:var(--line);outline:none;margin:6px 0 2px}
+  #dsw input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;border:3px solid #fff;box-shadow:0 0 0 1px var(--accent)}
+  #dsw input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;border:3px solid #fff}
+  #dsw .btnrow{display:flex;align-items:center;gap:14px;margin-top:12px;flex-wrap:wrap}
   #dsw button{font-family:'Geist',sans-serif;font-size:13.5px;font-weight:600;color:#fff;background:var(--accent);border:0;padding:11px 18px;cursor:pointer;letter-spacing:-.01em}
   #dsw button:active{transform:translateY(1px)}
-  #dsw .tape{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);min-height:18px}
-  #dsw .tape b{color:#0fa968}
 
-  #dsw .note{padding:14px 24px 6px;font-size:13px;color:var(--body)}
+  #dsw .result{margin:14px 24px 0;border:1px solid var(--line);background:var(--soft);padding:14px 16px}
+  #dsw .rgrid{display:flex;gap:22px;flex-wrap:wrap}
+  #dsw .rgrid .cell .l{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+  #dsw .rgrid .cell .v{font-size:17px;font-weight:700;color:var(--text);letter-spacing:-.02em;line-height:1.3}
+  #dsw .rgrid .cell .v.warn{color:var(--red)}
+  #dsw .rgrid .cell .v.ok{color:var(--emerald)}
+  #dsw .onchain{margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--emerald)}
+  #dsw .onchain .muted{color:var(--muted)}
+
+  #dsw .note{padding:16px 24px 6px;font-size:13px;color:var(--body)}
   #dsw .note b{color:var(--text);font-weight:600}
 
-  #dsw .ft{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 24px;border-top:1px solid var(--line);margin-top:10px;flex-wrap:wrap}
+  #dsw .ft{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 24px;border-top:1px solid var(--line);margin-top:12px;flex-wrap:wrap}
   #dsw .cap{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)}
   #dsw .mr{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
   #dsw .mr b{color:var(--text);font-weight:600}
@@ -57,7 +69,7 @@
   <div class="hd">
     <p class="kick">Deepstate · what it is</p>
     <h2>It's an orderbook. Onchain.</h2>
-    <p class="sub">Buyers post the price they'll pay. Sellers post the price they'll take. When the two meet, Deepstate pairs them and settles the trade, with no liquidity pool in between.</p>
+    <p class="sub">Buyers post the price they'll pay, sellers post the price they'll take, and Deepstate matches them onchain. Buy more than the top offer and your order walks <i>down the book</i>, taking each seller in turn.</p>
   </div>
 
   <div class="wrap">
@@ -69,12 +81,22 @@
   </div>
 
   <div class="controls">
-    <button id="go">▶ Match a trade</button>
-    <span class="tape" id="tape">A buyer just walked in wanting ETH…</span>
+    <div class="clabel"><span>Your market buy</span><b id="qval">8 ETH</b></div>
+    <input type="range" id="q" min="1" max="30" value="8" step="1">
+    <div class="btnrow"><button id="go">▶ Market buy</button></div>
+  </div>
+
+  <div class="result" id="result">
+    <div class="rgrid">
+      <div class="cell"><div class="l">Bought</div><div class="v" id="rBought">—</div></div>
+      <div class="cell"><div class="l">Avg fill price</div><div class="v" id="rAvg">—</div></div>
+      <div class="cell"><div class="l">Slippage vs best</div><div class="v" id="rSlip">—</div></div>
+    </div>
+    <div class="onchain" id="rChain"><span class="muted">Pick a size and hit Market buy to walk the book.</span></div>
   </div>
 
   <div class="note">
-    <b>That's the whole idea.</b> A book of real buy and sell orders, matched onchain. The clever part is making it cheap enough to run on Ethereum. The uncertain part is whether enough buyers <i>and</i> sellers show up to fill the book.
+    <b>That's the engine.</b> A small buy takes the best offer at one clean price. A big buy eats several sellers and pays a worse average — that's slippage, and it's why a book needs depth. Deepstate's hard part isn't the matching. It's getting enough buyers <i>and</i> sellers onchain to make the book deep in the first place.
   </div>
 
   <div class="ft">
@@ -85,44 +107,70 @@
 
 <script>
 (function(){
-  var asksEl=document.getElementById('asks'), bidsEl=document.getElementById('bids'), tape=document.getElementById('tape'), btn=document.getElementById('go');
-  var rng=function(a,b){return Math.round((a+Math.random()*(b-a)));};
+  var asksEl=document.getElementById('asks'),bidsEl=document.getElementById('bids'),
+      q=document.getElementById('q'),qval=document.getElementById('qval'),btn=document.getElementById('go'),
+      result=document.getElementById('result');
   var fmt=function(n){return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');};
-  var asks=[], bids=[];
+  var fmtDec=function(n){var s=n.toFixed(1).split('.');return fmt(+s[0])+'.'+s[1];};
+  var rng=function(a,b){return Math.round(a+Math.random()*(b-a));};
+  // asks ascending (index 0 = best/lowest); bids descending (index 0 = best/highest)
+  var asks,bids;
   function seed(){
-    asks=[{p:2004,s:rng(2,9)},{p:2003,s:rng(2,9)},{p:2002,s:rng(3,12)},{p:2001,s:rng(4,14)}];
-    bids=[{p:1999,s:rng(4,14)},{p:1998,s:rng(3,12)},{p:1997,s:rng(2,9)},{p:1996,s:rng(2,9)}];
+    asks=[{p:2001,s:rng(3,6)},{p:2002,s:rng(3,7)},{p:2003,s:rng(4,8)},{p:2004,s:rng(4,9)},{p:2005,s:rng(5,10)}];
+    bids=[{p:1999,s:rng(3,6)},{p:1998,s:rng(3,7)},{p:1997,s:rng(4,8)},{p:1996,s:rng(4,9)},{p:1995,s:rng(5,10)}];
   }
   function maxSize(){var m=1;asks.concat(bids).forEach(function(o){if(o.s>m)m=o.s;});return m;}
   function render(){
     var mx=maxSize();
-    function rows(arr,cls){return arr.map(function(o,i){
-      var best=(cls==='ask'&&i===arr.length-1)||(cls==='bid'&&i===0);
-      return '<div class="row '+cls+(best?' best':'')+'" data-p="'+o.p+'">'+
-        '<span class="bar" style="width:'+(18+o.s/mx*82)+'%"></span>'+
-        '<span class="px">$'+fmt(o.p)+'</span>'+
-        '<span class="sz">'+o.s.toFixed(1)+' ETH</span></div>';
-    }).join('');}
-    asksEl.innerHTML=rows(asks,'ask');
-    bidsEl.innerHTML=rows(bids,'bid');
+    // asks displayed highest-first (top) -> lowest near spread (bottom)
+    asksEl.innerHTML=asks.slice().reverse().map(function(o,i,arr){
+      var best=i===arr.length-1;
+      return '<div class="row ask'+(best?' best':'')+'"><span class="bar" style="width:'+(16+o.s/mx*84)+'%"></span><span class="px">$'+fmt(o.p)+'</span><span class="sz">'+o.s.toFixed(1)+' ETH</span></div>';
+    }).join('');
+    bidsEl.innerHTML=bids.map(function(o,i){
+      var best=i===0;
+      return '<div class="row bid'+(best?' best':'')+'"><span class="bar" style="width:'+(16+o.s/mx*84)+'%"></span><span class="px">$'+fmt(o.p)+'</span><span class="sz">'+o.s.toFixed(1)+' ETH</span></div>';
+    }).join('');
   }
   seed(); render();
+  q.addEventListener('input',function(){qval.textContent=q.value+' ETH';});
+
+  function txhash(){var h='0x';var c='0123456789abcdef';for(var i=0;i<6;i++)h+=c[Math.floor(Math.random()*16)];return h+'…';}
   var busy=false;
   btn.addEventListener('click',function(){
     if(busy)return; busy=true;
-    var best=asks[asks.length-1]; // lowest ask = what a buyer hits first
-    var rowEls=asksEl.querySelectorAll('.row');
-    var el=rowEls[rowEls.length-1];
-    tape.innerHTML='Buyer takes the lowest ask…';
-    el.classList.add('hit');
+    var want=+q.value, remaining=want, cost=0, filled=0, levels=0;
+    for(var i=0;i<asks.length && remaining>0.0001;i++){
+      var take=Math.min(remaining,asks[i].s);
+      cost+=take*asks[i].p; filled+=take; remaining-=take; levels++;
+    }
+    var avg=filled>0?cost/filled:0;
+    var best=asks[0].p;
+    var slip=filled>0?((avg-best)/best*100):0;
+    var partial=filled<want-0.0001;
+    // walk animation: highlight consumed asks bottom-up (lowest first)
+    var rows=asksEl.querySelectorAll('.row');           // rows[last] = lowest ask
+    for(var j=0;j<levels;j++){
+      (function(j){setTimeout(function(){var el=rows[rows.length-1-j];if(el)el.classList.add('hit');},j*150);})(j);
+    }
     setTimeout(function(){
-      tape.innerHTML='<b>✓ matched</b> '+best.s.toFixed(1)+' ETH @ $'+fmt(best.p);
-      // that offer is taken; a new maker refills the same best price. prices stay anchored, mid stays $2,000.
-      best.s=rng(3,13);
-      asks[0].s=rng(2,9);
-      bids[Math.floor(Math.random()*bids.length)].s=rng(3,13);
+      document.getElementById('rBought').textContent=filled.toFixed(1)+' ETH';
+      var avgEl=document.getElementById('rAvg'); avgEl.textContent='$'+fmtDec(avg);
+      var slipEl=document.getElementById('rSlip');
+      slipEl.textContent=(slip<0.001?'0.00':'+'+slip.toFixed(2))+'%';
+      slipEl.className='v'+(slip>0.15?' warn':(slip<0.06?' ok':''));
+      document.getElementById('rBought').className='v'+(partial?' warn':'');
+      var chain=document.getElementById('rChain');
+      if(partial){
+        chain.innerHTML='<span class="muted">only '+filled.toFixed(1)+' of '+want+' ETH filled — ran out of sellers.</span>  ✓ settled onchain <span class="muted">tx '+txhash()+'</span>';
+      } else {
+        chain.innerHTML='✓ settled onchain <span class="muted">across '+levels+' price level'+(levels>1?'s':'')+' · tx '+txhash()+'</span>';
+      }
+      // refill the taken depth (new makers), keep prices anchored
+      var r=remaining;
+      for(var i=0;i<asks.length;i++){ asks[i].s=rng(3,10); }
       render(); busy=false;
-    },560);
+    }, levels*150+400);
   });
 })();
 </script>
