@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deepstate · who holds the venue</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  html,body{margin:0;background:transparent} body{padding:0}
+  #dsg{--bg:#ffffff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#6c42eb14;--amber:#f59e0b;--slate:#c8ccd4;--slate2:#e2e5ea;
+    font-family:'Geist',system-ui,sans-serif;color:var(--body);background:var(--bg);border:1px solid var(--line);
+    box-sizing:border-box;width:100%;max-width:none;overflow:hidden;line-height:1.5}
+  #dsg *{box-sizing:border-box;min-width:0}
+  #dsg .hd{padding:22px 24px 16px;border-bottom:1px solid var(--line)}
+  #dsg .kick{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
+  #dsg h2{font-size:21px;font-weight:700;letter-spacing:-.025em;color:var(--text);margin:0 0 6px;line-height:1.2}
+  #dsg .sub{font-size:13.5px;color:var(--body);margin:0;max-width:58ch}
+
+  #dsg .sec{padding:18px 24px 0}
+  #dsg .sech{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+
+  #dsg .barwrap{position:relative;padding-top:20px;padding-bottom:22px}
+  #dsg .bar{position:relative;height:38px;background:var(--slate2);overflow:visible}
+  #dsg .fill{position:absolute;top:0;bottom:0;left:0;background:var(--accent);display:flex;align-items:center;padding-left:12px}
+  #dsg .fill b{font-size:15px;font-weight:600;color:#fff;letter-spacing:-.01em}
+  #dsg .tick{position:absolute;top:-9px;bottom:-9px;width:0;border-left:1.5px dashed var(--amber);z-index:2}
+  #dsg .tlab{position:absolute;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9a6b08;white-space:nowrap;padding-left:5px}
+  #dsg .tlab.top{top:0} #dsg .tlab.bot{bottom:0}
+  #dsg .brest{position:absolute;right:0;bottom:0;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);white-space:nowrap}
+
+  #dsg .mets{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:4px 24px 0}
+  #dsg .met{border:1px solid var(--line);padding:12px 14px;background:var(--bg)}
+  #dsg .met .l{font-size:11.5px;font-weight:500;color:var(--muted);line-height:1.3}
+  #dsg .met .n{font-size:20px;font-weight:600;letter-spacing:-.02em;margin-top:5px;color:var(--text);line-height:1.15}
+  #dsg .met .x{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:3px}
+
+  #dsg .flow{display:grid;grid-template-columns:1fr 22px 1fr 22px 1fr;align-items:stretch;gap:0}
+  #dsg .node{border:1px solid var(--line);padding:12px 14px;background:var(--soft)}
+  #dsg .node .t{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  #dsg .node .v{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.01em;line-height:1.25;word-break:break-word}
+  #dsg .node .s{font-size:11.5px;color:var(--muted);margin-top:4px}
+  #dsg .node.last{background:var(--accent-soft);border-color:#6c42eb44}
+  #dsg .node.last .v{color:var(--accent)}
+  #dsg .arrow{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
+
+  #dsg .tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+  #dsg .tabs button{font-family:'Geist',system-ui,sans-serif;font-size:12px;font-weight:500;padding:6px 12px;border:1px solid var(--line);background:var(--bg);color:var(--body);cursor:pointer;transition:.15s}
+  #dsg .tabs button:hover{border-color:var(--accent);color:var(--accent)}
+  #dsg .tabs button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+  #dsg .dist{display:flex;height:30px;width:100%;overflow:hidden}
+  #dsg .dist div{height:100%;transition:width .25s}
+  #dsg .dlegend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin:10px 0 0}
+  #dsg .dlegend span{display:inline-flex;align-items:center;gap:6px}
+  #dsg .dlegend i{width:11px;height:11px;display:inline-block;flex:none}
+  #dsg .dnote{font-size:12px;color:var(--muted);margin:8px 0 0}
+
+  #dsg .note{margin:16px 24px 0;padding:12px 14px;background:var(--soft);border:1px solid var(--line);font-size:12.5px;color:var(--body)}
+  #dsg .note b{color:var(--text);font-weight:600}
+  #dsg .ft{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 24px;border-top:1px solid var(--line);margin-top:14px;flex-wrap:wrap}
+  #dsg .cap{font-size:11px;color:var(--muted);max-width:60ch}
+  #dsg .mr{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+  #dsg .mr b{color:var(--text);font-weight:600}
+  #dsg .mr .eye{flex:none;display:block}
+  @media(max-width:620px){#dsg .mets{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:640px){
+    #dsg .hd{padding:18px 18px 14px} #dsg h2{font-size:19px}
+    #dsg .sec{padding:16px 18px 0} #dsg .mets{padding:4px 18px 0}
+    #dsg .note{margin:14px 18px 0} #dsg .ft{padding:12px 18px}
+    #dsg .flow{grid-template-columns:1fr;gap:0}
+    #dsg .arrow{height:20px;transform:rotate(90deg)}
+    #dsg .fill b{font-size:13px}
+  }
+</style>
+</head>
+<body>
+<div id="dsg">
+  <div class="hd">
+    <p class="kick">Deepstate · who holds the venue</p>
+    <h2>The key was not removed. It was moved, then bought.</h2>
+    <p class="sub">The team handed <code>owner()</code> on the engine and the vault to the Governor — a contract, not a person. That closes the risk that killed Serum. It also makes the Governor the only key, and one address now holds 80% of it.</p>
+  </div>
+
+  <div class="sec">
+    <p class="sech">Voting power · 22,473,092 STATE outstanding</p>
+    <div class="barwrap">
+      <div class="tlab top" style="left:1%">1% · proposal threshold</div>
+      <div class="bar">
+        <div class="fill" style="width:80.1%"><b>80.1% — one address</b></div>
+        <div class="tick" style="left:1%"></div>
+        <div class="tick" style="left:10%"></div>
+        
+      </div>
+      <div class="tlab bot" style="left:10%">10% · quorum</div>
+      <div class="brest">19.9% · everyone else — 153 addresses</div>
+    </div>
+  </div>
+
+  <div class="mets">
+    <div class="met"><div class="l">Clears quorum by</div><div class="n">8.0×</div><div class="x">alone, no coalition</div></div>
+    <div class="met"><div class="l">Clears proposal threshold by</div><div class="n">80×</div><div class="x">can table anything</div></div>
+    <div class="met"><div class="l">Share of all DEEP ever burned</div><div class="n">79%</div><div class="x">22.3M of 28,135,129</div></div>
+    <div class="met"><div class="l">STATE holders in total</div><div class="n">154</div><div class="x">top five hold 88.6%</div></div>
+  </div>
+
+  <div class="sec">
+    <p class="sech">How the position was assembled — it was not farmed</p>
+    <div class="flow">
+      <div class="node">
+        <div class="t">Origin</div>
+        <div class="v">0x2ACBB838…C0706</div>
+        <div class="s">Top wallet on the farming leaderboard</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node">
+        <div class="t">Plain transfer</div>
+        <div class="v">25,914,873 DEEP</div>
+        <div class="s">Moved, not earned by the receiver</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node last">
+        <div class="t">Burned into the vault</div>
+        <div class="v">18,000,000 STATE</div>
+        <div class="s">Self-delegated — <code>getVotes</code> returns the same 18M</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <p class="sech">Concentration</p>
+    <div class="tabs">
+      <button data-k="state" class="on">STATE · votes</button>
+      <button data-k="deep">DEEP · holders</button>
+    </div>
+    <div class="dist" id="dist"></div>
+    <div class="dlegend" id="dleg"></div>
+    <p class="dnote" id="dnote"></p>
+  </div>
+
+  <div class="note">
+    <b>What this is depends entirely on who that is, and the chain cannot say.</b> It could be the team consolidating its own farming into a governance position it always intended to hold. It could be a market maker taking the cheapest control premium on offer. It is not, on this evidence, a distributed community of holders. Governance opens <b>30 August</b> and the vote snapshot lands <b>2 September</b> — and matching 18M STATE now would take more DEEP burned than the entire circulating float, which is 28.4M tokens worth about $170,000.
+  </div>
+
+  <div class="ft">
+    <span class="cap">Balances, supply and <code>getVotes</code> read from the contracts over RPC on 20 August 2026, five days after deploy. DEEP shares exclude the rewarder, engine and burn address.</span>
+    <span class="mr"><svg class="eye" viewBox="0 0 64 64" width="16" height="16" aria-hidden="true"><path d="M10 32c6.3-7.4 13.8-11.2 22-11.2S47.7 24.6 54 32c-6.3 7.4-13.8 11.2-22 11.2S16.3 39.4 10 32Z" fill="none" stroke="#6C42EB" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="9" fill="none" stroke="#6C42EB" stroke-width="3"/></svg><b>moni</b> research</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  var DATA={
+    state:{segs:[
+        {l:'Largest holder',v:80.1,c:'#6c42eb'},
+        {l:'Next four',v:8.5,c:'#a284f2'},
+        {l:'Next five',v:4.3,c:'#c8ccd4'},
+        {l:'Other 144 holders',v:7.1,c:'#e2e5ea'}],
+      note:'154 holders. Top five 88.6%, top ten 92.9%. Voting power tracks the balance — the largest holder has self-delegated.'},
+    deep:{segs:[
+        {l:'Largest holder',v:29.4,c:'#6c42eb'},
+        {l:'Next nine',v:43.3,c:'#a284f2'},
+        {l:'Other 262 holders',v:27.3,c:'#e2e5ea'}],
+      note:'272 holders outside the rewarder, engine and vault. Top ten 72.7%. Ten farmers account for 76.1% of everything claimed.'}
+  };
+  var dist=document.getElementById('dist'),dleg=document.getElementById('dleg'),dnote=document.getElementById('dnote');
+  function render(k){
+    var d=DATA[k];
+    dist.innerHTML='';dleg.innerHTML='';
+    d.segs.forEach(function(s){
+      var el=document.createElement('div');
+      el.style.width=s.v+'%';el.style.background=s.c;el.title=s.l+' — '+s.v+'%';
+      dist.appendChild(el);
+      var lg=document.createElement('span');
+      lg.innerHTML='<i style="background:'+s.c+'"></i>'+s.l+' · '+s.v+'%';
+      dleg.appendChild(lg);
+    });
+    dnote.textContent=d.note;
+  }
+  var tabs=document.querySelectorAll('#dsg .tabs button');
+  for(var i=0;i<tabs.length;i++){
+    tabs[i].addEventListener('click',function(){
+      for(var j=0;j<tabs.length;j++) tabs[j].classList.toggle('on',tabs[j]===this);
+      render(this.dataset.k);
+    });
+  }
+  render('state');
+})();
+</script>
+</body>
+</html>

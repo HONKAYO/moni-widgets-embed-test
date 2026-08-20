@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deepstate · how late are you?</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  html,body{margin:0;background:transparent} body{padding:0}
+  #dsa{--bg:#ffffff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#6c42eb14;--slate:#94a3b8;--amber:#f59e0b;
+    font-family:'Geist',system-ui,sans-serif;color:var(--body);background:var(--bg);border:1px solid var(--line);
+    box-sizing:border-box;width:100%;max-width:none;overflow:hidden;line-height:1.5}
+  #dsa *{box-sizing:border-box;min-width:0}
+  #dsa .hd{padding:22px 24px 16px;border-bottom:1px solid var(--line)}
+  #dsa .kick{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
+  #dsa h2{font-size:21px;font-weight:700;letter-spacing:-.025em;color:var(--text);margin:0 0 6px;line-height:1.2}
+  #dsa .sub{font-size:13.5px;color:var(--body);margin:0;max-width:56ch}
+
+  #dsa .grid{display:grid;grid-template-columns:238px 1fr}
+  #dsa .ctl{padding:18px 20px;border-right:1px solid var(--line);background:var(--soft)}
+  #dsa .ctl h3{margin:0 0 14px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+  #dsa .row{margin-bottom:16px}
+  #dsa .row .lab{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:12.5px;color:var(--muted);margin-bottom:7px}
+  #dsa .row .lab b{font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;color:var(--text);white-space:nowrap}
+  #dsa input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;background:var(--line);outline:none;cursor:pointer;display:block}
+  #dsa input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--accent);border:3px solid var(--soft);box-shadow:0 0 0 1px var(--accent);cursor:pointer}
+  #dsa input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--accent);border:3px solid var(--soft);box-shadow:0 0 0 1px var(--accent);cursor:pointer}
+  #dsa .presets{display:flex;gap:5px;flex-wrap:wrap;margin-top:18px}
+  #dsa .presets button{font-family:'Geist',system-ui,sans-serif;font-size:11.5px;font-weight:500;padding:6px 9px;white-space:nowrap;border:1px solid var(--line);background:var(--bg);color:var(--body);cursor:pointer;transition:.15s}
+  #dsa .presets button:hover{border-color:var(--accent);color:var(--accent)}
+  #dsa .presets button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+
+  #dsa .viz{padding:18px 22px 6px}
+  #dsa .mets{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
+  #dsa .met{background:var(--bg);border:1px solid var(--line);padding:12px 14px}
+  #dsa .met .l{font-size:11.5px;font-weight:500;color:var(--muted);line-height:1.3}
+  #dsa .met .n{font-size:21px;font-weight:600;letter-spacing:-.02em;margin-top:5px;color:var(--text);line-height:1.15;word-break:break-word}
+  #dsa .met .x{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:3px}
+  #dsa .met.hero{background:var(--accent-soft);border-color:#6c42eb44;grid-column:1/-1}
+  #dsa .met.hero .l{color:var(--accent)}
+  #dsa .met.hero .n{color:var(--accent);font-size:27px}
+  #dsa .met.hero .x{color:#6c42ebbb}
+  #dsa .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin:0 0 6px}
+  #dsa .legend span{display:inline-flex;align-items:center;gap:6px}
+  #dsa .legend i{width:15px;height:3px;display:inline-block;flex:none}
+  #dsa .legend i.dot{width:9px;height:9px;border-radius:50%;background:#fff;border:2.5px solid var(--accent)}
+  #dsa .chartwrap{position:relative;height:236px}
+
+  #dsa .note{margin:10px 24px 0;padding:12px 14px;background:var(--soft);border:1px solid var(--line);font-size:12.5px;color:var(--body)}
+  #dsa .note b{color:var(--text);font-weight:600}
+  #dsa .ft{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 24px;border-top:1px solid var(--line);margin-top:14px;flex-wrap:wrap}
+  #dsa .cap{font-size:11px;color:var(--muted);max-width:62ch}
+  #dsa .mr{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+  #dsa .mr b{color:var(--text);font-weight:600}
+  #dsa .mr .eye{flex:none;display:block}
+  @media(max-width:640px){
+    #dsa .grid{grid-template-columns:1fr}
+    #dsa .ctl{border-right:none;border-bottom:1px solid var(--line)}
+    #dsa .viz{padding:16px 18px 6px}
+    #dsa .hd{padding:18px 18px 14px}
+    #dsa h2{font-size:19px}
+    #dsa .note{margin:10px 18px 0}
+    #dsa .ft{padding:12px 18px}
+  }
+</style>
+</head>
+<body>
+<div id="dsa">
+  <div class="hd">
+    <p class="kick">Deepstate · the arrival clock</p>
+    <h2>How late are you?</h2>
+    <p class="sub">Two clocks were fixed in the contract at deploy and neither one resets: emission decays, and the order you must post to earn it climbs. Drag the day to see what a dollar of posted capital is worth.</p>
+  </div>
+
+  <div class="grid">
+    <div class="ctl">
+      <h3>Where you arrive</h3>
+      <div class="row">
+        <div class="lab"><span>Day since first order</span><b id="d_v">5.0</b></div>
+        <input type="range" id="d" min="0" max="30" step="0.5" value="5">
+      </div>
+      <div class="row">
+        <div class="lab"><span>NVDA price</span><b>$<span id="p_v">180</span></b></div>
+        <input type="range" id="p" min="80" max="400" step="5" value="180">
+      </div>
+      <div class="presets">
+        <button data-d="0">Day 0</button>
+        <button data-d="5" class="on">Day 5 &middot; now</button>
+        <button data-d="30">Day 30</button>
+      </div>
+    </div>
+
+    <div class="viz">
+      <div class="mets">
+        <div class="met hero">
+          <div class="l">DEEP per $1 of qualifying order, per day — USDG side</div>
+          <div class="n" id="m_perusd">—</div>
+          <div class="x" id="m_ratio">—</div>
+        </div>
+        <div class="met">
+          <div class="l">Emission, both sides</div>
+          <div class="n" id="m_emit">—</div>
+          <div class="x">DEEP per day</div>
+        </div>
+        <div class="met">
+          <div class="l">Order you must post</div>
+          <div class="n" id="m_size">—</div>
+          <div class="x" id="m_size_n">—</div>
+        </div>
+      </div>
+      <div class="legend">
+        <span><i style="background:#6c42eb"></i>USDG side</span>
+        <span><i style="background:#94a3b8"></i>NVDA side</span>
+        <span><i class="dot"></i>Selected day</span>
+      </div>
+      <div class="chartwrap"><canvas id="c" role="img" aria-label="DEEP earned per dollar of qualifying order, plotted on a logarithmic scale across the first thirty days. The value falls by several orders of magnitude.">DEEP per dollar of posted capital collapses across the first thirty days.</canvas></div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Both curves are constants, not market conditions.</b> The emission side decays logarithmically from the moment the first order rests; the size requirement climbs geometrically to 1,000,000 USDG and 5,000 NVDA over thirty days. Nothing that happens on the book moves either one. Whoever is standing there earliest is paid the most for the least.
+  </div>
+
+  <div class="ft">
+    <span class="cap">Curves as written in the contract: C(t) = 500M · ln(1+t/30) / ln(1+395/30) per side. "Per $1" divides the day's emission by the minimum qualifying order at that day.</span>
+    <span class="mr"><svg class="eye" viewBox="0 0 64 64" width="16" height="16" aria-hidden="true"><path d="M10 32c6.3-7.4 13.8-11.2 22-11.2S47.7 24.6 54 32c-6.3 7.4-13.8 11.2-22 11.2S16.3 39.4 10 32Z" fill="none" stroke="#6C42EB" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="9" fill="none" stroke="#6C42EB" stroke-width="3"/></svg><b>moni</b> research</span>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function(){
+  var K=500e6/Math.log(1+395/30);           // 188.6M DEEP per side, curve constant
+  var rate=function(t){return K/(30+t);};   // DEEP per day, one side
+  var sizeU=function(t){return Math.pow(10,t/5);};        // 1 -> 1,000,000 USDG over 30d
+  var sizeN=function(t){return Math.pow(5000,t/30);};     // 1 -> 5,000 NVDA over 30d
+  var P={d:5,p:180};
+
+  function money(n){
+    if(n>=1e6) return '$'+(n/1e6).toFixed(2)+'M';
+    if(n>=1e3) return '$'+Math.round(n).toLocaleString('en-US');
+    return '$'+n.toFixed(n<10?2:0);
+  }
+  function big(n){
+    if(n>=1e6) return (n/1e6).toFixed(2)+'M';
+    if(n>=1e3) return Math.round(n).toLocaleString('en-US');
+    if(n>=10) return n.toFixed(0);
+    if(n>=1) return n.toFixed(1);
+    return n.toFixed(2);
+  }
+  function perUsd(t){return rate(t)/sizeU(t);}
+  function perUsdN(t,px){return rate(t)/(sizeN(t)*px);}
+
+  var xs=[];for(var i=0;i<=60;i++)xs.push(i*0.5);
+  var chart;
+  function build(){
+    chart=new Chart(document.getElementById('c'),{type:'line',
+      data:{datasets:[
+        {data:xs.map(function(x){return {x:x,y:perUsd(x)};}),borderColor:'#6c42eb',backgroundColor:'rgba(108,66,235,.09)',borderWidth:2.5,fill:true,pointRadius:0,tension:.15},
+        {data:xs.map(function(x){return {x:x,y:perUsdN(x,P.p)};}),borderColor:'#94a3b8',borderWidth:2,borderDash:[5,4],pointRadius:0,tension:.15},
+        {data:[{x:P.d,y:perUsd(P.d)}],borderColor:'#6c42eb',backgroundColor:'#fff',pointRadius:5,pointBorderWidth:2.5,showLine:false}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,animation:{duration:220},
+        layout:{padding:{top:4,right:4}},
+        scales:{
+          x:{type:'linear',min:0,max:30,title:{display:true,text:'Day since the first resting order',color:'#8b8f99',font:{size:11}},
+             ticks:{color:'#8b8f99',font:{family:'IBM Plex Mono',size:10},stepSize:5},grid:{color:'#eef0f3'}},
+          y:{type:'logarithmic',title:{display:true,text:'DEEP per $1, per day',color:'#8b8f99',font:{size:11}},
+             ticks:{color:'#8b8f99',font:{family:'IBM Plex Mono',size:10},callback:function(v){
+               var e=Math.log10(v); if(Math.abs(e-Math.round(e))>0.01) return null;
+               if(v>=1e6) return (v/1e6)+'M'; if(v>=1e3) return (v/1e3)+'k'; return v;
+             }},grid:{color:'#eef0f3'}}},
+        plugins:{legend:{display:false},tooltip:{enabled:false}}}});
+  }
+
+  function refresh(){
+    var t=P.d, r2=rate(t)*2, su=sizeU(t), sn=sizeN(t), pu=perUsd(t), end=perUsd(30);
+    document.getElementById('m_perusd').textContent=big(pu)+' DEEP';
+    document.getElementById('m_ratio').textContent = t>=29.99
+      ? 'the floor — this is where the curve lands'
+      : Math.round(pu/end).toLocaleString('en-US')+'× what the same dollar earns on day 30';
+    document.getElementById('m_emit').textContent=big(r2);
+    document.getElementById('m_size').textContent=money(su);
+    document.getElementById('m_size_n').textContent=(sn<10?sn.toFixed(2):Math.round(sn).toLocaleString('en-US'))+' NVDA · '+money(sn*P.p)+' on the other side';
+    chart.data.datasets[1].data=xs.map(function(x){return {x:x,y:perUsdN(x,P.p)};});
+    chart.data.datasets[2].data=[{x:t,y:pu}];
+    chart.update();
+  }
+  function mark(d){
+    var b=document.querySelectorAll('#dsa .presets button');
+    for(var i=0;i<b.length;i++) b[i].classList.toggle('on', d!==null && parseFloat(b[i].dataset.d)===d);
+  }
+  document.getElementById('d').addEventListener('input',function(e){
+    P.d=parseFloat(e.target.value);
+    document.getElementById('d_v').textContent=P.d.toFixed(1);
+    mark(P.d);refresh();
+  });
+  document.getElementById('p').addEventListener('input',function(e){
+    P.p=parseFloat(e.target.value);
+    document.getElementById('p_v').textContent=P.p;
+    refresh();
+  });
+  var btns=document.querySelectorAll('#dsa .presets button');
+  for(var i=0;i<btns.length;i++){
+    btns[i].addEventListener('click',function(){
+      P.d=parseFloat(this.dataset.d);
+      document.getElementById('d').value=P.d;
+      document.getElementById('d_v').textContent=P.d.toFixed(1);
+      mark(P.d);refresh();
+    });
+  }
+  build();refresh();
+})();
+</script>
+</body>
+</html>
