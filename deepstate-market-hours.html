@@ -212,5 +212,12 @@
   build();
 })();
 </script>
+<script>(function(){ // opened directly rather than embedded: centre it instead of stretching edge to edge
+  if (window.self === window.top) {
+    document.body.style.padding='24px 16px';
+    var r=document.getElementById('dsh');
+    r.style.maxWidth='960px'; r.style.margin='0 auto';
+  }
+})();</script>
 </body>
 </html>

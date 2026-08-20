@@ -29,6 +29,8 @@
   #dsa .presets button{font-family:'Geist',system-ui,sans-serif;font-size:11.5px;font-weight:500;padding:6px 9px;white-space:nowrap;border:1px solid var(--line);background:var(--bg);color:var(--body);cursor:pointer;transition:.15s}
   #dsa .presets button:hover{border-color:var(--accent);color:var(--accent)}
   #dsa .presets button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+  #dsa .ctlnote{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted);line-height:1.45}
+  #dsa .ctlnote b{color:var(--body);font-weight:600}
 
   #dsa .viz{padding:18px 22px 6px}
   #dsa .mets{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
@@ -88,6 +90,7 @@
         <button data-d="5" class="on">Day 5 &middot; now</button>
         <button data-d="30">Day 30</button>
       </div>
+      <p class="ctlnote">Day 0 is <b>15 Aug 2026, 07:24 UTC</b>, when the first order rested. Day 30 is where the size clock tops out and the curve stops rewarding early arrival.</p>
     </div>
 
     <div class="viz">
@@ -212,5 +215,12 @@
   build();refresh();
 })();
 </script>
+<script>(function(){ // opened directly rather than embedded: centre it instead of stretching edge to edge
+  if (window.self === window.top) {
+    document.body.style.padding='24px 16px';
+    var r=document.getElementById('dsa');
+    r.style.maxWidth='960px'; r.style.margin='0 auto';
+  }
+})();</script>
 </body>
 </html>

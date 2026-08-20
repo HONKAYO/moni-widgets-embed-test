@@ -19,14 +19,14 @@
   #dsg .sec{padding:18px 24px 0}
   #dsg .sech{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
 
-  #dsg .barwrap{position:relative;padding-top:20px;padding-bottom:22px}
+  #dsg .barwrap{position:relative;padding-bottom:4px}
   #dsg .bar{position:relative;height:38px;background:var(--slate2);overflow:visible}
-  #dsg .fill{position:absolute;top:0;bottom:0;left:0;background:var(--accent);display:flex;align-items:center;padding-left:12px}
+  #dsg .fill{position:absolute;top:0;bottom:0;left:0;background:var(--accent);display:flex;align-items:center;justify-content:flex-end;padding-right:12px}
   #dsg .fill b{font-size:15px;font-weight:600;color:#fff;letter-spacing:-.01em}
-  #dsg .tick{position:absolute;top:-9px;bottom:-9px;width:0;border-left:1.5px dashed var(--amber);z-index:2}
-  #dsg .tlab{position:absolute;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9a6b08;white-space:nowrap;padding-left:5px}
-  #dsg .tlab.top{top:0} #dsg .tlab.bot{bottom:0}
-  #dsg .brest{position:absolute;right:0;bottom:0;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);white-space:nowrap}
+  #dsg .tick{position:absolute;top:-6px;bottom:-6px;width:0;border-left:1.5px dashed var(--amber);z-index:2}
+  #dsg .blegend{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:14px;font-size:11.5px;color:var(--muted)}
+  #dsg .blegend span{display:inline-flex;align-items:center;gap:6px}
+  #dsg .blegend i.dash{width:13px;height:0;border-top:1.5px dashed var(--amber);flex:none}
 
   #dsg .mets{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:4px 24px 0}
   #dsg .met{border:1px solid var(--line);padding:12px 14px;background:var(--bg)}
@@ -67,7 +67,8 @@
     #dsg .sec{padding:16px 18px 0} #dsg .mets{padding:4px 18px 0}
     #dsg .note{margin:14px 18px 0} #dsg .ft{padding:12px 18px}
     #dsg .flow{grid-template-columns:1fr;gap:0}
-    #dsg .arrow{height:20px;transform:rotate(90deg)}
+    #dsg .arrow{height:24px;transform:none;font-size:0}
+    #dsg .arrow::after{content:'\2193';font-size:14px;color:var(--muted)}
     #dsg .fill b{font-size:13px}
   }
 </style>
@@ -82,17 +83,18 @@
 
   <div class="sec">
     <p class="sech">Voting power · 22,473,092 STATE outstanding</p>
-    <div class="barwrap">
-      <div class="tlab top" style="left:1%">1% · proposal threshold</div>
-      <div class="bar">
-        <div class="fill" style="width:80.1%"><b>80.1% — one address</b></div>
-        <div class="tick" style="left:1%"></div>
-        <div class="tick" style="left:10%"></div>
-        
+      <div class="barwrap">
+        <div class="bar">
+          <div class="fill" style="width:80.1%"><b>80.1% &mdash; one address</b></div>
+          <div class="tick" style="left:1%"></div>
+          <div class="tick" style="left:10%"></div>
+        </div>
+        <div class="blegend">
+          <span><i class="dash"></i>1% proposal threshold</span>
+          <span><i class="dash"></i>10% quorum</span>
+          <span>19.9% left over, split across 153 addresses</span>
+        </div>
       </div>
-      <div class="tlab bot" style="left:10%">10% · quorum</div>
-      <div class="brest">19.9% · everyone else — 153 addresses</div>
-    </div>
   </div>
 
   <div class="mets">
@@ -185,5 +187,12 @@
   render('state');
 })();
 </script>
+<script>(function(){ // opened directly rather than embedded: centre it instead of stretching edge to edge
+  if (window.self === window.top) {
+    document.body.style.padding='24px 16px';
+    var r=document.getElementById('dsg');
+    r.style.maxWidth='960px'; r.style.margin='0 auto';
+  }
+})();</script>
 </body>
 </html>
