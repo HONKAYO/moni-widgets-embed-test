@@ -25,10 +25,12 @@
   #dsa input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;background:var(--line);outline:none;cursor:pointer;display:block}
   #dsa input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--accent);border:3px solid var(--soft);box-shadow:0 0 0 1px var(--accent);cursor:pointer}
   #dsa input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--accent);border:3px solid var(--soft);box-shadow:0 0 0 1px var(--accent);cursor:pointer}
-  #dsa .presets{display:flex;gap:5px;flex-wrap:wrap;margin-top:18px}
-  #dsa .presets button{font-family:'Geist',system-ui,sans-serif;font-size:11.5px;font-weight:500;padding:6px 9px;white-space:nowrap;border:1px solid var(--line);background:var(--bg);color:var(--body);cursor:pointer;transition:.15s}
-  #dsa .presets button:hover{border-color:var(--accent);color:var(--accent)}
-  #dsa .presets button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+  #dsa .ticks{display:flex;justify-content:space-between;margin-top:6px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)}
+  #dsa .presets{display:flex;margin-top:18px}
+  #dsa .presets button{flex:1;font-family:'Geist',system-ui,sans-serif;font-size:12.5px;font-weight:500;padding:8px 6px;white-space:nowrap;border:1px solid var(--line);background:var(--bg);color:var(--body);cursor:pointer;transition:.15s}
+  #dsa .presets button+button{margin-left:-1px}
+  #dsa .presets button:hover{border-color:var(--accent);color:var(--accent);position:relative;z-index:1}
+  #dsa .presets button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);position:relative;z-index:2}
   #dsa .ctlnote{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted);line-height:1.45}
   #dsa .ctlnote b{color:var(--body);font-weight:600}
 
@@ -50,7 +52,8 @@
 
   #dsa .note{margin:10px 24px 0;padding:12px 14px;background:var(--soft);border:1px solid var(--line);font-size:12.5px;color:var(--body)}
   #dsa .note b{color:var(--text);font-weight:600}
-  #dsa .ft{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 24px;border-top:1px solid var(--line);margin-top:14px;flex-wrap:wrap}
+  #dsa .ft{display:flex;justify-content:flex-end;align-items:center;padding:13px 24px}
+  #dsa .meta{margin:14px 24px 0;padding:12px 0 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);line-height:1.5}
   #dsa .cap{font-size:11px;color:var(--muted);max-width:62ch}
   #dsa .mr{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
   #dsa .mr b{color:var(--text);font-weight:600}
@@ -62,7 +65,7 @@
     #dsa .hd{padding:18px 18px 14px}
     #dsa h2{font-size:19px}
     #dsa .note{margin:10px 18px 0}
-    #dsa .ft{padding:12px 18px}
+    #dsa .ft{padding:12px 18px} #dsa .meta{margin:14px 18px 0}
   }
 </style>
 </head>
@@ -80,6 +83,7 @@
       <div class="row">
         <div class="lab"><span>Day since first order</span><b id="d_v">5.0</b></div>
         <input type="range" id="d" min="0" max="30" step="0.5" value="5">
+        <div class="ticks"><span>0</span><span>30</span></div>
       </div>
       <div class="row">
         <div class="lab"><span>NVDA price</span><b>$<span id="p_v">180</span></b></div>
@@ -87,8 +91,7 @@
       </div>
       <div class="presets">
         <button data-d="0">Day 0</button>
-        <button data-d="5" class="on">Day 5 &middot; now</button>
-        <button data-d="30">Day 30</button>
+        <button data-d="5" class="on">Now</button>
       </div>
       <p class="ctlnote">Day 0 is <b>15 Aug 2026, 07:24 UTC</b>, when the first order rested. Day 30 is where the size clock tops out and the curve stops rewarding early arrival.</p>
     </div>
@@ -124,8 +127,8 @@
     <b>Both curves are constants, not market conditions.</b> The emission side decays logarithmically from the moment the first order rests; the size requirement climbs geometrically to 1,000,000 USDG and 5,000 NVDA over thirty days. Nothing that happens on the book moves either one. Whoever is standing there earliest is paid the most for the least.
   </div>
 
+  <p class="meta">Curves as written in the contract: C(t) = 500M &middot; ln(1+t/30) / ln(1+395/30) per side. &ldquo;Per $1&rdquo; divides the day&rsquo;s emission by the minimum qualifying order at that day.</p>
   <div class="ft">
-    <span class="cap">Curves as written in the contract: C(t) = 500M · ln(1+t/30) / ln(1+395/30) per side. "Per $1" divides the day's emission by the minimum qualifying order at that day.</span>
     <span class="mr"><svg class="eye" viewBox="0 0 64 64" width="16" height="16" aria-hidden="true"><path d="M10 32c6.3-7.4 13.8-11.2 22-11.2S47.7 24.6 54 32c-6.3 7.4-13.8 11.2-22 11.2S16.3 39.4 10 32Z" fill="none" stroke="#6C42EB" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="9" fill="none" stroke="#6C42EB" stroke-width="3"/></svg><b>moni</b> research</span>
   </div>
 </div>

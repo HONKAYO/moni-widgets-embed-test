@@ -48,7 +48,8 @@
 
   #dsh .note{margin:14px 24px 0;padding:12px 14px;background:var(--soft);border:1px solid var(--line);font-size:12.5px;color:var(--body)}
   #dsh .note b{color:var(--text);font-weight:600}
-  #dsh .ft{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 24px;border-top:1px solid var(--line);margin-top:14px;flex-wrap:wrap}
+  #dsh .ft{display:flex;justify-content:flex-end;align-items:center;padding:13px 24px}
+  #dsh .meta{margin:14px 24px 0;padding:12px 0 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);line-height:1.5}
   #dsh .cap{font-size:11px;color:var(--muted);max-width:60ch}
   #dsh .mr{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
   #dsh .mr b{color:var(--text);font-weight:600}
@@ -56,7 +57,7 @@
   @media(max-width:640px){
     #dsh .hd{padding:18px 18px 14px} #dsh h2{font-size:19px}
     #dsh .mets{grid-template-columns:1fr;padding:16px 18px 4px}
-    #dsh .sec{padding:14px 18px 0} #dsh .note{margin:12px 18px 0} #dsh .ft{padding:12px 18px}
+    #dsh .sec{padding:14px 18px 0} #dsh .note{margin:12px 18px 0} #dsh .ft{padding:12px 18px} #dsh .meta{margin:14px 18px 0}
     #dsh .hrs span:nth-child(even){visibility:hidden}
   }
 </style>
@@ -117,8 +118,8 @@
     <b>Deepstate went live at 07:24 UTC on a Saturday.</b> The stock was shut until Monday's bell, so the steepest fifty-four hours of the curve paid out against a reference price that could not move — and adverse selection, the tax that makes market making hard, was structurally muted for all of it. Whether that timing was deliberate is unknowable and beside the point. It is the cheapest window the mechanism will ever get, and it cannot recur.
   </div>
 
+  <p class="meta">Emission from the contract curve, C(t) = 500M &middot; ln(1+t/30) / ln(1+395/30) per side, integrated against a Mon&ndash;Fri 13:30&ndash;20:00 UTC cash session. Exchange holidays and daylight-saving shifts are not modelled; neither changes the weekly total.</p>
   <div class="ft">
-    <span class="cap">Emission from the contract curve, C(t) = 500M · ln(1+t/30) / ln(1+395/30) per side, integrated against a Mon–Fri 13:30–20:00 UTC cash session. Exchange holidays and daylight-saving shifts are not modelled; neither changes the weekly total.</span>
     <span class="mr"><svg class="eye" viewBox="0 0 64 64" width="16" height="16" aria-hidden="true"><path d="M10 32c6.3-7.4 13.8-11.2 22-11.2S47.7 24.6 54 32c-6.3 7.4-13.8 11.2-22 11.2S16.3 39.4 10 32Z" fill="none" stroke="#6C42EB" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="9" fill="none" stroke="#6C42EB" stroke-width="3"/></svg><b>moni</b> research</span>
   </div>
 </div>
