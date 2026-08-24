@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-24T00:00:00Z",
+  "updated_at": "2026-08-25T00:00:00Z",
   "source_label": "Dune dashboard snapshot",
   "sources": [
     "https://dune.com/gomosellow/deepstate-protocol",
@@ -10,8 +10,8 @@
     "farmers": "193",
     "top10_share": "76.3%",
     "deep_price": "$0.0026",
-    "float_market_cap": "$165k",
-    "revenue": "$102.4k"
+    "float_market_cap": "$165.4k",
+    "emission_to_revenue": "4x"
   },
   "leader": {
     "address": "0x2acb...c0706",
@@ -20,6 +20,6 @@
   },
   "notes": {
     "emissions": "Claimed emissions are recorded when an order closes, so they lag an open order.",
-    "revenue": "Revenue follows the reporting convention of the source dashboard."
+    "revenue": "The activity dashboard separately reports $102,436 total revenue; its label and methodology should not be treated as interchangeable with the protocol dashboard's emission-to-revenue ratio."
   }
 }
