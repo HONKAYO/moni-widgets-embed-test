@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deepstate live read</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;background:transparent}body{padding:0}
+  #dslive{--bg:#fff;--soft:#faf9ff;--text:#14151a;--body:#3b4049;--muted:#7e8490;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#eee9ff;width:100%;max-width:none;overflow:hidden;background:var(--bg);font-family:Geist,system-ui,sans-serif;color:var(--body);line-height:1.45}
+  #dslive *{box-sizing:border-box;min-width:0}
+  #dslive .hd{padding:24px 28px 18px;border-bottom:1px solid var(--line)}
+  #dslive .kick{margin:0 0 8px;color:var(--accent);font:600 10px/1 "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase}
+  #dslive h2{margin:0;color:var(--text);font:700 28px/1.05 Geist,system-ui,sans-serif;letter-spacing:-.035em}
+  #dslive .sub{max-width:720px;margin:9px 0 0;color:var(--body);font-size:13.5px}
+  #dslive .meta{margin:10px 0 0;color:var(--muted);font:500 10px/1.4 "IBM Plex Mono",monospace}
+  #dslive .body{padding:18px 28px 20px}
+  #dslive .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+  #dslive .card{border:1px solid var(--line);background:var(--soft);padding:13px 14px 12px}
+  #dslive .label{display:block;color:var(--muted);font:600 9px/1.2 "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase}
+  #dslive .value{display:block;margin-top:7px;color:var(--text);font:700 25px/1 Geist,system-ui,sans-serif;letter-spacing:-.04em}
+  #dslive .hint{display:block;margin-top:6px;color:#6d7380;font-size:11px}
+  #dslive .concentration{display:grid;grid-template-columns:minmax(0,1fr) 168px;gap:16px;align-items:center;margin-top:15px;padding:15px 16px;border:1px solid var(--line)}
+  #dslive .concentration h3{margin:0;color:var(--text);font:700 17px/1.15 Geist,system-ui,sans-serif;letter-spacing:-.02em}
+  #dslive .concentration p{margin:6px 0 0;font-size:12px}
+  #dslive .bar{height:10px;overflow:hidden;background:#ecebf1;display:flex}
+  #dslive .bar .top{width:76.3%;background:var(--accent)}
+  #dslive .bar .rest{flex:1;background:#c6b9f6}
+  #dslive .bar-labels{display:flex;justify-content:space-between;gap:12px;margin-top:6px;color:var(--muted);font:500 10px/1.3 "IBM Plex Mono",monospace}
+  #dslive .callout{margin-top:15px;padding:14px 16px;background:var(--accent-soft);border-left:3px solid var(--accent);color:var(--body);font-size:12.5px}
+  #dslive .callout b{color:var(--text)}
+  #dslive .links{display:flex;gap:14px;flex-wrap:wrap;margin:13px 0 0;font-size:12px}
+  #dslive .links a{color:var(--accent);text-decoration:none;font-weight:600}
+  #dslive .ft{padding:10px 28px;border-top:1px solid var(--line);display:flex;align-items:center}
+  #dslive .brand{display:inline-flex;gap:3px;align-items:center;white-space:nowrap}
+  #dslive .brand .m1{color:var(--accent);font:700 12px/1 Geist,system-ui,sans-serif}
+  #dslive .brand .m2{color:var(--text);font:italic 700 12px/1 Geist,system-ui,sans-serif}
+  @media(max-width:620px){#dslive .hd,#dslive .body,#dslive .ft{padding-left:18px;padding-right:18px}#dslive h2{font-size:24px}#dslive .grid{grid-template-columns:repeat(2,minmax(0,1fr))}#dslive .concentration{grid-template-columns:1fr;gap:12px}}
+  @media(max-width:420px){#dslive .grid{grid-template-columns:1fr}#dslive .value{font-size:24px}}
+</style>
+</head>
+<body>
+<div id="dslive">
+  <header class="hd">
+    <p class="kick">Deepstate / live read</p>
+    <h2>The book is live. The farm is concentrated.</h2>
+    <p class="sub">A refreshable snapshot of the signals that matter first: emissions, participation, concentration, and the token's thin public float.</p>
+    <p class="meta" id="updated">Loading latest Dune snapshot...</p>
+  </header>
+  <main class="body">
+    <section class="grid" aria-label="Live Deepstate metrics">
+      <div class="card"><span class="label">DEEP distributed</span><strong class="value" data-key="deep_distributed">97.26M</strong><span class="hint">claimed emissions</span></div>
+      <div class="card"><span class="label">unique farmers</span><strong class="value" data-key="farmers">193</strong><span class="hint">dashboard count</span></div>
+      <div class="card"><span class="label">top-10 share</span><strong class="value" data-key="top10_share">76.3%</strong><span class="hint">of claimed DEEP</span></div>
+      <div class="card"><span class="label">DEEP price</span><strong class="value" data-key="deep_price">$0.0026</strong><span class="hint">dashboard print</span></div>
+      <div class="card"><span class="label">float market cap</span><strong class="value" data-key="float_market_cap">$165k</strong><span class="hint">dashboard estimate</span></div>
+      <div class="card"><span class="label">reported revenue</span><strong class="value" data-key="revenue">$102.4k</strong><span class="hint">source dashboard metric</span></div>
+    </section>
+    <section class="concentration">
+      <div>
+        <h3>76.3% of claimed DEEP sits with the top ten farmers.</h3>
+        <p>The largest recorded farmer has <b id="leader-deep">29.70M</b> DEEP across <b id="leader-payouts">5,882</b> payouts. That is a distribution signal, not proof that one wallet controls the whole venue.</p>
+      </div>
+      <div><div class="bar" aria-label="Top ten farmer share"><span class="top"></span><span class="rest"></span></div><div class="bar-labels"><span>Top 10</span><span>Everyone else</span></div></div>
+    </section>
+    <div class="callout"><b>Read the split correctly:</b> the engine can be fully onchain and still be economically early. Claimed emissions appear when an order closes, and dashboard revenue labels follow their own reporting method. Neither number is a substitute for sustained two-sided flow.</div>
+    <nav class="links" aria-label="Source dashboards"><a href="https://dune.com/gomosellow/deepstate-protocol" target="_blank" rel="noopener">Protocol dashboard -&gt;</a><a href="https://dune.com/deep_kiwi3593/deepstate" target="_blank" rel="noopener">Activity dashboard -&gt;</a></nav>
+  </main>
+  <footer class="ft"><span class="brand" aria-label="moni research"><span class="m1">moni</span><span class="m2">research</span></span></footer>
+</div>
+<script>
+(function(){
+  var root=document.getElementById('dslive');
+  var fallback={updated_at:'2026-08-24T00:00:00Z',metrics:{deep_distributed:'97.26M',farmers:'193',top10_share:'76.3%',deep_price:'$0.0026',float_market_cap:'$165k',revenue:'$102.4k'},leader:{deep:'29.70M',payouts:'5,882'}};
+  function render(data){
+    data=data||fallback;
+    var metrics=data.metrics||{};
+    Object.keys(metrics).forEach(function(key){var el=root.querySelector('[data-key="'+key+'"]');if(el)el.textContent=metrics[key];});
+    if(data.leader){document.getElementById('leader-deep').textContent=data.leader.deep||fallback.leader.deep;document.getElementById('leader-payouts').textContent=data.leader.payouts||fallback.leader.payouts;}
+    var when=data.updated_at?new Date(data.updated_at):null;
+    document.getElementById('updated').textContent=when&&!isNaN(when)?'Dune snapshot refreshed '+when.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+' - values are a snapshot, not live tick data.':'Dune dashboard snapshot - values are a snapshot, not live tick data.';
+  }
+  render(fallback);
+  fetch('https://raw.githubusercontent.com/HONKAYO/moni-widgets-embed-test/main/deepstate-live.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('snapshot unavailable');return r.json();}).then(render).catch(function(){});
+})();
+</script>
+</body>
+</html>

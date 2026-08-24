@@ -1,0 +1,25 @@
+{
+  "updated_at": "2026-08-24T00:00:00Z",
+  "source_label": "Dune dashboard snapshot",
+  "sources": [
+    "https://dune.com/gomosellow/deepstate-protocol",
+    "https://dune.com/deep_kiwi3593/deepstate"
+  ],
+  "metrics": {
+    "deep_distributed": "97.26M",
+    "farmers": "193",
+    "top10_share": "76.3%",
+    "deep_price": "$0.0026",
+    "float_market_cap": "$165k",
+    "revenue": "$102.4k"
+  },
+  "leader": {
+    "address": "0x2acb...c0706",
+    "deep": "29.70M",
+    "payouts": "5,882"
+  },
+  "notes": {
+    "emissions": "Claimed emissions are recorded when an order closes, so they lag an open order.",
+    "revenue": "Revenue follows the reporting convention of the source dashboard."
+  }
+}
