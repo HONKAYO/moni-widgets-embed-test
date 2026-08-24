@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deepstate snapshot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;background:transparent}
+  body{padding:0}
+  #dsnap{--bg:#fff;--soft:#fafafb;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--accent2:#b9a8f4;--teal:#0aa6a6;--teal2:#9bd8d8;
+    width:100%;max-width:none;overflow:hidden;background:var(--bg);border:1px solid var(--line);box-sizing:border-box;font-family:Geist,system-ui,sans-serif;color:var(--body);line-height:1.45}
+  #dsnap *{box-sizing:border-box;min-width:0}
+  #dsnap .hd{padding:26px 36px 18px;border-bottom:1px solid var(--line)}
+  #dsnap .kick{margin:0 0 8px;color:var(--accent);font:600 11px/1 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase}
+  #dsnap h2{margin:0;color:var(--text);font:700 26px/1.08 Geist,system-ui,sans-serif;letter-spacing:-.03em}
+  #dsnap .sub{max-width:760px;margin:8px 0 0;color:var(--body);font-size:13.5px}
+  #dsnap .tabs{display:flex;gap:8px;flex-wrap:wrap;padding:14px 36px;border-bottom:1px solid var(--line)}
+  #dsnap .tab{border:1px solid var(--line);background:#fff;color:var(--body);font:600 12px Geist,system-ui,sans-serif;padding:8px 12px;cursor:pointer}
+  #dsnap .tab.on{border-color:var(--accent);background:var(--accent);color:#fff}
+  #dsnap .panel{display:none;padding:22px 36px 24px}
+  #dsnap .panel.on{display:block}
+
+  #dsnap .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  #dsnap .card{border:1px solid var(--line);background:#f7f5fc;padding:14px 16px 13px}
+  #dsnap .card .l{color:var(--muted);font:600 10px/1.2 "IBM Plex Mono",monospace;text-transform:uppercase}
+  #dsnap .card .v{display:block;margin-top:8px;color:var(--text);font-size:24px;line-height:1;font-weight:700;letter-spacing:-.035em}
+  #dsnap .card .s{display:block;margin-top:7px;color:#69707b;font-size:11.5px}
+  #dsnap .read{margin:16px 0 0;color:#747b86;font-size:12.5px;max-width:980px}
+
+  #dsnap .bars{max-width:910px;margin-top:14px}
+  #dsnap .barrow{display:grid;grid-template-columns:200px minmax(0,1fr) 260px;align-items:center;gap:12px;margin:18px 0}
+  #dsnap .barrow .name{text-align:right;color:var(--text);font-size:14px;font-weight:600}
+  #dsnap .track{height:34px;background:transparent;position:relative}
+  #dsnap .bar{height:100%;background:var(--accent);display:block}
+  #dsnap .bar.soft{background:var(--accent2)}
+  #dsnap .bar.teal{background:var(--teal)}
+  #dsnap .bar.tealsoft{background:var(--teal2)}
+  #dsnap .val{color:var(--text);font-size:13px;font-weight:700}
+  #dsnap .sep{height:1px;background:var(--line);margin:20px 0 12px 212px}
+
+  #dsnap .holders{max-width:960px;margin-top:12px}
+  #dsnap .hrow{display:grid;grid-template-columns:92px minmax(0,1fr) 72px 160px;align-items:center;gap:10px;margin:10px 0}
+  #dsnap .addr{font:600 12px "IBM Plex Mono",monospace;color:#59606c}
+  #dsnap .hbar{height:20px;background:var(--accent)}
+  #dsnap .hbar.transfer{background:var(--accent2)}
+  #dsnap .hbar.market{background:var(--teal)}
+  #dsnap .amt{font:700 12px Geist,system-ui,sans-serif;color:var(--text)}
+  #dsnap .why{font-size:11px;color:#737b86}
+  #dsnap .legend{display:flex;gap:28px;flex-wrap:wrap;margin:16px 0 0;color:#5f6672;font-size:12px}
+  #dsnap .legend span{display:inline-flex;align-items:center;gap:8px}
+  #dsnap .dot{width:10px;height:10px;background:var(--accent);display:inline-block}
+  #dsnap .dot.transfer{background:var(--accent2)}
+  #dsnap .dot.market{background:var(--teal)}
+  #dsnap .ft{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:11px 36px;border-top:1px solid var(--line);color:var(--muted);font:500 10px/1.4 "IBM Plex Mono",monospace}
+  #dsnap .brand{font-family:Geist,system-ui,sans-serif;font-size:12px;white-space:nowrap}
+  #dsnap .brand b{color:var(--accent)}
+  #dsnap .brand i{color:var(--text);font-style:italic;font-weight:700;margin-left:3px}
+  @media(max-width:760px){
+    #dsnap .hd,#dsnap .tabs,#dsnap .panel,#dsnap .ft{padding-left:18px;padding-right:18px}
+    #dsnap .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+    #dsnap .barrow{grid-template-columns:1fr;gap:6px;margin:16px 0}
+    #dsnap .barrow .name{text-align:left}
+    #dsnap .sep{margin-left:0}
+    #dsnap .hrow{grid-template-columns:82px minmax(0,1fr) 62px}
+    #dsnap .why{grid-column:2/-1}
+  }
+  @media(max-width:460px){
+    #dsnap h2{font-size:23px}
+    #dsnap .cards{grid-template-columns:1fr}
+    #dsnap .card .v{font-size:23px}
+  }
+</style>
+</head>
+<body>
+<div id="dsnap">
+  <div class="hd">
+    <p class="kick" id="kick">ON-CHAIN · RIGHT NOW</p>
+    <h2 id="title">Deepstate, by the numbers</h2>
+    <p class="sub" id="sub">Robinhood Chain, NVDA/USDG as the flagship book. Everything below is read from the contracts; nothing is projected.</p>
+  </div>
+  <div class="tabs" role="tablist" aria-label="Deepstate snapshot sections">
+    <button class="tab on" data-panel="numbers">Numbers</button>
+    <button class="tab" data-panel="backing">Backing</button>
+    <button class="tab" data-panel="holders">Holders</button>
+  </div>
+
+  <section class="panel on" id="numbers">
+    <div class="cards">
+      <div class="card"><span class="l">Deep distributed</span><strong class="v">97.3M</strong><span class="s">903m still unclaimed in the rewarder</span></div>
+      <div class="card"><span class="l">Farmers</span><strong class="v">193</strong><span class="s">391 addresses · 171,702 orders</span></div>
+      <div class="card"><span class="l">Top-10 share</span><strong class="v">76.3%</strong><span class="s">of every DEEP ever claimed</span></div>
+      <div class="card"><span class="l">Burned into STATE</span><strong class="v">34.6%</strong><span class="s">33.6m DEEP destroyed for votes</span></div>
+      <div class="card"><span class="l">DEEP price</span><strong class="v">$0.0026</strong><span class="s">float 6.6% of supply · $165k cap</span></div>
+      <div class="card"><span class="l">Fully diluted</span><strong class="v">$2.51M</strong><span class="s">if all 966M traded at that price</span></div>
+      <div class="card"><span class="l">Emission / fees</span><strong class="v">4.3×</strong><span class="s">$705/h paid vs $165/h earned</span></div>
+      <div class="card"><span class="l">Treasury NAV</span><strong class="v">$100,626</strong><span class="s">61% of the whole float's market cap</span></div>
+    </div>
+    <p class="read">Fees run at 165 USDG an hour against a 10 bps protocol take, implying roughly $4.0M of taker volume a day and $54M since launch. The interface company earns the same 10 bps, so its cut equals every token holder's combined.</p>
+  </section>
+
+  <section class="panel" id="backing">
+    <div class="bars">
+      <div class="barrow"><div class="name">Assets behind one DEEP</div><div class="track"><span class="bar" style="width:100%"></span></div><div class="val">0.0029909 USDG</div></div>
+      <div class="barrow"><div class="name">What the market pays</div><div class="track"><span class="bar soft" style="width:87%"></span></div><div class="val">0.0026 USDG · 13% less</div></div>
+      <div class="sep"></div>
+      <div class="barrow"><div class="name">Assets behind one STATE</div><div class="track"><span class="bar teal" style="width:100%"></span></div><div class="val">0.0038946 USDG</div></div>
+      <div class="barrow"><div class="name">What the STATE book prints</div><div class="track"><span class="bar tealsoft" style="width:26.3%"></span></div><div class="val">0.0010235 USDG · 26% of it</div></div>
+    </div>
+    <p class="read">The vault holds 90,639 USDG, 47.41 NVDA and 4,330 DEEP. STATE itself has a book now, opened 21 August, but with 22 fills between 7 addresses its 0.0010 print is an indication and not a valuation: it sits at a quarter of the assets behind it.</p>
+  </section>
+
+  <section class="panel" id="holders">
+    <div class="holders">
+      <div class="hrow"><span class="addr">0x90BD...D990</span><span class="hbar" style="width:100%"></span><b class="amt">9.29M</b><span class="why">farming + transfer</span></div>
+      <div class="hrow"><span class="addr">0x9955...BEE0</span><span class="hbar" style="width:92.7%"></span><b class="amt">8.61M</b><span class="why">farming</span></div>
+      <div class="hrow"><span class="addr">0x03D6...0AAE</span><span class="hbar transfer" style="width:75.3%"></span><b class="amt">7.00M</b><span class="why">transfer only</span></div>
+      <div class="hrow"><span class="addr">0x8B87...1D3F</span><span class="hbar" style="width:72.7%"></span><b class="amt">6.75M</b><span class="why">farming · sold 0.89M</span></div>
+      <div class="hrow"><span class="addr">0x98654...3F1B</span><span class="hbar transfer" style="width:70.2%"></span><b class="amt">6.52M</b><span class="why">transfer</span></div>
+      <div class="hrow"><span class="addr">0xAC83...960F</span><span class="hbar" style="width:25.8%"></span><b class="amt">2.40M</b><span class="why">farming</span></div>
+      <div class="hrow"><span class="addr">0x5D8D...A38D</span><span class="hbar market" style="width:19.8%"></span><b class="amt">1.84M</b><span class="why">market buy only</span></div>
+      <div class="hrow"><span class="addr">0xB52E...714C</span><span class="hbar" style="width:15.8%"></span><b class="amt">1.47M</b><span class="why">farming</span></div>
+      <div class="hrow"><span class="addr">0x406A...D83F</span><span class="hbar" style="width:11.3%"></span><b class="amt">1.05M</b><span class="why">farming</span></div>
+    </div>
+    <div class="legend"><span><i class="dot"></i>farmed it</span><span><i class="dot transfer"></i>received by transfer</span><span><i class="dot market"></i>bought on the book</span></div>
+    <p class="read">One wallet has sold 886,549 DEEP for 11,829 USDG at an average of 0.0133. One is a pure market buyer with no farming at all. The largest STATE position was assembled the same way: 26.0M DEEP received by transfer, 18.8M of it burned.</p>
+  </section>
+
+  <div class="ft">
+    <span>Source: contract/dashboard snapshot shown in research notes. Values are not projected.</span>
+    <span class="brand"><b>moni</b><i>research</i></span>
+  </div>
+</div>
+<script>
+(function(){
+  var meta={
+    numbers:["ON-CHAIN · RIGHT NOW","Deepstate, by the numbers","Robinhood Chain, NVDA/USDG as the flagship book. Everything below is read from the contracts; nothing is projected."],
+    backing:["BACKING","DEEP trades below the assets it converts into","Burning one DEEP mints 0.7680 STATE, and one STATE is a pro-rata claim on 0.0038946 USDG of vault assets. That makes the assets behind a DEEP worth 0.0029909, more than the market pays for it."],
+    holders:["WHO HOLDS IT","Almost nobody sells","The nine largest DEEP balances, by how the wallet got there. Sales are read from the contract's own fill amounts, not from token flow into the engine."]
+  };
+  var tabs=[].slice.call(document.querySelectorAll('#dsnap .tab'));
+  var panels=[].slice.call(document.querySelectorAll('#dsnap .panel'));
+  function show(id){
+    tabs.forEach(function(t){t.classList.toggle('on',t.dataset.panel===id);});
+    panels.forEach(function(p){p.classList.toggle('on',p.id===id);});
+    document.getElementById('kick').textContent=meta[id][0];
+    document.getElementById('title').textContent=meta[id][1];
+    document.getElementById('sub').textContent=meta[id][2];
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.dataset.panel);});});
+})();
+</script>
+</body>
+</html>
