@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deepstate holder concentration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;background:transparent}body{padding:0}
+#dsh{--bg:#fff;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--soft:#b9a8f4;--teal:#0aa6a6;width:100%;max-width:none;overflow:hidden;background:var(--bg);border:1px solid var(--line);box-sizing:border-box;font-family:Geist,system-ui,sans-serif;color:var(--body);line-height:1.45}
+#dsh *{box-sizing:border-box;min-width:0}
+#dsh .hd{padding:28px 36px 18px}
+#dsh .kick{margin:0 0 9px;color:var(--accent);font:600 11px/1 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase}
+#dsh h2{margin:0;color:var(--text);font:700 27px/1.08 Geist,system-ui,sans-serif;letter-spacing:-.035em}
+#dsh .sub{max-width:760px;margin:8px 0 0;color:#68707b;font-size:13.5px}
+#dsh .holders{max-width:940px;margin:16px 36px 0}
+#dsh .row{display:grid;grid-template-columns:92px minmax(0,1fr) 72px 160px;align-items:center;gap:10px;margin:10px 0}
+#dsh .addr{font:600 12px "IBM Plex Mono",monospace;color:#59606c}
+#dsh .bar{height:20px;background:var(--accent)}.bar.transfer{background:var(--soft)}.bar.market{background:var(--teal)}
+#dsh .amt{font:700 12px Geist,system-ui,sans-serif;color:var(--text)}
+#dsh .why{font-size:11px;color:#737b86}
+#dsh .legend{display:flex;gap:28px;flex-wrap:wrap;margin:16px 36px 0;color:#5f6672;font-size:12px}
+#dsh .legend span{display:inline-flex;align-items:center;gap:8px}
+#dsh .dot{width:10px;height:10px;background:var(--accent);display:inline-block}.dot.transfer{background:var(--soft)}.dot.market{background:var(--teal)}
+#dsh .read{margin:14px 36px 0;color:#747b86;font-size:12.5px;max-width:940px}
+#dsh .ft{display:flex;align-items:center;padding:14px 36px 16px}
+#dsh .mr{font-family:Geist,system-ui,sans-serif;font-size:12px;color:var(--text);display:inline-flex;align-items:center;gap:5px}
+#dsh .mr b{color:var(--accent);font-weight:700}.mr i{font-style:italic;font-weight:700}.eye{flex:none;display:block}
+@media(max-width:760px){#dsh .hd,#dsh .ft{padding-left:18px;padding-right:18px}#dsh .holders,#dsh .legend,#dsh .read{margin-left:18px;margin-right:18px}#dsh .row{grid-template-columns:82px minmax(0,1fr) 62px}#dsh .why{grid-column:2/-1}}
+@media(max-width:460px){#dsh h2{font-size:23px}}
+</style>
+</head>
+<body>
+<div id="dsh">
+  <div class="hd">
+    <p class="kick">Who holds it</p>
+    <h2>Almost nobody sells</h2>
+    <p class="sub">The nine largest DEEP balances, by how the wallet got there. Sales are read from the contract's own fill amounts, not from token flow into the engine.</p>
+  </div>
+  <div class="holders">
+    <div class="row"><span class="addr">0x90BD...D990</span><span class="bar" style="width:100%"></span><b class="amt">9.29M</b><span class="why">farming + transfer</span></div>
+    <div class="row"><span class="addr">0x9955...BEE0</span><span class="bar" style="width:92.7%"></span><b class="amt">8.61M</b><span class="why">farming</span></div>
+    <div class="row"><span class="addr">0x03D6...0AAE</span><span class="bar transfer" style="width:75.3%"></span><b class="amt">7.00M</b><span class="why">transfer only</span></div>
+    <div class="row"><span class="addr">0x8B87...1D3F</span><span class="bar" style="width:72.7%"></span><b class="amt">6.75M</b><span class="why">farming · sold 0.89M</span></div>
+    <div class="row"><span class="addr">0x98654...3F1B</span><span class="bar transfer" style="width:70.2%"></span><b class="amt">6.52M</b><span class="why">transfer</span></div>
+    <div class="row"><span class="addr">0xAC83...960F</span><span class="bar" style="width:25.8%"></span><b class="amt">2.40M</b><span class="why">farming</span></div>
+    <div class="row"><span class="addr">0x5D8D...A38D</span><span class="bar market" style="width:19.8%"></span><b class="amt">1.84M</b><span class="why">market buy only</span></div>
+    <div class="row"><span class="addr">0xB52E...714C</span><span class="bar" style="width:15.8%"></span><b class="amt">1.47M</b><span class="why">farming</span></div>
+    <div class="row"><span class="addr">0x406A...D83F</span><span class="bar" style="width:11.3%"></span><b class="amt">1.05M</b><span class="why">farming</span></div>
+  </div>
+  <div class="legend"><span><i class="dot"></i>farmed it</span><span><i class="dot transfer"></i>received by transfer</span><span><i class="dot market"></i>bought on the book</span></div>
+  <p class="read">One wallet has sold 886,549 DEEP for 11,829 USDG at an average of 0.0133. One is a pure market buyer with no farming at all. The largest STATE position was assembled the same way: 26.0M DEEP received by transfer, 18.8M of it burned.</p>
+  <div class="ft"><span class="mr"><svg class="eye" viewBox="0 0 64 64" width="17" height="17" aria-hidden="true"><path d="M10 32c6.3-7.4 13.8-11.2 22-11.2S47.7 24.6 54 32c-6.3 7.4-13.8 11.2-22 11.2S16.3 39.4 10 32Z" fill="none" stroke="#6C42EB" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="9" fill="none" stroke="#6C42EB" stroke-width="3"/></svg><b>moni</b><i>research</i></span></div>
+</div>
+</body>
+</html>

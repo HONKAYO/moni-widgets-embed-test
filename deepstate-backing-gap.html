@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deepstate backing gap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;background:transparent}body{padding:0}
+#dsb{--bg:#fff;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--soft:#b9a8f4;--teal:#0aa6a6;--teal2:#9bd8d8;width:100%;max-width:none;overflow:hidden;background:var(--bg);border:1px solid var(--line);box-sizing:border-box;font-family:Geist,system-ui,sans-serif;color:var(--body);line-height:1.45}
+#dsb *{box-sizing:border-box;min-width:0}
+#dsb .hd{padding:28px 36px 18px}
+#dsb .kick{margin:0 0 9px;color:var(--accent);font:600 11px/1 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase}
+#dsb h2{margin:0;color:var(--text);font:700 27px/1.08 Geist,system-ui,sans-serif;letter-spacing:-.035em}
+#dsb .sub{max-width:820px;margin:8px 0 0;color:#68707b;font-size:13.5px}
+#dsb .bars{max-width:900px;margin:6px 36px 0}
+#dsb .row{display:grid;grid-template-columns:205px minmax(0,1fr) 250px;align-items:center;gap:12px;margin:20px 0}
+#dsb .name{text-align:right;color:var(--text);font-size:14px;font-weight:600}
+#dsb .track{height:34px;background:transparent;position:relative}
+#dsb .bar{height:100%;background:var(--accent);display:block}.bar.soft{background:var(--soft)}.bar.teal{background:var(--teal)}.bar.tealsoft{background:var(--teal2)}
+#dsb .val{color:var(--text);font-size:13px;font-weight:700}
+#dsb .sep{height:1px;background:var(--line);margin:20px 0 12px 217px}
+#dsb .read{margin:22px 36px 0;color:#747b86;font-size:12.5px;max-width:940px}
+#dsb .ft{display:flex;align-items:center;padding:14px 36px 16px}
+#dsb .mr{font-family:Geist,system-ui,sans-serif;font-size:12px;color:var(--text);display:inline-flex;align-items:center;gap:5px}
+#dsb .mr b{color:var(--accent);font-weight:700}.mr i{font-style:italic;font-weight:700}.eye{flex:none;display:block}
+@media(max-width:760px){#dsb .hd,#dsb .ft{padding-left:18px;padding-right:18px}#dsb .bars,#dsb .read{margin-left:18px;margin-right:18px}#dsb .row{grid-template-columns:1fr;gap:6px;margin:16px 0}#dsb .name{text-align:left}#dsb .sep{margin-left:0}}
+@media(max-width:460px){#dsb h2{font-size:23px}}
+</style>
+</head>
+<body>
+<div id="dsb">
+  <div class="hd">
+    <p class="kick">Backing</p>
+    <h2>DEEP trades below the assets it converts into</h2>
+    <p class="sub">Burning one DEEP mints 0.7680 STATE, and one STATE is a pro-rata claim on 0.0038946 USDG of vault assets. That makes the assets behind a DEEP worth 0.0029909, more than the market pays for it.</p>
+  </div>
+  <div class="bars">
+    <div class="row"><div class="name">Assets behind one DEEP</div><div class="track"><span class="bar" style="width:100%"></span></div><div class="val">0.0029909 USDG</div></div>
+    <div class="row"><div class="name">What the market pays</div><div class="track"><span class="bar soft" style="width:87%"></span></div><div class="val">0.0026 USDG · 13% less</div></div>
+    <div class="sep"></div>
+    <div class="row"><div class="name">Assets behind one STATE</div><div class="track"><span class="bar teal" style="width:100%"></span></div><div class="val">0.0038946 USDG</div></div>
+    <div class="row"><div class="name">What the STATE book prints</div><div class="track"><span class="bar tealsoft" style="width:26.3%"></span></div><div class="val">0.0010235 USDG · 26% of it</div></div>
+  </div>
+  <p class="read">The vault holds 90,639 USDG, 47.41 NVDA and 4,330 DEEP. STATE itself has a book now, opened 21 August, but with 22 fills between 7 addresses its 0.0010 print is an indication and not a valuation: it sits at a quarter of the assets behind it.</p>
+  <div class="ft"><span class="mr"><svg class="eye" viewBox="0 0 64 64" width="17" height="17" aria-hidden="true"><path d="M10 32c6.3-7.4 13.8-11.2 22-11.2S47.7 24.6 54 32c-6.3 7.4-13.8 11.2-22 11.2S16.3 39.4 10 32Z" fill="none" stroke="#6C42EB" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="9" fill="none" stroke="#6C42EB" stroke-width="3"/></svg><b>moni</b><i>research</i></span></div>
+</div>
+</body>
+</html>
