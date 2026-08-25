@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<title>Deepstate: the next tests</title>
+<style>
+  :root{--ink:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--soft:#fafafb;--violet:#6c42eb;--pale:#6c42eb14}
+  *{box-sizing:border-box} html,body{margin:0;background:transparent} body{font-family:Geist,Arial,sans-serif;color:var(--ink)}
+  #dst{width:100%;overflow:hidden;border:1px solid var(--line);background:#fff}
+  #dst .head{padding:28px 30px 18px}
+  #dst .kicker{margin:0 0 8px;font:600 11px/1.2 'IBM Plex Mono',monospace;letter-spacing:.11em;color:var(--violet)}
+  #dst h2{margin:0;font-size:27px;line-height:1.06;letter-spacing:-.03em}
+  #dst .sub{max-width:660px;margin:9px 0 0;color:var(--body);font-size:14px;line-height:1.45}
+  #dst .track{margin:0 30px 24px;border-top:1px solid var(--line);position:relative}
+  #dst .track:before{content:"";position:absolute;top:-1px;bottom:0;left:19px;width:1px;background:#d9cffb}
+  #dst .event{position:relative;display:grid;grid-template-columns:126px minmax(0,1fr);gap:18px;padding:18px 0 0 47px}
+  #dst .dot{position:absolute;left:13px;top:22px;width:13px;height:13px;background:#fff;border:3px solid var(--violet);border-radius:50%}
+  #dst .date{padding-top:1px;font:600 11px/1.28 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.04em;color:var(--violet)}
+  #dst .copy{min-width:0;padding-bottom:2px}
+  #dst .copy h3{margin:0;font-size:16px;line-height:1.2;letter-spacing:-.015em}
+  #dst .copy p{margin:5px 0 0;color:var(--body);font-size:13px;line-height:1.42}
+  #dst .copy b{color:var(--violet);font-weight:700}
+  #dst .last{padding-bottom:16px}
+  #dst .last .dot{background:var(--violet)}
+  #dst .note{margin:0 30px 24px;padding:13px 15px;border:1px solid #d9cffb;background:var(--pale);font-size:13px;line-height:1.45;color:var(--body)}
+  #dst .note b{color:var(--violet)}
+  #dst .ft{display:flex;justify-content:flex-end;align-items:center;min-height:34px;padding:8px 30px;border-top:1px solid var(--line)}
+  #dst .mr{display:inline-flex;align-items:center;gap:4px;color:var(--violet);font-size:12px;line-height:1;white-space:nowrap}
+  #dst .mr b{font-weight:700} #dst .mr i{margin-left:0;color:var(--ink);font-weight:700;font-style:italic}
+  #dst .eye{display:block;width:15px;height:15px}
+  @media(max-width:520px){
+    #dst .head{padding:23px 17px 15px} #dst h2{font-size:24px} #dst .track{margin:0 17px 20px}
+    #dst .event{grid-template-columns:1fr;gap:5px;padding:16px 0 0 34px} #dst .date{padding:0}
+    #dst .dot{left:13px;top:20px} #dst .track:before{left:19px} #dst .copy h3{font-size:15px}
+    #dst .note{margin:0 17px 20px;padding:12px 13px} #dst .ft{padding:8px 17px}
+  }
+</style>
+</head>
+<body>
+<section id="dst" aria-label="Deepstate timeline of upcoming tests">
+  <header class="head">
+    <p class="kicker">DEEPSTATE / WHAT HAPPENS NEXT</p>
+    <h2>The next few dates matter more than the launch count</h2>
+    <p class="sub">Deepstate has paid for the first quote. These are the moments that show whether it bought a market or a temporary leaderboard.</p>
+  </header>
+  <div class="track">
+    <article class="event">
+      <span class="dot" aria-hidden="true"></span>
+      <div class="date">26 Aug<br>after close</div>
+      <div class="copy"><h3>Nvidia earnings</h3><p>The first obvious <b>adverse-selection</b> test. The reward curve keeps running while the reference price can gap.</p></div>
+    </article>
+    <article class="event">
+      <span class="dot" aria-hidden="true"></span>
+      <div class="date">30 Aug</div>
+      <div class="copy"><h3>First governance proposal opens</h3><p>DEEP becomes voting power only after it is burned into STATE. Early rewards now have a political deadline.</p></div>
+    </article>
+    <article class="event">
+      <span class="dot" aria-hidden="true"></span>
+      <div class="date">2 Sep</div>
+      <div class="copy"><h3>Vote snapshot</h3><p>The initial electorate is set. The question is not whether a Governor exists, but <b>how broadly it is held</b>.</p></div>
+    </article>
+    <article class="event">
+      <span class="dot" aria-hidden="true"></span>
+      <div class="date">Days 21–30</div>
+      <div class="copy"><h3>Farming becomes inventory management</h3><p>Qualifying size climbs while hourly rewards fall. Smaller participants have to decide whether they are actually market makers.</p></div>
+    </article>
+    <article class="event last">
+      <span class="dot" aria-hidden="true"></span>
+      <div class="date">14 Sep<br>2027</div>
+      <div class="copy"><h3>Day 395: emissions end</h3><p>Whatever volume and depth remain after the rent stops are the protocol's real product.</p></div>
+    </article>
+  </div>
+  <p class="note"><b>What to watch through each date:</b> spread, executable size, cancellations, maker retention and the distribution of STATE voting power. Headline volume alone is not enough.</p>
+  <footer class="ft"><span class="mr"><svg class="eye" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 32c6.3-7.4 13.8-11.2 22-11.2S47.7 24.6 54 32c-6.3 7.4-13.8 11.2-22 11.2S16.3 39.4 10 32Z" fill="none" stroke="#6C42EB" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="9" fill="none" stroke="#6C42EB" stroke-width="3"/></svg><b>moni</b><i>research</i></span></footer>
+</section>
+</body>
+</html>
+
+
