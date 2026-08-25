@@ -45,10 +45,10 @@
 <body>
 <div id="dslive">
   <header class="hd">
-    <p class="kick">Deepstate / live read</p>
-    <h2>The book is live. The farm is concentrated.</h2>
-    <p class="sub">A refreshable snapshot of the signals that matter first: emissions, participation, concentration, and the token's thin public float.</p>
-    <p class="meta" id="updated">Loading latest Dune snapshot...</p>
+    <p class="kick">Deepstate / at time of writing</p>
+    <h2>Deepstate, in the current dashboard read.</h2>
+    <p class="sub">A dated look at emissions, participation, concentration, and the token's thin public float. It is a research snapshot, not a live terminal.</p>
+    <p class="meta" id="updated">Loading Dune dashboard snapshot...</p>
   </header>
   <main class="body">
     <section class="grid" aria-label="Live Deepstate metrics">
@@ -81,7 +81,7 @@
     Object.keys(metrics).forEach(function(key){var el=root.querySelector('[data-key="'+key+'"]');if(el)el.textContent=metrics[key];});
     if(data.leader){document.getElementById('leader-deep').textContent=data.leader.deep||fallback.leader.deep;document.getElementById('leader-payouts').textContent=data.leader.payouts||fallback.leader.payouts;}
     var when=data.updated_at?new Date(data.updated_at):null;
-    document.getElementById('updated').textContent=when&&!isNaN(when)?'Dune snapshot refreshed '+when.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+' - values are a snapshot, not live tick data.':'Dune dashboard snapshot - values are a snapshot, not live tick data.';
+    document.getElementById('updated').textContent=when&&!isNaN(when)?'Dune dashboard read on '+when.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+' - values are a snapshot, not live tick data.':'Dune dashboard snapshot - values are a snapshot, not live tick data.';
   }
   render(fallback);
   fetch('https://raw.githubusercontent.com/HONKAYO/moni-widgets-embed-test/main/deepstate-live.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('snapshot unavailable');return r.json();}).then(render).catch(function(){});
