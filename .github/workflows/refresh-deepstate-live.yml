@@ -1,0 +1,27 @@
+name: Refresh Deepstate live data
+
+on:
+  schedule:
+    - cron: '17 */2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/refresh-deepstate-live.js
+        env:
+          DUNE_API_KEY: ${{ secrets.DUNE_API_KEY }}
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add deepstate-live.json
+          git diff --cached --quiet || git commit -m "Refresh Deepstate live data"
+          git push

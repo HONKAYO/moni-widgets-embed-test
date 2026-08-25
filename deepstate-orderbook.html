@@ -75,7 +75,7 @@
   <div class="wrap">
     <div class="side-h"><span>Sellers ask</span><span>size</span></div>
     <div class="book" id="asks"></div>
-    <div class="spread"><span class="ln"></span><span>mid <span class="mid" id="mid">$180</span></span><span class="ln"></span></div>
+    <div class="spread"><span class="ln"></span><span>mid <span class="mid" id="mid">$212.3996</span></span><span class="ln"></span></div>
     <div class="side-h"><span>Buyers bid</span><span>size</span></div>
     <div class="book" id="bids"></div>
   </div>
@@ -110,13 +110,14 @@
       q=document.getElementById('q'),qval=document.getElementById('qval'),btn=document.getElementById('go'),
       result=document.getElementById('result');
   var fmt=function(n){return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');};
-  var fmtDec=function(n){var s=n.toFixed(1).split('.');return fmt(+s[0])+'.'+s[1];};
+  var fmtPrice=function(n){return '$'+n.toLocaleString('en-US',{minimumFractionDigits:4,maximumFractionDigits:4});};
   var rng=function(a,b){return Math.round(a+Math.random()*(b-a));};
   // asks ascending (index 0 = best/lowest); bids descending (index 0 = best/highest)
   var asks,bids;
-  function seed(){
-    asks=[{p:181,s:rng(3,6)},{p:182,s:rng(3,7)},{p:183,s:rng(4,8)},{p:184,s:rng(4,9)},{p:185,s:rng(5,10)}];
-    bids=[{p:179,s:rng(3,6)},{p:178,s:rng(3,7)},{p:177,s:rng(4,8)},{p:176,s:rng(4,9)},{p:175,s:rng(5,10)}];
+  function seed(midPrice){
+    var tick=0.02, round=function(v){return Math.round(v*10000)/10000;};
+    asks=[{p:round(midPrice+tick),s:rng(3,6)},{p:round(midPrice+tick*2),s:rng(3,7)},{p:round(midPrice+tick*3),s:rng(4,8)},{p:round(midPrice+tick*4),s:rng(4,9)},{p:round(midPrice+tick*5),s:rng(5,10)}];
+    bids=[{p:round(midPrice-tick),s:rng(3,6)},{p:round(midPrice-tick*2),s:rng(3,7)},{p:round(midPrice-tick*3),s:rng(4,8)},{p:round(midPrice-tick*4),s:rng(4,9)},{p:round(midPrice-tick*5),s:rng(5,10)}];
   }
   function maxSize(){var m=1;asks.concat(bids).forEach(function(o){if(o.s>m)m=o.s;});return m;}
   function render(){
@@ -124,14 +125,15 @@
     // asks displayed highest-first (top) -> lowest near spread (bottom)
     asksEl.innerHTML=asks.slice().reverse().map(function(o,i,arr){
       var best=i===arr.length-1;
-      return '<div class="row ask'+(best?' best':'')+'"><span class="bar" style="width:'+(16+o.s/mx*84)+'%"></span><span class="px">$'+fmt(o.p)+'</span><span class="sz">'+o.s.toFixed(1)+' NVDA</span></div>';
+      return '<div class="row ask'+(best?' best':'')+'"><span class="bar" style="width:'+(16+o.s/mx*84)+'%"></span><span class="px">'+fmtPrice(o.p)+'</span><span class="sz">'+o.s.toFixed(1)+' NVDA</span></div>';
     }).join('');
     bidsEl.innerHTML=bids.map(function(o,i){
       var best=i===0;
-      return '<div class="row bid'+(best?' best':'')+'"><span class="bar" style="width:'+(16+o.s/mx*84)+'%"></span><span class="px">$'+fmt(o.p)+'</span><span class="sz">'+o.s.toFixed(1)+' NVDA</span></div>';
+      return '<div class="row bid'+(best?' best':'')+'"><span class="bar" style="width:'+(16+o.s/mx*84)+'%"></span><span class="px">'+fmtPrice(o.p)+'</span><span class="sz">'+o.s.toFixed(1)+' NVDA</span></div>';
     }).join('');
   }
-  seed(); render();
+  var nvdaPrice=212.39955556925193;
+  seed(nvdaPrice); render();
   q.addEventListener('input',function(){qval.textContent=q.value+' NVDA';});
 
   function txhash(){var h='0x';var c='0123456789abcdef';for(var i=0;i<6;i++)h+=c[Math.floor(Math.random()*16)];return h+'…';}
@@ -154,7 +156,7 @@
     }
     setTimeout(function(){
       document.getElementById('rBought').textContent=filled.toFixed(1)+' NVDA';
-      var avgEl=document.getElementById('rAvg'); avgEl.textContent='$'+fmtDec(avg);
+      var avgEl=document.getElementById('rAvg'); avgEl.textContent=fmtPrice(avg);
       var slipEl=document.getElementById('rSlip');
       slipEl.textContent=(slip<0.001?'0.00':'+'+slip.toFixed(2))+'%';
       slipEl.className='v'+(slip>0.15?' warn':(slip<0.06?' ok':''));
@@ -171,6 +173,10 @@
       render(); busy=false;
     }, levels*150+400);
   });
+  fetch('https://raw.githubusercontent.com/HONKAYO/moni-widgets-embed-test/main/deepstate-live.json?t='+Date.now(),{cache:'no-store'})
+    .then(function(r){if(!r.ok)throw new Error();return r.json();})
+    .then(function(data){var price=Number(data.raw&&data.raw.nvda_price);if(!isFinite(price))return;nvdaPrice=price;document.getElementById('mid').textContent=fmtPrice(price);seed(price);render();})
+    .catch(function(){});
 })();
 </script>
 </body>

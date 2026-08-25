@@ -1,25 +1,22 @@
 {
-  "updated_at": "2026-08-25T00:00:00Z",
-  "source_label": "Dune dashboard snapshot",
-  "sources": [
-    "https://dune.com/gomosellow/deepstate-protocol",
-    "https://dune.com/deep_kiwi3593/deepstate"
-  ],
+  "updated_at": "2026-08-25T19:17:52.771Z",
+  "source_label": "Dune query 8340363",
+  "source_url": "https://dune.com/queries/8340363",
   "metrics": {
-    "deep_distributed": "97.26M",
-    "farmers": "193",
-    "top10_share": "76.3%",
-    "deep_price": "$0.0026",
-    "float_market_cap": "$165.4k",
-    "emission_to_revenue": "4x"
+    "deep_distributed": "106.17M",
+    "rewarder_left": "893.83M",
+    "farmers": "199",
+    "top10_share": "73.3%",
+    "deep_price": "$0.0050",
+    "float_market_cap": "$282.3k",
+    "emission_to_revenue": "10.9x",
+    "nvda_price": "212.3996",
+    "burned_into_state": "46.8%",
+    "state_outstanding": "38.16M",
+    "vault_nav": "$108.6k",
+    "protocol_fees_net": "$54.2k"
   },
-  "leader": {
-    "address": "0x2acb...c0706",
-    "deep": "29.70M",
-    "payouts": "5,882"
-  },
-  "notes": {
-    "emissions": "Claimed emissions are recorded when an order closes, so they lag an open order.",
-    "revenue": "The activity dashboard separately reports $102,436 total revenue; its label and methodology should not be treated as interchangeable with the protocol dashboard's emission-to-revenue ratio."
+  "raw": {
+    "nvda_price": 212.39955556925193
   }
 }
