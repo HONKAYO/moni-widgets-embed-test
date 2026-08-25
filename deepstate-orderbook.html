@@ -67,9 +67,9 @@
 <body>
 <div id="dsw">
   <div class="hd">
-    <p class="kick">Deepstate · what it is</p>
-    <h2>NVDA/USDG, as an onchain orderbook.</h2>
-    <p class="sub">Buyers post the price they'll pay, sellers post the price they'll take, and Deepstate matches them onchain. Buy more than the top offer and your order walks <i>down the book</i>, taking each seller in turn.</p>
+    <p class="kick">Deepstate · order flow</p>
+    <h2>What a market buy does to the book</h2>
+    <p class="sub">Buyers name a price; sellers name theirs. A small buy takes the top offer. A larger one keeps moving through the next available sellers.</p>
   </div>
 
   <div class="wrap">
@@ -92,11 +92,11 @@
       <div class="cell"><div class="l">Avg fill price</div><div class="v" id="rAvg">—</div></div>
       <div class="cell"><div class="l">Slippage vs best</div><div class="v" id="rSlip">—</div></div>
     </div>
-    <div class="onchain" id="rChain"><span class="muted">Pick a size and hit Market buy to walk the book.</span></div>
+    <div class="onchain" id="rChain"><span class="muted">Choose a size, then run the market buy.</span></div>
   </div>
 
   <div class="note">
-    <b>That's the engine.</b> A small buy takes the best offer at one clean price. A big buy eats several sellers and pays a worse average — that's slippage, and it's why a book needs depth. Deepstate's hard part isn't the matching. It's getting enough buyers <i>and</i> sellers onchain to make the book deep in the first place.
+    <b>A small trade clears cleanly.</b> A larger one takes several offers and pays a worse average. That is slippage. Matching is the easy part; a usable book needs enough buyers and sellers behind the first quote.
   </div>
 
   <div class="ft">
