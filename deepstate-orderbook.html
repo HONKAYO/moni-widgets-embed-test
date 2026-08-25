@@ -68,20 +68,20 @@
 <div id="dsw">
   <div class="hd">
     <p class="kick">Deepstate · what it is</p>
-    <h2>It's an orderbook. Onchain.</h2>
+    <h2>NVDA/USDG, as an onchain orderbook.</h2>
     <p class="sub">Buyers post the price they'll pay, sellers post the price they'll take, and Deepstate matches them onchain. Buy more than the top offer and your order walks <i>down the book</i>, taking each seller in turn.</p>
   </div>
 
   <div class="wrap">
     <div class="side-h"><span>Sellers ask</span><span>size</span></div>
     <div class="book" id="asks"></div>
-    <div class="spread"><span class="ln"></span><span>mid <span class="mid" id="mid">$2,000</span></span><span class="ln"></span></div>
+    <div class="spread"><span class="ln"></span><span>mid <span class="mid" id="mid">$180</span></span><span class="ln"></span></div>
     <div class="side-h"><span>Buyers bid</span><span>size</span></div>
     <div class="book" id="bids"></div>
   </div>
 
   <div class="controls">
-    <div class="clabel"><span>Your market buy</span><b id="qval">8 ETH</b></div>
+    <div class="clabel"><span>Your market buy</span><b id="qval">8 NVDA</b></div>
     <input type="range" id="q" min="1" max="30" value="8" step="1">
     <div class="btnrow"><button id="go">▶ Market buy</button></div>
   </div>
@@ -115,8 +115,8 @@
   // asks ascending (index 0 = best/lowest); bids descending (index 0 = best/highest)
   var asks,bids;
   function seed(){
-    asks=[{p:2001,s:rng(3,6)},{p:2002,s:rng(3,7)},{p:2003,s:rng(4,8)},{p:2004,s:rng(4,9)},{p:2005,s:rng(5,10)}];
-    bids=[{p:1999,s:rng(3,6)},{p:1998,s:rng(3,7)},{p:1997,s:rng(4,8)},{p:1996,s:rng(4,9)},{p:1995,s:rng(5,10)}];
+    asks=[{p:181,s:rng(3,6)},{p:182,s:rng(3,7)},{p:183,s:rng(4,8)},{p:184,s:rng(4,9)},{p:185,s:rng(5,10)}];
+    bids=[{p:179,s:rng(3,6)},{p:178,s:rng(3,7)},{p:177,s:rng(4,8)},{p:176,s:rng(4,9)},{p:175,s:rng(5,10)}];
   }
   function maxSize(){var m=1;asks.concat(bids).forEach(function(o){if(o.s>m)m=o.s;});return m;}
   function render(){
@@ -124,15 +124,15 @@
     // asks displayed highest-first (top) -> lowest near spread (bottom)
     asksEl.innerHTML=asks.slice().reverse().map(function(o,i,arr){
       var best=i===arr.length-1;
-      return '<div class="row ask'+(best?' best':'')+'"><span class="bar" style="width:'+(16+o.s/mx*84)+'%"></span><span class="px">$'+fmt(o.p)+'</span><span class="sz">'+o.s.toFixed(1)+' ETH</span></div>';
+      return '<div class="row ask'+(best?' best':'')+'"><span class="bar" style="width:'+(16+o.s/mx*84)+'%"></span><span class="px">$'+fmt(o.p)+'</span><span class="sz">'+o.s.toFixed(1)+' NVDA</span></div>';
     }).join('');
     bidsEl.innerHTML=bids.map(function(o,i){
       var best=i===0;
-      return '<div class="row bid'+(best?' best':'')+'"><span class="bar" style="width:'+(16+o.s/mx*84)+'%"></span><span class="px">$'+fmt(o.p)+'</span><span class="sz">'+o.s.toFixed(1)+' ETH</span></div>';
+      return '<div class="row bid'+(best?' best':'')+'"><span class="bar" style="width:'+(16+o.s/mx*84)+'%"></span><span class="px">$'+fmt(o.p)+'</span><span class="sz">'+o.s.toFixed(1)+' NVDA</span></div>';
     }).join('');
   }
   seed(); render();
-  q.addEventListener('input',function(){qval.textContent=q.value+' ETH';});
+  q.addEventListener('input',function(){qval.textContent=q.value+' NVDA';});
 
   function txhash(){var h='0x';var c='0123456789abcdef';for(var i=0;i<6;i++)h+=c[Math.floor(Math.random()*16)];return h+'…';}
   var busy=false;
@@ -153,7 +153,7 @@
       (function(j){setTimeout(function(){var el=rows[rows.length-1-j];if(el)el.classList.add('hit');},j*150);})(j);
     }
     setTimeout(function(){
-      document.getElementById('rBought').textContent=filled.toFixed(1)+' ETH';
+      document.getElementById('rBought').textContent=filled.toFixed(1)+' NVDA';
       var avgEl=document.getElementById('rAvg'); avgEl.textContent='$'+fmtDec(avg);
       var slipEl=document.getElementById('rSlip');
       slipEl.textContent=(slip<0.001?'0.00':'+'+slip.toFixed(2))+'%';
@@ -161,7 +161,7 @@
       document.getElementById('rBought').className='v'+(partial?' warn':'');
       var chain=document.getElementById('rChain');
       if(partial){
-        chain.innerHTML='<span class="muted">only '+filled.toFixed(1)+' of '+want+' ETH filled — ran out of sellers.</span>  ✓ settled onchain <span class="muted">tx '+txhash()+'</span>';
+        chain.innerHTML='<span class="muted">only '+filled.toFixed(1)+' of '+want+' NVDA filled — ran out of sellers.</span>  ✓ settled onchain <span class="muted">tx '+txhash()+'</span>';
       } else {
         chain.innerHTML='✓ settled onchain <span class="muted">across '+levels+' price level'+(levels>1?'s':'')+' · tx '+txhash()+'</span>';
       }
