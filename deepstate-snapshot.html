@@ -55,7 +55,8 @@
   #dsnap .dot.transfer{background:var(--accent2)}
   #dsnap .dot.market{background:var(--teal)}
   #dsnap .ft{display:flex;justify-content:flex-end;align-items:center;padding:11px 36px;border-top:1px solid var(--line);color:var(--muted);font:500 10px/1.4 "IBM Plex Mono",monospace}
-  #dsnap .brand{font-family:Geist,system-ui,sans-serif;font-size:12px;white-space:nowrap}
+  #dsnap .brand{font-family:Geist,system-ui,sans-serif;font-size:12px;display:inline-flex;gap:3px;align-items:center;white-space:nowrap}
+  #dsnap .brand .eye{flex:none;display:block}
   #dsnap .brand b{color:var(--accent)}
   #dsnap .brand i{color:var(--text);font-style:italic;font-weight:700;margin-left:3px}
   @media(max-width:760px){
@@ -129,7 +130,7 @@
   </section>
 
   <div class="ft">
-    <span class="brand"><b>moni</b><i>research</i></span>
+    <span class="brand"><svg class="eye" viewBox="0 0 64 64" width="17" height="17" aria-hidden="true"><path d="M10 32c6.3-7.4 13.8-11.2 22-11.2S47.7 24.6 54 32c-6.3 7.4-13.8 11.2-22 11.2S16.3 39.4 10 32Z" fill="none" stroke="#6C42EB" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="9" fill="none" stroke="#6C42EB" stroke-width="3"/></svg><b>moni</b><i>research</i></span>
   </div>
 </div>
 <script>
