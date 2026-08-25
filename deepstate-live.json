@@ -1,22 +1,22 @@
 {
-  "updated_at": "2026-08-25T19:18:31.325Z",
+  "updated_at": "2026-08-25T20:45:37.129Z",
   "source_label": "Dune query 8340363",
   "source_url": "https://dune.com/queries/8340363",
   "metrics": {
-    "deep_distributed": "106.17M",
-    "rewarder_left": "893.83M",
-    "farmers": "199",
+    "deep_distributed": "107.13M",
+    "rewarder_left": "892.87M",
+    "farmers": "201",
     "top10_share": "73.3%",
-    "deep_price": "$0.0050",
-    "float_market_cap": "$282.3k",
-    "emission_to_revenue": "10.9x",
-    "nvda_price": "212.3996",
-    "burned_into_state": "46.8%",
-    "state_outstanding": "38.16M",
-    "vault_nav": "$108.6k",
-    "protocol_fees_net": "$54.2k"
+    "deep_price": "$0.0026",
+    "float_market_cap": "$149.0k",
+    "emission_to_revenue": "4.5x",
+    "nvda_price": "212.9991",
+    "burned_into_state": "46.5%",
+    "state_outstanding": "38.26M",
+    "vault_nav": "$109.9k",
+    "protocol_fees_net": "$54.7k"
   },
   "raw": {
-    "nvda_price": 212.39955556925193
+    "nvda_price": 212.99909990561008
   }
 }
