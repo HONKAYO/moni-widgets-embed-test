@@ -180,7 +180,13 @@
       const root = document.getElementById('dsw');
       if (!root || window.parent === window) return;
       const parentOrigin = 'https://research.moni.ai';
-      const reportHeight = () => window.parent.postMessage({ type: 'moni-widget:resize', height: Math.ceil(root.getBoundingClientRect().height) }, parentOrigin);
+      const reportHeight = () => {
+  const rootBox = root.getBoundingClientRect();
+  const lastBox = root.lastElementChild?.getBoundingClientRect();
+  // The footer is the last visible edge; ignore any inherited empty space below it.
+  const height = Math.ceil((lastBox?.bottom ?? rootBox.bottom) - rootBox.top + 1);
+  window.parent.postMessage({ type: 'moni-widget:resize', height }, parentOrigin);
+};
       new ResizeObserver(reportHeight).observe(root);
       window.addEventListener('load', reportHeight, { once: true });
       window.addEventListener('resize', reportHeight);
