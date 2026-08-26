@@ -201,10 +201,15 @@
     (() => {
       const root = document.getElementById('dsg');
       if (!root || window.parent === window) return;
-      const reportHeight = () => window.parent.postMessage({ type: 'moni-widget:resize', height: Math.ceil(root.getBoundingClientRect().height) }, 'https://research.moni.ai');
+      const parentOrigin = 'https://research.moni.ai';
+      const reportHeight = () => window.parent.postMessage({ type: 'moni-widget:resize', height: Math.ceil(root.getBoundingClientRect().height) }, parentOrigin);
       new ResizeObserver(reportHeight).observe(root);
       window.addEventListener('load', reportHeight, { once: true });
-      requestAnimationFrame(reportHeight);
+      window.addEventListener('resize', reportHeight);
+      window.addEventListener('message', (event) => {
+        if (event.origin === parentOrigin && event.data?.type === 'moni-widget:request-resize') reportHeight();
+      });
+      [0, 100, 500, 1500].forEach((delay) => setTimeout(reportHeight, delay));
     })();
   </script></body>
 </html>
