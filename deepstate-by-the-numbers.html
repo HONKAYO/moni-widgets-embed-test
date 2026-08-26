@@ -27,6 +27,10 @@ html,body{margin:0;background:transparent}body{padding:0}
 #dsn .eye{flex:none;display:block}
 @media(max-width:760px){#dsn .hd,#dsn .cards,#dsn .ft{padding-left:18px;padding-right:18px}#dsn .read{margin-left:18px;margin-right:18px}#dsn .cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:460px){#dsn h2{font-size:23px}#dsn .cards{grid-template-columns:1fr}}
+
+    #dsn .ft{display:flex;justify-content:flex-end!important;align-items:center;border-top:1px solid var(--line);padding:10px 24px}#dsn .mr{display:inline-flex;align-items:center;gap:4px;font-family:Geist,Arial,sans-serif;font-size:12px;line-height:1;white-space:nowrap;color:#14151a}#dsn .mr .eye{display:block;width:15px;height:15px;flex:0 0 15px}#dsn .mr b{color:#6c42eb;font-weight:700}#dsn .mr i{color:#14151a;font-weight:600;font-style:italic}
+
+    /* moni-footer-v2 */#dsn .ft{display:flex;justify-content:flex-end!important;align-items:center;border-top:1px solid var(--line);padding:10px 24px}#dsn .ft .mr{display:inline-flex;align-items:center;gap:4px;font-family:Geist,Arial,sans-serif;font-size:12px;line-height:1;white-space:nowrap;color:#14151a}#dsn .ft .eye{display:block;width:15px;height:15px;flex:0 0 15px}#dsn .ft b{color:#6c42eb;font-weight:700}#dsn .ft i{color:#14151a;font-weight:600;font-style:italic}
 </style>
 </head>
 <body>
@@ -47,7 +51,7 @@ html,body{margin:0;background:transparent}body{padding:0}
     <div class="card"><span class="label">Treasury NAV</span><strong class="num">$100,626</strong><span class="small">61% of the whole float's market cap</span></div>
   </div>
   <p class="read">Fees run at 165 USDG an hour against a 10 bps protocol take, implying roughly $4.0M of taker volume a day and $54M since launch. The interface company earns the same 10 bps, so its cut equals every token holder's combined.</p>
-  <div class="ft"><span class="mr"><svg class="eye" viewBox="0 0 64 64" width="17" height="17" aria-hidden="true"><path d="M10 32c6.3-7.4 13.8-11.2 22-11.2S47.7 24.6 54 32c-6.3 7.4-13.8 11.2-22 11.2S16.3 39.4 10 32Z" fill="none" stroke="#6C42EB" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="9" fill="none" stroke="#6C42EB" stroke-width="3"/></svg><b>moni</b><i>research</i></span></div>
+  <div class="ft"><span class="mr"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><b>moni</b><i>research</i></span></div>
 </div>
   <script>
     (() => {
