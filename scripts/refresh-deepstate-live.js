@@ -1,18 +1,39 @@
 const fs = require('fs');
 
-async function main() {
-const queryId = '8340363';
+const queryIds = {
+  metrics: '8340363',
+  revenue: '8412564',
+  volume: '8412634',
+  users: '8412578',
+  makers: '8399139',
+};
 const apiKey = process.env.DUNE_API_KEY;
 
 if (!apiKey) throw new Error('Missing DUNE_API_KEY. Configure it as a GitHub Actions secret.');
 
-const response = await fetch(`https://api.dune.com/api/v1/query/${queryId}/results`, {
-  headers: { 'X-DUNE-API-KEY': apiKey, Accept: 'application/json' },
-});
-if (!response.ok) throw new Error(`Dune API ${response.status}: ${await response.text()}`);
+async function duneRows(queryId) {
+  const response = await fetch(`https://api.dune.com/api/v1/query/${queryId}/results`, {
+    headers: { 'X-DUNE-API-KEY': apiKey, Accept: 'application/json' },
+  });
+  if (!response.ok) throw new Error(`Dune API ${queryId}: ${response.status}: ${await response.text()}`);
+  const payload = await response.json();
+  return payload?.result?.rows || [];
+}
 
-const payload = await response.json();
-const values = Object.fromEntries((payload?.result?.rows || []).map((row) => [row.metric, Number(row.value)]));
+const pick = (rows, queryId) => duneRows(queryId).catch((error) => {
+  console.warn(error.message);
+  return rows;
+});
+
+async function main() {
+const metricRows = await duneRows(queryIds.metrics);
+const [revenue, volume, users, makers] = await Promise.all([
+  pick([], queryIds.revenue),
+  pick([], queryIds.volume),
+  pick([], queryIds.users),
+  pick([], queryIds.makers),
+]);
+const values = Object.fromEntries(metricRows.map((row) => [row.metric, Number(row.value)]));
 const compact = (value, digits = 2) => {
   if (value >= 1e6) return `${(value / 1e6).toFixed(digits)}M`;
   if (value >= 1e3) return `${(value / 1e3).toFixed(digits)}k`;
@@ -21,8 +42,8 @@ const compact = (value, digits = 2) => {
 
 const output = {
   updated_at: new Date().toISOString(),
-  source_label: 'Dune query 8340363',
-  source_url: 'https://dune.com/queries/8340363',
+  source_label: 'Dune Deepstate dashboards',
+  source_url: 'https://dune.com/gomosellow/deepstate-protocol',
   metrics: {
     deep_distributed: compact(values['DEEP distributed']),
     rewarder_left: compact(values['Left in rewarder']),
@@ -38,6 +59,12 @@ const output = {
     protocol_fees_net: `$${compact(values['Protocol fees net, USDG'], 1)}`,
   },
   raw: { nvda_price: values['NVDA price, USDG'] },
+  activity: {
+    revenue: revenue.slice(-31),
+    volume: volume.slice(-31),
+    users: users.slice(-31),
+    makers: makers.slice(0, 10),
+  },
 };
 
 fs.writeFileSync('deepstate-live.json', `${JSON.stringify(output, null, 2)}\n`);
