@@ -84,17 +84,17 @@
     <div class="ctl">
       <h3>Where you arrive</h3>
       <div class="row">
-        <div class="lab"><span>Day since first order</span><b id="d_v">5.0</b></div>
-        <input type="range" id="d" min="0" max="30" step="0.5" value="5">
+        <div class="lab"><span>Day since first order</span><b id="d_v">—</b></div>
+        <input type="range" id="d" min="0" max="30" step="0.5" value="0">
         <div class="ticks"><span>0</span><span>30</span></div>
       </div>
       <div class="row">
-        <div class="lab"><span>NVDA price</span><b>$<span id="p_v">180</span></b></div>
-        <input type="range" id="p" min="80" max="400" step="5" value="180">
+        <div class="lab"><span>NVDA price</span><b>$<span id="p_v">213.248</span></b></div>
+        <input type="range" id="p" min="80" max="400" step="0.001" value="213.248">
       </div>
       <div class="presets">
         <button data-d="0">Day 0</button>
-        <button data-d="5" class="on">Now</button>
+        <button data-now class="on">Now</button>
       </div>
       <p class="ctlnote">Day 0 is <b>15 Aug 2026, 07:24 UTC</b>, when the first order rested. Day 30 is where the size clock tops out and the curve stops rewarding early arrival.</p>
     </div>
@@ -143,7 +143,8 @@
   var rate=function(t){return K/(30+t);};   // DEEP per day, one side
   var sizeU=function(t){return Math.pow(10,t/5);};        // 1 -> 1,000,000 USDG over 30d
   var sizeN=function(t){return Math.pow(5000,t/30);};     // 1 -> 5,000 NVDA over 30d
-  var P={d:5,p:180};
+  var dayZero=Date.UTC(2026,7,15,7,24), nowDay=function(){return Math.max(0,Math.min(30,(Date.now()-dayZero)/86400000));};
+  var P={d:nowDay(),p:213.248};
 
   function money(n){
     if(n>=1e6) return '$'+(n/1e6).toFixed(2)+'M';
@@ -197,7 +198,7 @@
   }
   function mark(d){
     var b=document.querySelectorAll('#dsa .presets button');
-    for(var i=0;i<b.length;i++) b[i].classList.toggle('on', d!==null && parseFloat(b[i].dataset.d)===d);
+    for(var i=0;i<b.length;i++) b[i].classList.toggle('on', (b[i].hasAttribute('data-now') && d===null) || (!b[i].hasAttribute('data-now') && d!==null && parseFloat(b[i].dataset.d)===d));
   }
   document.getElementById('d').addEventListener('input',function(e){
     P.d=parseFloat(e.target.value);
@@ -206,19 +207,30 @@
   });
   document.getElementById('p').addEventListener('input',function(e){
     P.p=parseFloat(e.target.value);
-    document.getElementById('p_v').textContent=P.p;
+    document.getElementById('p_v').textContent=P.p.toFixed(3);
     refresh();
   });
   var btns=document.querySelectorAll('#dsa .presets button');
   for(var i=0;i<btns.length;i++){
     btns[i].addEventListener('click',function(){
-      P.d=parseFloat(this.dataset.d);
+      P.d=this.hasAttribute('data-now')?nowDay():parseFloat(this.dataset.d);
       document.getElementById('d').value=P.d;
       document.getElementById('d_v').textContent=P.d.toFixed(1);
-      mark(P.d);refresh();
+      mark(this.hasAttribute('data-now')?null:P.d);refresh();
     });
   }
+  document.getElementById('d').value=P.d;
+  document.getElementById('d_v').textContent=P.d.toFixed(1);
+  document.getElementById('p_v').textContent=P.p.toFixed(3);
   build();refresh();
+  fetch('./deepstate-live.json?v='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null;}).then(function(data){
+    var price=data&&data.raw&&Number(data.raw.nvda_price);
+    if(!Number.isFinite(price))return;
+    P.p=price;
+    document.getElementById('p').value=price;
+    document.getElementById('p_v').textContent=price.toFixed(3);
+    refresh();
+  }).catch(function(){});
 })();
 </script>
 <script>(function(){ // opened directly rather than embedded: centre it instead of stretching edge to edge
