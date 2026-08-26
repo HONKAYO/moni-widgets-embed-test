@@ -42,18 +42,49 @@ html,body{margin:0;background:transparent}body{padding:0}
     <p class="sub">Robinhood Chain, NVDA/USDG as the flagship book. Everything below is read from the contracts; nothing is projected.</p>
   </div>
   <div class="cards">
-    <div class="card"><span class="label">Deep distributed</span><strong class="num">97.3M</strong><span class="small">903m still unclaimed in the rewarder</span></div>
-    <div class="card"><span class="label">Farmers</span><strong class="num">193</strong><span class="small">391 addresses · 171,702 orders</span></div>
-    <div class="card"><span class="label">Top-10 share</span><strong class="num">76.3%</strong><span class="small">of every DEEP ever claimed</span></div>
-    <div class="card"><span class="label">Burned into STATE</span><strong class="num">34.6%</strong><span class="small">33.6m DEEP destroyed for votes</span></div>
-    <div class="card"><span class="label">DEEP price</span><strong class="num">$0.0026</strong><span class="small">float 6.6% of supply · $165k cap</span></div>
+    <div class="card"><span class="label">Deep distributed</span><strong class="num" id="deepDistributed">97.3M</strong><span class="small" id="rewarderLeft">903m still unclaimed in the rewarder</span></div>
+    <div class="card"><span class="label">Farmers</span><strong class="num" id="farmers">193</strong><span class="small">reward-earning addresses</span></div>
+    <div class="card"><span class="label">Top-10 share</span><strong class="num" id="top10Share">76.3%</strong><span class="small">of every DEEP ever claimed</span></div>
+    <div class="card"><span class="label">Burned into STATE</span><strong class="num" id="burnedIntoState">34.6%</strong><span class="small">of distributed DEEP converted for votes</span></div>
+    <div class="card"><span class="label">DEEP price</span><strong class="num" id="deepPrice">$0.0026</strong><span class="small" id="floatMarketCap">float market cap · $165k</span></div>
     <div class="card"><span class="label">Fully diluted</span><strong class="num">$2.51M</strong><span class="small">if all 966M traded at that price</span></div>
-    <div class="card"><span class="label">Emission / fees</span><strong class="num">4.3x</strong><span class="small">$705/h paid vs $165/h earned</span></div>
-    <div class="card"><span class="label">Treasury NAV</span><strong class="num">$100,626</strong><span class="small">61% of the whole float's market cap</span></div>
+    <div class="card"><span class="label">Emission / fees</span><strong class="num" id="emissionToRevenue">4.3x</strong><span class="small">current emission divided by protocol fees</span></div>
+    <div class="card"><span class="label">Treasury NAV</span><strong class="num" id="vaultNav">$100,626</strong><span class="small" id="protocolFees">protocol fees, net · $54k</span></div>
   </div>
-  <p class="read">Fees run at 165 USDG an hour against a 10 bps protocol take, implying roughly $4.0M of taker volume a day and $54M since launch. The interface company earns the same 10 bps, so its cut equals every token holder's combined.</p>
+  <p class="read" id="dataNote">Metrics refresh from the public Dune query roughly every two hours. The displayed DEEP price is the latest filled DEEP/USDG order, not an oracle or mark price.</p>
   <div class="ft"><span class="mr"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><b>moni</b><i>research</i></span></div>
 </div>
+  <script>
+    (() => {
+      const set = (id, value) => { const el = document.getElementById(id); if (el && value != null) el.textContent = value; };
+      const update = async () => {
+        try {
+          const response = await fetch(`./deepstate-live.json?v=${Date.now()}`, { cache: 'no-store' });
+          if (!response.ok) return;
+          const { metrics, updated_at: updatedAt } = await response.json();
+          if (!metrics) return;
+          set('deepDistributed', metrics.deep_distributed);
+          set('rewarderLeft', `${metrics.rewarder_left} still unclaimed in the rewarder`);
+          set('farmers', metrics.farmers);
+          set('top10Share', metrics.top10_share);
+          set('burnedIntoState', metrics.burned_into_state);
+          set('deepPrice', metrics.deep_price);
+          set('floatMarketCap', `float market cap · ${metrics.float_market_cap}`);
+          set('emissionToRevenue', metrics.emission_to_revenue);
+          set('vaultNav', metrics.vault_nav);
+          set('protocolFees', `protocol fees, net · ${metrics.protocol_fees_net}`);
+          if (updatedAt) {
+            const stamp = new Date(updatedAt).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+            set('dataNote', `Dune snapshot updated ${stamp}. The DEEP price is the latest filled DEEP/USDG order, not an oracle or mark price.`);
+          }
+        } catch (_) {
+          // Preserve the last deployed snapshot if the feed is temporarily unavailable.
+        }
+      };
+      update();
+      setInterval(update, 300000);
+    })();
+  </script>
   <script>
     (() => {
       const root = document.getElementById('dsn');
