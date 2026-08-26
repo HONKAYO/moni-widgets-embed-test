@@ -56,10 +56,10 @@
   #dsw .note{padding:16px 24px 6px;font-size:13px;color:var(--body)}
   #dsw .note b{color:var(--text);font-weight:600}
 
-  #dsw .ft{display:flex;justify-content:flex-end;align-items:center;padding:13px 24px;border-top:1px solid var(--line);margin-top:12px}
+  #dsw .ft{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 24px;border-top:1px solid var(--line);margin-top:12px;flex-wrap:wrap}
   #dsw .cap{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)}
-  #dsw .mr{font-family:Geist,system-ui,sans-serif;font-size:12px;color:var(--text);display:inline-flex;align-items:center;gap:3px}
-  #dsw .mr b{color:var(--accent);font-weight:700} #dsw .mr i{font-style:italic;font-weight:700}
+  #dsw .mr{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+  #dsw .mr b{color:var(--text);font-weight:600}
   #dsw .mr .eye{flex:none;display:block}
   @media(max-width:520px){#dsw h2{font-size:19px}}
 </style>
@@ -67,21 +67,21 @@
 <body>
 <div id="dsw">
   <div class="hd">
-    <p class="kick">Deepstate · order flow</p>
-    <h2>What a market buy does to the book</h2>
-    <p class="sub">Buyers name a price; sellers name theirs. A small buy takes the top offer. A larger one keeps moving through the next available sellers.</p>
+    <p class="kick">Deepstate · what it is</p>
+    <h2>It's an orderbook. Onchain.</h2>
+    <p class="sub">Buyers post the price they'll pay, sellers post the price they'll take, and Deepstate matches them onchain. Buy more than the top offer and your order walks <i>down the book</i>, taking each seller in turn.</p>
   </div>
 
   <div class="wrap">
     <div class="side-h"><span>Sellers ask</span><span>size</span></div>
     <div class="book" id="asks"></div>
-    <div class="spread"><span class="ln"></span><span>mid <span class="mid" id="mid">$212.3996</span></span><span class="ln"></span></div>
+    <div class="spread"><span class="ln"></span><span>mid <span class="mid" id="mid">$2,000</span></span><span class="ln"></span></div>
     <div class="side-h"><span>Buyers bid</span><span>size</span></div>
     <div class="book" id="bids"></div>
   </div>
 
   <div class="controls">
-    <div class="clabel"><span>Your market buy</span><b id="qval">8 NVDA</b></div>
+    <div class="clabel"><span>Your market buy</span><b id="qval">8 ETH</b></div>
     <input type="range" id="q" min="1" max="30" value="8" step="1">
     <div class="btnrow"><button id="go">▶ Market buy</button></div>
   </div>
@@ -92,15 +92,16 @@
       <div class="cell"><div class="l">Avg fill price</div><div class="v" id="rAvg">—</div></div>
       <div class="cell"><div class="l">Slippage vs best</div><div class="v" id="rSlip">—</div></div>
     </div>
-    <div class="onchain" id="rChain"><span class="muted">Choose a size, then run the market buy.</span></div>
+    <div class="onchain" id="rChain"><span class="muted">Pick a size and hit Market buy to walk the book.</span></div>
   </div>
 
   <div class="note">
-    <b>A small trade clears cleanly.</b> A larger one takes several offers and pays a worse average. That is slippage. Matching is the easy part; a usable book needs enough buyers and sellers behind the first quote.
+    <b>That's the engine.</b> A small buy takes the best offer at one clean price. A big buy eats several sellers and pays a worse average — that's slippage, and it's why a book needs depth. Deepstate's hard part isn't the matching. It's getting enough buyers <i>and</i> sellers onchain to make the book deep in the first place.
   </div>
 
   <div class="ft">
-    <span class="mr"><svg class="eye" viewBox="0 0 64 64" width="16" height="16" aria-hidden="true"><path d="M10 32c6.3-7.4 13.8-11.2 22-11.2S47.7 24.6 54 32c-6.3 7.4-13.8 11.2-22 11.2S16.3 39.4 10 32Z" fill="none" stroke="#6C42EB" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="9" fill="none" stroke="#6C42EB" stroke-width="3"/></svg><b>moni</b><i>research</i></span>
+    <span class="cap">Illustrative. Prices/sizes are examples.</span>
+    <span class="mr"><svg class="eye" viewBox="0 0 64 64" width="16" height="16" aria-hidden="true"><path d="M10 32c6.3-7.4 13.8-11.2 22-11.2S47.7 24.6 54 32c-6.3 7.4-13.8 11.2-22 11.2S16.3 39.4 10 32Z" fill="none" stroke="#6C42EB" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="9" fill="none" stroke="#6C42EB" stroke-width="3"/></svg><b>moni</b> research</span>
   </div>
 </div>
 
@@ -110,14 +111,13 @@
       q=document.getElementById('q'),qval=document.getElementById('qval'),btn=document.getElementById('go'),
       result=document.getElementById('result');
   var fmt=function(n){return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');};
-  var fmtPrice=function(n){return '$'+n.toLocaleString('en-US',{minimumFractionDigits:4,maximumFractionDigits:4});};
+  var fmtDec=function(n){var s=n.toFixed(1).split('.');return fmt(+s[0])+'.'+s[1];};
   var rng=function(a,b){return Math.round(a+Math.random()*(b-a));};
   // asks ascending (index 0 = best/lowest); bids descending (index 0 = best/highest)
   var asks,bids;
-  function seed(midPrice){
-    var tick=0.02, round=function(v){return Math.round(v*10000)/10000;};
-    asks=[{p:round(midPrice+tick),s:rng(3,6)},{p:round(midPrice+tick*2),s:rng(3,7)},{p:round(midPrice+tick*3),s:rng(4,8)},{p:round(midPrice+tick*4),s:rng(4,9)},{p:round(midPrice+tick*5),s:rng(5,10)}];
-    bids=[{p:round(midPrice-tick),s:rng(3,6)},{p:round(midPrice-tick*2),s:rng(3,7)},{p:round(midPrice-tick*3),s:rng(4,8)},{p:round(midPrice-tick*4),s:rng(4,9)},{p:round(midPrice-tick*5),s:rng(5,10)}];
+  function seed(){
+    asks=[{p:2001,s:rng(3,6)},{p:2002,s:rng(3,7)},{p:2003,s:rng(4,8)},{p:2004,s:rng(4,9)},{p:2005,s:rng(5,10)}];
+    bids=[{p:1999,s:rng(3,6)},{p:1998,s:rng(3,7)},{p:1997,s:rng(4,8)},{p:1996,s:rng(4,9)},{p:1995,s:rng(5,10)}];
   }
   function maxSize(){var m=1;asks.concat(bids).forEach(function(o){if(o.s>m)m=o.s;});return m;}
   function render(){
@@ -125,16 +125,15 @@
     // asks displayed highest-first (top) -> lowest near spread (bottom)
     asksEl.innerHTML=asks.slice().reverse().map(function(o,i,arr){
       var best=i===arr.length-1;
-      return '<div class="row ask'+(best?' best':'')+'"><span class="bar" style="width:'+(16+o.s/mx*84)+'%"></span><span class="px">'+fmtPrice(o.p)+'</span><span class="sz">'+o.s.toFixed(1)+' NVDA</span></div>';
+      return '<div class="row ask'+(best?' best':'')+'"><span class="bar" style="width:'+(16+o.s/mx*84)+'%"></span><span class="px">$'+fmt(o.p)+'</span><span class="sz">'+o.s.toFixed(1)+' ETH</span></div>';
     }).join('');
     bidsEl.innerHTML=bids.map(function(o,i){
       var best=i===0;
-      return '<div class="row bid'+(best?' best':'')+'"><span class="bar" style="width:'+(16+o.s/mx*84)+'%"></span><span class="px">'+fmtPrice(o.p)+'</span><span class="sz">'+o.s.toFixed(1)+' NVDA</span></div>';
+      return '<div class="row bid'+(best?' best':'')+'"><span class="bar" style="width:'+(16+o.s/mx*84)+'%"></span><span class="px">$'+fmt(o.p)+'</span><span class="sz">'+o.s.toFixed(1)+' ETH</span></div>';
     }).join('');
   }
-  var nvdaPrice=212.39955556925193;
-  seed(nvdaPrice); render();
-  q.addEventListener('input',function(){qval.textContent=q.value+' NVDA';});
+  seed(); render();
+  q.addEventListener('input',function(){qval.textContent=q.value+' ETH';});
 
   function txhash(){var h='0x';var c='0123456789abcdef';for(var i=0;i<6;i++)h+=c[Math.floor(Math.random()*16)];return h+'…';}
   var busy=false;
@@ -155,15 +154,15 @@
       (function(j){setTimeout(function(){var el=rows[rows.length-1-j];if(el)el.classList.add('hit');},j*150);})(j);
     }
     setTimeout(function(){
-      document.getElementById('rBought').textContent=filled.toFixed(1)+' NVDA';
-      var avgEl=document.getElementById('rAvg'); avgEl.textContent=fmtPrice(avg);
+      document.getElementById('rBought').textContent=filled.toFixed(1)+' ETH';
+      var avgEl=document.getElementById('rAvg'); avgEl.textContent='$'+fmtDec(avg);
       var slipEl=document.getElementById('rSlip');
       slipEl.textContent=(slip<0.001?'0.00':'+'+slip.toFixed(2))+'%';
       slipEl.className='v'+(slip>0.15?' warn':(slip<0.06?' ok':''));
       document.getElementById('rBought').className='v'+(partial?' warn':'');
       var chain=document.getElementById('rChain');
       if(partial){
-        chain.innerHTML='<span class="muted">only '+filled.toFixed(1)+' of '+want+' NVDA filled — ran out of sellers.</span>  ✓ settled onchain <span class="muted">tx '+txhash()+'</span>';
+        chain.innerHTML='<span class="muted">only '+filled.toFixed(1)+' of '+want+' ETH filled — ran out of sellers.</span>  ✓ settled onchain <span class="muted">tx '+txhash()+'</span>';
       } else {
         chain.innerHTML='✓ settled onchain <span class="muted">across '+levels+' price level'+(levels>1?'s':'')+' · tx '+txhash()+'</span>';
       }
@@ -173,11 +172,16 @@
       render(); busy=false;
     }, levels*150+400);
   });
-  fetch('https://raw.githubusercontent.com/HONKAYO/moni-widgets-embed-test/main/deepstate-live.json?t='+Date.now(),{cache:'no-store'})
-    .then(function(r){if(!r.ok)throw new Error();return r.json();})
-    .then(function(data){var price=Number(data.raw&&data.raw.nvda_price);if(!isFinite(price))return;nvdaPrice=price;document.getElementById('mid').textContent=fmtPrice(price);seed(price);render();})
-    .catch(function(){});
 })();
 </script>
-</body>
+  <script>
+    (() => {
+      const root = document.getElementById('dsw');
+      if (!root || window.parent === window) return;
+      const reportHeight = () => window.parent.postMessage({ type: 'moni-widget:resize', height: Math.ceil(root.getBoundingClientRect().height) }, 'https://research.moni.ai');
+      new ResizeObserver(reportHeight).observe(root);
+      window.addEventListener('load', reportHeight, { once: true });
+      requestAnimationFrame(reportHeight);
+    })();
+  </script></body>
 </html>

@@ -1,91 +1,61 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Deepstate live read</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
-<style>
-  html,body{margin:0;background:transparent}body{padding:0}
-  #dslive{--bg:#fff;--soft:#faf9ff;--text:#14151a;--body:#3b4049;--muted:#7e8490;--line:#e8e8ed;--accent:#6c42eb;--accent-soft:#eee9ff;width:100%;max-width:none;overflow:hidden;background:var(--bg);font-family:Geist,system-ui,sans-serif;color:var(--body);line-height:1.45}
-  #dslive *{box-sizing:border-box;min-width:0}
-  #dslive .hd{padding:24px 28px 18px;border-bottom:1px solid var(--line)}
-  #dslive .kick{margin:0 0 8px;color:var(--accent);font:600 10px/1 "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase}
-  #dslive h2{margin:0;color:var(--text);font:700 28px/1.05 Geist,system-ui,sans-serif;letter-spacing:-.035em}
-  #dslive .sub{max-width:720px;margin:9px 0 0;color:var(--body);font-size:13.5px}
-  #dslive .meta{margin:10px 0 0;color:var(--muted);font:500 10px/1.4 "IBM Plex Mono",monospace}
-  #dslive .body{padding:18px 28px 20px}
-  #dslive .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
-  #dslive .card{border:1px solid var(--line);background:var(--soft);padding:13px 14px 12px}
-  #dslive .label{display:block;color:var(--muted);font:600 9px/1.2 "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase}
-  #dslive .value{display:block;margin-top:7px;color:var(--text);font:700 25px/1 Geist,system-ui,sans-serif;letter-spacing:-.04em}
-  #dslive .hint{display:block;margin-top:6px;color:#6d7380;font-size:11px}
-  #dslive .concentration{display:grid;grid-template-columns:minmax(0,1fr) 168px;gap:16px;align-items:center;margin-top:15px;padding:15px 16px;border:1px solid var(--line)}
-  #dslive .concentration h3{margin:0;color:var(--text);font:700 17px/1.15 Geist,system-ui,sans-serif;letter-spacing:-.02em}
-  #dslive .concentration p{margin:6px 0 0;font-size:12px}
-  #dslive .bar{height:10px;overflow:hidden;background:#ecebf1;display:flex}
-  #dslive .bar .top{width:73.3%;background:var(--accent)}
-  #dslive .bar .rest{flex:1;background:#c6b9f6}
-  #dslive .bar-labels{display:flex;justify-content:space-between;gap:12px;margin-top:6px;color:var(--muted);font:500 10px/1.3 "IBM Plex Mono",monospace}
-  #dslive .callout{margin-top:15px;padding:14px 16px;background:var(--accent-soft);border-left:3px solid var(--accent);color:var(--body);font-size:12.5px}
-  #dslive .callout b{color:var(--text)}
-  #dslive .links{display:flex;gap:14px;flex-wrap:wrap;margin:13px 0 0;font-size:12px}
-  #dslive .links a{color:var(--accent);text-decoration:none;font-weight:600}
-  #dslive .ft{padding:10px 28px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;align-items:center}
-  #dslive .brand{display:inline-flex;gap:3px;align-items:center;white-space:nowrap}
-  #dslive .brand .eye{flex:none;display:block}
-  #dslive .brand .m1{color:var(--accent);font:700 12px/1 Geist,system-ui,sans-serif}
-  #dslive .brand .m2{color:var(--text);font:italic 700 12px/1 Geist,system-ui,sans-serif}
-  @media(max-width:620px){#dslive .hd,#dslive .body,#dslive .ft{padding-left:18px;padding-right:18px}#dslive h2{font-size:24px}#dslive .grid{grid-template-columns:repeat(2,minmax(0,1fr))}#dslive .concentration{grid-template-columns:1fr;gap:12px}}
-  @media(max-width:420px){#dslive .grid{grid-template-columns:1fr}#dslive .value{font-size:24px}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Deepstate Runtime · HONKAYO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.7/chart.umd.min.js" integrity="sha512-c7v2mEghMrX9YKC1iSb93skFX4CVpTvFJxTiEek0DDQZc2zq/WsnlmeBARTTBr/M3Pzd9RwLZ/6ePHPFRYPldA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    :root{color-scheme:light;background:#fff}*{box-sizing:border-box}html,body{margin:0;min-width:320px;background:#fff;color:#14151a;font-family:Geist,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}body{background-image:linear-gradient(#f5f5f8 1px,transparent 1px),linear-gradient(90deg,#f5f5f8 1px,transparent 1px);background-size:48px 48px}
+    #dsw{--purple:#6c42eb;--purple-soft:#6c42eb14;--ink:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--panel:#fafafb;--green:#0fa968;--red:#e24b4a;--amber:#f59e0b;--slate:#94a3b8;width:min(1180px,calc(100% - 40px));margin:0 auto;padding:30px 0 48px;overflow:hidden}#dsw a{color:inherit}
+    #dsw .topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:0 0 22px;border-bottom:1px solid var(--line)}#dsw .brand{font:500 11px "IBM Plex Mono",monospace;letter-spacing:.09em;text-transform:uppercase;text-decoration:none}#dsw .brand span{margin-left:12px;color:var(--muted);font-weight:400}#dsw .back{color:var(--muted);font:500 11px "IBM Plex Mono",monospace;text-decoration:none;text-transform:uppercase;letter-spacing:.06em}#dsw .back:hover{color:var(--purple)}
+    #dsw .hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:28px;align-items:end;padding:50px 0 32px}#dsw .kicker{margin:0 0 12px;color:var(--purple);font:500 11px "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase}#dsw h1{margin:0;font-size:clamp(38px,6vw,74px);line-height:.95;letter-spacing:-.05em;font-weight:700}#dsw .dek{max-width:680px;margin:20px 0 0;color:var(--body);font-size:16px;line-height:1.55}
+    #dsw .live-box{min-width:220px;border:1px solid var(--line);background:#fff;padding:17px 18px}#dsw .status-line{display:flex;align-items:center;gap:9px;margin-bottom:8px}#dsw .dot{width:8px;height:8px;border-radius:50%;background:var(--slate)}#dsw .dot.live{background:var(--green);box-shadow:0 0 0 4px #0fa96816}#dsw .dot.degraded{background:var(--amber);box-shadow:0 0 0 4px #f59e0b18}#dsw .dot.offline{background:var(--red);box-shadow:0 0 0 4px #e24b4a18}#dsw .status-name{font-weight:700;font-size:15px;text-transform:uppercase}#dsw .micro{color:var(--muted);font:400 10px/1.5 "IBM Plex Mono",monospace;letter-spacing:.03em}
+    #dsw .metrics{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line);background:#fff}#dsw .metric{min-width:0;min-height:128px;padding:18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}#dsw .metric-label{display:block;min-height:27px;color:var(--muted);font:500 10px/1.35 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase}#dsw .metric-value{display:block;margin-top:13px;font-size:clamp(23px,2.6vw,36px);line-height:1;font-weight:700;letter-spacing:-.04em;white-space:nowrap}#dsw .metric-value.purple{color:var(--purple)}#dsw .metric-sub{display:block;margin-top:9px;color:var(--muted);font:400 10px "IBM Plex Mono",monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    #dsw .toolbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:34px;padding-bottom:12px;border-bottom:1px solid var(--ink)}#dsw .toolbar-title{font:500 11px "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase}#dsw .ranges{display:flex;gap:6px}#dsw .ranges button{border:1px solid var(--line);background:#fff;color:var(--muted);padding:7px 11px;font:500 10px "IBM Plex Mono",monospace;cursor:pointer}#dsw .ranges button:hover,#dsw .ranges button.active{border-color:var(--purple);background:var(--purple-soft);color:var(--purple)}
+    #dsw .chart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}#dsw .panel{min-width:0;border:1px solid var(--line);background:#fff;padding:19px}#dsw .panel.wide{grid-column:1/-1}#dsw .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}#dsw .panel h2{margin:0;font-size:18px;line-height:1.15;letter-spacing:-.025em}#dsw .panel-copy{margin:5px 0 0;color:var(--muted);font-size:12px}#dsw .legend{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:9px 13px;color:var(--muted);font:400 9px "IBM Plex Mono",monospace;text-transform:uppercase}#dsw .legend span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}#dsw .legend i{width:7px;height:7px;border-radius:50%;background:var(--c)}#dsw .chart-wrap{position:relative;height:250px}#dsw .wide .chart-wrap{height:295px}
+    #dsw .lower{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:16px;margin-top:16px}#dsw .state-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line);margin-top:16px}#dsw .state-row{min-width:0;padding:12px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}#dsw .state-row dt{color:var(--muted);font:500 9px "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase}#dsw .state-row dd{margin:6px 0 0;font-size:13px;font-weight:600;word-break:break-word}#dsw .events{list-style:none;margin:14px 0 0;padding:0}#dsw .events li{display:grid;grid-template-columns:76px minmax(0,1fr);gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:12px}#dsw .events time{color:var(--muted);font:400 10px "IBM Plex Mono",monospace}#dsw .events strong{font-weight:600}#dsw .events em{display:block;margin-top:2px;color:var(--muted);font-style:normal;font-size:11px}#dsw .empty{padding:26px 0;color:var(--muted);font-size:13px}
+    #dsw footer{display:flex;justify-content:space-between;gap:18px;margin-top:26px;padding-top:15px;border-top:1px solid var(--line);color:var(--muted);font:400 10px/1.5 "IBM Plex Mono",monospace}#dsw .error-banner{display:none;margin-bottom:14px;padding:12px;border:1px solid #e24b4a4d;background:#e24b4a0d;color:var(--red);font-size:13px}#dsw .error-banner.show{display:block}
+    @media(max-width:980px){#dsw .metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:760px){#dsw{width:min(100% - 24px,620px);padding-top:18px}#dsw .hero{grid-template-columns:1fr;align-items:start;padding-top:34px}#dsw .live-box{width:100%}#dsw .chart-grid,#dsw .lower{grid-template-columns:1fr}#dsw .panel.wide{grid-column:auto}#dsw .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}#dsw .panel-head{display:block}#dsw .legend{justify-content:flex-start;margin-top:12px}#dsw .chart-wrap,#dsw .wide .chart-wrap{height:235px}}@media(max-width:460px){#dsw .topbar{align-items:flex-start}#dsw .brand span{display:none}#dsw .metrics{grid-template-columns:1fr 1fr}#dsw .metric{padding:14px;min-height:112px}#dsw .metric-value{font-size:25px}#dsw .toolbar{align-items:flex-start;flex-direction:column}#dsw .state-grid{grid-template-columns:1fr}#dsw footer{display:block}#dsw footer span{display:block;margin-top:6px}}
+  </style>
 </head>
 <body>
-<div id="dslive">
-  <header class="hd">
-    <p class="kick">Deepstate / at time of writing</p>
-    <h2>Deepstate, in the current dashboard read.</h2>
-    <p class="sub">A dated look at emissions, participation, concentration, and the token's thin public float. It is a research snapshot, not a live terminal.</p>
-    <p class="meta" id="updated">Loading Dune dashboard snapshot...</p>
-  </header>
-  <main class="body">
-    <section class="grid" aria-label="Live Deepstate metrics">
-      <div class="card"><span class="label">DEEP distributed</span><strong class="value" data-key="deep_distributed">106.17M</strong><span class="hint">claimed emissions</span></div>
-      <div class="card"><span class="label">unique farmers</span><strong class="value" data-key="farmers">199</strong><span class="hint">dashboard count</span></div>
-      <div class="card"><span class="label">top-10 share</span><strong class="value" data-key="top10_share">73.3%</strong><span class="hint">of claimed DEEP</span></div>
-      <div class="card"><span class="label">DEEP price</span><strong class="value" data-key="deep_price">$0.0050</strong><span class="hint">dashboard print</span></div>
-      <div class="card"><span class="label">float market cap</span><strong class="value" data-key="float_market_cap">$282.3k</strong><span class="hint">dashboard estimate</span></div>
-      <div class="card"><span class="label">emission / revenue</span><strong class="value" data-key="emission_to_revenue">10.9x</strong><span class="hint">protocol dashboard ratio</span></div>
+  <main id="dsw">
+    <nav class="topbar"><a class="brand" href="/">HONKAYO<span>runtime observatory</span></a><a class="back" href="/">&larr; hub</a></nav>
+    <section class="hero"><div><p class="kicker">Deepstate · Direct GAP · Production</p><h1>Runtime, without guessing.</h1><p class="dek">A read-only view of the detector, execution path and VDS health. No signer, no RPC endpoint and no controls are exposed here.</p></div><aside class="live-box"><div class="status-line"><i id="statusDot" class="dot"></i><span id="statusName" class="status-name">Loading</span></div><div id="statusAge" class="micro">waiting for feed</div><div id="statusBuild" class="micro">build —</div></aside></section>
+    <div id="errorBanner" class="error-banner">Live feed is temporarily unavailable. The dashboard will retry automatically.</div>
+    <section class="metrics" aria-label="Current production metrics">
+      <article class="metric"><span class="metric-label">GAP capture</span><strong id="captureValue" class="metric-value purple">—</strong><span id="captureSub" class="metric-sub">seen / acted</span></article><article class="metric"><span class="metric-label">Watchdog p95</span><strong id="pollValue" class="metric-value">—</strong><span id="pollSub" class="metric-sub">target 500 ms</span></article><article class="metric"><span class="metric-label">Book read p95</span><strong id="readValue" class="metric-value">—</strong><span id="readSub" class="metric-sub">same-state read</span></article><article class="metric"><span class="metric-label">WSS</span><strong id="wsValue" class="metric-value">—</strong><span id="wsSub" class="metric-sub">events / reconnects</span></article><article class="metric"><span class="metric-label">Hot RPC max wait</span><strong id="rpcValue" class="metric-value">—</strong><span id="rpcSub" class="metric-sub">QoS protected</span></article><article class="metric"><span class="metric-label">Runtime RSS</span><strong id="rssValue" class="metric-value">—</strong><span id="rssSub" class="metric-sub">swap / threads</span></article>
     </section>
-    <section class="concentration">
-      <div>
-        <h3><span data-key="top10_share">73.3%</span> of claimed DEEP sits with the top ten farmers.</h3>
-        <p>This is a claimed-reward distribution signal, not proof that the same wallets control the venue or its governance today.</p>
-      </div>
-      <div><div class="bar" aria-label="Top ten farmer share"><span class="top"></span><span class="rest"></span></div><div class="bar-labels"><span>Top 10</span><span>Everyone else</span></div></div>
+    <div class="toolbar"><div class="toolbar-title">Rolling production window</div><div class="ranges" role="group" aria-label="Chart range"><button type="button" data-range="900000">15M</button><button type="button" class="active" data-range="3600000">1H</button><button type="button" data-range="21600000">6H</button></div></div>
+    <section class="chart-grid">
+      <article class="panel wide"><div class="panel-head"><div><h2>GAP capture</h2><p class="panel-copy">Cumulative episodes seen, acted and closed in the current process session.</p></div><div class="legend"><span><i style="--c:#6c42eb"></i>seen</span><span><i style="--c:#0fa968"></i>acted</span><span><i style="--c:#94a3b8"></i>closed</span></div></div><div class="chart-wrap"><canvas id="captureChart"></canvas></div></article>
+      <article class="panel"><div class="panel-head"><div><h2>Detection latency</h2><p class="panel-copy">Watchdog interval and full book read, p95.</p></div><div class="legend"><span><i style="--c:#6c42eb"></i>poll</span><span><i style="--c:#0fa968"></i>read</span><span><i style="--c:#f59e0b"></i>WS decision</span></div></div><div class="chart-wrap"><canvas id="latencyChart"></canvas></div></article>
+      <article class="panel"><div class="panel-head"><div><h2>Runtime health</h2><p class="panel-copy">Event-loop p99, hot RPC max wait and memory.</p></div><div class="legend"><span><i style="--c:#6c42eb"></i>loop</span><span><i style="--c:#e24b4a"></i>hot wait</span><span><i style="--c:#94a3b8"></i>RSS</span></div></div><div class="chart-wrap"><canvas id="runtimeChart"></canvas></div></article>
     </section>
-    <div class="callout"><b>Read the split correctly:</b> the engine can be fully onchain and still be economically early. Claimed emissions appear when an order closes, and dashboard revenue labels follow their own reporting method. Neither number is a substitute for sustained two-sided flow.</div>
-    <nav class="links" aria-label="Source dashboards"><a href="https://dune.com/gomosellow/deepstate-protocol" target="_blank" rel="noopener">Protocol dashboard -&gt;</a><a href="https://dune.com/deep_kiwi3593/deepstate" target="_blank" rel="noopener">Activity dashboard -&gt;</a></nav>
+    <section class="lower"><article class="panel"><div class="panel-head"><div><h2>Current state</h2><p class="panel-copy">Latest sanitized in-process truth.</p></div></div><dl class="state-grid"><div class="state-row"><dt>Block / free</dt><dd id="stateBook">—</dd></div><div class="state-row"><dt>Decision</dt><dd id="stateReason">—</dd></div><div class="state-row"><dt>Pending / locks</dt><dd id="stateLocks">—</dd></div><div class="state-row"><dt>Orders / exposure</dt><dd id="stateOrders">—</dd></div><div class="state-row"><dt>Blind / stale heads</dt><dd id="stateBlind">—</dd></div><div class="state-row"><dt>Session DEEP paid</dt><dd id="statePaid">—</dd></div><div class="state-row"><dt>PID / uptime</dt><dd id="stateProcess">—</dd></div><div class="state-row"><dt>Session</dt><dd id="stateSession">—</dd></div></dl></article><article class="panel"><div class="panel-head"><div><h2>Recent markers</h2><p class="panel-copy">Derived from counter and session transitions.</p></div></div><ul id="eventList" class="events"><li class="empty">Waiting for enough samples.</li></ul></article></section>
+    <footer><span>read-only · refreshed every 10 seconds</span><span id="footerStamp">feed —</span></footer>
   </main>
-  <footer class="ft"><span class="brand" aria-label="moni research"><svg class="eye" viewBox="0 0 64 64" width="17" height="17" aria-hidden="true"><path d="M10 32c6.3-7.4 13.8-11.2 22-11.2S47.7 24.6 54 32c-6.3 7.4-13.8 11.2-22 11.2S16.3 39.4 10 32Z" fill="none" stroke="#6C42EB" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="9" fill="none" stroke="#6C42EB" stroke-width="3"/></svg><span class="m1">moni</span><span class="m2">research</span></span></footer>
-</div>
-<script>
-(function(){
-  var root=document.getElementById('dslive');
-  var fallback={updated_at:'2026-08-25T19:14:27.151Z',metrics:{deep_distributed:'106.17M',farmers:'199',top10_share:'73.3%',deep_price:'$0.0050',float_market_cap:'$282.3k',emission_to_revenue:'10.9x'}};
-  function render(data){
-    data=data||fallback;
-    var metrics=data.metrics||{};
-    Object.keys(metrics).forEach(function(key){var el=root.querySelector('[data-key="'+key+'"]');if(el)el.textContent=metrics[key];});
-    var top=Number(String(metrics.top10_share||'').replace('%',''));if(!isNaN(top))root.querySelector('.bar .top').style.width=top+'%';
-    var when=data.updated_at?new Date(data.updated_at):null;
-    document.getElementById('updated').textContent=when&&!isNaN(when)?'Dune dashboard read on '+when.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+' - values are a snapshot, not live tick data.':'Dune dashboard snapshot - values are a snapshot, not live tick data.';
-  }
-  render(fallback);
-  fetch('https://raw.githubusercontent.com/HONKAYO/moni-widgets-embed-test/main/deepstate-live.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('snapshot unavailable');return r.json();}).then(render).catch(function(){});
-})();
-</script>
-</body>
+  <script>
+  (()=>{const API='./data/runtime.json',$=id=>document.getElementById(id),state={range:3600000,payload:null,charts:{}},colors={purple:'#6c42eb',green:'#0fa968',amber:'#f59e0b',red:'#e24b4a',slate:'#94a3b8',grid:'#eef0f3',muted:'#8b8f99'};const num=(v,d=1)=>v==null||Number.isNaN(Number(v))?'—':Number(v).toLocaleString(undefined,{maximumFractionDigits:d}),ms=v=>v==null?'—':`${num(v,v<10?2:1)} ms`,duration=s=>{if(s==null)return'—';const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),x=Math.floor(s%60);return h?`${h}h ${m}m`:m?`${m}m ${x}s`:`${x}s`},time=t=>new Date(t).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'}),capture=p=>p&&p.seen?Math.round(p.acted/p.seen*100):null;
+  const points=()=>{if(!state.payload?.series)return[];const cutoff=Date.now()-state.range;return state.payload.series.filter(p=>p.t>=cutoff)};function options(two=false){const scales={x:{grid:{display:false},ticks:{color:colors.muted,maxTicksLimit:7,font:{family:'IBM Plex Mono',size:9}}},y:{beginAtZero:true,grid:{color:colors.grid},ticks:{color:colors.muted,font:{family:'IBM Plex Mono',size:9}}}};if(two)scales.yR={position:'right',beginAtZero:false,grid:{display:false},ticks:{color:colors.muted,font:{family:'IBM Plex Mono',size:9}}};return{responsive:true,maintainAspectRatio:false,animation:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{enabled:false}},elements:{point:{radius:0},line:{borderWidth:2,tension:.2}},scales}}
+  function chart(name,id,sets,two=false){const p=points(),data={labels:p.map(x=>time(x.t)),datasets:sets.map(s=>({...s,data:p.map(x=>x[s.key]??null)}))};if(!state.charts[name])state.charts[name]=new Chart($(id),{type:'line',data,options:options(two)});else{state.charts[name].data=data;state.charts[name].update('none')}}function charts(){chart('capture','captureChart',[{key:'seen',label:'Seen',borderColor:colors.purple,backgroundColor:colors.purple,stepped:true},{key:'acted',label:'Acted',borderColor:colors.green,backgroundColor:colors.green,stepped:true},{key:'closed',label:'Closed',borderColor:colors.slate,backgroundColor:colors.slate,stepped:true}]);chart('latency','latencyChart',[{key:'poll_p95',label:'Poll p95',borderColor:colors.purple,backgroundColor:colors.purple},{key:'read_p95',label:'Read p95',borderColor:colors.green,backgroundColor:colors.green},{key:'ws_p95',label:'WS p95',borderColor:colors.amber,backgroundColor:colors.amber}]);chart('runtime','runtimeChart',[{key:'runtime_p99',label:'Loop p99',borderColor:colors.purple,backgroundColor:colors.purple},{key:'hot_max_wait',label:'Hot max',borderColor:colors.red,backgroundColor:colors.red},{key:'rss',label:'RSS',borderColor:colors.slate,backgroundColor:colors.slate,yAxisID:'yR'}],true)}
+  function markers(){const p=points(),e=[];for(let i=1;i<p.length;i++){const a=p[i-1],b=p[i];if(a.session!==b.session||a.pid!==b.pid)e.push({t:b.t,title:'New runtime session',detail:`PID ${b.pid} · ${b.session}`});if(b.seen>a.seen)e.push({t:b.t,title:`GAP +${b.seen-a.seen}`,detail:`seen ${b.seen} · free ${b.free??'—'}`});if(b.acted>a.acted)e.push({t:b.t,title:`DIRECT +${b.acted-a.acted}`,detail:`acted ${b.acted} · capture ${capture(b)??'—'}%`});if(b.deep_paid>a.deep_paid)e.push({t:b.t,title:`DEEP +${num(b.deep_paid-a.deep_paid,2)}`,detail:`session ${num(b.deep_paid,2)}`});if(b.blind>a.blind)e.push({t:b.t,title:'Blind sample',detail:`total ${b.blind}`});if(a.ws&&!b.ws)e.push({t:b.t,title:'WSS disconnected',detail:`reconnects ${b.reconnects}`});if(!a.pending&&b.pending)e.push({t:b.t,title:'Direct pending',detail:b.reason||'transaction in flight'})}const list=$('eventList'),out=e.slice(-10).reverse();list.innerHTML=out.length?out.map(x=>`<li><time>${time(x.t)}</time><span><strong>${x.title}</strong><em>${x.detail}</em></span></li>`).join(''):'<li class="empty">No markers inside this window.</li>'}
+  function render(){const p=state.payload?.latest;if(!p)return;const age=(Date.now()-p.t)/1000,health=age<=15&&p.ws&&!p.blind_run?'live':age<=60?'degraded':'offline';$('statusDot').className=`dot ${health}`;$('statusName').textContent=health;$('statusAge').textContent=`${age<2?'updated now':`updated ${num(age,0)}s ago`} · block ${p.block??'—'}`;$('statusBuild').textContent=`build ${p.build||'—'} · PID ${p.pid??'—'}`;const rate=capture(p);$('captureValue').textContent=rate==null?'—':`${rate}%`;$('captureSub').textContent=`${num(p.seen,0)} seen / ${num(p.acted,0)} acted`;$('pollValue').textContent=ms(p.poll_p95);$('pollSub').textContent=`p99 ${ms(p.poll_p99)} · max ${ms(p.poll_max)}`;$('readValue').textContent=ms(p.read_p95);$('readSub').textContent=`max ${ms(p.read_max)} · fail ${num(p.read_fail,0)}`;$('wsValue').textContent=p.ws?'UP':'DOWN';$('wsSub').textContent=`${num(p.events,0)} events · ${num(p.reconnects,0)} reconnects`;$('rpcValue').textContent=ms(p.hot_max_wait);$('rpcSub').textContent=`${num(p.hot_waits,0)} waits · cold max ${ms(p.cold_max_wait)}`;$('rssValue').textContent=`${num(p.rss,1)} MB`;$('rssSub').textContent=`${num(p.swap,1)} MB swap · ${num(p.threads,0)} threads`;$('stateBook').textContent=`${p.block??'—'} / free ${p.free??'—'}`;$('stateReason').textContent=p.reason||'—';$('stateLocks').textContent=`${p.pending?'pending':'clear'} / send ${p.send_lock?'locked':'open'} / cold ${p.housekeeping_lock?'locked':'open'}`;$('stateOrders').textContent=`${p.live_orders??0} live / ${p.exposure_count??0} exposure / $${num(p.exposure_capital,2)}`;$('stateBlind').textContent=`${p.blind??0} blind / ${p.stale_heads??0} stale`;$('statePaid').textContent=num(p.deep_paid,3);$('stateProcess').textContent=`${p.pid??'—'} / ${duration(p.uptime)}`;$('stateSession').textContent=p.session||'—';$('footerStamp').textContent=`${time(p.t)} · ${state.payload.series.length} points`;charts();markers()}
+  async function refresh(){try{const r=await fetch(`${API}?v=${Date.now()}`,{cache:'no-store',credentials:'same-origin'});if(!r.ok)throw new Error(`HTTP ${r.status}`);state.payload=await r.json();$('errorBanner').classList.remove('show');render()}catch(_){$('errorBanner').classList.add('show');$('statusDot').className='dot offline';$('statusName').textContent='offline';$('statusAge').textContent='feed retry scheduled'}}document.querySelectorAll('[data-range]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-range]').forEach(x=>x.classList.remove('active'));b.classList.add('active');state.range=Number(b.dataset.range);if(state.payload){charts();markers()}}));refresh();setInterval(refresh,10000)})();
+  </script>
+  <script>
+    (() => {
+      const root = document.getElementById('dsw');
+      if (!root || window.parent === window) return;
+      const reportHeight = () => window.parent.postMessage({ type: 'moni-widget:resize', height: Math.ceil(root.getBoundingClientRect().height) }, 'https://research.moni.ai');
+      new ResizeObserver(reportHeight).observe(root);
+      window.addEventListener('load', reportHeight, { once: true });
+      requestAnimationFrame(reportHeight);
+    })();
+  </script></body>
 </html>

@@ -52,11 +52,11 @@
 
   #dsa .note{margin:10px 24px 0;padding:12px 14px;background:var(--soft);border:1px solid var(--line);font-size:12.5px;color:var(--body)}
   #dsa .note b{color:var(--text);font-weight:600}
-  #dsa .ft{display:flex;justify-content:flex-end;align-items:center;padding:13px 24px;border-top:1px solid var(--line)}
+  #dsa .ft{display:flex;justify-content:flex-end;align-items:center;padding:13px 24px}
   #dsa .meta{margin:14px 24px 0;padding:12px 0 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);line-height:1.5}
   #dsa .cap{font-size:11px;color:var(--muted);max-width:62ch}
-  #dsa .mr{font-family:Geist,system-ui,sans-serif;font-size:12px;color:var(--text);display:inline-flex;align-items:center;gap:3px}
-  #dsa .mr b{color:var(--accent);font-weight:700} #dsa .mr i{font-style:italic;font-weight:700} #dsa .eye{flex:none;display:block}
+  #dsa .mr{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+  #dsa .mr b{color:var(--text);font-weight:600}
   #dsa .mr .eye{flex:none;display:block}
   @media(max-width:640px){
     #dsa .grid{grid-template-columns:1fr}
@@ -72,17 +72,17 @@
 <body>
 <div id="dsa">
   <div class="hd">
-    <p class="kick">Deepstate · rewards over time</p>
-    <h2>Early capital gets the easier trade</h2>
-    <p class="sub">The schedule was fixed at deploy. Rewards fall over time, while the qualifying order gets larger. Move the day to see what posted capital earns at each point.</p>
+    <p class="kick">Deepstate · the arrival clock</p>
+    <h2>How late are you?</h2>
+    <p class="sub">Two clocks were fixed in the contract at deploy and neither one resets: emission decays, and the order you must post to earn it climbs. Drag the day to see what a dollar of posted capital is worth.</p>
   </div>
 
   <div class="grid">
     <div class="ctl">
-      <h3>Pick a day</h3>
+      <h3>Where you arrive</h3>
       <div class="row">
-        <div class="lab"><span>Day since first order</span><b id="d_v">—</b></div>
-        <input type="range" id="d" min="0" max="30" step="0.5" value="0">
+        <div class="lab"><span>Day since first order</span><b id="d_v">5.0</b></div>
+        <input type="range" id="d" min="0" max="30" step="0.5" value="5">
         <div class="ticks"><span>0</span><span>30</span></div>
       </div>
       <div class="row">
@@ -91,9 +91,9 @@
       </div>
       <div class="presets">
         <button data-d="0">Day 0</button>
-        <button id="now" class="on">Now</button>
+        <button data-d="5" class="on">Now</button>
       </div>
-      <p class="ctlnote"><b>Launch:</b> 15 Aug 2026, 07:24 UTC, when the first order rested. Day 30 is where the size clock tops out and the curve stops rewarding early arrival.</p>
+      <p class="ctlnote">Day 0 is <b>15 Aug 2026, 07:24 UTC</b>, when the first order rested. Day 30 is where the size clock tops out and the curve stops rewarding early arrival.</p>
     </div>
 
     <div class="viz">
@@ -129,7 +129,7 @@
 
   <p class="meta">Curves as written in the contract: C(t) = 500M &middot; ln(1+t/30) / ln(1+395/30) per side. &ldquo;Per $1&rdquo; divides the day&rsquo;s emission by the minimum qualifying order at that day.</p>
   <div class="ft">
-    <span class="mr"><svg class="eye" viewBox="0 0 64 64" width="16" height="16" aria-hidden="true"><path d="M10 32c6.3-7.4 13.8-11.2 22-11.2S47.7 24.6 54 32c-6.3 7.4-13.8 11.2-22 11.2S16.3 39.4 10 32Z" fill="none" stroke="#6C42EB" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="9" fill="none" stroke="#6C42EB" stroke-width="3"/></svg><b>moni</b><i>research</i></span>
+    <span class="mr"><svg class="eye" viewBox="0 0 64 64" width="16" height="16" aria-hidden="true"><path d="M10 32c6.3-7.4 13.8-11.2 22-11.2S47.7 24.6 54 32c-6.3 7.4-13.8 11.2-22 11.2S16.3 39.4 10 32Z" fill="none" stroke="#6C42EB" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="9" fill="none" stroke="#6C42EB" stroke-width="3"/></svg><b>moni</b> research</span>
   </div>
 </div>
 
@@ -140,9 +140,7 @@
   var rate=function(t){return K/(30+t);};   // DEEP per day, one side
   var sizeU=function(t){return Math.pow(10,t/5);};        // 1 -> 1,000,000 USDG over 30d
   var sizeN=function(t){return Math.pow(5000,t/30);};     // 1 -> 5,000 NVDA over 30d
-  var DEPLOY=Date.UTC(2026,7,15,7,24,0);
-  function nowDay(){return Math.max(0,Math.min(30,(Date.now()-DEPLOY)/86400000));}
-  var P={d:nowDay(),p:180};
+  var P={d:5,p:180};
 
   function money(n){
     if(n>=1e6) return '$'+(n/1e6).toFixed(2)+'M';
@@ -194,31 +192,30 @@
     chart.data.datasets[2].data=[{x:t,y:pu}];
     chart.update();
   }
-  function mark(active){
+  function mark(d){
     var b=document.querySelectorAll('#dsa .presets button');
-    for(var i=0;i<b.length;i++) b[i].classList.toggle('on', active!==null && (b[i].dataset.d===active || (b[i].id==='now' && active==='now')));
-  }
-  function setDay(day,active){
-    P.d=day;
-    document.getElementById('d').value=P.d;
-    document.getElementById('d_v').textContent=P.d.toFixed(1);
-    mark(active);refresh();
-  }
-  function labelNow(){
-    var day=nowDay();
-    document.getElementById('now').textContent='Now · day '+day.toFixed(1);
+    for(var i=0;i<b.length;i++) b[i].classList.toggle('on', d!==null && parseFloat(b[i].dataset.d)===d);
   }
   document.getElementById('d').addEventListener('input',function(e){
-    setDay(parseFloat(e.target.value),null);
+    P.d=parseFloat(e.target.value);
+    document.getElementById('d_v').textContent=P.d.toFixed(1);
+    mark(P.d);refresh();
   });
   document.getElementById('p').addEventListener('input',function(e){
     P.p=parseFloat(e.target.value);
     document.getElementById('p_v').textContent=P.p;
     refresh();
   });
-  document.querySelector('[data-d="0"]').addEventListener('click',function(){setDay(0,'0');});
-  document.getElementById('now').addEventListener('click',function(){labelNow();setDay(nowDay(),'now');});
-  labelNow();build();setDay(P.d,'now');
+  var btns=document.querySelectorAll('#dsa .presets button');
+  for(var i=0;i<btns.length;i++){
+    btns[i].addEventListener('click',function(){
+      P.d=parseFloat(this.dataset.d);
+      document.getElementById('d').value=P.d;
+      document.getElementById('d_v').textContent=P.d.toFixed(1);
+      mark(P.d);refresh();
+    });
+  }
+  build();refresh();
 })();
 </script>
 <script>(function(){ // opened directly rather than embedded: centre it instead of stretching edge to edge
@@ -228,5 +225,14 @@
     r.style.maxWidth='960px'; r.style.margin='0 auto';
   }
 })();</script>
-</body>
+  <script>
+    (() => {
+      const root = document.getElementById('dsa');
+      if (!root || window.parent === window) return;
+      const reportHeight = () => window.parent.postMessage({ type: 'moni-widget:resize', height: Math.ceil(root.getBoundingClientRect().height) }, 'https://research.moni.ai');
+      new ResizeObserver(reportHeight).observe(root);
+      window.addEventListener('load', reportHeight, { once: true });
+      requestAnimationFrame(reportHeight);
+    })();
+  </script></body>
 </html>

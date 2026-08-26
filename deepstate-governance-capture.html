@@ -56,11 +56,11 @@
 
   #dsg .note{margin:16px 24px 0;padding:12px 14px;background:var(--soft);border:1px solid var(--line);font-size:12.5px;color:var(--body)}
   #dsg .note b{color:var(--text);font-weight:600}
-  #dsg .ft{display:flex;justify-content:flex-end;align-items:center;padding:13px 24px;border-top:1px solid var(--line)}
+  #dsg .ft{display:flex;justify-content:flex-end;align-items:center;padding:13px 24px}
   #dsg .meta{margin:14px 24px 0;padding:12px 0 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);line-height:1.5}
   #dsg .cap{font-size:11px;color:var(--muted);max-width:60ch}
-  #dsg .mr{font-family:Geist,system-ui,sans-serif;font-size:12px;color:var(--text);display:inline-flex;align-items:center;gap:3px}
-  #dsg .mr b{color:var(--accent);font-weight:700} #dsg .mr i{font-style:italic;font-weight:700} #dsg .eye{flex:none;display:block}
+  #dsg .mr{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+  #dsg .mr b{color:var(--text);font-weight:600}
   #dsg .mr .eye{flex:none;display:block}
   @media(max-width:620px){#dsg .mets{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:640px){
@@ -145,7 +145,7 @@
 
   <p class="meta">Balances, supply and <code>getVotes</code> read from the contracts over RPC on 20 August 2026, five days after deploy. DEEP shares exclude the rewarder, engine and burn address.</p>
   <div class="ft">
-    <span class="mr"><svg class="eye" viewBox="0 0 64 64" width="16" height="16" aria-hidden="true"><path d="M10 32c6.3-7.4 13.8-11.2 22-11.2S47.7 24.6 54 32c-6.3 7.4-13.8 11.2-22 11.2S16.3 39.4 10 32Z" fill="none" stroke="#6C42EB" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="9" fill="none" stroke="#6C42EB" stroke-width="3"/></svg><b>moni</b><i>research</i></span>
+    <span class="mr"><svg class="eye" viewBox="0 0 64 64" width="16" height="16" aria-hidden="true"><path d="M10 32c6.3-7.4 13.8-11.2 22-11.2S47.7 24.6 54 32c-6.3 7.4-13.8 11.2-22 11.2S16.3 39.4 10 32Z" fill="none" stroke="#6C42EB" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="9" fill="none" stroke="#6C42EB" stroke-width="3"/></svg><b>moni</b> research</span>
   </div>
 </div>
 
@@ -195,5 +195,14 @@
     r.style.maxWidth='960px'; r.style.margin='0 auto';
   }
 })();</script>
-</body>
+  <script>
+    (() => {
+      const root = document.getElementById('dsg');
+      if (!root || window.parent === window) return;
+      const reportHeight = () => window.parent.postMessage({ type: 'moni-widget:resize', height: Math.ceil(root.getBoundingClientRect().height) }, 'https://research.moni.ai');
+      new ResizeObserver(reportHeight).observe(root);
+      window.addEventListener('load', reportHeight, { once: true });
+      requestAnimationFrame(reportHeight);
+    })();
+  </script></body>
 </html>

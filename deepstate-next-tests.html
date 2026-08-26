@@ -77,6 +77,14 @@
   <p class="note"><b>What to watch through each date:</b> spread, executable size, cancellations, maker retention and the distribution of STATE voting power. Headline volume alone is not enough.</p>
   <footer class="ft"><span class="mr"><svg class="eye" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 32c6.3-7.4 13.8-11.2 22-11.2S47.7 24.6 54 32c-6.3 7.4-13.8 11.2-22 11.2S16.3 39.4 10 32Z" fill="none" stroke="#6C42EB" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="32" r="9" fill="none" stroke="#6C42EB" stroke-width="3"/></svg><b>moni</b><i>research</i></span></footer>
 </section>
-</body>
+  <script>
+    (() => {
+      const root = document.getElementById('dst');
+      if (!root || window.parent === window) return;
+      const reportHeight = () => window.parent.postMessage({ type: 'moni-widget:resize', height: Math.ceil(root.getBoundingClientRect().height) }, 'https://research.moni.ai');
+      new ResizeObserver(reportHeight).observe(root);
+      window.addEventListener('load', reportHeight, { once: true });
+      requestAnimationFrame(reportHeight);
+    })();
+  </script></body>
 </html>
-
