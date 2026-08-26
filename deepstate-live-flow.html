@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deepstate · live flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:transparent}
+#dfl{--bg:#fff;--soft:#fafafb;--card:#f7f5fc;--text:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--accent:#6c42eb;--teal:#0fa968;width:100%;max-width:none;overflow:hidden;background:var(--bg);color:var(--body);font-family:Geist,system-ui,sans-serif;line-height:1.45}
+#dfl *{box-sizing:border-box;min-width:0}#dfl .hd{padding:24px 24px 14px;border-bottom:1px solid var(--line)}#dfl .kick{margin:0 0 8px;color:var(--accent);font:600 10px/1 "IBM Plex Mono",monospace;letter-spacing:.09em;text-transform:uppercase}#dfl h2{margin:0;color:var(--text);font-size:25px;line-height:1.08;letter-spacing:-.035em}#dfl .sub{margin:8px 0 0;max-width:68ch;font-size:13px;color:var(--body)}
+#dfl .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:14px 24px 0}#dfl .card{border:1px solid var(--line);background:var(--card);padding:13px 14px}#dfl .label{display:block;color:var(--muted);font:600 9px/1.2 "IBM Plex Mono",monospace;letter-spacing:.07em;text-transform:uppercase}.num{display:block;margin-top:7px;color:var(--text);font-size:23px;line-height:1;font-weight:700;letter-spacing:-.04em}.num.accent{color:var(--accent)}.small{display:block;margin-top:7px;color:#69707b;font-size:10px}
+#dfl .body{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:14px;padding:14px 24px 16px}#dfl .panel{border:1px solid var(--line);padding:14px;background:#fff}.panel h3{margin:0;color:var(--text);font-size:15px;letter-spacing:-.02em}.panel .copy{margin:4px 0 10px;color:var(--muted);font-size:10.5px}.trend{display:grid;gap:5px}.day{display:grid;grid-template-columns:28px minmax(0,1fr) 42px;gap:7px;align-items:center;font:500 9px "IBM Plex Mono",monospace;color:var(--muted)}.track{height:10px;background:var(--soft);overflow:hidden}.bar{display:block;height:100%;background:var(--accent)}.bar.latest{background:var(--teal)}.val{text-align:right;color:var(--body)}
+#dfl .makers{display:grid;gap:7px}.maker{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end;border-bottom:1px solid var(--line);padding-bottom:7px}.maker:last-child{border:0;padding-bottom:0}.address{font:600 10px "IBM Plex Mono",monospace;color:var(--body)}.meta{display:block;margin-top:2px;font:500 9px "IBM Plex Mono",monospace;color:var(--muted)}.earned{color:var(--accent);font-size:13px;font-weight:700;letter-spacing:-.02em}
+#dfl .note{margin:0 24px 16px;padding:10px 12px;border:1px solid #6c42eb33;background:#6c42eb0d;color:var(--body);font-size:11px}.note b{color:var(--text)}#dfl .note a{color:var(--accent);text-decoration:none}
+#dfl .ft{display:flex;justify-content:flex-end;align-items:center;border-top:1px solid var(--line);padding:10px 24px}.mr{display:inline-flex;align-items:center;gap:4px;color:var(--text);font:12px/1 Geist,Arial,sans-serif;white-space:nowrap}.eye{display:block;width:15px;height:15px;flex:0 0 15px}.mr b{color:var(--accent);font-weight:700}.mr i{color:var(--text);font-weight:600;font-style:italic}
+@media(max-width:560px){#dfl .cards{grid-template-columns:1fr}#dfl .body{grid-template-columns:1fr}#dfl .hd,#dfl .cards,#dfl .body{padding-left:17px;padding-right:17px}#dfl .note{margin-left:17px;margin-right:17px}#dfl .ft{padding-left:17px;padding-right:17px}}
+</style>
+</head>
+<body>
+<div id="dfl">
+  <div class="hd"><p class="kick">Deepstate · Dune snapshot</p><h2>There is flow. The question is what stays.</h2><p class="sub">Latest completed-day activity and the wallets earning the quote rewards. These are live dashboard readings, not a claim that the book already has durable depth.</p></div>
+  <div class="cards">
+    <div class="card"><span class="label">Daily volume</span><strong class="num accent" id="volume">$6.13M</strong><span class="small" id="volumeSub">latest completed day</span></div>
+    <div class="card"><span class="label">Protocol revenue</span><strong class="num" id="revenue">$6.16k</strong><span class="small" id="revenueSub">10 bps to the STATE vault</span></div>
+    <div class="card"><span class="label">Active wallets</span><strong class="num" id="users">34</strong><span class="small" id="usersSub">21,217 transactions that day</span></div>
+  </div>
+  <div class="body">
+    <section class="panel"><h3>Volume, last completed days</h3><p class="copy">Executed volume, not token flow into the engine.</p><div class="trend" id="trend"></div></section>
+    <section class="panel"><h3>Who earns the quote rewards</h3><p class="copy">Top makers by cumulative DEEP earned. This is a reward leaderboard, not a holder list.</p><div class="makers" id="makers"></div></section>
+  </div>
+  <p class="note" id="note"><b>Read it carefully.</b> Emissions can recruit quote competition before they prove that makers will remain when inventory risk is no longer subsidised. <a href="https://dune.com/deep_kiwi3593/deepstate" target="_blank" rel="noreferrer">Open the Dune dashboards ↗</a></p>
+  <div class="ft"><span class="mr"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><b>moni</b><i>research</i></span></div>
+</div>
+<script>
+(() => {
+  const fallback={updated_at:'2026-08-26T12:51:00.562Z',activity:{revenue:[{day:'2026-08-25',revenue_usd:6164.01}],volume:[{day:'2026-08-20',volume_usd:14993103},{day:'2026-08-21',volume_usd:10371139},{day:'2026-08-22',volume_usd:4806086},{day:'2026-08-23',volume_usd:6587554},{day:'2026-08-24',volume_usd:8667106},{day:'2026-08-25',volume_usd:6131100}],users:[{day:'2026-08-25',active_users:34,transactions:21217}],makers:[{maker:'0x2acbb83869646baec4917627ded2f665ee4c0706',deep_earned:29700298,payouts:5882},{maker:'0x8b87a6c6046fefaab5e358b1a51b99f2de1c1d3f',deep_earned:12900893,payouts:163},{maker:'0x9955b74506ce384d7f942b5f33dd826e8f79bee0',deep_earned:9594302,payouts:3570},{maker:'0xa536f3c578709a63ceb2086cbcda06b0fd365b7d',deep_earned:5009724,payouts:54},{maker:'0xe951324b9eec300e177a4f926d160fca01acdfe9',deep_earned:4290163,payouts:5982}]}};
+  const money=n=>n>=1e6?'$'+(n/1e6).toFixed(2)+'M':n>=1e3?'$'+(n/1e3).toFixed(2)+'k':'$'+Number(n).toFixed(0);
+  const short=a=>a?a.slice(0,6)+'...'+a.slice(-4):'—';
+  const day=d=>new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  function render(data){
+    const a=data.activity||fallback.activity, v=a.volume||[], r=a.revenue||[], u=a.users||[], m=a.makers||[];
+    const latestV=v[v.length-1]||{}, latestR=r[r.length-1]||{}, latestU=u[u.length-1]||{};
+    document.getElementById('volume').textContent=money(latestV.volume_usd||0);
+    document.getElementById('volumeSub').textContent=(latestV.day?day(latestV.day)+' · ':'')+'latest completed day';
+    document.getElementById('revenue').textContent=money(latestR.revenue_usd||0);
+    document.getElementById('users').textContent=Number(latestU.active_users||0).toLocaleString('en-US');
+    document.getElementById('usersSub').textContent=Number(latestU.transactions||0).toLocaleString('en-US')+' transactions that day';
+    const rows=v.slice(-8), max=Math.max(...rows.map(x=>Number(x.volume_usd)||0),1);
+    document.getElementById('trend').innerHTML=rows.map((x,i)=>'<div class="day"><span>'+day(x.day)+'</span><span class="track"><i class="bar '+(i===rows.length-1?'latest':'')+'" style="width:'+((Number(x.volume_usd)||0)/max*100)+'%"></i></span><span class="val">'+money(x.volume_usd)+'</span></div>').join('');
+    document.getElementById('makers').innerHTML=m.slice(0,5).map(x=>'<div class="maker"><span><span class="address">'+short(x.maker)+'</span><span class="meta">'+Number(x.payouts||0).toLocaleString('en-US')+' payouts</span></span><strong class="earned">'+(Number(x.deep_earned||0)/1e6).toFixed(2)+'M</strong></div>').join('');
+    if(data.updated_at){document.getElementById('note').innerHTML='<b>Read it carefully.</b> Snapshot updated '+new Date(data.updated_at).toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})+'. Emissions can recruit quote competition before they prove that makers will remain when inventory risk is no longer subsidised. <a href="https://dune.com/deep_kiwi3593/deepstate" target="_blank" rel="noreferrer">Open the Dune dashboards ↗</a>';}
+  }
+  render(fallback);
+  fetch('./deepstate-live.json?v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(data=>{if(data)render(data)}).catch(()=>{});
+})();
+</script>
+<script>
+(() => {const root=document.getElementById('dfl');if(!root||window.parent===window)return;const report=()=>{const rootBox=root.getBoundingClientRect(),lastBox=root.lastElementChild?.getBoundingClientRect();window.parent.postMessage({type:'moni-widget:resize',height:Math.ceil((lastBox?.bottom??rootBox.bottom)-rootBox.top+1)},'https://research.moni.ai')};new ResizeObserver(report).observe(root);window.addEventListener('load',report,{once:true});window.addEventListener('resize',report);window.addEventListener('message',e=>{if(e.origin==='https://research.moni.ai'&&e.data?.type==='moni-widget:request-resize')report()});[0,100,500,1500].forEach(d=>setTimeout(report,d));})();
+</script>
+</body>
+</html>
