@@ -30,5 +30,15 @@
     </div>
     <div class="foot"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><b class="moni">moni</b><b class="research">research</b></span></div>
   </section>
+  <script>
+    (() => {
+      const root = document.getElementById('flopladder');
+      if (!root || window.parent === window) return;
+      const reportHeight = () => window.parent.postMessage({ type: 'moni-widget:resize', height: Math.ceil(root.getBoundingClientRect().height) }, 'https://research.moni.ai');
+      new ResizeObserver(reportHeight).observe(root);
+      window.addEventListener('load', reportHeight, { once: true });
+      requestAnimationFrame(reportHeight);
+    })();
+  </script>
 </body>
 </html>

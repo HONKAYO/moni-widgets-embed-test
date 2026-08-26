@@ -24,6 +24,14 @@
       ['↺','Buyer','Come back without a reward','Only repeat paid use turns a testnet interaction into demand for the network and its currency.','The proof','Would the same agent pay again with USDC and existing APIs available?']
     ];
     const ids=['icon','stage','title','copy','qlabel','qcopy'];document.querySelectorAll('#flopjob button').forEach((b)=>b.addEventListener('click',()=>{const s=steps[+b.dataset.step];ids.forEach((id,i)=>document.getElementById(id).textContent=s[i]);document.querySelectorAll('#flopjob button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}));
+    (() => {
+      const root = document.getElementById('flopjob');
+      if (!root || window.parent === window) return;
+      const reportHeight = () => window.parent.postMessage({ type: 'moni-widget:resize', height: Math.ceil(root.getBoundingClientRect().height) }, 'https://research.moni.ai');
+      new ResizeObserver(reportHeight).observe(root);
+      window.addEventListener('load', reportHeight, { once: true });
+      requestAnimationFrame(reportHeight);
+    })();
   </script>
 </body>
 </html>
