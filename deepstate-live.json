@@ -1,22 +1,333 @@
 {
-  "updated_at": "2026-08-26T10:51:36.470Z",
-  "source_label": "Dune query 8340363",
-  "source_url": "https://dune.com/queries/8340363",
+  "updated_at": "2026-08-26T12:51:00.562Z",
+  "source_label": "Dune Deepstate dashboards",
+  "source_url": "https://dune.com/gomosellow/deepstate-protocol",
   "metrics": {
-    "deep_distributed": "107.13M",
-    "rewarder_left": "892.87M",
-    "farmers": "201",
-    "top10_share": "73.3%",
-    "deep_price": "$0.0026",
-    "float_market_cap": "$149.0k",
-    "emission_to_revenue": "4.5x",
-    "nvda_price": "212.9991",
-    "burned_into_state": "46.5%",
-    "state_outstanding": "38.26M",
-    "vault_nav": "$109.9k",
-    "protocol_fees_net": "$54.7k"
+    "deep_distributed": "113.19M",
+    "rewarder_left": "886.81M",
+    "farmers": "202",
+    "top10_share": "71.0%",
+    "deep_price": "$0.0025",
+    "float_market_cap": "$155.4k",
+    "emission_to_revenue": "1.9x",
+    "nvda_price": "212.9950",
+    "burned_into_state": "45.1%",
+    "state_outstanding": "39.19M",
+    "vault_nav": "$114.6k",
+    "protocol_fees_net": "$57.5k"
   },
   "raw": {
-    "nvda_price": 212.99909990561008
+    "nvda_price": 212.99500793868683
+  },
+  "activity": {
+    "revenue": [
+      {
+        "cumulative_revenue_usd": 1865.6287522791354,
+        "day": "2026-08-15 00:00:00.000 UTC",
+        "deep_fees": 594.3440192982378,
+        "fee_transfers": 5590,
+        "nvda_fees": 3.535909090282585,
+        "revenue_usd": 1865.6287522791354,
+        "usdg_fees": 1070.4028209999997
+      },
+      {
+        "cumulative_revenue_usd": 10045.784786910815,
+        "day": "2026-08-16 00:00:00.000 UTC",
+        "deep_fees": 882.3919664329313,
+        "fee_transfers": 5444,
+        "nvda_fees": 22.31757961486854,
+        "revenue_usd": 8180.156034631681,
+        "usdg_fees": 3154.521223999999
+      },
+      {
+        "cumulative_revenue_usd": 20620.086270565196,
+        "day": "2026-08-17 00:00:00.000 UTC",
+        "deep_fees": 308.9231872909551,
+        "fee_transfers": 4702,
+        "nvda_fees": 23.925560200098793,
+        "revenue_usd": 10574.30148365438,
+        "usdg_fees": 5186.384938000006
+      },
+      {
+        "cumulative_revenue_usd": 41574.92163098025,
+        "day": "2026-08-18 00:00:00.000 UTC",
+        "deep_fees": 102.9734680282974,
+        "fee_transfers": 9520,
+        "nvda_fees": 37.7138374524054,
+        "revenue_usd": 20954.835360415054,
+        "usdg_fees": 12702.629511000003
+      },
+      {
+        "cumulative_revenue_usd": 62089.36867126428,
+        "day": "2026-08-19 00:00:00.000 UTC",
+        "deep_fees": 1288.8557560090157,
+        "fee_transfers": 10753,
+        "nvda_fees": 44.162094089800334,
+        "revenue_usd": 20514.447040284027,
+        "usdg_fees": 10845.026362000002
+      },
+      {
+        "cumulative_revenue_usd": 77077.26812523222,
+        "day": "2026-08-20 00:00:00.000 UTC",
+        "deep_fees": 172.1781107326428,
+        "fee_transfers": 8052,
+        "nvda_fees": 35.90825305022384,
+        "revenue_usd": 14987.89945396794,
+        "usdg_fees": 7182.102402000004
+      },
+      {
+        "cumulative_revenue_usd": 87419.53688573619,
+        "day": "2026-08-21 00:00:00.000 UTC",
+        "deep_fees": 729.9908963648326,
+        "fee_transfers": 7354,
+        "nvda_fees": 22.074587646655615,
+        "revenue_usd": 10342.268760503965,
+        "usdg_fees": 5589.306098999999
+      },
+      {
+        "cumulative_revenue_usd": 92228.79927830664,
+        "day": "2026-08-22 00:00:00.000 UTC",
+        "deep_fees": 49.09584011297801,
+        "fee_transfers": 1593,
+        "nvda_fees": 12.012346213167364,
+        "revenue_usd": 4809.262392570457,
+        "usdg_fees": 2222.6130210000015
+      },
+      {
+        "cumulative_revenue_usd": 98823.03355753432,
+        "day": "2026-08-23 00:00:00.000 UTC",
+        "deep_fees": 63.048562771506056,
+        "fee_transfers": 2468,
+        "nvda_fees": 16.353736380606186,
+        "revenue_usd": 6594.23427922767,
+        "usdg_fees": 3023.1338070000015
+      },
+      {
+        "cumulative_revenue_usd": 107408.56226487886,
+        "day": "2026-08-24 00:00:00.000 UTC",
+        "deep_fees": 137.90613691308337,
+        "fee_transfers": 3631,
+        "nvda_fees": 21.433018332359502,
+        "revenue_usd": 8585.52870734454,
+        "usdg_fees": 4105.266004000001
+      },
+      {
+        "cumulative_revenue_usd": 113572.57708937833,
+        "day": "2026-08-25 00:00:00.000 UTC",
+        "deep_fees": 182.1876312369442,
+        "fee_transfers": 2324,
+        "nvda_fees": 16.27897315726474,
+        "revenue_usd": 6164.0148244994725,
+        "usdg_fees": 2709.373517000001
+      }
+    ],
+    "volume": [
+      {
+        "day": "2026-08-15 00:00:00.000 UTC",
+        "plural_usd": 727427.6406669997,
+        "single_usd": 1089000.1098230004,
+        "subtree_usd": 41489.428647999994,
+        "volume_usd": 1857917.179138002
+      },
+      {
+        "day": "2026-08-16 00:00:00.000 UTC",
+        "plural_usd": 4185721.310649999,
+        "single_usd": 3922691.0746809994,
+        "subtree_usd": 61516.42942099999,
+        "volume_usd": 8169928.814751996
+      },
+      {
+        "day": "2026-08-17 00:00:00.000 UTC",
+        "plural_usd": 6448266.583270998,
+        "single_usd": 4014171.0660470007,
+        "subtree_usd": 129054.098426,
+        "volume_usd": 10591491.747744
+      },
+      {
+        "day": "2026-08-18 00:00:00.000 UTC",
+        "plural_usd": 10645790.880949993,
+        "single_usd": 10069372.39300102,
+        "subtree_usd": 298947.817407,
+        "volume_usd": 21014111.09135801
+      },
+      {
+        "day": "2026-08-19 00:00:00.000 UTC",
+        "plural_usd": 9889700.521703994,
+        "single_usd": 10432240.52177999,
+        "subtree_usd": 205354.594284,
+        "volume_usd": 20527295.637767978
+      },
+      {
+        "day": "2026-08-20 00:00:00.000 UTC",
+        "plural_usd": 7323893.246907997,
+        "single_usd": 7485560.332135996,
+        "subtree_usd": 183649.53356800007,
+        "volume_usd": 14993103.112611994
+      },
+      {
+        "day": "2026-08-21 00:00:00.000 UTC",
+        "plural_usd": 5317529.307254998,
+        "single_usd": 4881696.027598002,
+        "subtree_usd": 171913.87207500002,
+        "volume_usd": 10371139.206927996
+      },
+      {
+        "day": "2026-08-22 00:00:00.000 UTC",
+        "plural_usd": 2180946.143523,
+        "single_usd": 2585116.7510780008,
+        "subtree_usd": 40023.55362499999,
+        "volume_usd": 4806086.448225997
+      },
+      {
+        "day": "2026-08-23 00:00:00.000 UTC",
+        "plural_usd": 2451270.931849001,
+        "single_usd": 4079352.0409419998,
+        "subtree_usd": 56930.568632,
+        "volume_usd": 6587553.541423003
+      },
+      {
+        "day": "2026-08-24 00:00:00.000 UTC",
+        "plural_usd": 2772145.746464999,
+        "single_usd": 5760336.962615,
+        "subtree_usd": 134623.57578599997,
+        "volume_usd": 8667106.284866001
+      },
+      {
+        "day": "2026-08-25 00:00:00.000 UTC",
+        "plural_usd": 1922169.1195470002,
+        "single_usd": 4164727.244548999,
+        "subtree_usd": 44203.808288,
+        "volume_usd": 6131100.172384001
+      }
+    ],
+    "users": [
+      {
+        "active_users": 205,
+        "day": "2026-08-15 00:00:00.000 UTC",
+        "transactions": 31095
+      },
+      {
+        "active_users": 260,
+        "day": "2026-08-16 00:00:00.000 UTC",
+        "transactions": 31744
+      },
+      {
+        "active_users": 174,
+        "day": "2026-08-17 00:00:00.000 UTC",
+        "transactions": 33784
+      },
+      {
+        "active_users": 116,
+        "day": "2026-08-18 00:00:00.000 UTC",
+        "transactions": 57942
+      },
+      {
+        "active_users": 100,
+        "day": "2026-08-19 00:00:00.000 UTC",
+        "transactions": 42524
+      },
+      {
+        "active_users": 72,
+        "day": "2026-08-20 00:00:00.000 UTC",
+        "transactions": 33145
+      },
+      {
+        "active_users": 65,
+        "day": "2026-08-21 00:00:00.000 UTC",
+        "transactions": 33048
+      },
+      {
+        "active_users": 50,
+        "day": "2026-08-22 00:00:00.000 UTC",
+        "transactions": 7743
+      },
+      {
+        "active_users": 44,
+        "day": "2026-08-23 00:00:00.000 UTC",
+        "transactions": 19800
+      },
+      {
+        "active_users": 47,
+        "day": "2026-08-24 00:00:00.000 UTC",
+        "transactions": 59325
+      },
+      {
+        "active_users": 34,
+        "day": "2026-08-25 00:00:00.000 UTC",
+        "transactions": 21217
+      }
+    ],
+    "makers": [
+      {
+        "deep_earned": 29700298.261596434,
+        "first_reward": "2026-08-15 13:03:34.000 UTC",
+        "last_reward": "2026-08-20 05:23:30.000 UTC",
+        "maker": "0x2acbb83869646baec4917627ded2f665ee4c0706",
+        "payouts": 5882
+      },
+      {
+        "deep_earned": 12900893.165492367,
+        "first_reward": "2026-08-16 21:10:47.000 UTC",
+        "last_reward": "2026-08-26 04:31:42.000 UTC",
+        "maker": "0x8b87a6c6046fefaab5e358b1a51b99f2de1c1d3f",
+        "payouts": 163
+      },
+      {
+        "deep_earned": 9594302.022701932,
+        "first_reward": "2026-08-15 22:01:10.000 UTC",
+        "last_reward": "2026-08-26 11:43:10.000 UTC",
+        "maker": "0x9955b74506ce384d7f942b5f33dd826e8f79bee0",
+        "payouts": 3570
+      },
+      {
+        "deep_earned": 5009724.310911119,
+        "first_reward": "2026-08-23 00:41:47.000 UTC",
+        "last_reward": "2026-08-24 20:22:53.000 UTC",
+        "maker": "0xa536f3c578709a63ceb2086cbcda06b0fd365b7d",
+        "payouts": 54
+      },
+      {
+        "deep_earned": 4290163.340551375,
+        "first_reward": "2026-08-16 01:57:49.000 UTC",
+        "last_reward": "2026-08-26 11:45:37.000 UTC",
+        "maker": "0xe951324b9eec300e177a4f926d160fca01acdfe9",
+        "payouts": 5982
+      },
+      {
+        "deep_earned": 3985305.13077271,
+        "first_reward": "2026-08-16 01:51:52.000 UTC",
+        "last_reward": "2026-08-24 14:17:44.000 UTC",
+        "maker": "0x90bd5b3e0eb7cc8d92dba8eee3c855c374b2d990",
+        "payouts": 1193
+      },
+      {
+        "deep_earned": 3917294.5007755887,
+        "first_reward": "2026-08-25 19:38:08.000 UTC",
+        "last_reward": "2026-08-26 11:39:45.000 UTC",
+        "maker": "0xd051159c596d58f447f2e3646d566b143864110c",
+        "payouts": 89
+      },
+      {
+        "deep_earned": 3900646.3644688544,
+        "first_reward": "2026-08-24 21:44:33.000 UTC",
+        "last_reward": "2026-08-25 12:21:13.000 UTC",
+        "maker": "0x6837ad0fbd56f8a414a5aa1c9e6df3b7ff1a6d52",
+        "payouts": 30
+      },
+      {
+        "deep_earned": 3711917.4747070353,
+        "first_reward": "2026-08-15 11:37:00.000 UTC",
+        "last_reward": "2026-08-26 11:39:47.000 UTC",
+        "maker": "0xad41edecdbfe444ed49bad259d3eb1bae7b50fb9",
+        "payouts": 5847
+      },
+      {
+        "deep_earned": 3352822.047428244,
+        "first_reward": "2026-08-16 08:37:37.000 UTC",
+        "last_reward": "2026-08-26 11:41:30.000 UTC",
+        "maker": "0xedea2a3014e4729bb050b00e8480bb2d36086ad1",
+        "payouts": 5843
+      }
+    ]
   }
 }
