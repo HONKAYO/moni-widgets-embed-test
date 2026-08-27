@@ -1,203 +1,235 @@
 {
-  "updated_at": "2026-08-27T09:47:58.148Z",
+  "updated_at": "2026-08-27T20:30:07.380Z",
   "source_label": "Dune Deepstate dashboards",
   "source_url": "https://dune.com/gomosellow/deepstate-protocol",
   "metrics": {
-    "deep_distributed": "115.01M",
-    "rewarder_left": "884.99M",
-    "farmers": "203",
-    "top10_share": "70.3%",
-    "deep_price": "$0.0025",
-    "float_market_cap": "$147.6k",
-    "emission_to_revenue": "4.7x",
-    "nvda_price": "209.8393",
-    "burned_into_state": "48.7%",
-    "state_outstanding": "42.99M",
-    "vault_nav": "$117.3k",
-    "protocol_fees_net": "$58.9k"
+    "deep_distributed": "122.58M",
+    "rewarder_left": "877.42M",
+    "farmers": "206",
+    "top10_share": "69.8%",
+    "deep_price": "$0.0060",
+    "float_market_cap": "$341.6k",
+    "emission_to_revenue": "6.1x",
+    "nvda_price": "229.5688",
+    "burned_into_state": "53.6%",
+    "state_outstanding": "50.41M",
+    "vault_nav": "$129.6k",
+    "protocol_fees_net": "$65.4k"
   },
   "raw": {
-    "nvda_price": 209.83925760751373
+    "nvda_price": 229.5687795359743
   },
   "activity": {
     "revenue": [
       {
-        "cumulative_revenue_usd": 1865.6287522791354,
+        "cumulative_revenue_usd": 1865.628752279135,
         "day": "2026-08-15 00:00:00.000 UTC",
-        "deep_fees": 594.3440192982378,
+        "deep_fees": 594.344019298238,
         "fee_transfers": 5590,
-        "nvda_fees": 3.535909090282585,
-        "revenue_usd": 1865.6287522791354,
-        "usdg_fees": 1070.4028209999997
+        "nvda_fees": 3.5359090902825856,
+        "revenue_usd": 1865.628752279135,
+        "usdg_fees": 1070.4028209999992
       },
       {
-        "cumulative_revenue_usd": 10045.784786910815,
+        "cumulative_revenue_usd": 10045.78478691082,
         "day": "2026-08-16 00:00:00.000 UTC",
-        "deep_fees": 882.3919664329313,
+        "deep_fees": 882.3919664329317,
         "fee_transfers": 5444,
-        "nvda_fees": 22.31757961486854,
-        "revenue_usd": 8180.156034631681,
-        "usdg_fees": 3154.521223999999
+        "nvda_fees": 22.317579614868553,
+        "revenue_usd": 8180.156034631684,
+        "usdg_fees": 3154.5212239999987
       },
       {
         "cumulative_revenue_usd": 20620.086270565196,
         "day": "2026-08-17 00:00:00.000 UTC",
-        "deep_fees": 308.9231872909551,
+        "deep_fees": 308.92318729095524,
         "fee_transfers": 4702,
         "nvda_fees": 23.925560200098793,
-        "revenue_usd": 10574.30148365438,
-        "usdg_fees": 5186.384938000006
+        "revenue_usd": 10574.301483654377,
+        "usdg_fees": 5186.384938000002
       },
       {
-        "cumulative_revenue_usd": 41574.92163098025,
+        "cumulative_revenue_usd": 41574.92163098024,
         "day": "2026-08-18 00:00:00.000 UTC",
         "deep_fees": 102.9734680282974,
         "fee_transfers": 9520,
-        "nvda_fees": 37.7138374524054,
-        "revenue_usd": 20954.835360415054,
-        "usdg_fees": 12702.629511000003
+        "nvda_fees": 37.713837452405386,
+        "revenue_usd": 20954.835360415047,
+        "usdg_fees": 12702.629510999997
       },
       {
-        "cumulative_revenue_usd": 62089.36867126428,
+        "cumulative_revenue_usd": 62089.36867126427,
         "day": "2026-08-19 00:00:00.000 UTC",
         "deep_fees": 1288.8557560090157,
         "fee_transfers": 10753,
-        "nvda_fees": 44.162094089800334,
+        "nvda_fees": 44.16209408980031,
         "revenue_usd": 20514.447040284027,
-        "usdg_fees": 10845.026362000002
+        "usdg_fees": 10845.026362000006
       },
       {
-        "cumulative_revenue_usd": 77077.26812523222,
+        "cumulative_revenue_usd": 77077.2681252322,
         "day": "2026-08-20 00:00:00.000 UTC",
-        "deep_fees": 172.1781107326428,
+        "deep_fees": 172.17811073264284,
         "fee_transfers": 8052,
-        "nvda_fees": 35.90825305022384,
-        "revenue_usd": 14987.89945396794,
-        "usdg_fees": 7182.102402000004
+        "nvda_fees": 35.90825305022387,
+        "revenue_usd": 14987.899453967944,
+        "usdg_fees": 7182.102402000001
       },
       {
-        "cumulative_revenue_usd": 87419.53688573619,
+        "cumulative_revenue_usd": 87419.53688573618,
         "day": "2026-08-21 00:00:00.000 UTC",
-        "deep_fees": 729.9908963648326,
+        "deep_fees": 729.9908963648327,
         "fee_transfers": 7354,
-        "nvda_fees": 22.074587646655615,
+        "nvda_fees": 22.07458764665563,
         "revenue_usd": 10342.268760503965,
-        "usdg_fees": 5589.306098999999
+        "usdg_fees": 5589.3060989999985
       },
       {
-        "cumulative_revenue_usd": 92228.79927830664,
+        "cumulative_revenue_usd": 92228.79927830663,
         "day": "2026-08-22 00:00:00.000 UTC",
-        "deep_fees": 49.09584011297801,
+        "deep_fees": 49.095840112978,
         "fee_transfers": 1593,
-        "nvda_fees": 12.012346213167364,
-        "revenue_usd": 4809.262392570457,
-        "usdg_fees": 2222.6130210000015
+        "nvda_fees": 12.012346213167367,
+        "revenue_usd": 4809.262392570456,
+        "usdg_fees": 2222.6130209999997
       },
       {
-        "cumulative_revenue_usd": 98823.03355753432,
+        "cumulative_revenue_usd": 98823.0335575343,
         "day": "2026-08-23 00:00:00.000 UTC",
-        "deep_fees": 63.048562771506056,
+        "deep_fees": 63.04856277150606,
         "fee_transfers": 2468,
-        "nvda_fees": 16.353736380606186,
-        "revenue_usd": 6594.23427922767,
-        "usdg_fees": 3023.1338070000015
+        "nvda_fees": 16.353736380606193,
+        "revenue_usd": 6594.234279227671,
+        "usdg_fees": 3023.133807000001
       },
       {
-        "cumulative_revenue_usd": 107408.56226487886,
+        "cumulative_revenue_usd": 107408.56226487884,
         "day": "2026-08-24 00:00:00.000 UTC",
-        "deep_fees": 137.90613691308337,
+        "deep_fees": 137.9061369130834,
         "fee_transfers": 3631,
-        "nvda_fees": 21.433018332359502,
-        "revenue_usd": 8585.52870734454,
-        "usdg_fees": 4105.266004000001
+        "nvda_fees": 21.433018332359485,
+        "revenue_usd": 8585.528707344532,
+        "usdg_fees": 4105.266003999998
       },
       {
-        "cumulative_revenue_usd": 113572.57708937833,
+        "cumulative_revenue_usd": 115909.9366397222,
         "day": "2026-08-25 00:00:00.000 UTC",
-        "deep_fees": 182.1876312369442,
-        "fee_transfers": 2324,
-        "nvda_fees": 16.27897315726474,
-        "revenue_usd": 6164.0148244994725,
-        "usdg_fees": 2709.373517000001
+        "deep_fees": 270.36893212306364,
+        "fee_transfers": 3412,
+        "nvda_fees": 22.06462452610079,
+        "revenue_usd": 8501.374374843355,
+        "usdg_fees": 3779.9112420000006
+      },
+      {
+        "cumulative_revenue_usd": 125532.17812048004,
+        "day": "2026-08-26 00:00:00.000 UTC",
+        "deep_fees": 582.784521189357,
+        "fee_transfers": 3408,
+        "nvda_fees": 20.501163020522515,
+        "revenue_usd": 9622.241480757839,
+        "usdg_fees": 5112.435595000002
+      },
+      {
+        "cumulative_revenue_usd": 131533.4511792192,
+        "day": "2026-08-27 00:00:00.000 UTC",
+        "deep_fees": null,
+        "fee_transfers": 2616,
+        "nvda_fees": 10.70704392454305,
+        "revenue_usd": 6001.273058739177,
+        "usdg_fees": 3606.9687719999997
       }
     ],
     "volume": [
       {
         "day": "2026-08-15 00:00:00.000 UTC",
-        "plural_usd": 727427.6406669997,
+        "plural_usd": 727427.6406669996,
         "single_usd": 1089000.1098230004,
-        "subtree_usd": 41489.428647999994,
-        "volume_usd": 1857917.179138002
+        "subtree_usd": 41489.42864800001,
+        "volume_usd": 1857917.179137998
       },
       {
         "day": "2026-08-16 00:00:00.000 UTC",
-        "plural_usd": 4185721.310649999,
-        "single_usd": 3922691.0746809994,
-        "subtree_usd": 61516.42942099999,
-        "volume_usd": 8169928.814751996
+        "plural_usd": 4185721.3106500003,
+        "single_usd": 3922691.0746809975,
+        "subtree_usd": 61516.429421,
+        "volume_usd": 8169928.814752008
       },
       {
         "day": "2026-08-17 00:00:00.000 UTC",
-        "plural_usd": 6448266.583270998,
-        "single_usd": 4014171.0660470007,
-        "subtree_usd": 129054.098426,
-        "volume_usd": 10591491.747744
+        "plural_usd": 6448266.583271001,
+        "single_usd": 4014171.066046998,
+        "subtree_usd": 129054.09842599998,
+        "volume_usd": 10591491.747744007
       },
       {
         "day": "2026-08-18 00:00:00.000 UTC",
-        "plural_usd": 10645790.880949993,
-        "single_usd": 10069372.39300102,
-        "subtree_usd": 298947.817407,
-        "volume_usd": 21014111.09135801
+        "plural_usd": 10645790.880949995,
+        "single_usd": 10069372.393000992,
+        "subtree_usd": 298947.81740700005,
+        "volume_usd": 21014111.09135802
       },
       {
         "day": "2026-08-19 00:00:00.000 UTC",
-        "plural_usd": 9889700.521703994,
-        "single_usd": 10432240.52177999,
-        "subtree_usd": 205354.594284,
-        "volume_usd": 20527295.637767978
+        "plural_usd": 9889700.521704003,
+        "single_usd": 10432240.521779997,
+        "subtree_usd": 205354.59428400005,
+        "volume_usd": 20527295.63776801
       },
       {
         "day": "2026-08-20 00:00:00.000 UTC",
         "plural_usd": 7323893.246907997,
-        "single_usd": 7485560.332135996,
-        "subtree_usd": 183649.53356800007,
-        "volume_usd": 14993103.112611994
+        "single_usd": 7485560.332136001,
+        "subtree_usd": 183649.53356800004,
+        "volume_usd": 14993103.112611996
       },
       {
         "day": "2026-08-21 00:00:00.000 UTC",
-        "plural_usd": 5317529.307254998,
-        "single_usd": 4881696.027598002,
-        "subtree_usd": 171913.87207500002,
-        "volume_usd": 10371139.206927996
+        "plural_usd": 5317529.307254999,
+        "single_usd": 4881696.027598003,
+        "subtree_usd": 171913.87207499996,
+        "volume_usd": 10371139.206928004
       },
       {
         "day": "2026-08-22 00:00:00.000 UTC",
-        "plural_usd": 2180946.143523,
-        "single_usd": 2585116.7510780008,
+        "plural_usd": 2180946.1435229997,
+        "single_usd": 2585116.751078001,
         "subtree_usd": 40023.55362499999,
-        "volume_usd": 4806086.448225997
+        "volume_usd": 4806086.448225999
       },
       {
         "day": "2026-08-23 00:00:00.000 UTC",
-        "plural_usd": 2451270.931849001,
-        "single_usd": 4079352.0409419998,
-        "subtree_usd": 56930.568632,
-        "volume_usd": 6587553.541423003
+        "plural_usd": 2451270.931848999,
+        "single_usd": 4079352.040941999,
+        "subtree_usd": 56930.56863200002,
+        "volume_usd": 6587553.541423006
       },
       {
         "day": "2026-08-24 00:00:00.000 UTC",
-        "plural_usd": 2772145.746464999,
-        "single_usd": 5760336.962615,
-        "subtree_usd": 134623.57578599997,
-        "volume_usd": 8667106.284866001
+        "plural_usd": 2772145.7464649994,
+        "single_usd": 5760336.962615004,
+        "subtree_usd": 134623.57578599994,
+        "volume_usd": 8667106.284866005
       },
       {
         "day": "2026-08-25 00:00:00.000 UTC",
-        "plural_usd": 1922169.1195470002,
-        "single_usd": 4164727.244548999,
-        "subtree_usd": 44203.808288,
-        "volume_usd": 6131100.172384001
+        "plural_usd": 2719543.9244770003,
+        "single_usd": 5651800.528781998,
+        "subtree_usd": 62740.577079,
+        "volume_usd": 8434085.030337993
+      },
+      {
+        "day": "2026-08-26 00:00:00.000 UTC",
+        "plural_usd": 2021836.9979320003,
+        "single_usd": 7322350.068087,
+        "subtree_usd": 125019.12067400002,
+        "volume_usd": 9469206.186693002
+      },
+      {
+        "day": "2026-08-27 00:00:00.000 UTC",
+        "plural_usd": 1036959.651206,
+        "single_usd": 4906130.1228359975,
+        "subtree_usd": 41886.461393,
+        "volume_usd": 5984976.235435004
       }
     ],
     "users": [
@@ -252,60 +284,70 @@
         "transactions": 59325
       },
       {
-        "active_users": 34,
+        "active_users": 39,
         "day": "2026-08-25 00:00:00.000 UTC",
-        "transactions": 21217
+        "transactions": 28005
+      },
+      {
+        "active_users": 43,
+        "day": "2026-08-26 00:00:00.000 UTC",
+        "transactions": 21452
+      },
+      {
+        "active_users": 23,
+        "day": "2026-08-27 00:00:00.000 UTC",
+        "transactions": 11020
       }
     ],
     "makers": [
       {
-        "deep_earned": 29700298.261596434,
+        "deep_earned": 29700298.261596438,
         "first_reward": "2026-08-15 13:03:34.000 UTC",
         "last_reward": "2026-08-20 05:23:30.000 UTC",
         "maker": "0x2acbb83869646baec4917627ded2f665ee4c0706",
         "payouts": 5882
       },
       {
-        "deep_earned": 12900893.165492367,
+        "deep_earned": 12918227.609510133,
         "first_reward": "2026-08-16 21:10:47.000 UTC",
-        "last_reward": "2026-08-26 04:31:42.000 UTC",
+        "last_reward": "2026-08-27 13:20:24.000 UTC",
         "maker": "0x8b87a6c6046fefaab5e358b1a51b99f2de1c1d3f",
-        "payouts": 163
+        "payouts": 175
       },
       {
-        "deep_earned": 9777264.047795467,
+        "deep_earned": 10272488.278213395,
         "first_reward": "2026-08-15 22:01:10.000 UTC",
-        "last_reward": "2026-08-26 17:20:53.000 UTC",
+        "last_reward": "2026-08-27 17:46:32.000 UTC",
         "maker": "0x9955b74506ce384d7f942b5f33dd826e8f79bee0",
-        "payouts": 3612
+        "payouts": 3802
       },
       {
-        "deep_earned": 5009724.310911118,
+        "deep_earned": 7570106.19119212,
+        "first_reward": "2026-08-25 19:38:08.000 UTC",
+        "last_reward": "2026-08-27 17:30:20.000 UTC",
+        "maker": "0xd051159c596d58f447f2e3646d566b143864110c",
+        "payouts": 387
+      },
+      {
+        "deep_earned": 5009724.310911119,
         "first_reward": "2026-08-23 00:41:47.000 UTC",
         "last_reward": "2026-08-24 20:22:53.000 UTC",
         "maker": "0xa536f3c578709a63ceb2086cbcda06b0fd365b7d",
         "payouts": 54
       },
       {
-        "deep_earned": 4370383.798321858,
-        "first_reward": "2026-08-25 19:38:08.000 UTC",
-        "last_reward": "2026-08-26 17:21:21.000 UTC",
-        "maker": "0xd051159c596d58f447f2e3646d566b143864110c",
-        "payouts": 121
-      },
-      {
-        "deep_earned": 4307989.347443744,
+        "deep_earned": 4728608.419962332,
         "first_reward": "2026-08-16 01:57:49.000 UTC",
-        "last_reward": "2026-08-26 17:23:02.000 UTC",
+        "last_reward": "2026-08-27 17:40:33.000 UTC",
         "maker": "0xe951324b9eec300e177a4f926d160fca01acdfe9",
-        "payouts": 6065
+        "payouts": 8680
       },
       {
-        "deep_earned": 3985305.130772708,
+        "deep_earned": 4089127.661304452,
         "first_reward": "2026-08-16 01:51:52.000 UTC",
-        "last_reward": "2026-08-24 14:17:44.000 UTC",
+        "last_reward": "2026-08-27 15:39:13.000 UTC",
         "maker": "0x90bd5b3e0eb7cc8d92dba8eee3c855c374b2d990",
-        "payouts": 1193
+        "payouts": 1839
       },
       {
         "deep_earned": 3900646.3644688544,
@@ -315,18 +357,18 @@
         "payouts": 30
       },
       {
-        "deep_earned": 3719977.7859839085,
+        "deep_earned": 3778665.987739408,
         "first_reward": "2026-08-15 11:37:00.000 UTC",
-        "last_reward": "2026-08-26 17:12:27.000 UTC",
+        "last_reward": "2026-08-27 15:16:31.000 UTC",
         "maker": "0xad41edecdbfe444ed49bad259d3eb1bae7b50fb9",
-        "payouts": 5876
+        "payouts": 6265
       },
       {
-        "deep_earned": 3372826.0213435646,
-        "first_reward": "2026-08-16 08:37:37.000 UTC",
-        "last_reward": "2026-08-26 17:24:37.000 UTC",
-        "maker": "0xedea2a3014e4729bb050b00e8480bb2d36086ad1",
-        "payouts": 5960
+        "deep_earned": 3741169.8433452537,
+        "first_reward": "2026-08-25 20:16:07.000 UTC",
+        "last_reward": "2026-08-27 16:19:49.000 UTC",
+        "maker": "0x38788835213bb19e1c9b31ce1eb48d979ac4d585",
+        "payouts": 207
       }
     ]
   }
