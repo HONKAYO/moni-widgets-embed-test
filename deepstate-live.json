@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-27T20:30:07.380Z",
+  "updated_at": "2026-08-28T06:06:57.637Z",
   "source_label": "Dune Deepstate dashboards",
   "source_url": "https://dune.com/gomosellow/deepstate-protocol",
   "metrics": {
@@ -301,32 +301,32 @@
     ],
     "makers": [
       {
-        "deep_earned": 29700298.261596438,
+        "deep_earned": 29700298.261596467,
         "first_reward": "2026-08-15 13:03:34.000 UTC",
         "last_reward": "2026-08-20 05:23:30.000 UTC",
         "maker": "0x2acbb83869646baec4917627ded2f665ee4c0706",
         "payouts": 5882
       },
       {
-        "deep_earned": 12918227.609510133,
+        "deep_earned": 12986788.020502605,
         "first_reward": "2026-08-16 21:10:47.000 UTC",
-        "last_reward": "2026-08-27 13:20:24.000 UTC",
+        "last_reward": "2026-08-27 22:09:48.000 UTC",
         "maker": "0x8b87a6c6046fefaab5e358b1a51b99f2de1c1d3f",
-        "payouts": 175
+        "payouts": 181
       },
       {
-        "deep_earned": 10272488.278213395,
+        "deep_earned": 10505538.40370407,
         "first_reward": "2026-08-15 22:01:10.000 UTC",
-        "last_reward": "2026-08-27 17:46:32.000 UTC",
+        "last_reward": "2026-08-27 21:52:39.000 UTC",
         "maker": "0x9955b74506ce384d7f942b5f33dd826e8f79bee0",
-        "payouts": 3802
+        "payouts": 3966
       },
       {
-        "deep_earned": 7570106.19119212,
+        "deep_earned": 8046337.9098342825,
         "first_reward": "2026-08-25 19:38:08.000 UTC",
-        "last_reward": "2026-08-27 17:30:20.000 UTC",
+        "last_reward": "2026-08-27 22:21:56.000 UTC",
         "maker": "0xd051159c596d58f447f2e3646d566b143864110c",
-        "payouts": 387
+        "payouts": 409
       },
       {
         "deep_earned": 5009724.310911119,
@@ -336,14 +336,14 @@
         "payouts": 54
       },
       {
-        "deep_earned": 4728608.419962332,
+        "deep_earned": 4789610.28502076,
         "first_reward": "2026-08-16 01:57:49.000 UTC",
-        "last_reward": "2026-08-27 17:40:33.000 UTC",
+        "last_reward": "2026-08-27 22:22:16.000 UTC",
         "maker": "0xe951324b9eec300e177a4f926d160fca01acdfe9",
-        "payouts": 8680
+        "payouts": 9464
       },
       {
-        "deep_earned": 4089127.661304452,
+        "deep_earned": 4089127.6613044487,
         "first_reward": "2026-08-16 01:51:52.000 UTC",
         "last_reward": "2026-08-27 15:39:13.000 UTC",
         "maker": "0x90bd5b3e0eb7cc8d92dba8eee3c855c374b2d990",
@@ -357,18 +357,18 @@
         "payouts": 30
       },
       {
-        "deep_earned": 3778665.987739408,
+        "deep_earned": 3778665.9877394005,
         "first_reward": "2026-08-15 11:37:00.000 UTC",
         "last_reward": "2026-08-27 15:16:31.000 UTC",
         "maker": "0xad41edecdbfe444ed49bad259d3eb1bae7b50fb9",
         "payouts": 6265
       },
       {
-        "deep_earned": 3741169.8433452537,
+        "deep_earned": 3756944.421157523,
         "first_reward": "2026-08-25 20:16:07.000 UTC",
-        "last_reward": "2026-08-27 16:19:49.000 UTC",
+        "last_reward": "2026-08-27 19:59:23.000 UTC",
         "maker": "0x38788835213bb19e1c9b31ce1eb48d979ac4d585",
-        "payouts": 207
+        "payouts": 209
       }
     ]
   }
