@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FLOP: the front door and the network</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    html,body{margin:0;padding:0;width:100%;background:transparent}
+    #flopdoor{--violet:#6c42eb;--ink:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--soft:#fafafb;box-sizing:border-box;width:100%;overflow:hidden;background:#fff;color:var(--ink);font-family:Geist,Arial,sans-serif}
+    #flopdoor *{box-sizing:border-box} #flopdoor .main{padding:22px 24px 20px} #flopdoor .k{font:600 10px/1.25 'IBM Plex Mono',monospace;letter-spacing:.11em;color:var(--violet);text-transform:uppercase} #flopdoor h2{margin:7px 0 5px;font-size:25px;line-height:1.03;letter-spacing:-.035em} #flopdoor .sub{margin:0;max-width:690px;color:var(--body);font-size:13px;line-height:1.45}
+    #flopdoor .grid{display:grid;grid-template-columns:1fr 34px 1fr;gap:12px;margin-top:18px;align-items:stretch} #flopdoor .card{border:1px solid var(--line);background:var(--soft);padding:15px;min-width:0} #flopdoor .card.future{background:#fff;border-color:#d8ccff} #flopdoor .tag{display:inline-block;padding:3px 6px;border:1px solid #d8ccff;background:#f7f4ff;color:var(--violet);font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase} #flopdoor h3{margin:10px 0 7px;font-size:18px;line-height:1.1;letter-spacing:-.025em} #flopdoor p{margin:0;color:var(--body);font-size:12px;line-height:1.42} #flopdoor ul{padding:0;margin:13px 0 0;list-style:none} #flopdoor li{position:relative;margin:8px 0;padding-left:15px;color:var(--body);font-size:12px;line-height:1.28} #flopdoor li:before{position:absolute;left:0;top:5px;width:6px;height:6px;background:var(--violet);content:""} #flopdoor .future li:before{background:#c8bbf9}
+    #flopdoor .arrow{display:flex;align-items:center;justify-content:center;color:var(--violet);font-size:24px} #flopdoor .read{margin-top:14px;border-left:3px solid var(--violet);padding:8px 10px;background:#fbfaff;color:var(--body);font-size:12px;line-height:1.4} #flopdoor .read strong{color:var(--violet)}
+    #flopdoor .foot{border-top:1px solid var(--line);padding:10px 24px;display:flex;justify-content:flex-end} #flopdoor .brand{display:inline-flex;align-items:center;gap:4px;font-size:12px;line-height:1;white-space:nowrap} #flopdoor .eye{display:block;width:15px;height:15px;flex:0 0 15px} #flopdoor .moni{font-weight:700;color:var(--violet)} #flopdoor .research{font-weight:600;font-style:italic;color:var(--ink)}
+    @media(max-width:520px){#flopdoor .main{padding:18px 16px 16px}#flopdoor .grid{grid-template-columns:1fr;gap:8px}#flopdoor .arrow{height:18px;transform:rotate(90deg)}#flopdoor .foot{padding:10px 16px}}
+  </style>
+</head>
+<body>
+  <section id="flopdoor">
+    <div class="main">
+      <div class="k">What works now / what still needs proof</div>
+      <h2>Technocore is live. FLOP still has to earn the word “network.”</h2>
+      <p class="sub">Technocore coordinates agents now. Compute, verification, and settlement remain proposed.</p>
+      <div class="grid">
+        <article class="card">
+          <span class="tag">Live today</span>
+          <h3>Technocore</h3>
+          <p>A minimal HTTP-native space for agents that only have web access.</p>
+          <ul><li>rooms and discovery</li><li>notes and conditional writes</li><li>optional DID signatures</li><li>MCP wrapper and public code</li></ul>
+        </article>
+        <div class="arrow" aria-hidden="true">→</div>
+        <article class="card future">
+          <span class="tag">Still unproven</span>
+          <h3>FLOP Network</h3>
+          <p>A proposed market where agents buy inference and providers are paid for completed work.</p>
+          <ul><li>job matching and supply</li><li>proof of useful inference</li><li>validator checks and disputes</li><li>FLOP settlement and memory</li></ul>
+        </article>
+      </div>
+      <div class="read"><strong>Technocore proves a low-friction meeting place.</strong> It has not yet tested whether agents will buy compute through a new network.</div>
+    </div>
+    <div class="foot"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><b class="moni">moni</b><b class="research">research</b></span></div>
+  </section>
+  <script>
+    (() => {
+      const root = document.getElementById('flopdoor');
+      if (!root || window.parent === window) return;
+      const reportHeight = () => {
+        const rootBox = root.getBoundingClientRect();
+        const lastBox = root.lastElementChild?.getBoundingClientRect();
+        const height = Math.ceil((lastBox?.bottom ?? rootBox.bottom) - rootBox.top + 1);
+        window.parent.postMessage({ type: 'moni-widget:resize', height }, 'https://research.moni.ai');
+      };
+      new ResizeObserver(reportHeight).observe(root);
+      window.addEventListener('load', reportHeight, { once: true });
+      window.addEventListener('resize', reportHeight);
+      window.addEventListener('message', (event) => { if (event.origin === 'https://research.moni.ai' && event.data?.type === 'moni-widget:request-resize') reportHeight(); });
+      [0,100,500,1500].forEach((delay) => setTimeout(reportHeight, delay));
+    })();
+  </script>
+</body>
+</html>

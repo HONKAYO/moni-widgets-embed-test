@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FLOP proposed tokenomics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    html,body{margin:0;padding:0;width:100%;background:transparent}
+    #floptokenomics{--violet:#6c42eb;--ink:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--soft:#fafafb;--pale:#f5f1ff;box-sizing:border-box;width:100%;overflow:hidden;background:#fff;color:var(--ink);font-family:Geist,Arial,sans-serif}
+    #floptokenomics *{box-sizing:border-box}#floptokenomics .main{padding:22px 24px 20px}#floptokenomics .k{font:600 10px/1.25 'IBM Plex Mono',monospace;letter-spacing:.11em;text-transform:uppercase;color:var(--violet)}
+    #floptokenomics h2{margin:7px 0 5px;font-size:25px;line-height:1.05;letter-spacing:-.035em}#floptokenomics .sub{max-width:650px;margin:0;color:var(--body);font-size:13px;line-height:1.45}
+    #floptokenomics .tabs{display:flex;gap:7px;margin-top:17px;border-bottom:1px solid var(--line);padding-bottom:11px}.tab{appearance:none;border:1px solid var(--line);background:#fff;color:var(--body);padding:7px 10px;cursor:pointer;font:600 11px/1 Geist,Arial,sans-serif}.tab.active{border-color:var(--violet);color:var(--violet);background:#6c42eb14}.pane{display:none}.pane.active{display:block}
+    #floptokenomics .headline{display:flex;align-items:flex-end;gap:10px;margin:16px 0 13px}.headline strong{font-size:30px;line-height:.9;letter-spacing:-.05em}.headline span{padding-bottom:2px;color:var(--muted);font:600 10px/1.25 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.07em}
+    #floptokenomics .rows{border:1px solid var(--line)}.row{display:grid;grid-template-columns:136px minmax(0,1fr) 54px;padding:10px 12px;border-bottom:1px solid var(--line);align-items:center;gap:10px}.row:last-child{border-bottom:0}.label{font-size:12px;font-weight:600}.amount{text-align:right;font:600 11px/1 'IBM Plex Mono',monospace;color:var(--body)}.bar{height:9px;background:#edeaf5;overflow:hidden}.fill{height:100%;background:var(--violet)}.fill.soft{background:#aa93f0}.fill.mid{background:#8869e8}.fill.dark{background:#4f26ca}.fill.slate{background:#9da1aa}
+    #floptokenomics .callout{margin-top:13px;border-left:3px solid var(--violet);background:var(--soft);padding:10px 12px;color:var(--body);font-size:12px;line-height:1.42}.callout b{color:var(--violet)}
+    #floptokenomics .split{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.card{border:1px solid var(--line);padding:12px;background:#fff}.card .tiny{color:var(--muted);font:600 9px/1.3 'IBM Plex Mono',monospace;letter-spacing:.07em;text-transform:uppercase}.card strong{display:block;margin-top:5px;font-size:17px;letter-spacing:-.025em}.card p{margin:5px 0 0;color:var(--body);font-size:11px;line-height:1.38}
+    #floptokenomics .foot{border-top:1px solid var(--line);padding:10px 24px;display:flex;justify-content:flex-end}.brand{display:inline-flex;align-items:center;gap:4px;font-size:12px;line-height:1;white-space:nowrap}.eye{display:block;width:15px;height:15px;flex:0 0 15px}.moni{font-weight:700;color:var(--violet)}.research{font-weight:600;font-style:italic;color:var(--ink)}
+    @media(max-width:520px){#floptokenomics .main{padding:18px 16px 16px}#floptokenomics h2{font-size:22px}.row{grid-template-columns:105px minmax(0,1fr) 48px;padding:9px 10px;gap:8px}.label{font-size:11px}.amount{font-size:10px}.split{grid-template-columns:1fr}.foot{padding:10px 16px!important}.tabs{gap:5px}.tab{font-size:10px;padding:7px 8px}}
+  </style>
+</head>
+<body>
+  <section id="floptokenomics">
+    <div class="main">
+      <div class="k">FLOP · Proposed tokenomics</div>
+      <h2>The token plan pays both sides of the market.</h2>
+      <p class="sub">These are provisional year-10 figures. The relevant test starts in Q4: does the airdrop turn into inference demand?</p>
+      <div class="tabs" role="tablist" aria-label="Tokenomics view">
+        <button class="tab active" type="button" data-pane="supply" role="tab" aria-selected="true">Year 10 supply</button>
+        <button class="tab" type="button" data-pane="genesis" role="tab" aria-selected="false">Genesis airdrop</button>
+      </div>
+      <div class="pane active" id="supply">
+        <div class="headline"><strong>17.2B</strong><span>proposed total by year 10</span></div>
+        <div class="rows">
+          <div class="row"><span class="label">Miners</span><span class="bar"><i class="fill" style="width:100%"></i></span><span class="amount">51.2%</span></div>
+          <div class="row"><span class="label">Airdrop</span><span class="bar"><i class="fill mid" style="width:39.8%"></i></span><span class="amount">20.4%</span></div>
+          <div class="row"><span class="label">Team + Foundation</span><span class="bar"><i class="fill dark" style="width:22.3%"></i></span><span class="amount">11.4%</span></div>
+          <div class="row"><span class="label">Validators</span><span class="bar"><i class="fill soft" style="width:13.3%"></i></span><span class="amount">6.8%</span></div>
+          <div class="row"><span class="label">Brokers / agents</span><span class="bar"><i class="fill soft" style="width:13.3%"></i></span><span class="amount">6.8%</span></div>
+          <div class="row"><span class="label">Staking rewards</span><span class="bar"><i class="fill slate" style="width:6.6%"></i></span><span class="amount">3.4%</span></div>
+        </div>
+        <div class="callout"><b>What the split is trying to fund:</b> miners are proposed to receive 51.2% of year-10 supply plus 85% of inference fees. The open question is whether agents keep paying after the subsidy ends.</div>
+      </div>
+      <div class="pane" id="genesis">
+        <div class="headline"><strong>3.5B</strong><span>genesis pool · 20.4% of year-10 supply</span></div>
+        <div class="rows">
+          <div class="row"><span class="label">Miners</span><span class="bar"><i class="fill" style="width:100%"></i></span><span class="amount">1.20B</span></div>
+          <div class="row"><span class="label">Agents</span><span class="bar"><i class="fill mid" style="width:100%"></i></span><span class="amount">1.20B</span></div>
+          <div class="row"><span class="label">Reserve / incentives</span><span class="bar"><i class="fill soft" style="width:66.2%"></i></span><span class="amount">794.5M</span></div>
+          <div class="row"><span class="label">Validators</span><span class="bar"><i class="fill slate" style="width:25.5%"></i></span><span class="amount">305.5M</span></div>
+        </div>
+        <div class="split">
+          <div class="card"><span class="tiny">Agent condition</span><strong>Spend to unlock</strong><p>Every 3 FLOP spent on testnet inference is proposed to unlock 1 airdropped FLOP.</p></div>
+          <div class="card"><span class="tiny">Miner condition</span><strong>Serve compute</strong><p>Allocation is proposed to follow verified inference and valid blocks, not social tasks alone.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><b class="moni">moni</b><b class="research">research</b></span></div>
+  </section>
+  <script>
+    (() => {
+      const root = document.getElementById('floptokenomics');
+      if (!root || window.parent === window) return;
+      const reportHeight = () => {
+        const rootBox = root.getBoundingClientRect();
+        const lastBox = root.lastElementChild?.getBoundingClientRect();
+        const height = Math.ceil((lastBox?.bottom ?? rootBox.bottom) - rootBox.top + 1);
+        window.parent.postMessage({ type: 'moni-widget:resize', height }, 'https://research.moni.ai');
+      };
+      document.querySelectorAll('.tab').forEach((tab) => tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach((item) => { const on = item === tab; item.classList.toggle('active', on); item.setAttribute('aria-selected', String(on)); });
+        document.querySelectorAll('.pane').forEach((pane) => pane.classList.toggle('active', pane.id === tab.dataset.pane));
+        reportHeight();
+      }));
+      new ResizeObserver(reportHeight).observe(root);
+      window.addEventListener('load', reportHeight, { once: true });
+      window.addEventListener('resize', reportHeight);
+      window.addEventListener('message', (event) => { if (event.origin === 'https://research.moni.ai' && event.data?.type === 'moni-widget:request-resize') reportHeight(); });
+      [0,100,500,1500].forEach((delay) => setTimeout(reportHeight, delay));
+    })();
+  </script>
+</body>
+</html>

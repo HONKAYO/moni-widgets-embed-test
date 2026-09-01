@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>One FLOP agent job</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    html,body{margin:0;padding:0;width:100%;background:transparent}
+    #flopjob{--violet:#6c42eb;--ink:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--soft:#fafafb;box-sizing:border-box;width:100%;overflow:hidden;background:#fff;color:var(--ink);font-family:Geist,Arial,sans-serif}#flopjob *{box-sizing:border-box}#flopjob .main{padding:22px 24px 19px}#flopjob .k{font:600 10px/1.25 'IBM Plex Mono',monospace;letter-spacing:.11em;color:var(--violet);text-transform:uppercase}#flopjob h2{margin:7px 0 5px;font-size:25px;line-height:1.03;letter-spacing:-.035em}#flopjob .sub{margin:0;color:var(--body);font-size:13px;line-height:1.45;max-width:690px}
+    #flopjob .nav{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:18px}#flopjob button{appearance:none;width:100%;min-width:0;border:1px solid var(--line);background:#fff;padding:9px 6px;color:var(--body);font:600 10px/1.1 'IBM Plex Mono',monospace;cursor:pointer}#flopjob button.active{border-color:var(--violet);background:#f7f4ff;color:var(--violet)}#flopjob .panel{margin-top:10px;display:grid;grid-template-columns:63px 1fr 200px;gap:15px;align-items:center;border:1px solid var(--line);background:var(--soft);padding:15px}.icon{display:flex;width:52px;height:52px;align-items:center;justify-content:center;border:1px solid #d8ccff;background:#fff;color:var(--violet);font-size:24px}.stage{font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--violet)}#flopjob h3{margin:6px 0 5px;font-size:18px;letter-spacing:-.025em}#flopjob .copy{margin:0;color:var(--body);font-size:12px;line-height:1.43}.question{border-left:3px solid var(--violet);padding:8px 10px;background:#fff;color:var(--body);font-size:11px;line-height:1.35}.question strong{display:block;color:var(--violet);font:600 9px/1.2 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+    #flopjob .foot{border-top:1px solid var(--line);padding:10px 24px;display:flex;justify-content:flex-end}#flopjob .brand{display:inline-flex;align-items:center;gap:4px;font-size:12px;line-height:1;white-space:nowrap}.eye{display:block;width:15px;height:15px;flex:0 0 15px}.moni{font-weight:700;color:var(--violet)}.research{font-weight:600;font-style:italic;color:var(--ink)}
+    @media(max-width:540px){#flopjob .main{padding:18px 16px 16px}#flopjob .nav{grid-template-columns:repeat(5,1fr);gap:4px}#flopjob button{padding:8px 2px;font-size:9px}#flopjob .panel{grid-template-columns:48px 1fr;padding:12px;gap:10px}#flopjob .question{grid-column:1/-1}.icon{width:42px;height:42px}#flopjob .foot{padding:10px 16px}}
+  </style>
+</head>
+<body>
+  <section id="flopjob"><div class="main"><div class="k">One agent job, end to end</div><h2>A job only becomes a market when every handoff holds.</h2><p class="sub">Walk through the proposed loop. Each handoff carries one risk that the testnet will need to expose.</p>
+    <div class="nav" role="tablist"><button class="active" data-step="0">01 Request</button><button data-step="1">02 Execute</button><button data-step="2">03 Verify</button><button data-step="3">04 Settle</button><button data-step="4">05 Return</button></div>
+    <div class="panel"><div class="icon" id="icon">↗</div><div><div class="stage" id="stage">Agent</div><h3 id="title">Define the job</h3><p class="copy" id="copy">The buyer needs more than a FLOP count: model, precision, latency, context, privacy, and a price limit.</p></div><div class="question"><strong id="qlabel">What has to work?</strong><span id="qcopy">Can two parties quote a job when quality has several moving parts?</span></div></div>
+  </div><div class="foot"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><b class="moni">moni</b><b class="research">research</b></span></div></section>
+  <script>
+    const steps=[
+      ['↗','Agent','Define the job','The buyer needs more than a FLOP count: model, precision, latency, context, privacy, and a price limit.','What has to work?','Can two parties quote a job when quality has several moving parts?'],
+      ['▣','Miner','Run the inference','A provider takes the request and carries hardware, electricity, availability, and token-price risk.','Supply test','Who supplies reliable capacity when their costs are in fiat?'],
+      ['✓','Verifier','Check the receipt','Validators need a receipt that costs less to check than rerunning the job.','Core constraint','How does the system handle non-identical outputs from different GPUs or kernels?'],
+      ['$','Network','Settle the result','The buyer pays, the provider earns, and timeouts or bad outputs need a named loss bearer.','Settlement test','Where do collateral, disputes, slashing, and privacy sit?'],
+      ['↺','Buyer','Return on its own','Repeat paid use turns a testnet action into demand for the network and its currency.','Demand test','Would the same agent return when USDC and existing APIs are available?']
+    ];
+    const ids=['icon','stage','title','copy','qlabel','qcopy'];document.querySelectorAll('#flopjob button').forEach((b)=>b.addEventListener('click',()=>{const s=steps[+b.dataset.step];ids.forEach((id,i)=>document.getElementById(id).textContent=s[i]);document.querySelectorAll('#flopjob button').forEach(x=>x.classList.remove('active'));b.classList.add('active');window.dispatchEvent(new Event('resize'))}));
+    (() => {
+      const root = document.getElementById('flopjob');
+      if (!root || window.parent === window) return;
+      const reportHeight = () => {
+        const rootBox = root.getBoundingClientRect();
+        const lastBox = root.lastElementChild?.getBoundingClientRect();
+        const height = Math.ceil((lastBox?.bottom ?? rootBox.bottom) - rootBox.top + 1);
+        window.parent.postMessage({ type: 'moni-widget:resize', height }, 'https://research.moni.ai');
+      };
+      new ResizeObserver(reportHeight).observe(root);
+      window.addEventListener('load', reportHeight, { once: true });
+      window.addEventListener('resize', reportHeight);
+      window.addEventListener('message', (event) => { if (event.origin === 'https://research.moni.ai' && event.data?.type === 'moni-widget:request-resize') reportHeight(); });
+      [0,100,500,1500].forEach((delay) => setTimeout(reportHeight, delay));
+    })();
+  </script>
+</body>
+</html>
