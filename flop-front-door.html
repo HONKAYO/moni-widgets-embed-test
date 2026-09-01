@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
   <style>
-    html,body{margin:0;padding:0;background:transparent}
+    html,body{margin:0;padding:0;width:100%;background:transparent}
     #flopdoor{--violet:#6c42eb;--ink:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--soft:#fafafb;box-sizing:border-box;width:100%;overflow:hidden;background:#fff;color:var(--ink);font-family:Geist,Arial,sans-serif}
     #flopdoor *{box-sizing:border-box} #flopdoor .main{padding:22px 24px 20px} #flopdoor .k{font:600 10px/1.25 'IBM Plex Mono',monospace;letter-spacing:.11em;color:var(--violet);text-transform:uppercase} #flopdoor h2{margin:7px 0 5px;font-size:25px;line-height:1.03;letter-spacing:-.035em} #flopdoor .sub{margin:0;max-width:690px;color:var(--body);font-size:13px;line-height:1.45}
     #flopdoor .grid{display:grid;grid-template-columns:1fr 34px 1fr;gap:12px;margin-top:18px;align-items:stretch} #flopdoor .card{border:1px solid var(--line);background:var(--soft);padding:15px;min-width:0} #flopdoor .card.future{background:#fff;border-color:#d8ccff} #flopdoor .tag{display:inline-block;padding:3px 6px;border:1px solid #d8ccff;background:#f7f4ff;color:var(--violet);font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase} #flopdoor h3{margin:10px 0 7px;font-size:18px;line-height:1.1;letter-spacing:-.025em} #flopdoor p{margin:0;color:var(--body);font-size:12px;line-height:1.42} #flopdoor ul{padding:0;margin:13px 0 0;list-style:none} #flopdoor li{position:relative;margin:8px 0;padding-left:15px;color:var(--body);font-size:12px;line-height:1.28} #flopdoor li:before{position:absolute;left:0;top:5px;width:6px;height:6px;background:var(--violet);content:""} #flopdoor .future li:before{background:#c8bbf9}
@@ -20,9 +20,9 @@
 <body>
   <section id="flopdoor">
     <div class="main">
-      <div class="k">What is live vs what is proposed</div>
-      <h2>Technocore is the front door. FLOP is the market behind it.</h2>
-      <p class="sub">The distinction matters: one is a working agent coordination surface; the other still has to prove compute, verification and settlement.</p>
+      <div class="k">What works now / what still needs proof</div>
+      <h2>Technocore is live. FLOP still has to earn the word “network.”</h2>
+      <p class="sub">Technocore coordinates agents now. Compute, verification, and settlement remain proposed.</p>
       <div class="grid">
         <article class="card">
           <span class="tag">Live today</span>
@@ -38,7 +38,7 @@
           <ul><li>job matching and supply</li><li>proof of useful inference</li><li>validator checks and disputes</li><li>FLOP settlement and memory</li></ul>
         </article>
       </div>
-      <div class="read"><strong>The live service proves coordination.</strong> It does not yet prove a compute network, durable memory or demand for a new currency.</div>
+      <div class="read"><strong>Technocore proves a low-friction meeting place.</strong> It has not yet tested whether agents will buy compute through a new network.</div>
     </div>
     <div class="foot"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><b class="moni">moni</b><b class="research">research</b></span></div>
   </section>
@@ -55,10 +55,8 @@
       new ResizeObserver(reportHeight).observe(root);
       window.addEventListener('load', reportHeight, { once: true });
       window.addEventListener('resize', reportHeight);
-      window.addEventListener('message', (event) => {
-        if (event.origin === 'https://research.moni.ai' && event.data?.type === 'moni-widget:request-resize') reportHeight();
-      });
-      [0, 100, 500, 1500].forEach((delay) => setTimeout(reportHeight, delay));
+      window.addEventListener('message', (event) => { if (event.origin === 'https://research.moni.ai' && event.data?.type === 'moni-widget:request-resize') reportHeight(); });
+      [0,100,500,1500].forEach((delay) => setTimeout(reportHeight, delay));
     })();
   </script>
 </body>

@@ -7,9 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
   <style>
-    html,body{margin:0;padding:0;background:transparent}
+    html,body{margin:0;padding:0;width:100%;background:transparent}
     #flopladder{--violet:#6c42eb;--ink:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--soft:#fafafb;box-sizing:border-box;width:100%;overflow:hidden;background:#fff;color:var(--ink);font-family:Geist,Arial,sans-serif} #flopladder *{box-sizing:border-box} #flopladder .main{padding:22px 24px 19px} #flopladder .k{font:600 10px/1.25 'IBM Plex Mono',monospace;letter-spacing:.11em;color:var(--violet);text-transform:uppercase} #flopladder h2{margin:7px 0 5px;font-size:25px;line-height:1.03;letter-spacing:-.035em} #flopladder .sub{margin:0;color:var(--body);font-size:13px;line-height:1.45;max-width:690px}
-    #flopladder .steps{display:grid;grid-template-columns:repeat(5,1fr);margin-top:21px;border:1px solid var(--line)} #flopladder .step{position:relative;min-height:142px;padding:14px 13px 12px;border-right:1px solid var(--line);background:var(--soft)} #flopladder .step:last-child{border-right:0;background:#fbfaff} #flopladder .num{display:flex;align-items:center;justify-content:center;width:23px;height:23px;background:#fff;border:1px solid var(--violet);border-radius:50%;color:var(--violet);font:600 10px/1 'IBM Plex Mono',monospace} #flopladder .now{display:inline-block;margin-left:5px;color:var(--violet);font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase} #flopladder h3{margin:12px 0 6px;font-size:14px;line-height:1.1;letter-spacing:-.018em} #flopladder p{margin:0;color:var(--body);font-size:11px;line-height:1.35} #flopladder .bar{height:3px;margin-top:13px;background:#d8ccff} #flopladder .step:first-child .bar{background:var(--violet)} #flopladder .note{margin-top:13px;display:flex;gap:9px;align-items:flex-start;color:var(--body);font-size:12px;line-height:1.4} #flopladder .note b{color:var(--violet)}
+    #flopladder .steps{display:grid;grid-template-columns:repeat(5,1fr);margin-top:21px;border:1px solid var(--line)} #flopladder .step{position:relative;min-height:142px;padding:14px 13px 12px;border-right:1px solid var(--line);background:var(--soft);display:flex;flex-direction:column} #flopladder .step:last-child{border-right:0;background:#fbfaff} #flopladder .num{display:flex;align-items:center;justify-content:center;width:23px;height:23px;background:#fff;border:1px solid var(--violet);border-radius:50%;color:var(--violet);font:600 10px/1 'IBM Plex Mono',monospace} #flopladder .now{display:inline-block;margin-left:5px;color:var(--violet);font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase} #flopladder h3{margin:12px 0 6px;font-size:14px;line-height:1.1;letter-spacing:-.018em} #flopladder p{margin:0;color:var(--body);font-size:11px;line-height:1.35} #flopladder .bar{height:3px;margin-top:auto;background:#d8ccff} #flopladder .step:first-child .bar{background:var(--violet)} #flopladder .note{margin-top:13px;display:flex;gap:9px;align-items:flex-start;color:var(--body);font-size:12px;line-height:1.4} #flopladder .note b{color:var(--violet)}
     #flopladder .foot{border-top:1px solid var(--line);padding:10px 24px;display:flex;justify-content:flex-end} #flopladder .brand{display:inline-flex;align-items:center;gap:4px;font-size:12px;line-height:1;white-space:nowrap} #flopladder .eye{display:block;width:15px;height:15px;flex:0 0 15px} #flopladder .moni{font-weight:700;color:var(--violet)} #flopladder .research{font-weight:600;font-style:italic;color:var(--ink)}
     @media(max-width:620px){#flopladder .main{padding:18px 16px 16px}#flopladder .steps{grid-template-columns:1fr}#flopladder .step{min-height:auto;padding:12px 13px;border-right:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:30px 1fr;column-gap:9px}#flopladder .step:last-child{border-bottom:0}#flopladder .step h3{margin:1px 0 4px}#flopladder .step p{grid-column:2}.bar{display:none}#flopladder .foot{padding:10px 16px}}
   </style>
@@ -17,17 +17,17 @@
 <body>
   <section id="flopladder">
     <div class="main">
-      <div class="k">The retro validation ladder</div>
-      <h2>Not every action should earn the same claim on the future network.</h2>
-      <p class="sub">A useful retro gets progressively harder: from showing up, to doing work that proves a future compute market can exist.</p>
+      <div class="k">How the retro should mature</div>
+      <h2>Early actions need to get closer to the work the network will need.</h2>
+      <p class="sub">A DID is a start. The later steps should reveal whether agents and providers can actually make a compute market work.</p>
       <div class="steps">
-        <article class="step"><div><span class="num">1</span><span class="now">Now</span></div><h3>DID onboarding</h3><p>An agent establishes a repeatable identity and can return.</p><div class="bar"></div></article>
-        <article class="step"><div class="num">2</div><h3>Testnet action</h3><p>It runs a real client flow, not a social quest.</p><div class="bar"></div></article>
-        <article class="step"><div class="num">3</div><h3>Independent supply</h3><p>An unaffiliated miner or validator becomes reachable.</p><div class="bar"></div></article>
-        <article class="step"><div class="num">4</div><h3>Verified paid job</h3><p>Work completes, verifies and settles without team trust.</p><div class="bar"></div></article>
-        <article class="step"><div class="num">5</div><h3>Repeat demand</h3><p>The buyer returns after the incentive has disappeared.</p><div class="bar"></div></article>
+        <article class="step"><div><span class="num">1</span><span class="now">Now</span></div><h3>Set up a DID</h3><p>An agent gets a key it can use again.</p><div class="bar"></div></article>
+        <article class="step"><div class="num">2</div><h3>Run the client</h3><p>It completes a testnet flow end to end.</p><div class="bar"></div></article>
+        <article class="step"><div class="num">3</div><h3>Bring supply</h3><p>An outside miner or validator becomes reachable.</p><div class="bar"></div></article>
+        <article class="step"><div class="num">4</div><h3>Settle a job</h3><p>Work runs, verifies, and settles between outsiders.</p><div class="bar"></div></article>
+        <article class="step"><div class="num">5</div><h3>Come back</h3><p>The buyer returns once the reward is gone.</p><div class="bar"></div></article>
       </div>
-      <div class="note"><span>→</span><span><b>The step that matters most is #4.</b> Before an outside buyer pays an outside provider for a verified job, FLOP has onboarding evidence, not market evidence.</span></div>
+      <div class="note"><span>→</span><span><b>Step 4 is the break point.</b> Until an outside buyer pays an outside provider for a verified job, the project has onboarding data rather than market data.</span></div>
     </div>
     <div class="foot"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><b class="moni">moni</b><b class="research">research</b></span></div>
   </section>
@@ -44,10 +44,8 @@
       new ResizeObserver(reportHeight).observe(root);
       window.addEventListener('load', reportHeight, { once: true });
       window.addEventListener('resize', reportHeight);
-      window.addEventListener('message', (event) => {
-        if (event.origin === 'https://research.moni.ai' && event.data?.type === 'moni-widget:request-resize') reportHeight();
-      });
-      [0, 100, 500, 1500].forEach((delay) => setTimeout(reportHeight, delay));
+      window.addEventListener('message', (event) => { if (event.origin === 'https://research.moni.ai' && event.data?.type === 'moni-widget:request-resize') reportHeight(); });
+      [0,100,500,1500].forEach((delay) => setTimeout(reportHeight, delay));
     })();
   </script>
 </body>
