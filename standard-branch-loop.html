@@ -70,7 +70,7 @@
     (() => {
       const root=document.getElementById('srbranch');
       if(!root || window.parent===window)return;
-      const report=()=>{const r=root.getBoundingClientRect(), last=root.lastElementChild?.getBoundingClientRect();parent.postMessage({type:'moni-widget:resize',height:Math.ceil((last?.bottom??r.bottom)-r.top+1)},'https://research.moni.ai')};
+      const report=()=>{const r=root.getBoundingClientRect(), last=root.lastElementChild?.getBoundingClientRect();parent.postMessage({type:'moni-widget:resize',height:Math.max(1,Math.ceil((last?.bottom??r.bottom)-r.top)-2)},'https://research.moni.ai')};
       new ResizeObserver(report).observe(root);addEventListener('load',report,{once:true});addEventListener('resize',report);
       addEventListener('message',event=>{if(event.origin==='https://research.moni.ai'&&event.data?.type==='moni-widget:request-resize')report()});
       [0,100,500,1500].forEach(delay=>setTimeout(report,delay));

@@ -64,6 +64,6 @@
 })();
 </script>
 <script>
-(() => {const root=document.getElementById('srexit');if(!root||window.parent===window)return;const reportHeight=()=>{const r=root.getBoundingClientRect(),l=root.lastElementChild?.getBoundingClientRect();window.parent.postMessage({type:'moni-widget:resize',height:Math.ceil((l?.bottom??r.bottom)-r.top+1)},'https://research.moni.ai')};new ResizeObserver(reportHeight).observe(root);window.addEventListener('load',reportHeight,{once:true});window.addEventListener('resize',reportHeight);window.addEventListener('message',e=>{if(e.origin==='https://research.moni.ai'&&e.data?.type==='moni-widget:request-resize')reportHeight()});[0,100,500,1500].forEach(d=>setTimeout(reportHeight,d))})();
+(() => {const root=document.getElementById('srexit');if(!root||window.parent===window)return;const reportHeight=()=>{const r=root.getBoundingClientRect(),l=root.lastElementChild?.getBoundingClientRect();window.parent.postMessage({type:'moni-widget:resize',height:Math.max(1,Math.ceil((l?.bottom??r.bottom)-r.top)-2)},'https://research.moni.ai')};new ResizeObserver(reportHeight).observe(root);window.addEventListener('load',reportHeight,{once:true});window.addEventListener('resize',reportHeight);window.addEventListener('message',e=>{if(e.origin==='https://research.moni.ai'&&e.data?.type==='moni-widget:request-resize')reportHeight()});[0,100,500,1500].forEach(d=>setTimeout(reportHeight,d))})();
 </script>
 </body></html>
