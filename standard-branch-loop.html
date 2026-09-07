@@ -23,8 +23,8 @@
   <div id="srbranch">
     <div class="inner">
       <p class="kick">Standard Reserve · banker lifecycle</p>
-      <h2 class="title">A Charter is an issuance position</h2>
-      <p class="dek">The Charter NFT is the licence. <strong>Branches</strong> are the working units: they earn issuance, can be expanded with burned STANDARD, and disappear when the banker realizes profit.</p>
+      <h2 class="title">A Charter gives you a seat</h2>
+      <p class="dek">The Charter NFT opens the seat. <strong>Branches</strong> do the work: they earn issuance, can be expanded with burned STANDARD, and disappear when the banker takes profit.</p>
       <div class="tabs">
         <button class="active" type="button">1 · Start</button><button type="button">2 · Expand</button><button type="button">3 · Earn</button><button type="button">4 · Retire</button>
       </div>
@@ -39,7 +39,7 @@
           <div><div class="lab" id="sumLabel">At start</div><strong id="sumTitle">You own a banker seat</strong><p id="sumCopy">The Charter grants one initial Branch. It is not a claim on a fixed APY.</p></div>
           <div><div class="lab">What changes supply</div><strong id="supplyTitle">Nothing has been minted yet</strong><p id="supplyCopy">The Branch is only a right to participate in later issuance.</p></div>
         </div>
-        <p class="note" id="note"><b>The key distinction:</b> the NFT does not pay you by existing. It gives you a working position inside the issuance system.</p>
+        <p class="note" id="note"><b>What the NFT gives you:</b> a working seat in the issuance system, not a passive yield stream.</p>
       </div>
     </div>
     <div class="ft"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><span>moni</span><i>research</i></span></div>
@@ -50,9 +50,9 @@
       const label=document.getElementById('sumLabel'), title=document.getElementById('sumTitle'), copy=document.getElementById('sumCopy');
       const supplyTitle=document.getElementById('supplyTitle'), supplyCopy=document.getElementById('supplyCopy'), note=document.getElementById('note');
       const states=[
-        ['At start','You own a banker seat','The Charter grants one initial Branch. It is not a claim on a fixed APY.','Nothing has been minted yet','The Branch is only a right to participate in later issuance.','The key distinction: the NFT does not pay you by existing. It gives you a working position inside the issuance system.'],
+        ['At start','You own a banker seat','The Charter opens with one Branch. It is not a fixed-APY claim.','Nothing has been minted yet','The Branch only gives you a place in later issuance.','What the NFT gives you: a working seat in the issuance system, not a passive yield stream.'],
         ['After expansion','Your share can grow','Buying another Branch increases your share of future issuance. The payment is burned.','STANDARD leaves the float','Expansion is the internal growth action, and it is also a supply sink.','Growth is not free: bankers burn STANDARD to buy more earning capacity.'],
-        ['While active','Your Branch accrues','The Branch holds a pro-rata claim on issuance while it remains open.','Supply is an internal liability','Accrued balance is not yet STANDARD in the banker wallet.','The protocol separates earning from cashing out. That gap is where its exit policy lives.'],
+        ['While active','Your Branch accrues','The Branch gets its pro-rata share while it remains open.','Supply is an internal liability','The accrued balance has not reached the banker wallet yet.','Earning and cashing out are separate steps. The exit rule sits in that gap.'],
         ['At retirement','You take STANDARD now','A Branch is retired, its accrued balance is minted to the banker, and future share falls.','Earning capacity is destroyed','The withdrawal fee burns part of the payout and sends part to bankers who stayed.','Taking profit means selling part of your future right to print.']
       ];
       function setStep(index){
