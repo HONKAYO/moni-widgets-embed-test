@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Standard: taking profit costs a Branch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--violet:#6c42eb;--ink:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--soft:#fafafb;--lav:#f6f3ff;--green:#0fa968}
+    *{box-sizing:border-box}html,body{margin:0;padding:0;background:transparent}body{font-family:Geist,system-ui,sans-serif;color:var(--ink)}
+    #srexit{width:100%;overflow:hidden;border:1px solid var(--line);background:#fff}.inner{padding:22px 22px 18px}.kicker{margin:0 0 7px;color:var(--violet);font:600 10px/1.25 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase}.title{margin:0;font-size:25px;line-height:1.03;letter-spacing:-.035em}.dek{margin:9px 0 0;max-width:620px;color:var(--body);font-size:13px;line-height:1.45}.dek strong{color:var(--violet)}
+    .grid{display:grid;grid-template-columns:190px minmax(0,1fr);gap:14px;margin-top:18px}.controls,.outcome{border:1px solid var(--line);min-width:0}.controls{padding:14px;background:var(--soft)}.label{display:flex;justify-content:space-between;gap:8px;margin:0 0 7px;font:600 9px/1.2 'IBM Plex Mono',monospace;color:var(--muted);letter-spacing:.07em;text-transform:uppercase}.label b{color:var(--ink);font-weight:600}.control{margin:0 0 15px}.control:last-child{margin-bottom:0}input[type=range]{appearance:none;width:100%;height:3px;background:#ddddec;outline:none}input[type=range]::-webkit-slider-thumb{appearance:none;width:13px;height:13px;border-radius:50%;background:var(--violet);border:2px solid white;box-shadow:0 0 0 1px var(--violet);cursor:pointer}input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--violet);border:2px solid white;box-shadow:0 0 0 1px var(--violet);cursor:pointer}
+    .outcome{padding:15px;background:#fff}.readout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid var(--line)}.metric{padding:0 12px 12px 0;min-width:0}.metric:not(:first-child){padding-left:12px;border-left:1px solid var(--line)}.metric .m-label{color:var(--muted);font:600 9px/1.25 'IBM Plex Mono',monospace;letter-spacing:.07em;text-transform:uppercase}.metric .number{margin-top:5px;font-size:23px;font-weight:700;letter-spacing:-.04em;white-space:nowrap}.metric .number.purple{color:var(--violet)}.metric .sub{margin-top:3px;color:var(--body);font-size:10px;line-height:1.3}
+    .journey{display:grid;grid-template-columns:1fr 22px 1fr 22px 1fr;align-items:center;gap:0;padding-top:14px}.node{min-height:86px;padding:11px;border:1px solid var(--line);background:var(--soft)}.node.primary{border-color:#d9cbff;background:var(--lav)}.node .step{color:var(--violet);font:600 9px/1.2 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}.node b{display:block;margin-top:5px;font-size:13px;line-height:1.12}.node p{margin:5px 0 0;color:var(--body);font-size:10px;line-height:1.32}.arrow{text-align:center;color:var(--violet);font-size:17px}.note{margin:14px 0 0;padding:10px 12px;border-left:2px solid var(--violet);background:var(--lav);color:var(--body);font-size:11px;line-height:1.4}.note b{color:var(--violet)}
+    .ft{display:flex;justify-content:flex-end;align-items:center;height:31px;padding:0 17px;border-top:1px solid var(--line)}.brand{display:flex;align-items:center;gap:4px;color:var(--violet);font-size:12px;font-weight:600;line-height:1}.brand .eye{width:15px;height:15px;display:block;flex:0 0 15px}.brand i{color:var(--ink);font-family:Geist,sans-serif;font-weight:600;font-size:12px}
+    @media(max-width:520px){.inner{padding:18px 16px 15px}.title{font-size:23px}.grid{grid-template-columns:1fr}.readout{grid-template-columns:1fr 1fr}.metric:last-child{grid-column:span 2;border-left:0;border-top:1px solid var(--line);padding:11px 0 0;margin-top:1px}.journey{grid-template-columns:1fr;gap:6px}.arrow{transform:rotate(90deg);height:14px}.node{min-height:0}.ft{padding:0 13px}}
+  </style>
+</head>
+<body>
+<div id="srexit">
+  <div class="inner">
+    <p class="kicker">Standard Reserve · exit mechanic</p>
+    <h2 class="title">Taking profit costs a Branch</h2>
+    <p class="dek">A banker can withdraw accrued <strong>STANDARD</strong>, but retires the Branch that earned it. The exit fee rises when more bankers leave. Final fee parameters are redacted; this is an illustrative reading of the rule.</p>
+    <div class="grid">
+      <div class="controls">
+        <div class="control"><p class="label">Your Branches <b id="branchesVal">3</b></p><input id="branches" type="range" min="1" max="10" value="3"></div>
+        <div class="control"><p class="label">All Branches <b id="totalVal">300</b></p><input id="total" type="range" min="100" max="1000" step="50" value="300"></div>
+        <div class="control"><p class="label">Accrued STANDARD <b id="accruedVal">1,250</b></p><input id="accrued" type="range" min="250" max="5000" step="250" value="1250"></div>
+        <div class="control"><p class="label">7d exit pressure <b id="pressureVal">12%</b></p><input id="pressure" type="range" min="0" max="50" value="12"></div>
+      </div>
+      <div class="outcome">
+        <div class="readout">
+          <div class="metric"><div class="m-label">Cash now</div><div class="number purple" id="cash">1,175</div><div class="sub">STANDARD to wallet</div></div>
+          <div class="metric"><div class="m-label">Resolution fee</div><div class="number" id="fee">6%</div><div class="sub"><span id="burn">38</span> burned / <span id="stayers">38</span> to stayers</div></div>
+          <div class="metric"><div class="m-label">Future share lost</div><div class="number" id="share">0.33%</div><div class="sub">one Branch retired</div></div>
+        </div>
+        <div class="journey">
+          <div class="node"><div class="step">01 · accrue</div><b>Your Branch earns</b><p><span id="branchShare">1.00%</span> of the issuance while it stays open.</p></div>
+          <div class="arrow">→</div>
+          <div class="node primary"><div class="step">02 · retire</div><b>Take profit now</b><p>One Branch burns. The future claim gets smaller.</p></div>
+          <div class="arrow">→</div>
+          <div class="node"><div class="step">03 · settle</div><b>Exit pressure sets cost</b><p>Half the fee burns; half pays active bankers.</p></div>
+        </div>
+        <p class="note"><b id="bottomLine">At 12% exit pressure, a banker gives up 0.33% of all future issuance to receive STANDARD now.</b> The mechanism changes the price of leaving. It does not create a buyer for the token.</p>
+      </div>
+    </div>
+  </div>
+  <div class="ft"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><span>moni</span><i>research</i></span></div>
+</div>
+<script>
+(() => {
+  const $=id=>document.getElementById(id), fmt=n=>Math.round(n).toLocaleString('en-US');
+  function update(){
+    const branches=+$('branches').value,total=+$('total').value,accrued=+$('accrued').value,pressure=+$('pressure').value;
+    const fee=Math.min(50,3+pressure*pressure*.02), feeAmount=accrued*fee/100, cash=accrued-feeAmount, share=100/total, own=branches/total*100;
+    $('branchesVal').textContent=branches;$('totalVal').textContent=fmt(total);$('accruedVal').textContent=fmt(accrued);$('pressureVal').textContent=pressure+'%';
+    $('cash').textContent=fmt(cash);$('fee').textContent=Math.round(fee)+'%';$('burn').textContent=fmt(feeAmount/2);$('stayers').textContent=fmt(feeAmount/2);$('share').textContent=share.toFixed(2)+'%';$('branchShare').textContent=own.toFixed(2)+'%';
+    $('bottomLine').textContent=`At ${pressure}% exit pressure, a banker gives up ${share.toFixed(2)}% of all future issuance to receive STANDARD now.`;
+  }
+  ['branches','total','accrued','pressure'].forEach(id=>$(id).addEventListener('input',update));update();
+})();
+</script>
+<script>
+(() => {const root=document.getElementById('srexit');if(!root||window.parent===window)return;const reportHeight=()=>{const r=root.getBoundingClientRect(),l=root.lastElementChild?.getBoundingClientRect();window.parent.postMessage({type:'moni-widget:resize',height:Math.ceil((l?.bottom??r.bottom)-r.top+1)},'https://research.moni.ai')};new ResizeObserver(reportHeight).observe(root);window.addEventListener('load',reportHeight,{once:true});window.addEventListener('resize',reportHeight);window.addEventListener('message',e=>{if(e.origin==='https://research.moni.ai'&&e.data?.type==='moni-widget:request-resize')reportHeight()});[0,100,500,1500].forEach(d=>setTimeout(reportHeight,d))})();
+</script>
+</body></html>
