@@ -3,153 +3,160 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Standard Reserve: central bank simulator</title>
+  <title>Standard Reserve: policy machine</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root{--v:#6c42eb;--ink:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--soft:#fafafb;--lav:#f6f3ff;--red:#d95b55;--gold:#a98243;--blue:#5d82a1;--green:#0f9566}
-    *{box-sizing:border-box}html,body{margin:0;padding:0;background:transparent}body{font-family:Geist,system-ui,sans-serif;color:var(--ink)}button,input{font:inherit}
-    #srcb{width:100%;overflow:hidden;background:#fff}.inner{padding:20px 22px 18px}.kicker{margin:0 0 6px;color:var(--v);font:600 9px/1.2 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase}.title{margin:0;font-size:27px;line-height:1.02;letter-spacing:-.04em}.dek{max-width:620px;margin:8px 0 0;color:var(--body);font-size:12.5px;line-height:1.42}.dek b{color:var(--v)}
-    .presets{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:15px}.preset{min-width:0;padding:8px 7px;border:1px solid var(--line);background:#fff;color:var(--body);font-size:10px;font-weight:600;cursor:pointer}.preset:hover{border-color:#cfcfd7}.preset.active{border-color:var(--v);background:var(--lav);color:var(--v)}.preset.run{border-color:#edcbc8;color:#a84540}.preset.run.active{border-color:var(--red);background:#fff5f4;color:#a84540}
-    .workbench{display:grid;grid-template-columns:196px minmax(0,1fr);gap:10px;margin-top:10px}.controls,.screen{min-width:0;border:1px solid var(--line)}.controls{padding:12px;background:var(--soft)}.section-label{margin:0;color:var(--muted);font:600 8px/1.2 'IBM Plex Mono',monospace;letter-spacing:.09em;text-transform:uppercase}.control{margin-top:14px}.control-head{display:flex;align-items:flex-end;justify-content:space-between;gap:8px}.control label{color:var(--body);font-size:10px;font-weight:600}.control output{color:var(--ink);font:600 9px/1 'IBM Plex Mono',monospace;white-space:nowrap}.control output.negative{color:var(--red)}.control output.positive{color:var(--green)}input[type=range]{appearance:none;width:100%;height:3px;margin:11px 0 0;background:#dedee7;outline:none}input[type=range]::-webkit-slider-thumb{appearance:none;width:13px;height:13px;border:2px solid #fff;border-radius:50%;background:var(--v);box-shadow:0 0 0 1px var(--v);cursor:pointer}input[type=range]::-moz-range-thumb{width:13px;height:13px;border:2px solid #fff;border-radius:50%;background:var(--v);box-shadow:0 0 0 1px var(--v);cursor:pointer}.flow-scale{display:flex;justify-content:space-between;margin-top:5px;color:var(--muted);font:500 7px/1 'IBM Plex Mono',monospace}.play{width:100%;margin-top:15px;padding:9px 8px;border:1px solid var(--v);background:var(--v);color:#fff;font-size:10px;font-weight:700;cursor:pointer}.play:disabled{opacity:.65;cursor:default}.assumption{margin:10px 0 0;color:var(--muted);font-size:8.5px;line-height:1.35}.assumption a{color:var(--v);text-decoration:none}
-    .screen{background:#fff}.statebar{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;padding:11px 12px;border-bottom:1px solid var(--line);background:var(--lav)}.statebar.contraction{background:#fff5f4}.regime-label{color:var(--muted);font:600 8px/1.2 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}.regime{display:block;margin-top:3px;color:var(--v);font-size:19px;line-height:1;font-weight:700;letter-spacing:-.035em}.statebar.contraction .regime{color:var(--red)}.epoch{color:var(--body);font:600 9px/1 'IBM Plex Mono',monospace}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid var(--line)}.metric{min-width:0;padding:10px}.metric:not(:first-child){border-left:1px solid var(--line)}.metric-label{color:var(--muted);font:600 7.5px/1.2 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase}.metric-value{margin-top:5px;font-size:18px;line-height:1;font-weight:700;letter-spacing:-.04em;white-space:nowrap}.metric-value.accent{color:var(--v)}.metric-sub{margin-top:3px;color:var(--muted);font-size:7.8px;line-height:1.25}
-    .trace{padding:11px 12px 9px}.trace-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.trace-title{font-size:11px;font-weight:700}.trace-legend{display:flex;gap:10px;color:var(--muted);font:500 7px/1 'IBM Plex Mono',monospace}.trace-legend span{display:flex;align-items:center;gap:4px}.trace-legend i{width:10px;height:2px;background:var(--v)}.trace-legend .gold{background:var(--gold)}.trace-legend .red{background:var(--red)}.chart{display:block;width:100%;height:auto;margin-top:7px}.gridline{stroke:#efeff3;stroke-width:1}.axis{fill:var(--muted);font:500 6px 'IBM Plex Mono',monospace}.policy-line,.reserve-line,.defence-line{fill:none;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter}.policy-line{stroke:var(--v)}.reserve-line{stroke:var(--gold)}.defence-line{stroke:var(--red)}.cursor{stroke:#c8c8d0;stroke-width:1;stroke-dasharray:2 3}.dot{stroke:#fff;stroke-width:1.5}.dot.policy{fill:var(--v)}.dot.reserve{fill:var(--gold)}.dot.defence{fill:var(--red)}
-    .event{margin:0 12px 12px;padding:9px 10px;border-left:2px solid var(--v);background:var(--soft);color:var(--body);font-size:9.5px;line-height:1.35}.statebar.contraction~.metrics+.trace+.event{border-left-color:var(--red)}.event b{color:var(--ink)}
-    .exit{margin-top:10px;border:1px solid var(--line)}.exit-head{display:flex;justify-content:space-between;gap:12px;padding:10px 12px;border-bottom:1px solid var(--line)}.exit-head b{font-size:12px}.exit-head span{color:var(--muted);font:500 8px/1.2 'IBM Plex Mono',monospace}.settlement{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}.settle{min-width:0;padding:10px 12px}.settle:not(:first-child){border-left:1px solid var(--line)}.settle-label{color:var(--muted);font:600 7.5px/1.2 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em}.settle-value{margin-top:4px;font-size:17px;font-weight:700;letter-spacing:-.035em;white-space:nowrap}.settle-value.burn{color:var(--red)}.settle-value.stay{color:var(--v)}.settle small{display:block;margin-top:2px;color:var(--muted);font-size:7.5px;line-height:1.25}.exit-note{margin:0;padding:9px 12px;border-top:1px solid var(--line);background:var(--lav);color:var(--body);font-size:9.5px;line-height:1.35}.exit-note b{color:var(--ink)}
-    .method{margin:10px 0 0;color:var(--muted);font-size:8.5px;line-height:1.4}.method b{color:var(--body)}.ft{height:31px;padding:0 17px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:flex-end}.brand{display:flex;align-items:center;gap:4px;color:var(--v);font-size:12px;font-weight:600;line-height:1}.eye{display:block;width:15px;height:15px;flex:0 0 15px}.brand i{color:var(--ink);font:600 italic 12px Geist,sans-serif}
-    @media(max-width:620px){.inner{padding:18px 16px 15px}.title{font-size:24px}.workbench{grid-template-columns:1fr}.controls{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.controls>.section-label,.controls>.play,.controls>.assumption{grid-column:1/-1}.control{margin-top:12px}.metrics{grid-template-columns:1fr 1fr}.metric:nth-child(3){border-left:0;border-top:1px solid var(--line)}.metric:nth-child(4){border-top:1px solid var(--line)}.settlement{grid-template-columns:1fr 1fr}.settle:nth-child(3){border-left:0;border-top:1px solid var(--line)}.settle:nth-child(4){border-top:1px solid var(--line)}}
-    @media(max-width:440px){.presets{grid-template-columns:1fr 1fr}.controls{grid-template-columns:1fr}.controls>.section-label,.controls>.play,.controls>.assumption{grid-column:auto}.trace-head{align-items:flex-start;flex-direction:column}.trace-legend{gap:7px}.metric-value,.settle-value{font-size:16px}.ft{padding:0 13px}}
+    :root{--v:#6c42eb;--ink:#111217;--body:#40444d;--muted:#858a95;--line:#e3e4e9;--grid:#f0f1f4;--soft:#fafafb;--lav:#f6f3ff;--red:#df5c51;--red-soft:#fff5f3;--gold:#ad8240;--blue:#527da3;--green:#158d63}
+    *{box-sizing:border-box}html,body{margin:0;padding:0;background:transparent}body{font-family:Geist,system-ui,sans-serif;color:var(--ink)}button{font:inherit}
+    #srpm{width:100%;overflow:hidden;background:#fff}.inner{padding:20px 22px 17px}.kicker{margin:0 0 6px;color:var(--v);font:600 9px/1.2 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase}.title{margin:0;font-size:28px;line-height:1.02;letter-spacing:-.045em}.dek{max-width:610px;margin:8px 0 0;color:var(--body);font-size:12.5px;line-height:1.42}
+    .modes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:15px}.mode{position:relative;min-width:0;padding:9px 8px 8px;border:1px solid var(--line);background:#fff;color:var(--body);text-align:left;cursor:pointer}.mode:hover{border-color:#c8c9d0}.mode b{display:block;font-size:10.5px;line-height:1.1}.mode span{display:block;margin-top:3px;color:var(--muted);font:500 7.5px/1.2 'IBM Plex Mono',monospace}.mode.active{border-color:var(--v);background:var(--lav);color:var(--v)}.mode.danger.active{border-color:var(--red);background:var(--red-soft);color:#b6453d}.mode.active span{color:inherit}
+    .stage{position:relative;margin-top:9px;border:1px solid var(--line);background-color:#fff;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:18px 18px;overflow:hidden}.machine{display:block;width:100%;height:auto}.mobile-machine{display:none}.box{fill:#fff;stroke:#d8d9df;stroke-width:1}.box.core{fill:var(--lav);stroke:var(--v);stroke-width:1.4}.box.warn{fill:var(--red-soft);stroke:var(--red)}.rule{stroke:#dedfe4;stroke-width:1}.path{fill:none;stroke:#7d828c;stroke-width:1.5}.path.dashed{stroke-dasharray:4 4}.path.blue{stroke:var(--blue)}.path.red{stroke:var(--red)}.path.gold{stroke:var(--gold)}.node-kicker{fill:var(--v);font:600 7px 'IBM Plex Mono',monospace;letter-spacing:.09em}.node-title{fill:var(--ink);font:700 14px Geist,sans-serif;letter-spacing:-.03em}.node-copy{fill:var(--body);font:500 8px Geist,sans-serif}.node-muted{fill:var(--muted);font:400 7.5px Geist,sans-serif}.node-big{fill:var(--ink);font:700 21px Geist,sans-serif;letter-spacing:-.04em}.node-big.purple{fill:var(--v)}.node-big.red{fill:var(--red)}.path-label{fill:var(--body);font:500 7px 'IBM Plex Mono',monospace}.path-label.red{fill:var(--red)}.split-label{fill:var(--muted);font:500 6.5px 'IBM Plex Mono',monospace}.pulse-ring{fill:#fff;stroke:var(--v);stroke-width:1.5}.particle{opacity:0}.particle.visible{opacity:1}.module-flash{animation:flash .6s ease}.module-flash.warn{animation:flashWarn .6s ease}@keyframes flash{0%,100%{opacity:1}45%{opacity:.45}}@keyframes flashWarn{0%,100%{opacity:1}45%{opacity:.35}}
+    .sequence{display:grid;grid-template-columns:1fr 22px 1fr 22px 1.2fr;align-items:stretch;border-top:1px solid var(--line);background:#fff}.step{min-width:0;padding:11px 12px}.step-label{color:var(--muted);font:600 7px/1.2 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}.step-value{margin-top:4px;font-size:15px;line-height:1.05;font-weight:700;letter-spacing:-.035em}.step-value.red{color:var(--red)}.step-value.purple{color:var(--v)}.step small{display:block;margin-top:4px;color:var(--muted);font-size:8px;line-height:1.25}.arrow{display:flex;align-items:center;justify-content:center;color:#a2a5ad;font:500 13px/1 'IBM Plex Mono',monospace}.mechanism{display:grid;grid-template-columns:106px 1fr;gap:12px;margin-top:9px;padding:10px 12px;border-left:2px solid var(--v);background:var(--lav)}.mechanism span{color:var(--v);font:600 7px/1.3 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}.mechanism p{margin:0;color:var(--body);font-size:9.5px;line-height:1.38}.mechanism b{color:var(--ink)}.method{margin:9px 0 0;color:var(--muted);font-size:8.3px;line-height:1.38}.method a{color:var(--v);text-decoration:none}.ft{height:31px;padding:0 17px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:flex-end}.brand{display:flex;align-items:center;gap:4px;color:var(--v);font-size:12px;font-weight:600;line-height:1}.eye{display:block;width:15px;height:15px;flex:0 0 15px}.brand i{color:var(--ink);font:600 italic 12px Geist,sans-serif}
+    @media(max-width:520px){.inner{padding:18px 15px 15px}.title{font-size:25px}.modes{grid-template-columns:1fr 1fr}.machine{display:none}.mobile-machine{display:block;padding:12px}.mobile-signal{display:grid;grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr);align-items:center}.m-card{min-width:0;padding:11px;border:1px solid var(--line);background:#fff}.m-card.core{border-color:var(--v);background:var(--lav)}.m-card.warn{border-color:var(--red);background:var(--red-soft)}.m-kicker{color:var(--v);font:600 6.5px/1.2 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}.m-title{display:block;margin-top:5px;font-size:12px;line-height:1.08}.m-value{display:block;margin-top:12px;color:var(--v);font-size:18px;line-height:1;font-weight:700;letter-spacing:-.04em}.m-value.red{color:var(--red)}.m-copy{display:block;margin-top:4px;color:var(--muted);font-size:7.5px;line-height:1.3}.m-link{color:var(--blue);font:600 10px/1 'IBM Plex Mono',monospace;text-align:center}.mobile-reactions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-top:10px}.m-reaction{min-width:0;padding:10px;border:1px solid var(--line);background:#fff}.m-reaction b{display:block;margin-top:5px;font-size:11px;line-height:1.08}.m-reaction small{display:block;margin-top:4px;color:var(--muted);font-size:7px;line-height:1.28}.sequence{grid-template-columns:1fr}.sequence .arrow{display:none}.step{padding:10px 12px}.step:not(:first-child){border-top:1px solid var(--line)}.mechanism{grid-template-columns:1fr;gap:4px}.method{font-size:8px}.ft{padding:0 13px}}
   </style>
 </head>
 <body>
-  <div id="srcb">
+  <div id="srpm">
     <div class="inner">
-      <p class="kicker">Standard Reserve · structural simulator</p>
-      <h2 class="title">Run the central bank</h2>
-      <p class="dek">Push ETH in, pull it out, or trigger a bank run. Watch policy, vault routing and the cost of leaving react over <b>30 epochs</b>.</p>
+      <p class="kicker">Standard Reserve · policy machine</p>
+      <h2 class="title">One market. Three reactions.</h2>
+      <p class="dek">Choose a flow regime. The ETH/STANDARD pool sends one signal; issuance, the active vault and the price of exit all respond.</p>
 
-      <div class="presets" role="group" aria-label="Scenario presets">
-        <button class="preset active" type="button" data-scenario="expansion">Expansion</button>
-        <button class="preset" type="button" data-scenario="flat">Flat market</button>
-        <button class="preset" type="button" data-scenario="bleed">Slow bleed</button>
-        <button class="preset run" type="button" data-scenario="run">Run the bank</button>
+      <div class="modes" role="group" aria-label="Choose a market regime">
+        <button class="mode active" type="button" data-mode="in"><b>Capital in</b><span>+30 ETH / epoch</span></button>
+        <button class="mode" type="button" data-mode="quiet"><b>No net flow</b><span>0 ETH / epoch</span></button>
+        <button class="mode" type="button" data-mode="out"><b>Capital out</b><span>−12 ETH / epoch</span></button>
+        <button class="mode danger" type="button" data-mode="run"><b>Bank run</b><span>−60 ETH / epoch</span></button>
       </div>
 
-      <div class="workbench">
-        <section class="controls" aria-label="Simulation controls">
-          <p class="section-label">Inputs per epoch</p>
-          <div class="control"><div class="control-head"><label for="flow">Net ETH flow</label><output id="flowOut" class="positive">+30 ETH</output></div><input id="flow" type="range" min="-80" max="80" step="2" value="30"><div class="flow-scale"><span>outflow</span><span>inflow</span></div></div>
-          <div class="control"><div class="control-head"><label for="fees">Protocol ETH</label><output id="feesOut">18 ETH</output></div><input id="fees" type="range" min="0" max="40" step="1" value="18"></div>
-          <div class="control"><div class="control-head"><label for="pressure">7d exit pressure</label><output id="pressureOut">4%</output></div><input id="pressure" type="range" min="0" max="50" step="1" value="4"></div>
-          <div class="control"><div class="control-head"><label for="withdrawal">Branch withdrawal</label><output id="withdrawalOut">25k</output></div><input id="withdrawal" type="range" min="0" max="500" step="5" value="25"></div>
-          <button class="play" id="play" type="button">▶ Run 30 epochs</button>
-          <p class="assumption">Policy steps and exit-fee bounds are illustrative because launch values remain redacted. <a href="https://www.standardreserve.xyz/whitepaper/" target="_blank" rel="noopener">Whitepaper ↗</a></p>
-        </section>
-
-        <section class="screen" aria-live="polite">
-          <div class="statebar" id="statebar"><div><span class="regime-label">Current regime</span><strong class="regime" id="regime">Expansion</strong></div><span class="epoch" id="epoch">Epoch 30 / 30</span></div>
-          <div class="metrics">
-            <div class="metric"><div class="metric-label">Policy multiplier</div><div class="metric-value accent" id="multiplier">2.00×</div><div class="metric-sub">illustrative rate path</div></div>
-            <div class="metric"><div class="metric-label">Daily issuance</div><div class="metric-value" id="issuance">2.00M</div><div class="metric-sub">STANDARD credited</div></div>
-            <div class="metric"><div class="metric-label">Active vault</div><div class="metric-value" id="vault">Reserve</div><div class="metric-sub" id="vaultSub">12.6 ETH routed</div></div>
-            <div class="metric"><div class="metric-label">Resolution fee</div><div class="metric-value" id="exitFee">2.3%</div><div class="metric-sub">rises with exits</div></div>
+      <section class="stage" aria-live="polite">
+        <div class="mobile-machine" aria-label="Standard Reserve policy machine">
+          <div class="mobile-signal">
+            <div class="m-card"><span class="m-kicker">The market</span><b class="m-title">ETH / STANDARD</b><strong id="mFlowValue" class="m-value">+30 ETH</strong><span class="m-copy">net flow this epoch</span></div>
+            <div class="m-link">→</div>
+            <div id="mCore" class="m-card core"><span class="m-kicker">Policy core</span><b id="mRegime" class="m-title">Expansion</b><strong id="mMultiplier" class="m-value">1.50×</strong><span id="mPolicyVerb" class="m-copy">loosens slowly</span></div>
           </div>
-          <div class="trace">
-            <div class="trace-head"><span class="trace-title">What 30 identical epochs do</span><div class="trace-legend"><span><i></i>policy</span><span><i class="gold"></i>hard reserves</span><span><i class="red"></i>buybacks</span></div></div>
-            <svg class="chart" id="chart" viewBox="0 0 390 126" role="img" aria-label="Simulation paths over 30 epochs">
-              <line class="gridline" x1="30" y1="28" x2="378" y2="28"/><line class="gridline" x1="30" y1="67" x2="378" y2="67"/><line class="gridline" x1="30" y1="106" x2="378" y2="106"/>
-              <text class="axis" x="2" y="30">policy</text><text class="axis" x="2" y="69">reserve</text><text class="axis" x="2" y="108">buyback</text><text class="axis" x="30" y="122">0</text><text class="axis" x="366" y="122">30</text>
-              <path class="policy-line" id="policyPath"/><path class="reserve-line" id="reservePath"/><path class="defence-line" id="defencePath"/>
-              <line class="cursor" id="cursor" y1="14" y2="110"/><circle class="dot policy" id="policyDot" r="3"/><circle class="dot reserve" id="reserveDot" r="3"/><circle class="dot defence" id="defenceDot" r="3"/>
-            </svg>
+          <div class="mobile-reactions">
+            <div class="m-reaction"><span class="m-kicker">1 · Issuance</span><b id="mRateAction">Climbs</b><small id="mRateCopy">new supply expands slowly</small></div>
+            <div class="m-reaction"><span class="m-kicker">2 · Vault</span><b id="mVaultAction">Builds reserves</b><small id="mVaultCopy">12.6 ETH buys hard assets</small></div>
+            <div class="m-reaction"><span class="m-kicker">3 · Exit</span><b id="mExitAction">2.3% fee</b><small>½ burns · ½ pays stayers</small></div>
           </div>
-          <p class="event" id="event"><b>Positive ETH flow persists.</b> Policy loosens slowly while 70% of protocol ETH builds hard reserves.</p>
-        </section>
-      </div>
-
-      <section class="exit">
-        <div class="exit-head"><b>The exit settles in four moves</b><span>one Branch retires</span></div>
-        <div class="settlement">
-          <div class="settle"><div class="settle-label">Accrued</div><div class="settle-value" id="gross">25,000</div><small>STANDARD released</small></div>
-          <div class="settle"><div class="settle-label">To wallet</div><div class="settle-value" id="wallet">24,420</div><small>after resolution fee</small></div>
-          <div class="settle"><div class="settle-label">Burned</div><div class="settle-value burn" id="burned">290</div><small>half of the fee</small></div>
-          <div class="settle"><div class="settle-label">To stayers</div><div class="settle-value stay" id="stayers">290</div><small>the other half</small></div>
         </div>
-        <p class="exit-note" id="exitNote"><b>The payout arrives, but the earning vehicle is gone.</b> The banker cannot claim the balance and keep the same future issuance share.</p>
+        <svg class="machine" viewBox="0 0 620 302" role="img" aria-labelledby="machineTitle machineDesc">
+          <title id="machineTitle">Standard Reserve policy machine</title>
+          <desc id="machineDesc">Net ETH flow from the pool reaches the policy core, which changes issuance, vault action and the resolution fee.</desc>
+          <defs>
+            <marker id="arrowGray" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#7d828c"/></marker>
+            <marker id="arrowBlue" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#527da3"/></marker>
+            <marker id="arrowRed" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#df5c51"/></marker>
+            <marker id="arrowGold" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#ad8240"/></marker>
+          </defs>
+
+          <path id="signalPath" class="path blue" d="M174 151H231" marker-end="url(#arrowBlue)"/>
+          <path id="ratePath" class="path" d="M389 105H433V56H455" marker-end="url(#arrowGray)"/>
+          <path id="vaultPath" class="path gold" d="M389 151H455" marker-end="url(#arrowGold)"/>
+          <path id="exitPath" class="path red" d="M389 197H433V246H455" marker-end="url(#arrowRed)"/>
+
+          <g id="poolNode">
+            <rect class="box" x="20" y="102" width="154" height="98"/>
+            <text class="node-kicker" x="34" y="121">THE MARKET</text>
+            <text class="node-title" x="34" y="143">ETH / STANDARD</text>
+            <line class="rule" x1="34" y1="153" x2="160" y2="153"/>
+            <text id="flowValue" class="node-big purple" x="34" y="180">+30 ETH</text>
+            <text class="node-muted" x="34" y="192">net flow this epoch</text>
+          </g>
+
+          <g id="coreNode">
+            <rect id="coreBox" class="box core" x="231" y="82" width="158" height="138"/>
+            <text class="node-kicker" x="247" y="102">POLICY CORE</text>
+            <text id="regime" class="node-title" x="247" y="124">Expansion</text>
+            <line class="rule" x1="247" y1="135" x2="373" y2="135"/>
+            <text class="node-copy" x="247" y="153">Reads net ETH flow</text>
+            <text id="policyVerb" class="node-copy" x="247" y="167">Loosens slowly</text>
+            <text id="multiplier" class="node-big purple" x="247" y="198">1.50×</text>
+            <text class="node-muted" x="316" y="197">issuance rate</text>
+            <rect x="247" y="207" width="88" height="3" fill="#6c42eb"/><rect x="335" y="207" width="19" height="3" fill="#ad8240"/><rect x="354" y="207" width="19" height="3" fill="#b8bbc2"/>
+            <text class="split-label" x="247" y="217">70 vault</text><text class="split-label" x="331" y="217">15 POL</text><text class="split-label" x="353" y="217">15 team</text>
+          </g>
+
+          <g id="rateNode">
+            <rect class="box" x="455" y="20" width="145" height="72"/>
+            <text class="node-kicker" x="468" y="38">1 · ISSUANCE</text>
+            <text id="rateAction" class="node-title" x="468" y="59">Climbs</text>
+            <text id="rateCopy" class="node-muted" x="468" y="77">new supply expands slowly</text>
+          </g>
+          <g id="vaultNode">
+            <rect class="box" x="455" y="115" width="145" height="72"/>
+            <text class="node-kicker" x="468" y="133">2 · ACTIVE VAULT</text>
+            <text id="vaultAction" class="node-title" x="468" y="154">Builds reserves</text>
+            <text id="vaultCopy" class="node-muted" x="468" y="172">12.6 ETH buys hard assets</text>
+          </g>
+          <g id="exitNode">
+            <rect class="box" x="455" y="210" width="145" height="72"/>
+            <text class="node-kicker" x="468" y="228">3 · EXIT DOOR</text>
+            <text id="exitAction" class="node-title" x="468" y="249">2.3% fee</text>
+            <text class="node-muted" x="468" y="267">½ burns · ½ pays stayers</text>
+          </g>
+
+          <text class="path-label" x="181" y="143">NET ETH FLOW</text>
+          <text class="path-label" x="398" y="98">RATE</text>
+          <text class="path-label" x="404" y="144">FEE ETH</text>
+          <text class="path-label red" x="397" y="213">EXIT PRESSURE</text>
+
+          <circle id="signalDot" class="particle pulse-ring" r="4"><animateMotion id="signalMotion" dur=".7s" begin="indefinite" fill="freeze"><mpath href="#signalPath"/></animateMotion></circle>
+          <circle id="rateDot" class="particle pulse-ring" r="4"><animateMotion id="rateMotion" dur=".7s" begin="indefinite" fill="freeze"><mpath href="#ratePath"/></animateMotion></circle>
+          <circle id="vaultDot" class="particle" r="4" fill="#fff" stroke="#ad8240" stroke-width="1.5"><animateMotion id="vaultMotion" dur=".7s" begin="indefinite" fill="freeze"><mpath href="#vaultPath"/></animateMotion></circle>
+          <circle id="exitDot" class="particle" r="4" fill="#fff" stroke="#df5c51" stroke-width="1.5"><animateMotion id="exitMotion" dur=".7s" begin="indefinite" fill="freeze"><mpath href="#exitPath"/></animateMotion></circle>
+        </svg>
+
+        <div class="sequence" aria-label="Branch exit settlement">
+          <div class="step"><div class="step-label">Retire one Branch</div><div class="step-value">Earning power ends</div><small>The licence cannot keep earning after withdrawal.</small></div>
+          <div class="arrow">→</div>
+          <div class="step"><div class="step-label">Mint accrued balance</div><div id="gross" class="step-value">25,000 STANDARD</div><small>The banker receives the balance, less the fee.</small></div>
+          <div class="arrow">→</div>
+          <div class="step"><div class="step-label">Price the exit</div><div id="split" class="step-value purple">290 burn · 290 stayers</div><small id="splitCopy">Low pressure keeps the resolution fee small.</small></div>
+        </div>
       </section>
 
-      <p class="method"><b>Fixed whitepaper rules:</b> protocol ETH routes 70% / 15% / 15%; exit fees split 50% burn / 50% to active bankers; contraction buybacks are rate-limited. Starting balances, policy steps and fee bounds are model assumptions, not launch parameters.</p>
+      <div class="mechanism"><span id="mechanismLabel">Expansion regime</span><p id="mechanism"><b>Capital arrives.</b> Policy loosens gradually, while protocol ETH builds the reserve base behind future defence.</p></div>
+      <p class="method">Structure follows the <a href="https://www.standardreserve.xyz/whitepaper/" target="_blank" rel="noopener">public whitepaper ↗</a>. Policy steps, fee bounds and scenario balances are illustrative because final launch parameters remain redacted.</p>
     </div>
     <div class="ft"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><span>moni</span><i>research</i></span></div>
   </div>
 
   <script>
-    (() => {
-      const $ = id => document.getElementById(id);
-      const controls = {flow:$('flow'),fees:$('fees'),pressure:$('pressure'),withdrawal:$('withdrawal')};
-      const scenarios = {
-        expansion:{flow:30,fees:18,pressure:4,withdrawal:25},
-        flat:{flow:0,fees:6,pressure:8,withdrawal:50},
-        bleed:{flow:-12,fees:10,pressure:18,withdrawal:100},
-        run:{flow:-60,fees:22,pressure:45,withdrawal:300}
+    (()=>{
+      const $=id=>document.getElementById(id);
+      const modes={
+        in:{flow:'+30 ETH',regime:'Expansion',verb:'Loosens slowly',multiplier:'1.50×',rate:'Climbs',rateCopy:'new supply expands slowly',vault:'Builds reserves',vaultCopy:'12.6 ETH buys hard assets',fee:2.3,gross:25000,label:'Expansion regime',lead:'Capital arrives.',copy:'Policy loosens gradually, while protocol ETH builds the reserve base behind future defence.',splitCopy:'Low pressure keeps the resolution fee small.',warn:false},
+        quiet:{flow:'0 ETH',regime:'Contraction',verb:'Cuts immediately',multiplier:'.85×',rate:'Cuts',rateCopy:'zero flow is not neutral',vault:'Buys + burns',vaultCopy:'4.2 ETH defends the market',fee:3.1,gross:50000,label:'No-flow regime',lead:'The market goes quiet.',copy:'With no positive flow, policy turns defensive: issuance falls and the active vault starts buying STANDARD.',splitCopy:'A small exit adds a small resolution fee.',warn:true},
+        out:{flow:'−12 ETH',regime:'Contraction',verb:'Cuts faster',multiplier:'.55×',rate:'Contracts',rateCopy:'fewer tokens reach bankers',vault:'Buys + burns',vaultCopy:'7.0 ETH defends the market',fee:7.7,gross:100000,label:'Outflow regime',lead:'Capital leaves.',copy:'Issuance contracts, fee ETH is deployed into capped buybacks, and the cost of retiring a Branch begins to rise.',splitCopy:'More exits make the next exit more expensive.',warn:true},
+        run:{flow:'−60 ETH',regime:'Hard contraction',verb:'Falls to the floor',multiplier:'.25×',rate:'Hits the floor',rateCopy:'new issuance is throttled',vault:'Defends',vaultCopy:'15.4 ETH buys + burns',fee:30,gross:300000,label:'Bank-run regime',lead:'Three brakes engage together.',copy:'Issuance hits its floor, the vault buys and burns STANDARD, and a crowded exit transfers value to holders who remain.',splitCopy:'A crowded door burns supply and pays active bankers.',warn:true}
       };
-      let model, current=30, timer;
-      const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
-      const fmt=(n,d=0)=>n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
-      const compact=n=>n>=1e6?(n/1e6).toFixed(2)+'M':n>=1e3?(n/1e3).toFixed(0)+'k':fmt(n);
-      const linePath=(values,index,top,bottom)=>{
-        const shown=values.slice(0,index+1),min=Math.min(...values),max=Math.max(...values),span=Math.max(1e-9,max-min);
-        return shown.map((value,i)=>`${i?'L':'M'}${30+i*(348/30)} ${bottom-(value-min)/span*(bottom-top)}`).join(' ');
-      };
-      const point=(values,index,top,bottom)=>{
-        const min=Math.min(...values),max=Math.max(...values),span=Math.max(1e-9,max-min),value=values[index];
-        return {x:30+index*(348/30),y:bottom-(value-min)/span*(bottom-top)};
-      };
-      function build(){
-        const flow=+controls.flow.value,fees=+controls.fees.value,pressure=+controls.pressure.value,withdrawal=+controls.withdrawal.value*1000;
-        const feeRate=2+28*Math.pow(Math.min(pressure,40)/40,2);
-        const policy=[1],reserves=[100],buybacks=[0],issuance=[1e6],vaultRouted=[0];
-        let m=1,hard=100,contractionVault=50,deployed=0,previousFlow=0;
-        for(let epoch=1;epoch<=30;epoch++){
-          const signal=flow+previousFlow;
-          m=clamp(m+(signal>0?.05:-.15),.25,2);
-          const active=fees*.70;
-          if(flow>0){hard+=active}else{
-            contractionVault+=active;
-            for(let tick=0;tick<24;tick++){
-              const spend=Math.min(contractionVault*.10,2);
-              contractionVault-=spend;deployed+=spend;
-            }
-          }
-          policy.push(m);reserves.push(hard);buybacks.push(deployed);issuance.push(1e6*m);vaultRouted.push(active);previousFlow=flow;
-        }
-        return {flow,fees,pressure,withdrawal,feeRate,policy,reserves,buybacks,issuance,vaultRouted};
+      let active='in',timers=[];
+      const fmt=n=>n.toLocaleString('en-US',{minimumFractionDigits:Number.isInteger(n)?0:1,maximumFractionDigits:1});
+      const clear=()=>{timers.forEach(clearTimeout);timers=[];document.querySelectorAll('.particle').forEach(x=>x.classList.remove('visible'));document.querySelectorAll('#rateNode,#vaultNode,#exitNode').forEach(x=>x.classList.remove('module-flash','warn'))};
+      const fire=(dot,motion,node,delay,warn=false)=>{timers.push(setTimeout(()=>{const d=$(dot),m=$(motion),n=$(node);d.classList.add('visible');m.beginElement();n.classList.add('module-flash');if(warn)n.classList.add('warn');timers.push(setTimeout(()=>d.classList.remove('visible'),720));},delay))};
+      function render(name){
+        active=name;clear();const d=modes[name],fee=d.gross*d.fee/100,half=fee/2;
+        document.querySelectorAll('.mode').forEach(x=>x.classList.toggle('active',x.dataset.mode===name));
+        $('flowValue').textContent=d.flow;$('regime').textContent=d.regime;$('policyVerb').textContent=d.verb;$('multiplier').textContent=d.multiplier;
+        $('rateAction').textContent=d.rate;$('rateCopy').textContent=d.rateCopy;$('vaultAction').textContent=d.vault;$('vaultCopy').textContent=d.vaultCopy;$('exitAction').textContent=d.fee.toFixed(1)+'% fee';
+        $('mFlowValue').textContent=d.flow;$('mRegime').textContent=d.regime;$('mPolicyVerb').textContent=d.verb.toLowerCase();$('mMultiplier').textContent=d.multiplier;
+        $('mRateAction').textContent=d.rate;$('mRateCopy').textContent=d.rateCopy;$('mVaultAction').textContent=d.vault;$('mVaultCopy').textContent=d.vaultCopy;$('mExitAction').textContent=d.fee.toFixed(1)+'% fee';
+        $('gross').textContent=fmt(d.gross)+' STANDARD';$('split').textContent=fmt(half)+' burn · '+fmt(half)+' stayers';$('splitCopy').textContent=d.splitCopy;
+        $('mechanismLabel').textContent=d.label;$('mechanism').innerHTML='<b>'+d.lead+'</b> '+d.copy;
+        $('coreBox').classList.toggle('warn',d.warn);$('mCore').classList.toggle('warn',d.warn);$('multiplier').classList.toggle('red',d.warn);$('mMultiplier').classList.toggle('red',d.warn);$('split').classList.toggle('red',d.warn);$('split').classList.toggle('purple',!d.warn);
+        fire('signalDot','signalMotion','coreNode',80,d.warn);fire('rateDot','rateMotion','rateNode',650,d.warn);fire('vaultDot','vaultMotion','vaultNode',730,d.warn);fire('exitDot','exitMotion','exitNode',810,d.warn);
       }
-      function render(index=30){
-        model=build();current=clamp(index,0,30);
-        const contraction=model.flow<=0,m=model.policy[current],active=model.vaultRouted[current]||model.fees*.70;
-        $('flowOut').textContent=(model.flow>0?'+':'')+model.flow+' ETH';$('flowOut').className=model.flow>0?'positive':model.flow<0?'negative':'';
-        $('feesOut').textContent=model.fees+' ETH';$('pressureOut').textContent=model.pressure+'%';$('withdrawalOut').textContent=compact(model.withdrawal);
-        $('statebar').classList.toggle('contraction',contraction);$('regime').textContent=contraction?'Contraction':'Expansion';$('epoch').textContent=`Epoch ${current} / 30`;
-        $('multiplier').textContent=m.toFixed(2)+'×';$('issuance').textContent=compact(model.issuance[current]);$('vault').textContent=contraction?'Buyback':'Reserve';$('vaultSub').textContent=fmt(active,1)+' ETH routed';$('exitFee').textContent=model.feeRate.toFixed(1)+'%';
-        const fee=model.withdrawal*model.feeRate/100,wallet=model.withdrawal-fee,half=fee/2;
-        $('gross').textContent=fmt(model.withdrawal);$('wallet').textContent=fmt(wallet);$('burned').textContent=fmt(half);$('stayers').textContent=fmt(half);
-        $('event').innerHTML=contraction?`<b>ETH flow is non-positive.</b> Policy tightens while 70% of protocol ETH funds capped buybacks.`:`<b>Positive ETH flow persists.</b> Policy loosens while 70% of protocol ETH builds hard reserves.`;
-        $('exitNote').innerHTML=model.withdrawal?`<b>The payout arrives, but the earning vehicle is gone.</b> Retiring the Branch ends its future issuance share.`:`<b>No Branch exits in this scenario.</b> The earning right stays alive, and no resolution fee is charged.`;
-        const traces=[['policyPath','policyDot',model.policy,16,39],['reservePath','reserveDot',model.reserves,52,75],['defencePath','defenceDot',model.buybacks,88,111]];
-        traces.forEach(([pathId,dotId,values,top,bottom])=>{const p=point(values,current,top,bottom);$(pathId).setAttribute('d',linePath(values,current,top,bottom));$(dotId).setAttribute('cx',p.x);$(dotId).setAttribute('cy',p.y)});
-        const cursorX=30+current*(348/30);$('cursor').setAttribute('x1',cursorX);$('cursor').setAttribute('x2',cursorX);
-      }
-      function stop(){clearInterval(timer);timer=null;$('play').disabled=false;$('play').textContent='▶ Run 30 epochs'}
-      function play(){stop();current=0;render(0);$('play').disabled=true;$('play').textContent='Running…';timer=setInterval(()=>{current+=1;render(current);if(current>=30)stop()},150)}
-      document.querySelectorAll('.preset').forEach(button=>button.addEventListener('click',()=>{const values=scenarios[button.dataset.scenario];Object.entries(values).forEach(([key,value])=>controls[key].value=value);document.querySelectorAll('.preset').forEach(x=>x.classList.toggle('active',x===button));render(30);if(button.dataset.scenario==='run')play()}));
-      Object.values(controls).forEach(input=>input.addEventListener('input',()=>{stop();document.querySelectorAll('.preset').forEach(x=>x.classList.remove('active'));render(30)}));
-      $('play').addEventListener('click',play);render(30);
+      document.querySelectorAll('.mode').forEach(button=>button.addEventListener('click',()=>render(button.dataset.mode)));
+      render(active);
     })();
   </script>
   <script>
-    (()=>{const root=document.getElementById('srcb');if(!root||window.parent===window)return;const report=()=>{const rect=root.getBoundingClientRect(),last=root.lastElementChild?.getBoundingClientRect();parent.postMessage({type:'moni-widget:resize',height:Math.max(1,Math.floor((last?.bottom??rect.bottom)-rect.top)-2)},'https://research.moni.ai')};new ResizeObserver(report).observe(root);addEventListener('load',report,{once:true});addEventListener('resize',report);addEventListener('message',event=>{if(event.origin==='https://research.moni.ai'&&event.data?.type==='moni-widget:request-resize')report()});[0,100,500,1500].forEach(delay=>setTimeout(report,delay))})();
+    (()=>{const root=document.getElementById('srpm');if(!root||window.parent===window)return;const report=()=>{const rect=root.getBoundingClientRect(),last=root.lastElementChild?.getBoundingClientRect();parent.postMessage({type:'moni-widget:resize',height:Math.max(1,Math.floor((last?.bottom??rect.bottom)-rect.top)-2)},'https://research.moni.ai')};new ResizeObserver(report).observe(root);addEventListener('load',report,{once:true});addEventListener('resize',report);addEventListener('message',event=>{if(event.origin==='https://research.moni.ai'&&event.data?.type==='moni-widget:request-resize')report()});[0,100,500,1500].forEach(delay=>setTimeout(report,delay))})();
   </script>
 </body>
 </html>
