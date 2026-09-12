@@ -1,23 +1,23 @@
 {
-  "updated_at": "2026-09-12T15:31:21.172Z",
+  "updated_at": "2026-09-12T18:23:16.856Z",
   "source_label": "Dune Deepstate dashboards",
   "source_url": "https://dune.com/gomosellow/deepstate-protocol",
   "metrics": {
-    "deep_distributed": "205.58M",
-    "rewarder_left": "794.42M",
+    "deep_distributed": "205.71M",
+    "rewarder_left": "794.29M",
     "farmers": "220",
     "top10_share": "74.6%",
-    "deep_price": "$0.0008",
-    "float_market_cap": "$54.8k",
-    "emission_to_revenue": "0.0x",
-    "nvda_price": "218.0334",
-    "burned_into_state": "67.2%",
-    "state_outstanding": "96.34M",
-    "vault_nav": "$131.2k",
-    "protocol_fees_net": "$60.5k"
+    "deep_price": "$0.0013",
+    "float_market_cap": "$87.4k",
+    "emission_to_revenue": "0.3x",
+    "nvda_price": "219.5000",
+    "burned_into_state": "67.3%",
+    "state_outstanding": "46.49M",
+    "vault_nav": "$63.2k",
+    "protocol_fees_net": "$-7173.3"
   },
   "raw": {
-    "nvda_price": 218.03335639034566
+    "nvda_price": 219.49999905551107
   },
   "activity": {
     "revenue": [
