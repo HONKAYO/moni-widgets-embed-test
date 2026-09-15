@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-15T16:58:53.292Z",
+  "updated_at": "2026-09-15T21:20:35.609Z",
   "source_label": "Dune Deepstate dashboards",
   "source_url": "https://dune.com/gomosellow/deepstate-protocol",
   "metrics": {
@@ -12,9 +12,9 @@
     "emission_to_revenue": "42512.0x",
     "nvda_price": "212.9000",
     "burned_into_state": "67.1%",
-    "state_outstanding": "46.49M",
-    "vault_nav": "$63.2k",
-    "protocol_fees_net": "$-7131.3"
+    "state_outstanding": "46.15M",
+    "vault_nav": "$62.7k",
+    "protocol_fees_net": "$-7591.6"
   },
   "raw": {
     "nvda_price": 212.89999741665866
