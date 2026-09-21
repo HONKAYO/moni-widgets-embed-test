@@ -14,23 +14,23 @@
   <div id="ely-routes">
     <div class="inner">
       <p class="kicker">Elysium · economic map</p>
-      <h2 class="title">Three routes have to pay upstream</h2>
-      <p class="dek">Elysium only adds ecosystem value if activity creates something outside the L2 itself. Select a route to see what has to become real.</p>
+      <h2 class="title">Three ways value could move upstream</h2>
+      <p class="dek">Each route has a different receipt. Select one to see the number that would show it is working.</p>
       <div class="routes">
-        <div class="origin"><span>Entry</span><b>External capital + applications</b><p>New users, stablecoins and market-making inventory enter through Elysium.</p></div>
+        <div class="origin"><span>Starting point</span><b>Capital enters through Elysium</b><p>New users, stablecoins and market-making inventory arrive from outside.</p></div>
         <div class="trunk"><i class="pulse"></i></div>
         <div class="route-stack">
-          <button class="route-card active" type="button" data-route="trade"><span class="route-num">01</span><span class="route-copy"><span>Trade route</span><b>Arbitrage reaches HyperCore</b><p>AMM and spot prices converge through real inventory.</p></span><span class="route-out">fees · HYPE burn</span></button>
-          <button class="route-card" type="button" data-route="usdc"><span class="route-num">02</span><span class="route-copy"><span>Reserve route</span><b>Native USDC backs on HyperEVM</b><p>Parent-side backing can contribute to AQAv2 economics.</p></span><span class="route-out">AQAv2 revenue</span></button>
-          <button class="route-card" type="button" data-route="fees"><span class="route-num">03</span><span class="route-copy"><span>Sequencer route</span><b>Execution fees leave the L2</b><p>Revenue is split among builders, treasury and KNTQ buys.</p></span><span class="route-out">25 · 25 · 50</span></button>
+          <button class="route-card active" type="button" data-route="trade"><span class="route-num">01</span><span class="route-copy"><span>Trading</span><b>Arbitrage reaches HyperCore</b><p>Real inventory closes the gap between AMMs and spot books.</p></span><span class="route-out">fees · HYPE burn</span></button>
+          <button class="route-card" type="button" data-route="usdc"><span class="route-num">02</span><span class="route-copy"><span>USDC backing</span><b>Reserves sit on HyperEVM</b><p>Parent-side backing can feed AQAv2 economics.</p></span><span class="route-out">AQAv2 revenue</span></button>
+          <button class="route-card" type="button" data-route="fees"><span class="route-num">03</span><span class="route-copy"><span>Sequencer fees</span><b>Execution revenue leaves the L2</b><p>Builders, treasury and KNTQ purchases share the cash flow.</p></span><span class="route-out">25 · 25 · 50</span></button>
         </div>
       </div>
-      <div class="detail"><span id="detailLabel">What proves it</span><p id="detailCopy"><b>Incremental HyperCore spot volume</b> from assets and users that were not already trading inside Hyperliquid.</p></div>
+      <div class="detail"><span id="detailLabel">Watch this</span><p id="detailCopy"><b>Incremental HyperCore spot volume</b> from assets and users that were not already trading inside Hyperliquid.</p></div>
     </div>
     <div class="ft"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><span>moni</span><i>research</i></span></div>
   </div>
   <script>
-    (()=>{const detail={trade:['What proves it','<b>Incremental HyperCore spot volume</b> from assets and users that were not already trading inside Hyperliquid.'],usdc:['What proves it','<b>Native USDC backing and realized AQAv2 contribution.</b> The Base-sized example is a scenario, not current revenue.'],fees:['What proves it','<b>Onchain sequencer fees and KNTQ purchases.</b> The announced split is 25% builders, 25% treasury and 50% KNTQ buys.']};document.querySelectorAll('.route-card').forEach(card=>card.addEventListener('click',()=>{document.querySelectorAll('.route-card').forEach(x=>x.classList.toggle('active',x===card));const copy=detail[card.dataset.route];document.getElementById('detailLabel').textContent=copy[0];document.getElementById('detailCopy').innerHTML=copy[1]}))})();
+    (()=>{const detail={trade:['Watch this','<b>Incremental HyperCore spot volume</b> from assets and users that were not already trading inside Hyperliquid.'],usdc:['Watch this','<b>Native USDC backing and realized AQAv2 revenue.</b> The Base-sized example shows scale; it is not current revenue.'],fees:['Watch this','<b>Sequencer fees and the KNTQ purchases they fund.</b> The announced split sends 25% to builders, 25% to treasury and 50% to KNTQ buys.']};document.querySelectorAll('.route-card').forEach(card=>card.addEventListener('click',()=>{document.querySelectorAll('.route-card').forEach(x=>x.classList.toggle('active',x===card));const copy=detail[card.dataset.route];document.getElementById('detailLabel').textContent=copy[0];document.getElementById('detailCopy').innerHTML=copy[1]}))})();
   </script>
   <script>
     (() => {const root=document.getElementById('ely-routes');if(!root||window.parent===window)return;const reportHeight=()=>{const rootBox=root.getBoundingClientRect();const lastBox=root.lastElementChild?.getBoundingClientRect();const height=Math.max(1,Math.floor((lastBox?.bottom??rootBox.bottom)-rootBox.top)-2);window.parent.postMessage({type:'moni-widget:resize',height},'https://research.moni.ai')};new ResizeObserver(reportHeight).observe(root);window.addEventListener('load',reportHeight,{once:true});window.addEventListener('resize',reportHeight);window.addEventListener('message',event=>{if(event.origin==='https://research.moni.ai'&&event.data?.type==='moni-widget:request-resize')reportHeight()});[0,100,500,1500].forEach(delay=>setTimeout(reportHeight,delay))})();

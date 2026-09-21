@@ -16,12 +16,12 @@
   <div id="ely-phase">
     <div class="inner">
       <p class="kicker">Elysium · product boundary</p>
-      <h2 class="title">The launch is not the whole product</h2>
-      <p class="dek">Launch moves assets between Elysium, HyperEVM and HyperCore. The market-making edge arrives in a later network upgrade.</p>
+      <h2 class="title">The product arrives in two steps</h2>
+      <p class="dek">Launch opens the asset routes. The faster read-and-trade loop comes with a later network upgrade.</p>
       <div class="tabs" role="tablist" aria-label="Product phase"><button class="tab active" type="button" data-phase="launch">Launch</button><button class="tab" type="button" data-phase="phase2">Phase Two</button></div>
       <div class="stage">
         <div class="route">
-          <div class="node active" id="nodeE"><span class="eyebrow" id="eEye">Execution</span><h3 id="eTitle">Elysium EVM</h3><p id="eCopy">Fast blocks, HYPE gas and standard EVM applications.</p></div>
+          <div class="node active" id="nodeE"><span class="eyebrow" id="eEye">Execution</span><h3 id="eTitle">Elysium EVM</h3><p id="eCopy">Fast blocks, HYPE gas and familiar EVM applications.</p></div>
           <div class="link" id="linkOne"><span class="dot"></span></div>
           <div class="node active" id="nodeH"><span class="eyebrow" id="hEye">Settlement + bridge</span><h3 id="hTitle">HyperEVM</h3><p id="hCopy">Locks assets, mints representations and settles the rollup.</p></div>
           <div class="link" id="linkTwo"><span class="dot"></span></div>
@@ -32,15 +32,15 @@
           <div class="phase-list" id="facts"></div>
         </div>
       </div>
-      <div class="take" id="take"><b>The distinction matters:</b> phase one supplies the rails. It does not yet give contracts the fast HyperCore read/write loop that makes Elysium different.</div>
+      <div class="take" id="take"><b>At launch, the rails are real but the edge is still ahead.</b> Contracts do not get the faster HyperCore read-and-trade loop until phase two.</div>
     </div>
     <div class="ft"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><span>moni</span><i>research</i></span></div>
   </div>
   <script>
     (()=>{
       const phases={
-        launch:{status:'At launch',name:'Move the assets',eyes:['Execution','Settlement + bridge','Market'],titles:['Elysium EVM','HyperEVM','HyperCore spot'],copies:['Fast blocks, HYPE gas and standard EVM applications.','Locks assets, mints representations and settles the rollup.','Linked tokens can graduate into native order books.'],facts:[['01 · GAS','HYPE moves 1:1','No wrapper or new gas token.'],['02 · TOKENS','ERC-20s bridge both ways','Canonical and mirror routes.'],['03 · SPOT','Assets reach HyperCore','Deposit wallets link supply to the book.']],take:'<b>The distinction matters:</b> phase one supplies the rails. It does not yet give contracts the fast HyperCore read/write loop that makes Elysium different.'},
-        phase2:{status:'Post-launch upgrade',name:'Move market intent',eyes:['Contract logic','Trade-only agent','Native venue'],titles:['Read + decide','Sign + submit','HyperCore books'],copies:['Contracts read deeper Core state and emit trading intents.','A managed or self-hosted agent signs without withdrawal rights.','Orders rest on the user’s own account and report outcomes back.'],facts:[['01 · READ','Full-depth Core data','Books, balances, positions and slippage.'],['02 · WRITE','Faster order intents','Targeted around one HyperCore block.'],['03 · REPORT','Execution callbacks','Contracts can see success or failure.']],take:'<b>This is the actual wedge:</b> contract-controlled capital with a faster path into HyperCore. It is specified, but it is not a launch feature.'}
+        launch:{status:'At launch',name:'Move the assets',eyes:['Execution','Settlement + bridge','Market'],titles:['Elysium EVM','HyperEVM','HyperCore spot'],copies:['Fast blocks, HYPE gas and familiar EVM applications.','Locks assets, mints representations and settles the rollup.','Linked tokens can graduate into native order books.'],facts:[['01 · GAS','HYPE moves 1:1','No wrapper and no separate gas token.'],['02 · TOKENS','ERC-20s bridge both ways','Canonical routes in; mirror routes out.'],['03 · SPOT','Assets reach HyperCore','Deposit wallets connect supply to the book.']],take:'<b>At launch, the rails are real but the edge is still ahead.</b> Contracts do not get the faster HyperCore read-and-trade loop until phase two.'},
+        phase2:{status:'Post-launch upgrade',name:'Move market intent',eyes:['Contract logic','Trade-only agent','Native venue'],titles:['Read + decide','Sign + submit','HyperCore books'],copies:['Contracts read deeper Core state and send trading intents.','A managed or self-hosted agent signs without withdrawal rights.','Orders stay in the user’s account and report the result back.'],facts:[['01 · READ','Deeper Core data','Books, balances, positions and slippage.'],['02 · WRITE','Faster order intents','The target is roughly one HyperCore block.'],['03 · REPORT','Execution callbacks','The contract learns whether the order landed.']],take:'<b>Phase two is the reason this chain could matter.</b> It puts contract-controlled capital on a faster path into HyperCore, but it is still a specified upgrade rather than a launch feature.'}
       };
       const facts=document.getElementById('facts');
       function render(key){const p=phases[key];document.getElementById('status').textContent=p.status;document.getElementById('phaseName').textContent=p.name;['e','h','c'].forEach((id,i)=>{document.getElementById(id+'Eye').textContent=p.eyes[i];document.getElementById(id+'Title').textContent=p.titles[i];document.getElementById(id+'Copy').textContent=p.copies[i]});facts.innerHTML=p.facts.map(x=>`<div class="fact"><span>${x[0]}</span><b>${x[1]}</b><p>${x[2]}</p></div>`).join('');document.getElementById('take').innerHTML=p.take;document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.phase===key));document.getElementById('linkOne').classList.toggle('back',key==='phase2');document.getElementById('linkTwo').classList.toggle('back',key==='phase2')}
