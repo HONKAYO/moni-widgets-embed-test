@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Elysium: user retention loop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--v:#6c42eb;--ink:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--soft:#fafafb;--lav:#f6f3ff;--red:#e24b4a;--red-soft:#fff5f4;--green:#0f8e63}*{box-sizing:border-box}html,body{margin:0;padding:0;background:transparent}body{font-family:Geist,system-ui,sans-serif;color:var(--ink)}button{font:inherit}#ely-retention{width:100%;max-width:none;overflow:hidden;background:#fff}.inner{padding:22px}.kicker{margin:0 0 7px;color:var(--v);font:600 9px/1.2 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase}.title{margin:0;font-size:25px;line-height:1.04;letter-spacing:-.04em}.dek{margin:8px 0 0;max-width:610px;color:var(--body);font-size:12.5px;line-height:1.44}.switch{display:inline-grid;grid-template-columns:1fr 1fr;margin-top:14px;border:1px solid var(--line);background:#fff}.switch button{min-width:112px;padding:8px 13px;border:0;border-right:1px solid var(--line);background:#fff;color:var(--muted);font-size:10.5px;font-weight:600;cursor:pointer}.switch button:last-child{border-right:0}.switch button[aria-pressed="true"]{background:var(--lav);color:var(--v);box-shadow:inset 0 0 0 1px var(--v)}.flow-shell{position:relative;margin-top:12px;padding:12px;border:1px solid var(--line);background:linear-gradient(90deg,#f5f5f8 1px,transparent 1px),linear-gradient(#f5f5f8 1px,transparent 1px);background-size:20px 20px}.flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.stage{position:relative;min-width:0;min-height:116px;padding:11px 10px;border:1px solid var(--line);background:#fff}.stage:not(:last-child):after{content:'';position:absolute;z-index:2;right:-9px;top:35px;width:9px;height:1px;background:var(--v)}.stage:not(:last-child):before{content:'';position:absolute;z-index:3;right:-9px;top:32px;border-left:5px solid var(--v);border-top:3.5px solid transparent;border-bottom:3.5px solid transparent}.num{color:var(--v);font:600 8px/1.2 'IBM Plex Mono',monospace;letter-spacing:.08em}.stage b{display:block;margin-top:7px;font-size:12.5px;line-height:1.14;letter-spacing:-.015em}.stage p{margin:6px 0 0;color:var(--body);font-size:9.5px;line-height:1.34}.loopback{display:grid;grid-template-columns:78px 1fr;gap:10px;align-items:center;margin-top:9px;padding:8px 10px;border-left:2px solid var(--v);background:var(--lav)}.loopback span{color:var(--v);font:600 8px/1.2 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}.loopback p{margin:0;color:var(--body);font-size:10px;line-height:1.35}.proof{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.proof-card{padding:11px 12px;border:1px solid var(--line);background:#fff}.proof-card span{color:var(--muted);font:600 8px/1.2 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}.proof-card b{display:block;margin-top:6px;font-size:13px;line-height:1.12}.proof-card p{margin:5px 0 0;color:var(--body);font-size:9.5px;line-height:1.35}.mode-note{margin-top:9px;padding:9px 11px;border-left:2px solid var(--green);background:#f4fbf8;color:var(--body);font-size:10.5px;line-height:1.4}.mode-note b{color:var(--ink)}#ely-retention.stall .switch button[aria-pressed="true"]{background:var(--red-soft);color:var(--red);box-shadow:inset 0 0 0 1px var(--red)}#ely-retention.stall .stage:not(:last-child):after{background:var(--red)}#ely-retention.stall .stage:not(:last-child):before{border-left-color:var(--red)}#ely-retention.stall .num{color:var(--red)}#ely-retention.stall .loopback{border-left-color:var(--red);background:var(--red-soft)}#ely-retention.stall .loopback span{color:var(--red)}#ely-retention.stall .mode-note{border-left-color:var(--red);background:var(--red-soft)}.ft{height:31px;padding:0 17px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:flex-end}.brand{display:flex;align-items:center;gap:4px;color:var(--v);font-size:12px;font-weight:600}.eye{width:15px;height:15px;display:block;flex:0 0 15px}.brand i{color:var(--ink);font:600 italic 12px Geist,sans-serif}
+    @media(max-width:620px){.flow{grid-template-columns:repeat(3,minmax(0,1fr))}.stage:nth-child(3):after,.stage:nth-child(3):before{display:none}.stage:nth-child(4){grid-column:2}.stage:nth-child(5){grid-column:3}.stage{min-height:108px}}
+    @media(max-width:520px){.inner{padding:18px 16px}.title{font-size:23px}.switch{display:grid}.switch button{min-width:102px}.flow{grid-template-columns:1fr;gap:7px}.stage,.stage:nth-child(4),.stage:nth-child(5){grid-column:auto;min-height:0;padding:10px 11px}.stage:not(:last-child):after{right:auto;left:20px;top:auto;bottom:-8px;width:1px;height:8px}.stage:not(:last-child):before{right:auto;left:17px;top:auto;bottom:-8px;border-top:5px solid var(--v);border-left:3.5px solid transparent;border-right:3.5px solid transparent;border-bottom:0}.stage:nth-child(3):after,.stage:nth-child(3):before{display:block}#ely-retention.stall .stage:not(:last-child):before{border-top-color:var(--red);border-left-color:transparent}.loopback{grid-template-columns:1fr;gap:3px}.proof{grid-template-columns:1fr}.ft{padding:0 13px}}
+  </style>
+</head>
+<body>
+  <div id="ely-retention">
+    <div class="inner">
+      <p class="kicker">Elysium · retention test</p>
+      <h2 class="title">The chain only works if users come back</h2>
+      <p class="dek">Kinetiq can seed the first markets. The harder part is turning a launch into recurring demand from users and builders outside its own stack.</p>
+
+      <div class="switch" role="group" aria-label="Activity model">
+        <button type="button" data-mode="compound" aria-pressed="true">Compounds</button>
+        <button type="button" data-mode="stall" aria-pressed="false">Recycles</button>
+      </div>
+
+      <div class="flow-shell">
+        <div class="flow" id="flow"></div>
+        <div class="loopback"><span id="loopLabel">Loop back</span><p id="loopCopy"></p></div>
+      </div>
+
+      <div class="proof">
+        <div class="proof-card"><span id="proofOneLabel"></span><b id="proofOneValue"></b><p id="proofOneCopy"></p></div>
+        <div class="proof-card"><span id="proofTwoLabel"></span><b id="proofTwoValue"></b><p id="proofTwoCopy"></p></div>
+      </div>
+      <div class="mode-note" id="modeNote"></div>
+    </div>
+    <div class="ft"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><span>moni</span><i>research</i></span></div>
+  </div>
+
+  <script>
+    (() => {
+      const data = {
+        compound: {
+          stages: [
+            ['01 · SEED','Kinetiq starts it','Products, launches and liquidity open the first market.'],
+            ['02 · COME','Outside capital arrives','New assets and yield give users a reason to bridge in.'],
+            ['03 · TRADE','Markets connect','AMMs and HyperCore share inventory through arbitrage.'],
+            ['04 · STAY','Products create repeat use','Vaults and strategies keep capital working after launch.'],
+            ['05 · COMPOUND','Independent teams join','More builders make the next market easier to start.']
+          ],
+          loop: 'Third-party products and deeper liquidity bring the next cohort without relying on the same launch incentive.',
+          proofs: [
+            ['PROOF OF RETENTION','Repeat users','Cohorts return after rewards fade.'],
+            ['PROOF OF NEW DEMAND','Incremental HyperCore flow','Trading appears that Hyperliquid would not have seen otherwise.']
+          ],
+          note: '<b>The loop is working</b> when outside deposits, unaffiliated apps and repeat users rise together.'
+        },
+        stall: {
+          stages: [
+            ['01 · SEED','Kinetiq starts it','The same products and incentives create the opening burst.'],
+            ['02 · COME','Existing wallets bridge','Capital moves from elsewhere in Hyperliquid.'],
+            ['03 · TRADE','The same money loops','Extra hops inflate volume without adding new demand.'],
+            ['04 · LEAVE','Rewards lose the user','Capital exits when the initial opportunity disappears.'],
+            ['05 · STALL','No independent follow-on','Few outside teams create the next reason to return.']
+          ],
+          loop: 'The chain can still show transactions, sequencer fees and KNTQ buys while the user base quietly resets.',
+          proofs: [
+            ['WHAT LOOKS GOOD','Gross volume','Busy venues can hide recycled capital.'],
+            ['WHAT STAYS WEAK','External demand','HyperCore gains little business it did not already have.']
+          ],
+          note: '<b>The loop is recycling</b> when activity depends on Kinetiq-owned products and disappears with incentives.'
+        }
+      };
+
+      const root = document.getElementById('ely-retention');
+      const flow = document.getElementById('flow');
+      const render = mode => {
+        const state = data[mode];
+        root.classList.toggle('stall', mode === 'stall');
+        document.querySelectorAll('[data-mode]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mode === mode)));
+        flow.innerHTML = state.stages.map(([num,title,copy]) => `<div class="stage"><span class="num">${num}</span><b>${title}</b><p>${copy}</p></div>`).join('');
+        document.getElementById('loopCopy').textContent = state.loop;
+        document.getElementById('proofOneLabel').textContent = state.proofs[0][0];
+        document.getElementById('proofOneValue').textContent = state.proofs[0][1];
+        document.getElementById('proofOneCopy').textContent = state.proofs[0][2];
+        document.getElementById('proofTwoLabel').textContent = state.proofs[1][0];
+        document.getElementById('proofTwoValue').textContent = state.proofs[1][1];
+        document.getElementById('proofTwoCopy').textContent = state.proofs[1][2];
+        document.getElementById('modeNote').innerHTML = state.note;
+      };
+      document.querySelectorAll('[data-mode]').forEach(button => button.addEventListener('click', () => render(button.dataset.mode)));
+      render('compound');
+    })();
+  </script>
+  <script>
+    (() => {
+      const root = document.getElementById('ely-retention');
+      if (!root || window.parent === window) return;
+      const reportHeight = () => {
+        const rootBox = root.getBoundingClientRect();
+        const lastBox = root.lastElementChild?.getBoundingClientRect();
+        const height = Math.max(1, Math.floor((lastBox?.bottom ?? rootBox.bottom) - rootBox.top) - 2);
+        window.parent.postMessage({ type: 'moni-widget:resize', height }, 'https://research.moni.ai');
+      };
+      new ResizeObserver(reportHeight).observe(root);
+      window.addEventListener('load', reportHeight, { once: true });
+      window.addEventListener('resize', reportHeight);
+      window.addEventListener('message', event => {
+        if (event.origin === 'https://research.moni.ai' && event.data?.type === 'moni-widget:request-resize') reportHeight();
+      });
+      [0, 100, 500, 1500].forEach(delay => setTimeout(reportHeight, delay));
+    })();
+  </script>
+</body>
+</html>
