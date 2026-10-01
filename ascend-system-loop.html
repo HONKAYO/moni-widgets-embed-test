@@ -72,9 +72,9 @@
 <body>
   <div id="ascend-loop">
     <div class="inner">
-      <p class="kicker">Ascend · planned system map</p>
+      <p class="kicker">Ascend · planned mechanism</p>
       <h2 class="title">The launchpad stays in the market</h2>
-      <p class="dek">HYPE yield buys exposure to new launches. Trading fees then flow back into creators, ecosystem assets and the infrastructure around those markets.</p>
+      <p class="dek">HYPE holders keep their base position. Its yield buys selected launch tokens, while trading fees continue paying creators and supporting the market.</p>
 
       <div class="map-shell">
         <svg class="desktop-map" viewBox="0 0 640 480" role="img" aria-labelledby="mapTitle mapDesc">
@@ -105,7 +105,7 @@
 
           <path id="p-fee-creator" class="route amber" marker-end="url(#aa)" d="M550 252V282H126V251"/>
           <path id="p-fee-router" class="route slate" marker-end="url(#as)" d="M550 252V302H320V318"/>
-          <text class="route-label amber" x="223" y="276">25% default · 50% approved</text>
+          <text class="route-label amber" x="338" y="276" text-anchor="middle">25% default · 50% if approved</text>
           <text class="route-label" x="462" y="297">remainder</text>
 
           <path id="p-router-hype" class="route blue" marker-end="url(#ab)" d="M230 350H166"/>
@@ -114,21 +114,21 @@
           <path id="p-hype-market" class="route coral dashed" marker-end="url(#ac)" d="M166 378H202V252H244"/>
           <path id="p-kntq-market" class="route coral dashed" marker-end="url(#ac)" d="M474 378H438V252H396"/>
 
-          <g id="n-holders" class="node"><rect class="zone" x="14" y="32" width="152" height="80"/><text class="eyebrow" x="26" y="48">HYPE HOLDERS</text><text class="heading" x="26" y="68">Keep HYPE exposure</text><line class="divider" x1="26" y1="78" x2="154" y2="78"/><text class="body" x="26" y="96">Deposit HYPE · receive kHYPE</text></g>
-          <g id="n-stake" class="node"><rect class="zone-accent" x="244" y="24" width="152" height="96"/><text class="eyebrow" x="256" y="42">STAKING ROUTER</text><text class="heading heading-accent" x="256" y="62">Yield buys new tokens</text><line class="divider" x1="256" y1="72" x2="384" y2="72"/><text class="body" x="256" y="90">Normal kHYPE yield is redirected</text><text class="body muted" x="256" y="104">It is not a second yield</text></g>
-          <g id="n-tokens" class="node"><rect class="zone" x="474" y="32" width="152" height="80"/><text class="eyebrow" x="486" y="48">QUALIFYING TOKENS</text><text class="heading" x="486" y="68">Tokens reach stakers</text><line class="divider" x1="486" y1="78" x2="614" y2="78"/><text class="body" x="486" y="96">Selected Elysium launches</text></g>
+          <g id="n-holders" class="node"><rect class="zone" x="14" y="32" width="152" height="80"/><text class="eyebrow" x="26" y="48">HYPE HOLDERS</text><text class="heading" x="26" y="68">Keep the HYPE position</text><line class="divider" x1="26" y1="78" x2="154" y2="78"/><text class="body" x="26" y="96">Deposit HYPE · get kHYPE</text></g>
+          <g id="n-stake" class="node"><rect class="zone-accent" x="244" y="24" width="152" height="96"/><text class="eyebrow" x="256" y="42">STAKING ROUTER</text><text class="heading heading-accent" x="256" y="62">Yield buys launch tokens</text><line class="divider" x1="256" y1="72" x2="384" y2="72"/><text class="body" x="256" y="90">Regular kHYPE yield is redirected</text><text class="body muted" x="256" y="104">This is not extra yield</text></g>
+          <g id="n-tokens" class="node"><rect class="zone" x="474" y="32" width="152" height="80"/><text class="eyebrow" x="486" y="48">QUALIFYING TOKENS</text><text class="heading" x="486" y="68">Tokens go to stakers</text><line class="divider" x1="486" y1="78" x2="614" y2="78"/><text class="body" x="486" y="96">Selected Elysium launches only</text></g>
 
-          <g id="n-project" class="node"><rect class="zone" x="14" y="174" width="152" height="78"/><text class="eyebrow" x="26" y="190">CREATOR</text><text class="heading" x="26" y="210">Launch a token</text><line class="divider" x1="26" y1="220" x2="154" y2="220"/><text class="body" x="26" y="238">Closed pool · no bond curve</text></g>
-          <g id="n-market" class="node"><rect class="zone-accent" x="244" y="166" width="152" height="96"/><text class="eyebrow" x="256" y="184">THE MARKET</text><text class="heading heading-accent" x="256" y="204">Trading funds support</text><line class="divider" x1="256" y1="214" x2="384" y2="214"/><text class="body" x="256" y="232">Every trade pays the system</text><text class="body muted" x="256" y="246">No volume, no fee loop</text></g>
-          <g id="n-fee" class="node"><rect class="zone" x="474" y="174" width="152" height="78"/><text class="eyebrow" x="486" y="190">FEE ENGINE</text><text class="heading" x="486" y="210">1% trading fee</text><line class="divider" x1="486" y1="220" x2="614" y2="220"/><text class="body" x="486" y="237">Recipient share + protocol remainder</text><text class="body muted" x="486" y="248">Separate swap + gas costs</text></g>
+          <g id="n-project" class="node"><rect class="zone" x="14" y="174" width="152" height="78"/><text class="eyebrow" x="26" y="190">CREATOR</text><text class="heading" x="26" y="210">Start in a closed pool</text><line class="divider" x1="26" y1="220" x2="154" y2="220"/><text class="body" x="26" y="238">No separate bonding curve</text></g>
+          <g id="n-market" class="node"><rect class="zone-accent" x="244" y="166" width="152" height="96"/><text class="eyebrow" x="256" y="184">THE MARKET</text><text class="heading heading-accent" x="256" y="204">Trading starts the loop</text><line class="divider" x1="256" y1="214" x2="384" y2="214"/><text class="body" x="256" y="232">Each trade generates fees</text><text class="body muted" x="256" y="246">No volume, no support budget</text></g>
+          <g id="n-fee" class="node"><rect class="zone" x="474" y="174" width="152" height="78"/><text class="eyebrow" x="486" y="190">FEE ENGINE</text><text class="heading" x="486" y="210">Each trade pays 1%</text><line class="divider" x1="486" y1="220" x2="614" y2="220"/><text class="body" x="486" y="237">The rest becomes protocol revenue</text><text class="body muted" x="486" y="248">Swap + gas costs are extra</text></g>
 
-          <g id="n-router" class="node"><rect class="zone-soft" x="230" y="318" width="180" height="64"/><text class="eyebrow" x="242" y="336">NET PROTOCOL REVENUE</text><text class="metric" x="242" y="360">HYPE 50% · KNTQ 50%</text></g>
+          <g id="n-router" class="node"><rect class="zone-soft" x="230" y="318" width="180" height="64"/><text class="eyebrow" x="242" y="336">NET REVENUE</text><text class="metric" x="242" y="360">50% HYPE · 50% KNTQ</text></g>
 
-          <g id="n-hype" class="node"><rect class="zone" x="14" y="338" width="152" height="78"/><text class="eyebrow" x="26" y="354">HYPE SIDE</text><text class="heading" x="26" y="373">Stake + support markets</text><text class="allocation-label" x="26" y="389">40 stake · 30 ecosystem</text><text class="allocation-label" x="26" y="401">20 ops · 10 rewards</text><rect class="bar-bg" x="26" y="407" width="128" height="5"/><rect class="bar-hype" x="26" y="407" width="51.2" height="5"/><rect fill="#957cf2" x="77.2" y="407" width="38.4" height="5"/><rect fill="#b9a9f7" x="115.6" y="407" width="25.6" height="5"/><rect fill="#d6ccfb" x="141.2" y="407" width="12.8" height="5"/></g>
-          <g id="n-kntq" class="node"><rect class="zone" x="474" y="338" width="152" height="78"/><text class="eyebrow" x="486" y="354">KNTQ SIDE</text><text class="heading" x="486" y="373">Burn + add liquidity</text><text class="allocation-label" x="486" y="389">60 burn · 20 liquidity</text><text class="allocation-label" x="486" y="401">20 points</text><rect class="bar-bg" x="486" y="407" width="128" height="5"/><rect class="bar-kntq" x="486" y="407" width="76.8" height="5"/><rect fill="#67c5b9" x="562.8" y="407" width="25.6" height="5"/><rect fill="#a8dfd8" x="588.4" y="407" width="25.6" height="5"/></g>
+          <g id="n-hype" class="node"><rect class="zone" x="14" y="338" width="152" height="78"/><text class="eyebrow" x="26" y="354">HYPE SIDE</text><text class="heading" x="26" y="373">Build the HYPE position</text><text class="allocation-label" x="26" y="389">40 stake · 30 ecosystem</text><text class="allocation-label" x="26" y="401">20 ops · 10 rewards</text><rect class="bar-bg" x="26" y="407" width="128" height="5"/><rect class="bar-hype" x="26" y="407" width="51.2" height="5"/><rect fill="#957cf2" x="77.2" y="407" width="38.4" height="5"/><rect fill="#b9a9f7" x="115.6" y="407" width="25.6" height="5"/><rect fill="#d6ccfb" x="141.2" y="407" width="12.8" height="5"/></g>
+          <g id="n-kntq" class="node"><rect class="zone" x="474" y="338" width="152" height="78"/><text class="eyebrow" x="486" y="354">KNTQ SIDE</text><text class="heading" x="486" y="373">Burn KNTQ, add liquidity</text><text class="allocation-label" x="486" y="389">60 burn · 20 liquidity</text><text class="allocation-label" x="486" y="401">20 points</text><rect class="bar-bg" x="486" y="407" width="128" height="5"/><rect class="bar-kntq" x="486" y="407" width="76.8" height="5"/><rect fill="#67c5b9" x="562.8" y="407" width="25.6" height="5"/><rect fill="#a8dfd8" x="588.4" y="407" width="25.6" height="5"/></g>
 
           <g aria-label="Planned token lifecycle">
-            <text class="eyebrow" x="320" y="440" text-anchor="middle">PLANNED MARKET PATH · LATER STAGES ARE CONDITIONAL</text>
+            <text class="eyebrow" x="320" y="440" text-anchor="middle">PLANNED ROUTE · SPOT AND PERPS ARE CONDITIONAL</text>
             <rect class="step-box" x="84" y="448" width="108" height="18"/><text class="step-num" x="90" y="460">01</text><text class="step-name" x="108" y="460">Launch</text>
             <rect class="step-box" x="206" y="448" width="108" height="18"/><text class="step-num" x="212" y="460">02</text><text class="step-name" x="230" y="460">Ascended</text>
             <rect class="step-box future" x="328" y="448" width="108" height="18"/><text class="step-num" x="334" y="460">03</text><text class="step-name" x="352" y="460">HyperCore spot</text>
@@ -139,18 +139,18 @@
         </svg>
 
         <div class="mobile-map">
-          <div class="m-section"><span class="m-kicker">01 · STAKE</span><h3>HYPE stays as the base position</h3><p>Ascend routes deposits into kHYPE. Its normal staking yield buys qualifying ecosystem tokens and distributes them to stakers.</p></div>
+          <div class="m-section"><span class="m-kicker">01 · STAKE</span><h3>Keep the HYPE position</h3><p>A deposit becomes kHYPE. Its regular staking yield buys selected ecosystem tokens and sends them to stakers.</p></div>
           <div class="m-arrow"></div>
-          <div class="m-section accent"><span class="m-kicker">02 · LAUNCH + TRADE</span><h3>Volume powers the system</h3><p>Projects launch in closed pools. Every token trade pays a 1% fee before the separate swap fee and network cost.</p></div>
+          <div class="m-section accent"><span class="m-kicker">02 · LAUNCH + TRADE</span><h3>Trading starts the fee loop</h3><p>Tokens launch in closed pools. Each trade pays 1%, before a separate swap fee and network costs.</p></div>
           <div class="m-arrow"></div>
-          <div class="m-section"><span class="m-kicker">03 · SPLIT</span><h3>Creators get paid; the rest stays at work</h3><p>The recipient gets 25%, or 50% when approved. Remaining protocol revenue buys HYPE and KNTQ equally.</p><div class="m-split"><div class="m-mini"><b>HYPE side</b><span>40% staking · 30% ecosystem · 20% ops · 10% rewards</span></div><div class="m-mini"><b>KNTQ side</b><span>60% burn · 20% liquidity · 20% points</span></div></div></div>
+          <div class="m-section"><span class="m-kicker">03 · SPLIT</span><h3>Split the fee, then recycle it</h3><p>The default recipient gets 25%; an approved creator gets 50%. The rest buys HYPE and KNTQ in equal amounts.</p><div class="m-split"><div class="m-mini"><b>HYPE side</b><span>40% staking · 30% ecosystem · 20% ops · 10% rewards</span></div><div class="m-mini"><b>KNTQ side</b><span>60% burn · 20% liquidity · 20% points</span></div></div></div>
           <div class="m-arrow"></div>
-          <div class="m-section accent"><span class="m-kicker">04 · SUPPORT</span><h3>Fees return after launch</h3><p>Ecosystem purchases, liquidity, rewards and listing inventory keep Ascend economically involved in the market.</p><div class="m-life"><div class="m-step"><b>Launch</b><span>closed pool</span></div><div class="m-step"><b>Ascended</b><span>internal checks</span></div><div class="m-step future"><b>Spot</b><span>conditional</span></div><div class="m-step future"><b>HIP-3</b><span>conditional</span></div></div></div>
+          <div class="m-section accent"><span class="m-kicker">04 · SUPPORT</span><h3>Put money back into the market</h3><p>Token purchases, liquidity, rewards and listing inventory continue after launch.</p><div class="m-life"><div class="m-step"><b>Launch</b><span>closed pool</span></div><div class="m-step"><b>Ascended</b><span>internal checks</span></div><div class="m-step future"><b>Spot</b><span>conditional</span></div><div class="m-step future"><b>HIP-3</b><span>conditional</span></div></div></div>
         </div>
         <div class="legend"><span><i></i> staking yield</span><span><i class="fees"></i> trading fees</span><span><i class="hype"></i> HYPE</span><span><i class="kntq"></i> KNTQ</span><span><i class="support"></i> market support</span></div>
       </div>
 
-      <div class="take"><span>The mechanism</span><p><b>Ascend does not stop at issuance.</b> Yield distributes new assets before launch, while fees keep financing creators and their markets afterward.</p></div>
+      <div class="take"><span>The mechanism</span><p><b>Ascend keeps routing money after the first trade.</b> Staking yield buys selected tokens; fees pay creators and fund market support.</p></div>
     </div>
     <div class="ft"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><span>moni</span><i>research</i></span></div>
   </div>
