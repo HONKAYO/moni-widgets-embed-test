@@ -14,17 +14,17 @@
   <div id="ptpaper">
     <div class="inner">
       <p class="kicker">Papertrade · farming check</p>
-      <h2 class="title">Was farming PAPER worth the loss?</h2>
-      <p class="dek">A $100 loss mints 10,000 PAPER at the current base rate. Move the future token price to find break-even.</p>
+      <h2 class="title">What PAPER price covers a $100 loss?</h2>
+      <p class="dek">At the current base rate, a $100 loss mints 10,000 PAPER. Set a future token price to see whether it covers the loss.</p>
       <div class="model">
         <div class="control">
           <div class="control-head"><label for="price">Future PAPER price</label><output id="priceOut">$0.010</output></div>
           <input id="price" type="range" min="0" max="0.10" step="0.001" value="0.01" aria-label="Future PAPER price from zero to ten cents">
           <div class="ticks"><span class="a">$0</span><span class="b">break-even</span><span class="c">$0.10</span></div>
-          <p class="fixed">Fixed example: $100 loss · 100 PAPER per $1 lost · 10,000 PAPER minted.</p>
+          <p class="fixed">Model: $100 loss · 100 PAPER per $1 lost · 10,000 PAPER minted.</p>
         </div>
         <div class="result">
-          <div class="hero-label">Farming result</div>
+          <div class="hero-label">Value after the loss</div>
           <div class="hero"><b id="status">Break-even</b><span id="statusCopy">at $0.010 per PAPER</span></div>
           <div class="valuebar" aria-hidden="true"><div class="break"></div><div class="marker" id="marker"></div></div>
           <div class="barlabels"><span>$0 value</span><span>$0.01 break-even</span><span>$1,000 value</span></div>
@@ -33,14 +33,14 @@
             <div class="metric"><span>Token value</span><b id="value">$100</b></div>
             <div class="metric"><span>Net result</span><b id="net">$0</b></div>
           </div>
-          <div class="take" id="take"><b>$0.010 is the break-even price.</b> This simple view ignores dilution, staking income, trading fees, and transfer limits.</div>
+          <div class="take" id="take"><b>At $0.010, 10,000 PAPER is worth $100.</b> That matches the original loss before dilution, staking income, fees, or transfer limits.</div>
         </div>
       </div>
     </div>
     <div class="ft"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><span>moni</span><i>research</i></span></div>
   </div>
   <script>
-    (()=>{const slider=document.getElementById('price');const dollars=n=>`${n>0?'+':''}${n<0?'−':''}$${Math.abs(Math.round(n)).toLocaleString('en-US')}`;function update(){const price=+slider.value,value=price*10000,net=value-100,recovery=value;document.getElementById('priceOut').textContent='$'+price.toFixed(3);document.getElementById('value').textContent='$'+Math.round(value).toLocaleString('en-US');document.getElementById('net').textContent=dollars(net);document.getElementById('marker').style.left=Math.min(100,price/0.10*100)+'%';const status=document.getElementById('status'),copy=document.getElementById('statusCopy'),take=document.getElementById('take');if(Math.abs(net)<.01){status.textContent='Break-even';status.style.color='var(--v)';copy.textContent='at $0.010 per PAPER';take.innerHTML='<b>$0.010 is the break-even price.</b> This simple view ignores dilution, staking income, trading fees, and transfer limits.'}else if(net>0){status.textContent=dollars(net);status.style.color='var(--green)';copy.textContent='value above the $100 loss';take.innerHTML=`<b>The 10,000 PAPER would be worth $${Math.round(value).toLocaleString('en-US')}.</b> That is ${Math.round(recovery)}% of the original loss before dilution, fees, or staking income.`}else{status.textContent=dollars(net);status.style.color='var(--red)';copy.textContent='still below break-even';take.innerHTML=`<b>The tokens recover only ${Math.round(recovery)}% of the $100 loss.</b> PAPER needs to reach $0.010 for this farming example to break even.`}}slider.addEventListener('input',update);update()})();
+    (()=>{const slider=document.getElementById('price');const dollars=n=>`${n>0?'+':''}${n<0?'−':''}$${Math.abs(Math.round(n)).toLocaleString('en-US')}`;function update(){const price=+slider.value,value=price*10000,net=value-100,recovery=value;document.getElementById('priceOut').textContent='$'+price.toFixed(3);document.getElementById('value').textContent='$'+Math.round(value).toLocaleString('en-US');document.getElementById('net').textContent=dollars(net);document.getElementById('marker').style.left=Math.min(100,price/0.10*100)+'%';const status=document.getElementById('status'),copy=document.getElementById('statusCopy'),take=document.getElementById('take');if(Math.abs(net)<.01){status.textContent='Break-even';status.style.color='var(--v)';copy.textContent='at $0.010 per PAPER';take.innerHTML='<b>At $0.010, 10,000 PAPER is worth $100.</b> That matches the original loss before dilution, staking income, fees, or transfer limits.'}else if(net>0){status.textContent=dollars(net);status.style.color='var(--green)';copy.textContent='value above the $100 loss';take.innerHTML=`<b>At $${price.toFixed(3)}, 10,000 PAPER is worth $${Math.round(value).toLocaleString('en-US')}.</b> That leaves ${dollars(net)} after the $100 loss, before dilution, fees, or staking income.`}else{status.textContent=dollars(net);status.style.color='var(--red)';copy.textContent='still below break-even';take.innerHTML=`<b>At $${price.toFixed(3)}, the tokens recover ${Math.round(recovery)}% of the loss.</b> Break-even is $0.010 per PAPER.`}}slider.addEventListener('input',update);update()})();
   </script>
   <script>
     (() => {const root=document.getElementById('ptpaper');if(!root||window.parent===window)return;const reportHeight=()=>{const rootBox=root.getBoundingClientRect();const lastBox=root.lastElementChild?.getBoundingClientRect();const height=Math.max(1,Math.floor((lastBox?.bottom??rootBox.bottom)-rootBox.top)-2);window.parent.postMessage({type:'moni-widget:resize',height},'https://research.moni.ai')};new ResizeObserver(reportHeight).observe(root);window.addEventListener('load',reportHeight,{once:true});window.addEventListener('resize',reportHeight);window.addEventListener('message',event=>{if(event.origin==='https://research.moni.ai'&&event.data?.type==='moni-widget:request-resize')reportHeight()});[0,100,500,1500].forEach(delay=>setTimeout(reportHeight,delay))})();
