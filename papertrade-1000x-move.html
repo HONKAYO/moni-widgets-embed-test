@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Papertrade: what 1000x means</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--v:#6c42eb;--ink:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--soft:#fafafb;--lav:#f6f3ff;--green:#0fa968;--red:#e24b4a;--amber:#f59e0b}*{box-sizing:border-box}html,body{margin:0;padding:0;background:transparent}body{font-family:Geist,system-ui,sans-serif;color:var(--ink)}#pt1000{width:100%;max-width:none;overflow:hidden;background:#fff}.inner{padding:22px}.kicker{margin:0 0 7px;color:var(--v);font:600 9px/1.2 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase}.title{margin:0;font-size:25px;line-height:1.04;letter-spacing:-.04em}.dek{margin:8px 0 0;max-width:610px;color:var(--body);font-size:12.5px;line-height:1.44}.model{display:grid;grid-template-columns:210px 1fr;margin-top:15px;border:1px solid var(--line)}.control{padding:15px;background:var(--soft);border-right:1px solid var(--line)}.control-head{display:flex;align-items:end;justify-content:space-between;gap:8px}.control label{color:var(--muted);font:600 8px/1.2 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase}.control output{color:var(--ink);font-size:14px;font-weight:700}input[type=range]{appearance:none;width:100%;height:3px;margin:14px 0 0;background:linear-gradient(90deg,#f0c6c6 0 50%,#c9eadc 50% 100%);outline:0;cursor:pointer}input[type=range]::-webkit-slider-thumb{appearance:none;width:14px;height:14px;border-radius:50%;background:var(--v);border:2px solid #fff;box-shadow:0 0 0 1px var(--v)}input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--v);border:2px solid #fff;box-shadow:0 0 0 1px var(--v)}.ticks{position:relative;height:18px;margin-top:5px;color:var(--muted);font:500 7.5px 'IBM Plex Mono',monospace}.ticks span{position:absolute;transform:translateX(-50%)}.ticks .a{left:0;transform:none}.ticks .b{left:47.5%;color:var(--red)}.ticks .c{left:50%}.ticks .d{right:0;transform:none}.fixed{margin:14px 0 0;color:var(--muted);font-size:9px;line-height:1.4}.result{min-width:0;padding:15px}.hero-label{color:var(--muted);font:600 8px/1.2 'IBM Plex Mono',monospace;letter-spacing:.07em;text-transform:uppercase}.hero{display:flex;align-items:baseline;gap:8px;margin-top:5px}.hero b{color:var(--v);font-size:30px;line-height:1;letter-spacing:-.055em}.hero span{color:var(--body);font-size:10px}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:14px;border:1px solid var(--line)}.metric{min-width:0;padding:10px}.metric+.metric{border-left:1px solid var(--line)}.metric span{color:var(--muted);font:600 7.5px/1.2 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase}.metric b{display:block;margin-top:5px;font-size:18px;line-height:1;letter-spacing:-.035em}.take{margin-top:11px;padding:10px 12px;border-left:2px solid var(--v);background:var(--lav);color:var(--body);font-size:10.5px;line-height:1.42}.take b{color:var(--ink)}.ft{height:31px;padding:0 17px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:flex-end}.brand{display:flex;align-items:center;gap:4px;color:var(--v);font-size:12px;font-weight:600}.eye{width:15px;height:15px;display:block;flex:0 0 15px}.brand i{color:var(--ink);font:600 italic 12px Geist,sans-serif}
+    @media(max-width:520px){.inner{padding:18px 16px}.title{font-size:23px}.model{grid-template-columns:1fr}.control{border-right:0;border-bottom:1px solid var(--line)}.metrics{grid-template-columns:1fr}.metric+.metric{border-left:0;border-top:1px solid var(--line)}.ft{padding:0 13px}}
+  </style>
+</head>
+<body>
+  <div id="pt1000">
+    <div class="inner">
+      <p class="kicker">Papertrade · leverage check</p>
+      <h2 class="title">What does 1000x actually mean?</h2>
+      <p class="dek">Move BTC by a fraction of a percent. The example uses a $100 long with $100,000 of exposure.</p>
+      <div class="model">
+        <div class="control">
+          <div class="control-head"><label for="move">BTC price move</label><output id="moveOut">+0.10%</output></div>
+          <input id="move" type="range" min="-1" max="1" step="0.01" value="0.10" aria-label="BTC price move from minus one percent to plus one percent">
+          <div class="ticks"><span class="a">-1%</span><span class="b">liq.</span><span class="c">0</span><span class="d">+1%</span></div>
+          <p class="fixed">Fixed example: $100 margin · 1000x long · liquidation around -0.05%.</p>
+        </div>
+        <div class="result">
+          <div class="hero-label">Position status</div>
+          <div class="hero"><b id="status">+$100</b><span id="statusCopy">raw profit</span></div>
+          <div class="metrics">
+            <div class="metric"><span>Raw PnL</span><b id="pnl">+$100</b></div>
+            <div class="metric"><span>Margin value</span><b id="equity">$200</b></div>
+            <div class="metric"><span>Return on margin</span><b id="roi">+100%</b></div>
+          </div>
+          <div class="take" id="take"><b>A 0.10% move doubles the margin.</b> Papertrade's payout curve and fee can reduce the final profit.</div>
+        </div>
+      </div>
+    </div>
+    <div class="ft"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><span>moni</span><i>research</i></span></div>
+  </div>
+  <script>
+    (()=>{const slider=document.getElementById('move');const money=n=>`${n>0?'+':''}${n<0?'−':''}$${Math.abs(Math.round(n)).toLocaleString('en-US')}`;const pct=n=>`${n>0?'+':''}${n.toFixed(2)}%`;function update(){const move=+slider.value,liquidated=move<=-.05;let pnl=100000*move/100,equity=100+pnl,roi=pnl;if(liquidated){pnl=-100;equity=0;roi=-100}document.getElementById('moveOut').textContent=pct(move);document.getElementById('pnl').textContent=money(pnl);document.getElementById('equity').textContent='$'+Math.max(0,Math.round(equity)).toLocaleString('en-US');document.getElementById('roi').textContent=`${roi>0?'+':''}${Math.round(roi)}%`;const status=document.getElementById('status'),copy=document.getElementById('statusCopy'),take=document.getElementById('take');if(liquidated){status.textContent='Liquidated';status.style.color='var(--red)';copy.textContent='around −0.05%';take.innerHTML='<b>The full $100 margin is lost near −0.05%.</b> Most of the negative half of the slider happens after the trade is already gone.'}else if(move>0){status.textContent=money(pnl);status.style.color='var(--green)';copy.textContent='raw profit';take.innerHTML=`<b>A ${pct(move)} move creates ${money(pnl)} in raw profit.</b> Papertrade's payout curve and fee can reduce the final amount.`}else if(move<0){status.textContent=money(pnl);status.style.color='var(--amber)';copy.textContent='unrealized loss';take.innerHTML=`<b>Only ${Math.max(0,Math.round(equity))}% of the starting margin remains.</b> The position is close to its roughly −0.05% liquidation point.`}else{status.textContent='$0';status.style.color='var(--v)';copy.textContent='no price move';take.innerHTML='<b>The position starts with almost no room for error.</b> A move of only a few basis points can decide the trade.'}}slider.addEventListener('input',update);update()})();
+  </script>
+  <script>
+    (() => {const root=document.getElementById('pt1000');if(!root||window.parent===window)return;const reportHeight=()=>{const rootBox=root.getBoundingClientRect();const lastBox=root.lastElementChild?.getBoundingClientRect();const height=Math.max(1,Math.floor((lastBox?.bottom??rootBox.bottom)-rootBox.top)-2);window.parent.postMessage({type:'moni-widget:resize',height},'https://research.moni.ai')};new ResizeObserver(reportHeight).observe(root);window.addEventListener('load',reportHeight,{once:true});window.addEventListener('resize',reportHeight);window.addEventListener('message',event=>{if(event.origin==='https://research.moni.ai'&&event.data?.type==='moni-widget:request-resize')reportHeight()});[0,100,500,1500].forEach(delay=>setTimeout(reportHeight,delay))})();
+  </script>
+</body>
+</html>

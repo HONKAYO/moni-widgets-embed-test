@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Papertrade: payout queue clearance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--v:#6c42eb;--ink:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--soft:#fafafb;--lav:#f6f3ff;--green:#0fa968;--red:#e24b4a;--amber:#f59e0b}*{box-sizing:border-box}html,body{margin:0;padding:0;background:transparent}body{font-family:Geist,system-ui,sans-serif;color:var(--ink)}#ptqueue{width:100%;max-width:none;overflow:hidden;background:#fff}.inner{padding:22px}.kicker{margin:0 0 7px;color:var(--v);font:600 9px/1.2 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase}.title{margin:0;font-size:25px;line-height:1.04;letter-spacing:-.04em}.dek{margin:8px 0 0;max-width:610px;color:var(--body);font-size:12.5px;line-height:1.44}.model{display:grid;grid-template-columns:220px 1fr;margin-top:15px;border:1px solid var(--line)}.control{padding:15px;background:var(--soft);border-right:1px solid var(--line)}.control-head{display:flex;align-items:end;justify-content:space-between;gap:8px}.control label{color:var(--muted);font:600 8px/1.2 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase}.control output{color:var(--ink);font-size:14px;font-weight:700}input[type=range]{appearance:none;width:100%;height:3px;margin:14px 0 0;background:linear-gradient(90deg,#e7dfff,#6c42eb);outline:0;cursor:pointer}input[type=range]::-webkit-slider-thumb{appearance:none;width:14px;height:14px;border-radius:50%;background:var(--v);border:2px solid #fff;box-shadow:0 0 0 1px var(--v)}input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--v);border:2px solid #fff;box-shadow:0 0 0 1px var(--v)}.ticks{display:flex;justify-content:space-between;margin-top:6px;color:var(--muted);font:500 7.5px 'IBM Plex Mono',monospace}.fixed{margin:14px 0 0;color:var(--muted);font-size:9px;line-height:1.4}.result{min-width:0;padding:15px}.hero-label{color:var(--muted);font:600 8px/1.2 'IBM Plex Mono',monospace;letter-spacing:.07em;text-transform:uppercase}.hero{display:flex;align-items:baseline;gap:8px;margin-top:5px}.hero b{color:var(--v);font-size:30px;line-height:1;letter-spacing:-.055em}.hero span{color:var(--body);font-size:10px}.timeline{position:relative;height:25px;margin-top:14px;border:1px solid var(--line);background:var(--soft);overflow:hidden}.fill{height:100%;background:var(--v);transition:width .18s ease}.timeline-labels{display:flex;justify-content:space-between;margin-top:5px;color:var(--muted);font:500 7.5px 'IBM Plex Mono',monospace}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:13px;border:1px solid var(--line)}.metric{min-width:0;padding:10px}.metric+.metric{border-left:1px solid var(--line)}.metric span{color:var(--muted);font:600 7.5px/1.2 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase}.metric b{display:block;margin-top:5px;font-size:18px;line-height:1;letter-spacing:-.035em}.take{margin-top:11px;padding:10px 12px;border-left:2px solid var(--v);background:var(--lav);color:var(--body);font-size:10.5px;line-height:1.42}.take b{color:var(--ink)}.ft{height:31px;padding:0 17px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:flex-end}.brand{display:flex;align-items:center;gap:4px;color:var(--v);font-size:12px;font-weight:600}.eye{width:15px;height:15px;display:block;flex:0 0 15px}.brand i{color:var(--ink);font:600 italic 12px Geist,sans-serif}
+    @media(max-width:520px){.inner{padding:18px 16px}.title{font-size:23px}.model{grid-template-columns:1fr}.control{border-right:0;border-bottom:1px solid var(--line)}.metrics{grid-template-columns:1fr}.metric+.metric{border-left:0;border-top:1px solid var(--line)}.ft{padding:0 13px}}
+  </style>
+</head>
+<body>
+  <div id="ptqueue">
+    <div class="inner">
+      <p class="kicker">Papertrade · queue model</p>
+      <h2 class="title">How fast can a $1m queue clear?</h2>
+      <p class="dek">Papertrade pays unpaid profits with future trader losses. Move the daily loss flow to see the wait.</p>
+      <div class="model">
+        <div class="control">
+          <div class="control-head"><label for="losses">Net trader losses / day</label><output id="lossesOut">$100K</output></div>
+          <input id="losses" type="range" min="0" max="1000000" step="10000" value="100000" aria-label="Daily net trader losses from zero to one million dollars">
+          <div class="ticks"><span>$0</span><span>$500K</span><span>$1M</span></div>
+          <p class="fixed">Fixed example: $1m of unpaid profit. Every dollar of net losses is assumed to repay the queue.</p>
+        </div>
+        <div class="result">
+          <div class="hero-label">Estimated time to clear</div>
+          <div class="hero"><b id="days">10 days</b><span id="daysCopy">at the selected loss flow</span></div>
+          <div class="timeline" aria-hidden="true"><div class="fill" id="fill"></div></div>
+          <div class="timeline-labels"><span>repaid in one day</span><span id="endLabel">10% of queue</span></div>
+          <div class="metrics">
+            <div class="metric"><span>Unpaid profit</span><b>$1.0M</b></div>
+            <div class="metric"><span>7-day capacity</span><b id="weekly">$700K</b></div>
+            <div class="metric"><span>Paid in 30 days</span><b id="month">100%</b></div>
+          </div>
+          <div class="take" id="take"><b>At $100K of net losses per day, the queue clears in 10 days.</b> Lower trading losses mean a longer wait for winners.</div>
+        </div>
+      </div>
+    </div>
+    <div class="ft"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><span>moni</span><i>research</i></span></div>
+  </div>
+  <script>
+    (()=>{const slider=document.getElementById('losses');const compact=n=>n>=1e6?`$${(n/1e6).toFixed(n%1e6?1:0)}M`:n>=1e3?`$${Math.round(n/1e3)}K`:`$${n}`;function update(){const daily=+slider.value,share=Math.min(100,Math.round(daily/1000000*100));document.getElementById('lossesOut').textContent=compact(daily);document.getElementById('weekly').textContent=compact(daily*7);document.getElementById('month').textContent=daily===0?'0%':Math.min(100,Math.round(daily*30/1000000*100))+'%';const daysEl=document.getElementById('days'),copy=document.getElementById('daysCopy'),take=document.getElementById('take'),end=document.getElementById('endLabel');document.getElementById('fill').style.width=share+'%';end.textContent=share+'% of queue';if(daily===0){daysEl.textContent='Never';daysEl.style.color='var(--red)';copy.textContent='with no net trader losses';take.innerHTML='<b>Without net losses, the queue does not move.</b> Winners keep waiting until new losses enter the system.'}else{const exact=1000000/daily,days=Math.ceil(exact);daysEl.textContent=days===1?'1 day':days+' days';daysEl.style.color=days<=10?'var(--green)':days<=30?'var(--v)':'var(--amber)';copy.textContent='at the selected loss flow';take.innerHTML=`<b>At ${compact(daily)} of net losses per day, the queue clears in ${days===1?'1 day':days+' days'}.</b> This assumes the loss flow continues without another winner adding debt.`}}slider.addEventListener('input',update);update()})();
+  </script>
+  <script>
+    (() => {const root=document.getElementById('ptqueue');if(!root||window.parent===window)return;const reportHeight=()=>{const rootBox=root.getBoundingClientRect();const lastBox=root.lastElementChild?.getBoundingClientRect();const height=Math.max(1,Math.floor((lastBox?.bottom??rootBox.bottom)-rootBox.top)-2);window.parent.postMessage({type:'moni-widget:resize',height},'https://research.moni.ai')};new ResizeObserver(reportHeight).observe(root);window.addEventListener('load',reportHeight,{once:true});window.addEventListener('resize',reportHeight);window.addEventListener('message',event=>{if(event.origin==='https://research.moni.ai'&&event.data?.type==='moni-widget:request-resize')reportHeight()});[0,100,500,1500].forEach(delay=>setTimeout(reportHeight,delay))})();
+  </script>
+</body>
+</html>
