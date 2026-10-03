@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Papertrade: PAPER farming cost</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--v:#6c42eb;--ink:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--soft:#fafafb;--lav:#f6f3ff;--green:#0fa968;--red:#e24b4a}*{box-sizing:border-box}html,body{margin:0;padding:0;background:transparent}body{font-family:Geist,system-ui,sans-serif;color:var(--ink)}#ptfarm{width:100%;max-width:none;overflow:hidden;background:#fff}.inner{padding:22px}.kicker{margin:0 0 7px;color:var(--v);font:600 9px/1.2 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase}.title{margin:0;font-size:25px;line-height:1.04;letter-spacing:-.04em}.dek{margin:8px 0 0;max-width:610px;color:var(--body);font-size:12.5px;line-height:1.44}.switches{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));margin-top:15px;border:1px solid var(--line)}.strategy{appearance:none;border:0;border-right:1px solid var(--line);background:#fff;padding:9px 5px;color:var(--body);font:600 9px/1.2 'IBM Plex Mono',monospace;cursor:pointer}.strategy:last-child{border-right:0}.strategy.active{background:#6c42eb14;color:var(--v);box-shadow:inset 0 -2px 0 var(--v)}.model{display:grid;grid-template-columns:228px 1fr;margin-top:11px;border:1px solid var(--line)}.compare{padding:14px;background:var(--soft);border-right:1px solid var(--line)}.small-label{color:var(--muted);font:600 8px/1.2 'IBM Plex Mono',monospace;letter-spacing:.07em;text-transform:uppercase}.rows{display:grid;gap:7px;margin-top:10px}.row{display:grid;grid-template-columns:48px 1fr 42px;align-items:center;gap:7px;color:var(--muted);font:500 8px/1.2 'IBM Plex Mono',monospace}.track{height:7px;background:#ececf1}.bar{height:100%;background:#c8cbd2;transition:width .18s ease,background .18s ease}.row.best .bar{background:var(--green)}.row.selected{color:var(--ink)}.row.selected .bar{background:var(--v)}.row b{text-align:right;color:inherit;font-size:8px}.result{min-width:0;padding:14px}.hero-label{color:var(--muted);font:600 8px/1.2 'IBM Plex Mono',monospace;letter-spacing:.07em;text-transform:uppercase}.hero{display:flex;align-items:baseline;gap:7px;margin-top:5px}.hero b{color:var(--v);font-size:30px;line-height:1;letter-spacing:-.055em}.hero span{color:var(--body);font-size:10px}.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:13px;border:1px solid var(--line)}.metric{min-width:0;padding:10px}.metric+.metric{border-left:1px solid var(--line)}.metric span{color:var(--muted);font:600 7.5px/1.2 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase}.metric b{display:block;margin-top:5px;font-size:18px;line-height:1;letter-spacing:-.035em}.take{margin-top:11px;padding:10px 12px;border-left:2px solid var(--v);background:var(--lav);color:var(--body);font-size:10.5px;line-height:1.42}.take b{color:var(--ink)}.note{margin:9px 0 0;color:var(--muted);font-size:9px;line-height:1.4}.ft{height:31px;padding:0 17px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:flex-end}.brand{display:flex;align-items:center;gap:4px;color:var(--v);font-size:12px;font-weight:600}.eye{width:15px;height:15px;display:block;flex:0 0 15px}.brand i{color:var(--ink);font:600 italic 12px Geist,sans-serif}
+    @media(max-width:520px){.inner{padding:18px 16px}.title{font-size:23px}.switches{grid-template-columns:repeat(3,minmax(0,1fr))}.strategy:nth-child(3){border-right:0}.strategy:nth-child(n+4){border-top:1px solid var(--line)}.strategy:nth-child(5){border-right:0}.model{grid-template-columns:1fr}.compare{border-right:0;border-bottom:1px solid var(--line)}.ft{padding:0 13px}}
+    @media(max-width:440px){.metrics{grid-template-columns:1fr}.metric+.metric{border-left:0;border-top:1px solid var(--line)}}
+  </style>
+</head>
+<body>
+  <div id="ptfarm">
+    <div class="inner">
+      <p class="kicker">Papertrade · pre-launch farming test</p>
+      <h2 class="title">Which strategy farmed PAPER cheapest?</h2>
+      <p class="dek">An early simulation tested five approaches on live BTC and ETH prices. Pick one to compare the cost of every 1,000 PAPER.</p>
+      <div class="switches" role="group" aria-label="Farming strategy">
+        <button class="strategy" data-key="3x">3x</button><button class="strategy" data-key="20x">20x</button><button class="strategy active" data-key="100x">100x</button><button class="strategy" data-key="1000x">1000x</button><button class="strategy" data-key="adaptive">Adaptive</button>
+      </div>
+      <div class="model">
+        <div class="compare">
+          <div class="small-label">Cost per 1,000 PAPER</div>
+          <div class="rows" id="rows"></div>
+        </div>
+        <div class="result">
+          <div class="hero-label">Selected strategy</div>
+          <div class="hero"><b id="hero">$2.55</b><span>per 1,000 PAPER</span></div>
+          <div class="metrics">
+            <div class="metric"><span>USDC spent</span><b id="spent">$67.49</b></div>
+            <div class="metric"><span>PAPER acquired</span><b id="paper">26,511</b></div>
+            <div class="metric"><span>vs cheapest</span><b id="premium">Best</b></div>
+          </div>
+          <div class="take" id="take"><b>100x was the cheapest run in this snapshot.</b> It cost $2.55 for every 1,000 PAPER.</div>
+        </div>
+      </div>
+      <p class="note">Early external simulation, not live product data. Fees, payout curve, liquidation timing, paired trades and LP conditions may change the ranking.</p>
+    </div>
+    <div class="ft"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><span>moni</span><i>research</i></span></div>
+  </div>
+  <script>
+    (()=>{
+      const data={
+        '3x':{label:'3x',spent:13.82,paper:795,cost:17.38,take:'<b>3x was the most expensive run overall.</b> Every 1,000 PAPER cost $17.38.'},
+        '20x':{label:'20x',spent:23.23,paper:5302,cost:4.38,take:'<b>20x cost $4.38 per 1,000 PAPER.</b> That was 72% more expensive than the 100x run.'},
+        '100x':{label:'100x',spent:67.49,paper:26511,cost:2.55,take:'<b>100x was the cheapest run in this snapshot.</b> It cost $2.55 for every 1,000 PAPER.'},
+        '1000x':{label:'1000x',spent:231.89,paper:45842,cost:5.06,take:'<b>1000x minted the most PAPER, but it was not the cheapest.</b> Each 1,000 cost $5.06 — almost 2x the 100x run.'},
+        adaptive:{label:'Adaptive',spent:89.77,paper:31918,cost:2.81,take:'<b>Adaptive came close to the best result.</b> At $2.81 per 1,000 PAPER, it was about 10% above 100x.'}
+      };
+      const order=['3x','20x','100x','1000x','adaptive'],best=data['100x'].cost,max=Math.max(...order.map(k=>data[k].cost));
+      const rows=document.getElementById('rows');
+      rows.innerHTML=order.map(k=>`<div class="row${k==='100x'?' best':''}" data-row="${k}"><span>${data[k].label}</span><div class="track"><div class="bar" style="width:${data[k].cost/max*100}%"></div></div><b>$${data[k].cost.toFixed(2)}</b></div>`).join('');
+      const money=n=>'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+      function select(key){const d=data[key],premium=(d.cost/best-1)*100;document.querySelectorAll('.strategy').forEach(b=>{const on=b.dataset.key===key;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on))});document.querySelectorAll('.row').forEach(r=>r.classList.toggle('selected',r.dataset.row===key));document.getElementById('hero').textContent=money(d.cost);document.getElementById('spent').textContent=money(d.spent);document.getElementById('paper').textContent=d.paper.toLocaleString('en-US');document.getElementById('premium').textContent=key==='100x'?'Best':'+'+Math.round(premium)+'%';document.getElementById('take').innerHTML=d.take}
+      document.querySelectorAll('.strategy').forEach(b=>b.addEventListener('click',()=>select(b.dataset.key)));select('100x');
+    })();
+  </script>
+  <script>
+    (() => {const root=document.getElementById('ptfarm');if(!root||window.parent===window)return;const reportHeight=()=>{const rootBox=root.getBoundingClientRect();const lastBox=root.lastElementChild?.getBoundingClientRect();const height=Math.max(1,Math.floor((lastBox?.bottom??rootBox.bottom)-rootBox.top)-2);window.parent.postMessage({type:'moni-widget:resize',height},'https://research.moni.ai')};new ResizeObserver(reportHeight).observe(root);window.addEventListener('load',reportHeight,{once:true});window.addEventListener('resize',reportHeight);window.addEventListener('message',event=>{if(event.origin==='https://research.moni.ai'&&event.data?.type==='moni-widget:request-resize')reportHeight()});[0,100,500,1500].forEach(delay=>setTimeout(reportHeight,delay))})();
+  </script>
+</body>
+</html>
