@@ -17,9 +17,9 @@
 <body>
   <div id="paper-map">
     <div class="inner">
-      <p class="kicker">Papertrade · mechanism map</p>
-      <h2 class="title">The full loop: cash, queue and PAPER</h2>
-      <p class="dek">Papertrade takes the other side of every position. Winners pull cash out; losers refill the system and receive PAPER.</p>
+      <p class="kicker">Papertrade · money flow</p>
+      <h2 class="title">How Papertrade moves money</h2>
+      <p class="dek">Losses refill the cash pot. Profits are paid from that pot or wait in a FIFO queue. Losing traders receive PAPER.</p>
 
       <div class="map-shell">
         <svg class="desktop-map" viewBox="0 0 640 472" role="img" aria-labelledby="mapTitle mapDesc">
@@ -39,57 +39,57 @@
           <path id="p-trader-engine" class="route blue" marker-end="url(#ab)" d="M166 74H244"/>
           <path id="p-feed-engine" class="route slate dashed" marker-end="url(#as)" d="M474 74H396"/>
           <path id="p-engine-settle" class="route violet" marker-end="url(#av)" d="M320 120V166"/>
-          <text class="route-label" x="205" y="61" text-anchor="middle">margin + order</text>
-          <text class="route-label" x="435" y="61" text-anchor="middle">midpoint price</text>
+          <text class="route-label" x="205" y="61" text-anchor="middle">USDC + order</text>
+          <text class="route-label" x="435" y="61" text-anchor="middle">price</text>
 
           <path id="p-settle-win" class="route green" marker-end="url(#ag)" d="M244 214H166"/>
           <path id="p-settle-loss" class="route red" marker-end="url(#ar)" d="M396 214H474"/>
           <text class="route-label green" x="205" y="201" text-anchor="middle">profit</text>
-          <text class="route-label red" x="435" y="201" text-anchor="middle">loss / liquidation</text>
+          <text class="route-label red" x="435" y="201" text-anchor="middle">loss</text>
 
           <path id="p-win-queue" class="route amber" marker-end="url(#aa)" d="M90 254V340"/>
           <path id="p-cash-win" class="route green" marker-end="url(#ag)" d="M244 354H202V236H166"/>
           <path id="p-loss-cash" class="route red" marker-end="url(#ar)" d="M550 254V300H360V326"/>
           <path id="p-loss-paper" class="route violet" marker-end="url(#av)" d="M550 254V340"/>
-          <text class="route-label amber" x="101" y="300">unpaid profit</text>
+          <text class="route-label amber" x="101" y="300">queued profit</text>
           <text class="route-label green" x="211" y="336">pay now</text>
-          <text class="route-label red" x="458" y="294">USDC loss</text>
-          <text class="route-label violet" x="560" y="300">mint PAPER</text>
+          <text class="route-label red" x="458" y="294">USDC</text>
+          <text class="route-label violet" x="560" y="300">PAPER</text>
 
           <path id="p-cash-queue" class="route amber" marker-end="url(#aa)" d="M244 390H166"/>
           <path id="p-cash-paper" class="route violet" marker-end="url(#av)" d="M396 390H474"/>
           <path id="p-paper-trader" class="route violet dashed" marker-end="url(#av)" d="M550 418V450H90V112"/>
-          <text class="route-label amber" x="205" y="379" text-anchor="middle">oldest claim first</text>
+          <text class="route-label amber" x="205" y="379" text-anchor="middle">oldest first</text>
           <text class="route-label violet" x="435" y="379" text-anchor="middle">fees + excess cash</text>
-          <text class="route-label violet" x="320" y="463" text-anchor="middle">staking rewards return to PAPER holders</text>
+          <text class="route-label violet" x="320" y="463" text-anchor="middle">rewards return to stakers</text>
 
           <g id="n-trader" class="node"><rect class="zone" x="14" y="32" width="152" height="80"/><text class="eyebrow" x="26" y="48">TRADER</text><text class="heading" x="26" y="68">Deposit USDC</text><line class="divider" x1="26" y1="78" x2="154" y2="78"/><text class="body" x="26" y="96">Open BTC or ETH · up to 1000x</text></g>
-          <g id="n-engine" class="node"><rect class="zone-accent" x="244" y="24" width="152" height="96"/><text class="eyebrow" x="256" y="42">POSITION ENGINE</text><text class="heading heading-accent" x="256" y="62">Papertrade faces the trade</text><line class="divider" x1="256" y1="72" x2="384" y2="72"/><text class="body" x="256" y="90">No matching trader · no hedge</text><text class="body muted" x="256" y="104">Isolated position</text></g>
-          <g id="n-feed" class="node"><rect class="zone" x="474" y="32" width="152" height="80"/><text class="eyebrow" x="486" y="48">REFERENCE MARKET</text><text class="heading" x="486" y="68">Hyperliquid price feed</text><line class="divider" x1="486" y1="78" x2="614" y2="78"/><text class="body" x="486" y="96">Best bid / ask midpoint</text></g>
+          <g id="n-engine" class="node"><rect class="zone-accent" x="244" y="24" width="152" height="96"/><text class="eyebrow" x="256" y="42">POSITION ENGINE</text><text class="heading heading-accent" x="256" y="62">Protocol is the house</text><line class="divider" x1="256" y1="72" x2="384" y2="72"/><text class="body" x="256" y="90">No matching trader or hedge</text><text class="body muted" x="256" y="104">Each position is isolated</text></g>
+          <g id="n-feed" class="node"><rect class="zone" x="474" y="32" width="152" height="80"/><text class="eyebrow" x="486" y="48">REFERENCE MARKET</text><text class="heading" x="486" y="68">Hyperliquid price</text><line class="divider" x1="486" y1="78" x2="614" y2="78"/><text class="body" x="486" y="96">Midpoint of best bid and ask</text></g>
 
-          <g id="n-win" class="node"><rect class="zone-win" x="14" y="174" width="152" height="80"/><text class="eyebrow green" x="26" y="190">WINNING TRADE</text><text class="heading" x="26" y="210">Profit pulls cash out</text><line class="divider" x1="26" y1="220" x2="154" y2="220"/><text class="body" x="26" y="237">Margin returns immediately</text><text class="body muted" x="26" y="248">Profit may have to wait</text></g>
-          <g id="n-settle" class="node"><rect class="zone-accent" x="244" y="166" width="152" height="96"/><text class="eyebrow" x="256" y="184">SETTLEMENT</text><text class="heading heading-accent" x="256" y="204">Raw P&amp;L is adjusted</text><line class="divider" x1="256" y1="214" x2="384" y2="214"/><text class="body" x="256" y="232">Payout curve first</text><text class="body muted" x="256" y="246">Then the P&amp;L fee</text></g>
-          <g id="n-loss" class="node"><rect class="zone-loss" x="474" y="174" width="152" height="80"/><text class="eyebrow red" x="486" y="190">LOSING TRADE</text><text class="heading" x="486" y="210">Loss refills the system</text><line class="divider" x1="486" y1="220" x2="614" y2="220"/><text class="body" x="486" y="237">USDC stays in the cash pot</text><text class="body muted" x="486" y="248">Loser receives PAPER</text></g>
+          <g id="n-win" class="node"><rect class="zone-win" x="14" y="174" width="152" height="80"/><text class="eyebrow green" x="26" y="190">WINNING TRADE</text><text class="heading" x="26" y="210">Profit needs cash</text><line class="divider" x1="26" y1="220" x2="154" y2="220"/><text class="body" x="26" y="237">Margin comes back at once</text><text class="body muted" x="26" y="248">Profit may enter the queue</text></g>
+          <g id="n-settle" class="node"><rect class="zone-accent" x="244" y="166" width="152" height="96"/><text class="eyebrow" x="256" y="184">SETTLEMENT</text><text class="heading heading-accent" x="256" y="204">Adjusted P&amp;L</text><line class="divider" x1="256" y1="214" x2="384" y2="214"/><text class="body" x="256" y="232">Payout curve</text><text class="body muted" x="256" y="246">Then the P&amp;L fee</text></g>
+          <g id="n-loss" class="node"><rect class="zone-loss" x="474" y="174" width="152" height="80"/><text class="eyebrow red" x="486" y="190">LOSING TRADE</text><text class="heading" x="486" y="210">Loss refills the pot</text><line class="divider" x1="486" y1="220" x2="614" y2="220"/><text class="body" x="486" y="237">USDC stays in the pot</text><text class="body muted" x="486" y="248">Trader receives PAPER</text></g>
 
-          <g id="n-queue" class="node"><rect class="zone" x="14" y="340" width="152" height="78"/><text class="eyebrow" x="26" y="356">FIFO PAYOUT QUEUE</text><text class="heading" x="26" y="375">Carry unpaid profit</text><line class="divider" x1="26" y1="385" x2="154" y2="385"/><text class="body" x="26" y="402">Future losses pay oldest claims</text></g>
-          <g id="n-cash" class="node"><rect class="zone-accent" x="244" y="326" width="152" height="100"/><text class="eyebrow" x="256" y="344">THE CASH POT</text><text class="metric" x="320" y="369" text-anchor="middle">Losses in · payouts out</text><line class="divider" x1="256" y1="380" x2="384" y2="380"/><text class="body" x="256" y="397">Can go negative when winners lead</text><text class="body muted" x="256" y="412">Target balance limits exposure</text></g>
-          <g id="n-paper" class="node"><rect class="zone" x="474" y="340" width="152" height="78"/><text class="eyebrow" x="486" y="356">PAPER + STAKING</text><text class="heading" x="486" y="375">Turn loss into ownership</text><line class="divider" x1="486" y1="385" x2="614" y2="385"/><text class="body" x="486" y="402">Early losses mint more PAPER</text></g>
+          <g id="n-queue" class="node"><rect class="zone" x="14" y="340" width="152" height="78"/><text class="eyebrow" x="26" y="356">FIFO PAYOUT QUEUE</text><text class="heading" x="26" y="375">Unpaid profit waits</text><line class="divider" x1="26" y1="385" x2="154" y2="385"/><text class="body" x="26" y="402">New losses pay the oldest claim</text></g>
+          <g id="n-cash" class="node"><rect class="zone-accent" x="244" y="326" width="152" height="100"/><text class="eyebrow" x="256" y="344">THE CASH POT</text><text class="metric" x="320" y="369" text-anchor="middle">Losses in, payouts out</text><line class="divider" x1="256" y1="380" x2="384" y2="380"/><text class="body" x="256" y="397">Balance can fall below zero</text><text class="body muted" x="256" y="412">Target balance caps exposure</text></g>
+          <g id="n-paper" class="node"><rect class="zone" x="474" y="340" width="152" height="78"/><text class="eyebrow" x="486" y="356">PAPER + STAKING</text><text class="heading" x="486" y="375">Losses mint PAPER</text><line class="divider" x1="486" y1="385" x2="614" y2="385"/><text class="body" x="486" y="402">Earlier losses mint more</text></g>
 
           <circle id="flow-particle" class="particle" cx="166" cy="74" r="4.2" fill="#5279a3" opacity="0" stroke="#fff" stroke-width="2"/>
         </svg>
 
         <div class="mobile-map">
-          <div class="m-section"><span class="m-kicker">01 · OPEN</span><h3>Trader deposits USDC</h3><p>Papertrade records a leveraged BTC or ETH position. Hyperliquid supplies the midpoint price.</p></div>
+          <div class="m-section"><span class="m-kicker">01 · OPEN</span><h3>Trader deposits USDC</h3><p>A BTC or ETH position opens against the protocol. Hyperliquid supplies the price.</p></div>
           <div class="m-arrow"></div>
-          <div class="m-section accent"><span class="m-kicker">02 · SETTLE</span><h3>Papertrade calculates the result</h3><p>The payout curve adjusts winning P&amp;L, then the protocol applies its fee.</p><div class="m-split"><div class="m-mini win"><b>Trader wins</b><span>Cash pot pays now; any shortfall enters the FIFO queue.</span></div><div class="m-mini loss"><b>Trader loses</b><span>USDC refills the pot and PAPER is minted to the trader.</span></div></div></div>
+          <div class="m-section accent"><span class="m-kicker">02 · SETTLE</span><h3>Papertrade settles the trade</h3><p>First comes the payout curve, then the P&amp;L fee.</p><div class="m-split"><div class="m-mini win"><b>Trader wins</b><span>The cash pot pays. Any shortfall joins the FIFO queue.</span></div><div class="m-mini loss"><b>Trader loses</b><span>USDC stays in the pot; the trader gets PAPER.</span></div></div></div>
           <div class="m-arrow"></div>
-          <div class="m-section"><span class="m-kicker">03 · RECYCLE</span><h3>Losses fund the whole loop</h3><p>New losses pay old claims, rebuild the cash balance and support PAPER staking rewards.</p><div class="m-loop"><div class="m-node"><b>Queue</b><span>oldest profit first</span></div><div class="m-node"><b>Cash pot</b><span>losses in, payouts out</span></div><div class="m-node"><b>PAPER</b><span>fees + excess cash</span></div></div></div>
+          <div class="m-section"><span class="m-kicker">03 · RECYCLE</span><h3>Losses refill the cash pot</h3><p>That money pays queued profits and future winners. Fees and excess cash can flow to PAPER stakers.</p><div class="m-loop"><div class="m-node"><b>Queue</b><span>oldest profit first</span></div><div class="m-node"><b>Cash pot</b><span>losses in, payouts out</span></div><div class="m-node"><b>PAPER</b><span>fees + excess cash</span></div></div></div>
         </div>
-        <div class="legend"><span><i class="orders"></i> orders + margin</span><span><i class="price"></i> price data</span><span><i class="payout"></i> payouts</span><span><i class="losses"></i> trader losses</span><span><i class="paper"></i> PAPER + rewards</span></div>
+        <div class="legend"><span><i class="orders"></i> USDC + orders</span><span><i class="price"></i> price data</span><span><i class="payout"></i> payouts</span><span><i class="losses"></i> losses</span><span><i class="paper"></i> PAPER + rewards</span></div>
       </div>
 
-      <div class="take"><span>The mechanism</span><p><b>Winners consume liquidity; losers create it.</b> PAPER gives the losing side a claim on future fees and excess cash.</p></div>
-      <div class="risk"><span>The failure loop</span><p><b>Queue grows → traders leave → fewer losses arrive → the queue clears more slowly.</b></p></div>
+      <div class="take"><span>In one line</span><p><b>Losses fund payouts.</b> If the pot is short, unpaid profit waits in the FIFO queue. PAPER gives losing traders exposure to fees and excess cash.</p></div>
+      <div class="risk"><span>Where it jams</span><p>If the queue grows, traders may leave. Fewer traders means fewer losses entering the pot, so old claims clear more slowly.</p></div>
     </div>
     <div class="ft"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><span>moni</span><i>research</i></span></div>
   </div>
@@ -102,4 +102,3 @@
   </script>
 </body>
 </html>
-
