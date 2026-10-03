@@ -3,99 +3,103 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Papertrade: how the mechanism works</title>
+  <title>Papertrade: mechanism map</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root{--v:#6c42eb;--ink:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--soft:#fafafb;--lav:#f6f3ff;--green:#0fa968;--green-bg:#f1fbf7;--red:#e24b4a;--red-bg:#fff5f4;--amber:#f59e0b;--amber-bg:#fff8ea;--slate:#94a3b8}*{box-sizing:border-box}html,body{margin:0;padding:0;background:transparent}body{font-family:Geist,system-ui,sans-serif;color:var(--ink)}#ptflow{width:100%;max-width:none;overflow:hidden;background:#fff}.inner{padding:22px}.head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.copy{min-width:0}.kicker{margin:0 0 7px;color:var(--v);font:600 9px/1.2 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase}.title{margin:0;max-width:520px;font-size:25px;line-height:1.04;letter-spacing:-.04em}.dek{margin:8px 0 0;max-width:570px;color:var(--body);font-size:12.5px;line-height:1.44}.modes{flex:0 0 auto;display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line)}.mode{appearance:none;border:0;border-right:1px solid var(--line);background:#fff;padding:8px 9px;color:var(--body);font:600 8px/1.2 'IBM Plex Mono',monospace;cursor:pointer}.mode:last-child{border-right:0}.mode.active{background:#6c42eb14;color:var(--v);box-shadow:inset 0 -2px 0 var(--v)}.start{display:grid;grid-template-columns:1fr 32px 1fr 32px 1fr;align-items:stretch;margin-top:16px}.node{min-width:0;border:1px solid var(--line);background:#fff;padding:12px}.num{display:block;color:var(--v);font:600 8px/1.2 'IBM Plex Mono',monospace;letter-spacing:.08em}.node b{display:block;margin-top:5px;font-size:14px;line-height:1.18;letter-spacing:-.02em}.node p{margin:4px 0 0;color:var(--body);font-size:10px;line-height:1.35}.arrow{position:relative;min-width:0}.arrow:before{content:"";position:absolute;left:6px;right:8px;top:50%;height:1px;background:var(--line)}.arrow:after{content:"";position:absolute;right:6px;top:calc(50% - 3px);width:6px;height:6px;border-top:1px solid var(--muted);border-right:1px solid var(--muted);transform:rotate(45deg)}.fork{margin:12px 0 8px;text-align:center;color:var(--muted);font:600 8px/1.2 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}.fork:before,.fork:after{content:"";display:inline-block;width:48px;height:1px;margin:0 9px 3px;background:var(--line)}.branches{display:grid;grid-template-columns:1fr 1fr;gap:10px}.branch{min-width:0;border:1px solid var(--line);transition:opacity .18s ease,filter .18s ease}.branch-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line)}.branch-head b{font-size:14px;letter-spacing:-.02em}.pill{padding:4px 6px;font:600 7px/1 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase}.win .branch-head{background:var(--green-bg)}.win .pill{color:var(--green);border:1px solid #bfe9d8}.loss .branch-head{background:var(--red-bg)}.loss .pill{color:var(--red);border:1px solid #f1cbc7}.steps{padding:4px 12px}.step{display:grid;grid-template-columns:18px 1fr;gap:8px;padding:9px 0;border-bottom:1px solid var(--line)}.step:last-child{border-bottom:0}.dot{width:18px;height:18px;display:flex;align-items:center;justify-content:center;background:var(--soft);color:var(--muted);font:600 7px/1 'IBM Plex Mono',monospace}.step b{display:block;font-size:11px;line-height:1.2}.step p{margin:3px 0 0;color:var(--body);font-size:9.5px;line-height:1.35}.win .step:last-child .dot{background:var(--amber-bg);color:var(--amber)}.loss .step:nth-child(2) .dot{background:var(--lav);color:var(--v)}.connector{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 10px}.down{height:25px;position:relative}.down:before{content:"";position:absolute;left:50%;top:0;bottom:6px;width:1px;background:var(--line)}.down:after{content:"";position:absolute;left:calc(50% - 3px);bottom:5px;width:6px;height:6px;border-right:1px solid var(--muted);border-bottom:1px solid var(--muted);transform:rotate(45deg)}.engine{border:1px solid var(--line);background:var(--soft)}.engine-title{padding:10px 12px;border-bottom:1px solid var(--line);color:var(--muted);font:600 8px/1.2 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;text-align:center}.engine-grid{display:grid;grid-template-columns:1fr 42px 1fr}.engine-card{min-width:0;padding:12px;background:#fff}.engine-card.cash{border-right:1px solid var(--line)}.engine-card h3{margin:0;font-size:15px;line-height:1.16;letter-spacing:-.025em}.engine-card p{margin:5px 0 0;color:var(--body);font-size:9.5px;line-height:1.38}.engine-card ul{margin:9px 0 0;padding:0;list-style:none}.engine-card li{padding:6px 0;border-top:1px solid var(--line);color:var(--body);font-size:9px;line-height:1.3}.engine-card li b{color:var(--ink)}.loop-arrow{position:relative;background:var(--lav)}.loop-arrow:before{content:"";position:absolute;left:8px;right:10px;top:50%;height:1px;background:var(--v)}.loop-arrow:after{content:"";position:absolute;right:8px;top:calc(50% - 3px);width:6px;height:6px;border-top:1px solid var(--v);border-right:1px solid var(--v);transform:rotate(45deg)}.loop-arrow span{position:absolute;left:50%;top:calc(50% - 17px);transform:translateX(-50%);color:var(--v);font:600 7px/1 'IBM Plex Mono',monospace;text-transform:uppercase}.risk{display:grid;grid-template-columns:28px 1fr;margin-top:10px;border:1px solid #f3dcaa;background:var(--amber-bg)}.risk-icon{display:flex;align-items:center;justify-content:center;color:var(--amber);font:700 14px/1 Geist,sans-serif}.risk-copy{padding:9px 10px;border-left:1px solid #f3dcaa}.risk-copy b{display:block;font-size:10.5px}.risk-copy p{margin:3px 0 0;color:var(--body);font-size:9px;line-height:1.35}.note{margin:9px 0 0;color:var(--muted);font-size:8.5px;line-height:1.4}.ft{height:31px;padding:0 17px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:flex-end}.brand{display:flex;align-items:center;gap:4px;color:var(--v);font-size:12px;font-weight:600}.eye{width:15px;height:15px;display:block;flex:0 0 15px}.brand i{color:var(--ink);font:600 italic 12px Geist,sans-serif}#ptflow[data-mode="win"] .loss,#ptflow[data-mode="loss"] .win{opacity:.28;filter:grayscale(.65)}#ptflow[data-mode="win"] .win,#ptflow[data-mode="loss"] .loss{border-color:var(--v)}
-    @media(max-width:620px){.head{display:block}.modes{margin-top:12px;width:220px}.start{grid-template-columns:1fr}.arrow{height:22px}.arrow:before{left:50%;right:auto;top:3px;bottom:7px;width:1px;height:auto}.arrow:after{right:auto;left:calc(50% - 3px);top:auto;bottom:6px;transform:rotate(135deg)}.branches{grid-template-columns:1fr}.connector{grid-template-columns:1fr;margin:0}.connector .down:first-child{display:none}.engine-grid{grid-template-columns:1fr}.engine-card.cash{border-right:0;border-bottom:1px solid var(--line)}.loop-arrow{height:28px}.loop-arrow:before{left:50%;right:auto;top:4px;bottom:8px;width:1px;height:auto}.loop-arrow:after{right:auto;left:calc(50% - 3px);top:auto;bottom:6px;transform:rotate(135deg)}.loop-arrow span{left:calc(50% + 25px);top:10px}.ft{padding:0 13px}}
-    @media(max-width:440px){.inner{padding:18px 16px}.title{font-size:23px}.modes{width:100%}.fork:before,.fork:after{width:26px}.branch-head{align-items:flex-start}.risk{grid-template-columns:24px 1fr}}
+    :root{--v:#6c42eb;--ink:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--soft:#fafafb;--lav:#f6f3ff;--blue:#5279a3;--green:#0f9d78;--red:#dc6259;--amber:#b47d20;--slate:#747982}
+    *{box-sizing:border-box}html,body{margin:0;padding:0;background:transparent}body{font-family:Geist,system-ui,sans-serif;color:var(--ink)}#paper-map{width:100%;max-width:none;overflow:hidden;background:#fff}.inner{padding:20px 22px 18px}.kicker{margin:0 0 6px;color:var(--v);font:600 9px/1.2 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase}.title{margin:0;font-size:25px;line-height:1.04;letter-spacing:-.04em}.dek{max-width:610px;margin:7px 0 0;color:var(--body);font-size:12.5px;line-height:1.43}.map-shell{position:relative;margin-top:14px;border:1px solid var(--line);overflow:hidden;background:#fff}.map-shell svg{display:block;width:100%;height:auto}.grid-bg{fill:url(#grid)}.zone{fill:#fff;stroke:#d9dbe0;stroke-width:1}.zone-accent{fill:var(--lav);stroke:var(--v);stroke-width:1.2}.zone-soft{fill:#fcfcfd;stroke:#d9dbe0;stroke-width:1}.zone-win{fill:#f3fbf7;stroke:#9fd7c1;stroke-width:1}.zone-loss{fill:#fff6f5;stroke:#efc1bc;stroke-width:1}.divider{stroke:#e9e9ee;stroke-width:1}.eyebrow{fill:var(--v);font:600 7.2px 'IBM Plex Mono',monospace;letter-spacing:.09em}.eyebrow.green{fill:var(--green)}.eyebrow.red{fill:var(--red)}.heading{fill:var(--ink);font:700 12.5px Geist,sans-serif;letter-spacing:-.025em}.heading-accent{fill:var(--v)}.body{fill:var(--body);font:500 8px Geist,sans-serif}.muted{fill:var(--muted)}.mono{fill:var(--muted);font:500 6.9px 'IBM Plex Mono',monospace}.metric{fill:var(--ink);font:700 11.8px Geist,sans-serif;letter-spacing:-.03em}.route{fill:none;stroke-width:1.35;stroke-linecap:square;stroke-linejoin:miter}.route.violet{stroke:var(--v)}.route.blue{stroke:var(--blue)}.route.green{stroke:var(--green)}.route.red{stroke:var(--red)}.route.amber{stroke:var(--amber)}.route.slate{stroke:var(--slate)}.route.dashed{stroke-dasharray:4 4}.route-label{fill:var(--body);font:500 6.6px 'IBM Plex Mono',monospace;paint-order:stroke;stroke:#fff;stroke-width:5;stroke-linejoin:round}.route-label.violet{fill:var(--v)}.route-label.green{fill:var(--green)}.route-label.red{fill:var(--red)}.route-label.amber{fill:var(--amber)}.node{transition:filter .2s ease}.node.active{filter:drop-shadow(0 2px 5px rgba(108,66,235,.16))}.node.active .zone,.node.active .zone-soft,.node.active .zone-win,.node.active .zone-loss{stroke:var(--v);fill:#fbf9ff}.legend{display:flex;flex-wrap:wrap;justify-content:center;gap:13px;padding:8px 10px 9px;border-top:1px solid var(--line);color:var(--muted);font:500 8px 'IBM Plex Mono',monospace}.legend span{display:flex;align-items:center;gap:5px}.legend i{width:14px;height:2px;background:var(--v)}.legend .orders{background:var(--blue)}.legend .price{background:var(--slate)}.legend .payout{background:var(--green)}.legend .losses{background:var(--red)}.legend .paper{background:var(--v)}.take{display:grid;grid-template-columns:114px 1fr;gap:10px;margin-top:10px;padding:10px 11px;border-left:2px solid var(--v);background:var(--lav)}.take span{color:var(--v);font:600 8px/1.3 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}.take p{margin:0;color:var(--body);font-size:10.5px;line-height:1.4}.take b{color:var(--ink)}.risk{display:grid;grid-template-columns:114px 1fr;gap:10px;margin-top:8px;padding:9px 11px;border-left:2px solid var(--amber);background:#fff8ea}.risk span{color:var(--amber);font:600 8px/1.3 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}.risk p{margin:0;color:var(--body);font-size:10px;line-height:1.38}.risk b{color:var(--ink)}.mobile-map{display:none}.ft{height:31px;padding:0 17px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:flex-end}.brand{display:flex;align-items:center;gap:4px;color:var(--v);font-size:12px;font-weight:600}.eye{width:15px;height:15px;display:block;flex:0 0 15px}.brand i{color:var(--ink);font:600 italic 12px Geist,sans-serif}
+    @media(max-width:520px){.inner{padding:18px 16px 16px}.title{font-size:23px}.dek{font-size:12px}.map-shell .desktop-map{display:none}.mobile-map{display:block;padding:12px;background-image:linear-gradient(#f4f4f7 1px,transparent 1px),linear-gradient(90deg,#f4f4f7 1px,transparent 1px);background-size:16px 16px}.m-section{padding:10px;border:1px solid var(--line);background:#fff}.m-section+.m-section{margin-top:8px}.m-section.accent{border-color:var(--v);background:var(--lav)}.m-kicker{color:var(--v);font:600 7.5px 'IBM Plex Mono',monospace;letter-spacing:.08em}.m-section h3{margin:4px 0 0;font-size:13px;line-height:1.15}.m-section p{margin:4px 0 0;color:var(--body);font-size:9.5px;line-height:1.35}.m-arrow{height:15px;margin-left:19px;border-left:1px solid var(--v)}.m-split{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}.m-mini{padding:8px;border:1px solid var(--line);background:#fff}.m-mini.win{border-color:#9fd7c1;background:#f3fbf7}.m-mini.loss{border-color:#efc1bc;background:#fff6f5}.m-mini b{display:block;font-size:10px}.m-mini span{display:block;margin-top:3px;color:var(--muted);font-size:8.5px;line-height:1.3}.m-loop{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:8px}.m-node{padding:7px 5px;border:1px solid var(--line);background:#fff;text-align:center}.m-node b{display:block;color:var(--v);font-size:8px}.m-node span{display:block;margin-top:2px;color:var(--muted);font-size:7px;line-height:1.2}.take,.risk{grid-template-columns:1fr;gap:4px}.ft{padding:0 13px}}
+    @media(prefers-reduced-motion:reduce){.particle{display:none}}
   </style>
 </head>
 <body>
-  <div id="ptflow" data-mode="all">
+  <div id="paper-map">
     <div class="inner">
-      <div class="head">
-        <div class="copy">
-          <p class="kicker">Papertrade · mechanism map</p>
-          <h2 class="title">How one trade moves cash, debt and PAPER</h2>
-          <p class="dek">The trader always faces Papertrade. A win can become an immediate payout or queue debt. A loss adds cash to the system and mints PAPER.</p>
+      <p class="kicker">Papertrade · mechanism map</p>
+      <h2 class="title">The full loop: cash, queue and PAPER</h2>
+      <p class="dek">Papertrade takes the other side of every position. Winners pull cash out; losers refill the system and receive PAPER.</p>
+
+      <div class="map-shell">
+        <svg class="desktop-map" viewBox="0 0 640 472" role="img" aria-labelledby="mapTitle mapDesc">
+          <title id="mapTitle">Papertrade mechanism map</title>
+          <desc id="mapDesc">A trader deposits USDC and opens a leveraged BTC or ETH position. Papertrade settles the position using Hyperliquid's midpoint. Winning profit is paid from the cash pot or enters a FIFO queue. Losing trades refill the cash pot and mint PAPER. PAPER can be staked for fees and excess cash.</desc>
+          <defs>
+            <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#f3f3f6" stroke-width="1"/></pattern>
+            <marker id="av" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path fill="#6c42eb" d="M0 0L7 3.5L0 7Z"/></marker>
+            <marker id="ab" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path fill="#5279a3" d="M0 0L7 3.5L0 7Z"/></marker>
+            <marker id="ag" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path fill="#0f9d78" d="M0 0L7 3.5L0 7Z"/></marker>
+            <marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path fill="#dc6259" d="M0 0L7 3.5L0 7Z"/></marker>
+            <marker id="aa" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path fill="#b47d20" d="M0 0L7 3.5L0 7Z"/></marker>
+            <marker id="as" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path fill="#747982" d="M0 0L7 3.5L0 7Z"/></marker>
+          </defs>
+          <rect class="grid-bg" width="640" height="472"/>
+
+          <path id="p-trader-engine" class="route blue" marker-end="url(#ab)" d="M166 74H244"/>
+          <path id="p-feed-engine" class="route slate dashed" marker-end="url(#as)" d="M474 74H396"/>
+          <path id="p-engine-settle" class="route violet" marker-end="url(#av)" d="M320 120V166"/>
+          <text class="route-label" x="205" y="61" text-anchor="middle">margin + order</text>
+          <text class="route-label" x="435" y="61" text-anchor="middle">midpoint price</text>
+
+          <path id="p-settle-win" class="route green" marker-end="url(#ag)" d="M244 214H166"/>
+          <path id="p-settle-loss" class="route red" marker-end="url(#ar)" d="M396 214H474"/>
+          <text class="route-label green" x="205" y="201" text-anchor="middle">profit</text>
+          <text class="route-label red" x="435" y="201" text-anchor="middle">loss / liquidation</text>
+
+          <path id="p-win-queue" class="route amber" marker-end="url(#aa)" d="M90 254V340"/>
+          <path id="p-cash-win" class="route green" marker-end="url(#ag)" d="M244 354H202V236H166"/>
+          <path id="p-loss-cash" class="route red" marker-end="url(#ar)" d="M550 254V300H360V326"/>
+          <path id="p-loss-paper" class="route violet" marker-end="url(#av)" d="M550 254V340"/>
+          <text class="route-label amber" x="101" y="300">unpaid profit</text>
+          <text class="route-label green" x="211" y="336">pay now</text>
+          <text class="route-label red" x="458" y="294">USDC loss</text>
+          <text class="route-label violet" x="560" y="300">mint PAPER</text>
+
+          <path id="p-cash-queue" class="route amber" marker-end="url(#aa)" d="M244 390H166"/>
+          <path id="p-cash-paper" class="route violet" marker-end="url(#av)" d="M396 390H474"/>
+          <path id="p-paper-trader" class="route violet dashed" marker-end="url(#av)" d="M550 418V450H90V112"/>
+          <text class="route-label amber" x="205" y="379" text-anchor="middle">oldest claim first</text>
+          <text class="route-label violet" x="435" y="379" text-anchor="middle">fees + excess cash</text>
+          <text class="route-label violet" x="320" y="463" text-anchor="middle">staking rewards return to PAPER holders</text>
+
+          <g id="n-trader" class="node"><rect class="zone" x="14" y="32" width="152" height="80"/><text class="eyebrow" x="26" y="48">TRADER</text><text class="heading" x="26" y="68">Deposit USDC</text><line class="divider" x1="26" y1="78" x2="154" y2="78"/><text class="body" x="26" y="96">Open BTC or ETH · up to 1000x</text></g>
+          <g id="n-engine" class="node"><rect class="zone-accent" x="244" y="24" width="152" height="96"/><text class="eyebrow" x="256" y="42">POSITION ENGINE</text><text class="heading heading-accent" x="256" y="62">Papertrade faces the trade</text><line class="divider" x1="256" y1="72" x2="384" y2="72"/><text class="body" x="256" y="90">No matching trader · no hedge</text><text class="body muted" x="256" y="104">Isolated position</text></g>
+          <g id="n-feed" class="node"><rect class="zone" x="474" y="32" width="152" height="80"/><text class="eyebrow" x="486" y="48">REFERENCE MARKET</text><text class="heading" x="486" y="68">Hyperliquid price feed</text><line class="divider" x1="486" y1="78" x2="614" y2="78"/><text class="body" x="486" y="96">Best bid / ask midpoint</text></g>
+
+          <g id="n-win" class="node"><rect class="zone-win" x="14" y="174" width="152" height="80"/><text class="eyebrow green" x="26" y="190">WINNING TRADE</text><text class="heading" x="26" y="210">Profit pulls cash out</text><line class="divider" x1="26" y1="220" x2="154" y2="220"/><text class="body" x="26" y="237">Margin returns immediately</text><text class="body muted" x="26" y="248">Profit may have to wait</text></g>
+          <g id="n-settle" class="node"><rect class="zone-accent" x="244" y="166" width="152" height="96"/><text class="eyebrow" x="256" y="184">SETTLEMENT</text><text class="heading heading-accent" x="256" y="204">Raw P&amp;L is adjusted</text><line class="divider" x1="256" y1="214" x2="384" y2="214"/><text class="body" x="256" y="232">Payout curve first</text><text class="body muted" x="256" y="246">Then the P&amp;L fee</text></g>
+          <g id="n-loss" class="node"><rect class="zone-loss" x="474" y="174" width="152" height="80"/><text class="eyebrow red" x="486" y="190">LOSING TRADE</text><text class="heading" x="486" y="210">Loss refills the system</text><line class="divider" x1="486" y1="220" x2="614" y2="220"/><text class="body" x="486" y="237">USDC stays in the cash pot</text><text class="body muted" x="486" y="248">Loser receives PAPER</text></g>
+
+          <g id="n-queue" class="node"><rect class="zone" x="14" y="340" width="152" height="78"/><text class="eyebrow" x="26" y="356">FIFO PAYOUT QUEUE</text><text class="heading" x="26" y="375">Carry unpaid profit</text><line class="divider" x1="26" y1="385" x2="154" y2="385"/><text class="body" x="26" y="402">Future losses pay oldest claims</text></g>
+          <g id="n-cash" class="node"><rect class="zone-accent" x="244" y="326" width="152" height="100"/><text class="eyebrow" x="256" y="344">THE CASH POT</text><text class="metric" x="320" y="369" text-anchor="middle">Losses in · payouts out</text><line class="divider" x1="256" y1="380" x2="384" y2="380"/><text class="body" x="256" y="397">Can go negative when winners lead</text><text class="body muted" x="256" y="412">Target balance limits exposure</text></g>
+          <g id="n-paper" class="node"><rect class="zone" x="474" y="340" width="152" height="78"/><text class="eyebrow" x="486" y="356">PAPER + STAKING</text><text class="heading" x="486" y="375">Turn loss into ownership</text><line class="divider" x1="486" y1="385" x2="614" y2="385"/><text class="body" x="486" y="402">Early losses mint more PAPER</text></g>
+
+          <circle id="flow-particle" class="particle" cx="166" cy="74" r="4.2" fill="#5279a3" opacity="0" stroke="#fff" stroke-width="2"/>
+        </svg>
+
+        <div class="mobile-map">
+          <div class="m-section"><span class="m-kicker">01 · OPEN</span><h3>Trader deposits USDC</h3><p>Papertrade records a leveraged BTC or ETH position. Hyperliquid supplies the midpoint price.</p></div>
+          <div class="m-arrow"></div>
+          <div class="m-section accent"><span class="m-kicker">02 · SETTLE</span><h3>Papertrade calculates the result</h3><p>The payout curve adjusts winning P&amp;L, then the protocol applies its fee.</p><div class="m-split"><div class="m-mini win"><b>Trader wins</b><span>Cash pot pays now; any shortfall enters the FIFO queue.</span></div><div class="m-mini loss"><b>Trader loses</b><span>USDC refills the pot and PAPER is minted to the trader.</span></div></div></div>
+          <div class="m-arrow"></div>
+          <div class="m-section"><span class="m-kicker">03 · RECYCLE</span><h3>Losses fund the whole loop</h3><p>New losses pay old claims, rebuild the cash balance and support PAPER staking rewards.</p><div class="m-loop"><div class="m-node"><b>Queue</b><span>oldest profit first</span></div><div class="m-node"><b>Cash pot</b><span>losses in, payouts out</span></div><div class="m-node"><b>PAPER</b><span>fees + excess cash</span></div></div></div>
         </div>
-        <div class="modes" role="group" aria-label="Highlight a trade outcome">
-          <button class="mode active" data-mode="all">Both</button>
-          <button class="mode" data-mode="win">Winner</button>
-          <button class="mode" data-mode="loss">Loser</button>
-        </div>
+        <div class="legend"><span><i class="orders"></i> orders + margin</span><span><i class="price"></i> price data</span><span><i class="payout"></i> payouts</span><span><i class="losses"></i> trader losses</span><span><i class="paper"></i> PAPER + rewards</span></div>
       </div>
 
-      <div class="start" aria-label="Trade starts">
-        <div class="node"><span class="num">01</span><b>Deposit USDC</b><p>The trader posts margin.</p></div>
-        <div class="arrow" aria-hidden="true"></div>
-        <div class="node"><span class="num">02</span><b>Open BTC or ETH trade</b><p>Up to 1000x, using Hyperliquid's midpoint as the reference price.</p></div>
-        <div class="arrow" aria-hidden="true"></div>
-        <div class="node"><span class="num">03</span><b>Papertrade takes the other side</b><p>No trader matching and no hedge on Hyperliquid.</p></div>
-      </div>
-
-      <div class="fork">Trade closes</div>
-      <div class="branches">
-        <section class="branch win">
-          <div class="branch-head"><b>If the trader wins</b><span class="pill">cash outflow</span></div>
-          <div class="steps">
-            <div class="step"><span class="dot">1</span><div><b>Profit is adjusted</b><p>The payout curve reduces small-move profits; the fee is charged on P&amp;L.</p></div></div>
-            <div class="step"><span class="dot">2</span><div><b>The cash pot pays what it can</b><p>If enough cash is available, the adjusted profit is paid immediately.</p></div></div>
-            <div class="step"><span class="dot">3</span><div><b>Any shortfall enters the FIFO queue</b><p>Margin comes back first. Unpaid profit waits for future trader losses.</p></div></div>
-          </div>
-        </section>
-        <section class="branch loss">
-          <div class="branch-head"><b>If the trader loses</b><span class="pill">cash inflow</span></div>
-          <div class="steps">
-            <div class="step"><span class="dot">1</span><div><b>The loss stays in the protocol</b><p>It builds the cash pot and can clear older winning claims.</p></div></div>
-            <div class="step"><span class="dot">2</span><div><b>PAPER is minted to the loser</b><p>Early losses earn more PAPER. The rate falls as cumulative LP gains rise.</p></div></div>
-            <div class="step"><span class="dot">3</span><div><b>The trader can stake PAPER</b><p>Stakers receive a share of fees and cash above the protocol's target balance.</p></div></div>
-          </div>
-        </section>
-      </div>
-
-      <div class="connector"><div class="down"></div><div class="down"></div></div>
-      <section class="engine">
-        <div class="engine-title">The shared engine</div>
-        <div class="engine-grid">
-          <div class="engine-card cash">
-            <h3>Cash pot + payout queue</h3>
-            <p>Losses refill the same pool that pays winners.</p>
-            <ul>
-              <li><b>First:</b> pay the oldest queued profit.</li>
-              <li><b>Then:</b> rebuild a positive cash balance.</li>
-              <li><b>Above target:</b> excess cash can go to PAPER stakers.</li>
-            </ul>
-          </div>
-          <div class="loop-arrow" aria-hidden="true"><span>feeds</span></div>
-          <div class="engine-card token">
-            <h3>PAPER ownership loop</h3>
-            <p>Losing traders receive a claim on future platform income.</p>
-            <ul>
-              <li><b>Early farmers:</b> mint more PAPER per dollar lost.</li>
-              <li><b>Later farmers:</b> add cash but receive fewer tokens.</li>
-              <li><b>Value depends on:</b> fees, trading losses and retention.</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <div class="risk">
-        <div class="risk-icon">!</div>
-        <div class="risk-copy"><b>The loop breaks when the queue grows faster than new losses.</b><p>Winners wait longer → traders leave → fewer losses arrive → the queue clears even more slowly.</p></div>
-      </div>
-      <p class="note">Simplified launch model. Live contracts will determine the exact payout curve, fee order, cash target and PAPER mint rate.</p>
+      <div class="take"><span>The mechanism</span><p><b>Winners consume liquidity; losers create it.</b> PAPER gives the losing side a claim on future fees and excess cash.</p></div>
+      <div class="risk"><span>The failure loop</span><p><b>Queue grows → traders leave → fewer losses arrive → the queue clears more slowly.</b></p></div>
     </div>
     <div class="ft"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><span>moni</span><i>research</i></span></div>
   </div>
+
   <script>
-    (()=>{const root=document.getElementById('ptflow');const buttons=[...document.querySelectorAll('.mode')];buttons.forEach(button=>button.addEventListener('click',()=>{root.dataset.mode=button.dataset.mode;buttons.forEach(item=>{const on=item===button;item.classList.toggle('active',on);item.setAttribute('aria-pressed',String(on))})}));buttons[0].setAttribute('aria-pressed','true');buttons.slice(1).forEach(button=>button.setAttribute('aria-pressed','false'))})();
+    (()=>{if(window.matchMedia('(prefers-reduced-motion: reduce)').matches||window.innerWidth<=520)return;const particle=document.getElementById('flow-particle');const routes=[['p-trader-engine','n-trader','#5279a3'],['p-feed-engine','n-feed','#747982'],['p-engine-settle','n-engine','#6c42eb'],['p-settle-win','n-settle','#0f9d78'],['p-cash-win','n-cash','#0f9d78'],['p-win-queue','n-win','#b47d20'],['p-cash-queue','n-cash','#b47d20'],['p-settle-loss','n-settle','#dc6259'],['p-loss-cash','n-loss','#dc6259'],['p-loss-paper','n-loss','#6c42eb'],['p-cash-paper','n-cash','#6c42eb'],['p-paper-trader','n-paper','#6c42eb']];let routeIndex=0,start=0,raf=0,visible=true;const duration=1000,pause=170;const setActive=id=>document.querySelectorAll('.node').forEach(node=>node.classList.toggle('active',node.id===id));const frame=now=>{if(!visible)return;if(!start)start=now;const[pathId,nodeId,color]=routes[routeIndex],path=document.getElementById(pathId),elapsed=now-start;if(elapsed<pause){particle.setAttribute('opacity','0');raf=requestAnimationFrame(frame);return}const t=Math.min(1,(elapsed-pause)/duration),eased=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2,point=path.getPointAtLength(path.getTotalLength()*eased);particle.setAttribute('cx',point.x);particle.setAttribute('cy',point.y);particle.setAttribute('fill',color);particle.setAttribute('opacity',t>.96?String((1-t)/.04):'1');setActive(nodeId);if(t>=1){routeIndex=(routeIndex+1)%routes.length;start=now}raf=requestAnimationFrame(frame)};const observer=new IntersectionObserver(entries=>{visible=entries[0]?.isIntersecting??true;if(visible){start=0;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}else{cancelAnimationFrame(raf);particle.setAttribute('opacity','0');setActive('')}},{threshold:.12});observer.observe(document.querySelector('.map-shell'))})();
   </script>
   <script>
-    (()=>{const root=document.getElementById('ptflow');if(!root||window.parent===window)return;const reportHeight=()=>{const rootBox=root.getBoundingClientRect();const lastBox=root.lastElementChild?.getBoundingClientRect();const height=Math.max(1,Math.floor((lastBox?.bottom??rootBox.bottom)-rootBox.top)-2);window.parent.postMessage({type:'moni-widget:resize',height},'https://research.moni.ai')};new ResizeObserver(reportHeight).observe(root);window.addEventListener('load',reportHeight,{once:true});window.addEventListener('resize',reportHeight);window.addEventListener('message',event=>{if(event.origin==='https://research.moni.ai'&&event.data?.type==='moni-widget:request-resize')reportHeight()});[0,100,500,1500].forEach(delay=>setTimeout(reportHeight,delay))})();
+    (()=>{const root=document.getElementById('paper-map');if(!root||window.parent===window)return;const reportHeight=()=>{const rootBox=root.getBoundingClientRect();const lastBox=root.lastElementChild?.getBoundingClientRect();const height=Math.max(1,Math.floor((lastBox?.bottom??rootBox.bottom)-rootBox.top)-2);window.parent.postMessage({type:'moni-widget:resize',height},'https://research.moni.ai')};new ResizeObserver(reportHeight).observe(root);window.addEventListener('load',reportHeight,{once:true});window.addEventListener('resize',reportHeight);window.addEventListener('message',event=>{if(event.origin==='https://research.moni.ai'&&event.data?.type==='moni-widget:request-resize')reportHeight()});[0,100,500,1500].forEach(delay=>setTimeout(reportHeight,delay))})();
   </script>
 </body>
 </html>
+
