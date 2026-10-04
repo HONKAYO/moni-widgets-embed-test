@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Orbio &amp; Beyond · protocol flywheel</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@500;600&amp;display=swap">
+<style>
+  html,body{margin:0;padding:0;background:transparent}
+  #orbio-flywheel{--ink:#15161a;--body:#434750;--muted:#8b8f99;--line:#e7e7ec;--soft:#fafafb;--v:#6c42eb;--lav:#f4f0ff;--green:#0f9f67;--green-soft:#eef9f4;--amber:#b7790b;--amber-soft:#fff8e8;box-sizing:border-box;width:100%;max-width:none;overflow:hidden;border:1px solid var(--line);background:#fff;color:var(--body);font-family:Geist,system-ui,sans-serif;line-height:1.45}
+  #orbio-flywheel *{box-sizing:border-box}
+  .head{padding:21px 22px 15px;border-bottom:1px solid var(--line)}
+  .kicker{color:var(--v);font:600 9px/1.2 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase}
+  h2{margin:7px 0 5px;color:var(--ink);font-size:25px;line-height:1.06;letter-spacing:-.04em}
+  .dek{max-width:610px;margin:0;color:var(--muted);font-size:12px;line-height:1.45}
+  .tabs{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line)}
+  .tab{position:relative;padding:11px 8px;border:0;border-right:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer;font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
+  .tab:last-child{border-right:0}.tab:hover{color:var(--v)}.tab[aria-selected="true"]{background:var(--lav);color:var(--v)}
+  .tab[aria-selected="true"]:after{content:"";position:absolute;right:0;bottom:-1px;left:0;height:2px;background:var(--v)}
+  .stage{padding:16px 17px 0;background:linear-gradient(#fff,#fdfdfe)}
+  .panel{display:none}.panel.active{display:block}
+  .panel-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:10px}
+  .panel-title{margin:0;color:var(--ink);font-size:14px;line-height:1.2;letter-spacing:-.02em}
+  .panel-note{color:var(--muted);font:500 8px/1.25 'IBM Plex Mono',monospace;text-align:right;text-transform:uppercase;letter-spacing:.06em}
+  .flow{display:grid;grid-template-columns:1fr 18px 1fr 18px 1fr 18px 1fr 18px 1fr;align-items:stretch}
+  .node{min-width:0;min-height:76px;padding:10px 9px;border:1px solid var(--line);background:#fff;color:var(--body);text-align:left;cursor:pointer;font:500 10px/1.28 Geist,sans-serif;transition:background .15s,border-color .15s,transform .15s}
+  .node:hover,.node.on{border-color:var(--v);background:var(--lav)}.node:active{transform:translateY(1px)}
+  .node b{display:block;margin-top:4px;color:var(--ink);font-size:12px;line-height:1.15;letter-spacing:-.02em}
+  .node small{display:block;margin-top:6px;color:var(--muted);font-size:8.8px;line-height:1.25}
+  .node .tag{color:var(--v);font:600 7px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+  .node.allocated{border-color:#a9dac6;background:var(--green-soft)}.node.allocated .tag{color:var(--green)}
+  .node.thesis{border-style:dashed;border-color:#dfbd76;background:var(--amber-soft)}.node.thesis .tag{color:var(--amber)}
+  .arr{display:grid;place-items:center;color:var(--v);font:600 14px/1 'IBM Plex Mono',monospace}
+  .arr.thesis{color:var(--amber)}
+  .launch-top{grid-template-columns:1fr 28px 1fr 28px 1fr;max-width:455px;margin:0 auto}
+  .split-stem{height:18px;width:1px;margin:0 auto;background:var(--v)}
+  .split-grid{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:7px;padding-top:12px}
+  .split-grid:before{content:"";position:absolute;top:0;right:12.5%;left:12.5%;height:1px;background:var(--v)}
+  .split-grid .node{position:relative;min-height:70px}.split-grid .node:before{content:"";position:absolute;top:-13px;left:50%;width:1px;height:12px;background:var(--v)}
+  .share{display:block;color:var(--v);font-size:17px;font-weight:700;line-height:1;letter-spacing:-.04em}
+  .loop{display:flex;align-items:center;justify-content:center;gap:7px;margin:8px 0 0;padding:7px 10px;border:1px dashed #dfbd76;background:var(--amber-soft);color:var(--amber);font:600 8px/1.25 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.05em}
+  .loop .return{font-size:14px}
+  .detail{display:grid;grid-template-columns:128px 1fr;gap:12px;margin-top:12px;padding:11px 12px;border-left:2px solid var(--v);background:var(--lav);min-height:61px}
+  .detail-label{color:var(--v);font:600 8px/1.25 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+  .detail-label span{display:block;margin-top:5px;color:var(--muted);font-size:7px;letter-spacing:.05em}
+  .detail p{margin:0;color:var(--body);font-size:10.5px;line-height:1.4}.detail strong{color:var(--ink)}
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);margin-top:13px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .metric{padding:11px 12px;border-right:1px solid var(--line);background:#fff}.metric:last-child{border-right:0}
+  .metric b{display:block;color:var(--ink);font-size:16px;line-height:1;letter-spacing:-.03em}.metric span{display:block;margin-top:5px;color:var(--muted);font:500 7.5px/1.25 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.04em}
+  .metric.next{background:var(--amber-soft)}.metric.next b{color:var(--amber);font-size:12px;line-height:1.15}
+  .legend{display:flex;flex-wrap:wrap;gap:13px;padding:9px 17px;color:var(--muted);font:500 7.5px/1.2 'IBM Plex Mono',monospace}
+  .legend span{display:flex;align-items:center;gap:5px}.sw{width:14px;height:7px;border:1px solid var(--v);background:var(--lav)}.sw.allocated{border-color:var(--green);background:var(--green-soft)}.sw.thesis{border-style:dashed;border-color:var(--amber);background:var(--amber-soft)}
+  .ft{min-height:34px;padding:7px 17px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .source{color:var(--muted);font:500 7.5px/1.25 'IBM Plex Mono',monospace}.source a{color:inherit;text-decoration:none}.source a:hover{color:var(--v)}
+  .brand{display:flex;align-items:center;gap:4px;color:var(--v);font-size:12px;font-weight:600;white-space:nowrap}.eye{width:15px;height:15px;display:block;flex:0 0 15px}.brand i{color:var(--ink);font:600 italic 12px Geist,sans-serif}
+  @media(max-width:520px){.head{padding:18px 16px 14px}h2{font-size:22px}.stage{padding:14px 12px 0}.flow{grid-template-columns:1fr 13px 1fr 13px 1fr 13px 1fr 13px 1fr}.arr{font-size:11px}.node{padding:8px 6px;min-height:72px;font-size:9px}.node b{font-size:10px}.node small{display:none}.launch-top{grid-template-columns:1fr 20px 1fr 20px 1fr}.split-grid{gap:4px}.share{font-size:14px}.detail{grid-template-columns:100px 1fr}.metrics{grid-template-columns:1fr 1fr}.metric:nth-child(2){border-right:0}.metric.next{grid-column:1/-1;border-top:1px solid var(--line)}.panel-note{display:none}}
+  @media(max-width:459px){.flow,.launch-top{display:flex;flex-direction:column}.arr{height:16px;transform:rotate(90deg)}.node{min-height:0}.split-grid{grid-template-columns:1fr 1fr}.split-grid:before,.split-grid .node:before,.split-stem{display:none}.detail{grid-template-columns:1fr;gap:5px}.tabs .tab{font-size:8px}.ft{align-items:flex-end}.source{max-width:205px}}
+</style>
+</head>
+<body>
+<section id="orbio-flywheel">
+  <header class="head">
+    <div class="kicker">Orbio · protocol flywheel</div>
+    <h2>Orbio &amp; Beyond</h2>
+    <p class="dek">Три слоя одного механизма: работающий core, launchpad-распределение и следующий — пока не доказанный — цикл внешнего спроса.</p>
+  </header>
+
+  <nav class="tabs" aria-label="Слои протокола">
+    <button class="tab" type="button" data-tab="core" aria-selected="true">01 · Core rail</button>
+    <button class="tab" type="button" data-tab="launchpad" aria-selected="false">02 · Launchpad</button>
+    <button class="tab" type="button" data-tab="beyond" aria-selected="false">03 · Beyond</button>
+  </nav>
+
+  <div class="stage">
+    <section class="panel active" data-panel="core">
+      <div class="panel-head"><h3 class="panel-title">Токен становится доступом к AI-сервису</h3><span class="panel-note">подтверждённая механика</span></div>
+      <div class="flow">
+        <button class="node on" data-title="ORBIO activity" data-status="Подтверждено" data-copy="Торговля, staking и протокольная активность создают общий денежный рельс. Рыночная цена дала механизму ликвидность и внимание."><span class="tag">Market rail</span><b>ORBIO activity</b><small>attention + liquidity</small></button>
+        <span class="arr">→</span>
+        <button class="node" data-title="Protocol flows" data-status="Подтверждено" data-copy="Комиссии и reward-механика связывают токен с продуктом: часть стоимости остаётся внутри протокольного контура."><span class="tag">Value flow</span><b>Protocol fees</b><small>rewards + staking</small></button>
+        <span class="arr">→</span>
+        <button class="node" data-title="CREDIT" data-status="Подтверждено" data-copy="1 CREDIT даёт $1 сервисного баланса Orbio. Это не cash и не redeemable stablecoin, а право потребить инфраструктуру."><span class="tag">Service claim</span><b>CREDIT</b><small>$1 face value</small></button>
+        <span class="arr">→</span>
+        <button class="node" data-title="Activation" data-status="Подтверждено" data-copy="При активации CREDIT сжигается, а пользователь получает непередаваемый gateway balance. Так спекулятивный актив становится бюджетом."><span class="tag">Conversion</span><b>Activate &amp; burn</b><small>non-transferable balance</small></button>
+        <span class="arr">→</span>
+        <button class="node" data-title="AI gateway" data-status="Подтверждено" data-copy="Баланс оплачивает модели и внешние инструменты — inference, данные, crawling и automation APIs — через один интерфейс."><span class="tag">Product</span><b>Models + tools</b><small>inference and APIs</small></button>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="launchpad">
+      <div class="panel-head"><h3 class="panel-title">Каждый запуск получает встроенный compute runway</h3><span class="panel-note">fee split · current terms</span></div>
+      <div class="flow launch-top">
+        <button class="node" data-title="Project-token trading" data-status="Подтверждено" data-copy="Внимание к новому проекту создаёт оборот. В отличие от обычного launchpad, его creator fees не заканчиваются выплатой создателю."><span class="tag">Input</span><b>Token trades</b><small>market attention</small></button>
+        <span class="arr">→</span>
+        <button class="node" data-title="Creator fees" data-status="Подтверждено" data-copy="Creator fees автоматически становятся источником капитала и операционного бюджета для проекта."><span class="tag">Cash flow</span><b>Creator fees</b><small>automatic allocation</small></button>
+        <span class="arr">→</span>
+        <button class="node on" data-title="50 / 30 / 10 / 10" data-status="Подтверждено" data-copy="Текущая схема направляет 50% в ORBIO principal, 30% в CREDIT, 10% в gateway balance и 10% в treasury."><span class="tag">Split</span><b>50 / 30 / 10 / 10</b><small>four destinations</small></button>
+      </div>
+      <div class="split-stem"></div>
+      <div class="split-grid">
+        <button class="node allocated" data-title="50% · ORBIO principal" data-status="Аллоцировано" data-copy="Половина creator fees покупает ORBIO principal. Создатель может вывести его, поэтому это capital alignment, но не вечный lock."><span class="share">50%</span><b>ORBIO principal</b></button>
+        <button class="node allocated" data-title="30% · CREDIT" data-status="Аллоцировано" data-copy="CREDIT формирует сервисный запас проекта. Его экономический смысл появляется, когда этот запас активируют и реально расходуют."><span class="share">30%</span><b>CREDIT</b></button>
+        <button class="node allocated" data-title="10% · Gateway balance" data-status="Аллоцировано" data-copy="Готовый непередаваемый баланс сразу доступен для моделей и инструментов. Это самый прямой compute runway."><span class="share">10%</span><b>Gateway balance</b></button>
+        <button class="node allocated" data-title="10% · Treasury" data-status="Аллоцировано" data-copy="Treasury оставляет часть потока внутри экосистемы для дальнейшего развития протокола."><span class="share">10%</span><b>Treasury</b></button>
+      </div>
+    </section>
+
+    <section class="panel" data-panel="beyond">
+      <div class="panel-head"><h3 class="panel-title">Следующий рынок начинается после launch</h3><span class="panel-note">thesis · requires proof</span></div>
+      <div class="flow">
+        <button class="node thesis" data-title="Attention + builders" data-status="Тезис" data-copy="Ликвидный ORBIO и гранты снижают стоимость первого эксперимента и притягивают разработчиков к общему рельсу."><span class="tag">Acquire</span><b>Builders</b><small>attention + grants</small></button>
+        <span class="arr thesis">→</span>
+        <button class="node thesis" data-title="Project launch" data-status="Тезис" data-copy="Команда получает токен, рынок и дистрибуцию. Но сам запуск — только вход в цикл, а не продуктовый результат."><span class="tag">Launch</span><b>Project token</b><small>distribution</small></button>
+        <span class="arr thesis">→</span>
+        <button class="node thesis on" data-title="Fee-funded runway" data-status="Тезис" data-copy="Торговые fees превращаются в ORBIO, CREDIT и gateway balance: спекулятивный спрос оставляет после себя ресурс для работы."><span class="tag">Fund</span><b>Compute runway</b><small>stake + CREDIT + balance</small></button>
+        <span class="arr thesis">→</span>
+        <button class="node thesis" data-title="Agent product" data-status="Тезис" data-copy="Inference и инструменты должны стать работающим приложением, которое сохраняет ценность после затухания первой торговой волны."><span class="tag">Build</span><b>Live product</b><small>inference + tools</small></button>
+        <span class="arr thesis">→</span>
+        <button class="node thesis" data-title="External demand" data-status="Kill condition" data-copy="Решающая проверка — повторные внешние пользователи и выручка. Без них баланс лишь накапливается, а экономика остаётся замкнутой на новых запусках."><span class="tag">Validate</span><b>Users + revenue</b><small>fresh outside demand</small></button>
+      </div>
+      <div class="loop"><span class="return">↺</span> внешний спрос возвращает капитал и новых билдеров в ORBIO / CREDIT</div>
+    </section>
+
+    <aside class="detail" aria-live="polite">
+      <div class="detail-label" id="detail-title">ORBIO activity<span id="detail-status">Подтверждено</span></div>
+      <p id="detail-copy"><strong>Нажмите на любой блок.</strong> Карта покажет, что уже работает на уровне механики, что лишь аллоцировано и где начинается инвестиционный тезис.</p>
+    </aside>
+
+    <div class="metrics" aria-label="Launchpad snapshot">
+      <div class="metric"><b>665</b><span>launch records · 2 Oct 2026</span></div>
+      <div class="metric"><b>$87.9K</b><span>gateway budget created</span></div>
+      <div class="metric next"><b>30 / 60 / 90d</b><span>next proof · retained apps + usage</span></div>
+    </div>
+  </div>
+
+  <div class="legend"><span><i class="sw"></i>подтверждённая механика</span><span><i class="sw allocated"></i>аллоцированный бюджет</span><span><i class="sw thesis"></i>тезис / требует доказательства</span></div>
+  <footer class="ft"><span class="source">Sources: <a href="https://www.orbio.so/launchpad/whitepaper" target="_blank" rel="noopener">Orbio terms</a> · <a href="https://www.orbio.so/api/protocol/agents/analytics" target="_blank" rel="noopener">analytics</a></span><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><span>moni</span><i>research</i></span></footer>
+</section>
+<script>
+(()=>{
+  const root=document.getElementById('orbio-flywheel');
+  const title=document.getElementById('detail-title');
+  const status=document.getElementById('detail-status');
+  const copy=document.getElementById('detail-copy');
+  function selectNode(node){
+    root.querySelectorAll('.node').forEach(n=>n.classList.remove('on'));
+    node.classList.add('on');
+    title.childNodes[0].nodeValue=node.dataset.title;
+    status.textContent=node.dataset.status;
+    copy.textContent=node.dataset.copy;
+  }
+  root.querySelectorAll('.node').forEach(node=>node.addEventListener('click',()=>selectNode(node)));
+  root.querySelectorAll('.tab').forEach(tab=>tab.addEventListener('click',()=>{
+    root.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',String(t===tab)));
+    root.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.dataset.panel===tab.dataset.tab));
+    const first=root.querySelector(`[data-panel="${tab.dataset.tab}"] .node.on`)||root.querySelector(`[data-panel="${tab.dataset.tab}"] .node`);
+    if(first)selectNode(first);
+  }));
+  if(window.parent!==window){
+    const reportHeight=()=>{const rootBox=root.getBoundingClientRect();const lastBox=root.lastElementChild?.getBoundingClientRect();const height=Math.max(1,Math.floor((lastBox?.bottom??rootBox.bottom)-rootBox.top)-2);window.parent.postMessage({type:'moni-widget:resize',height},'https://research.moni.ai')};
+    new ResizeObserver(reportHeight).observe(root);
+    window.addEventListener('load',reportHeight,{once:true});window.addEventListener('resize',reportHeight);
+    window.addEventListener('message',event=>{if(event.origin==='https://research.moni.ai'&&event.data?.type==='moni-widget:request-resize')reportHeight()});
+    [0,100,500,1500].forEach(delay=>setTimeout(reportHeight,delay));
+  }
+})();
+</script>
+</body>
+</html>
