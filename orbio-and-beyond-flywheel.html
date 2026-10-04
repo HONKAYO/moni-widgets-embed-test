@@ -1,170 +1,144 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Orbio &amp; Beyond · protocol flywheel</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@500;600&amp;display=swap">
-<style>
-  html,body{margin:0;padding:0;background:transparent}
-  #orbio-flywheel{--ink:#15161a;--body:#434750;--muted:#8b8f99;--line:#e7e7ec;--soft:#fafafb;--v:#6c42eb;--lav:#f4f0ff;--green:#0f9f67;--green-soft:#eef9f4;--amber:#b7790b;--amber-soft:#fff8e8;box-sizing:border-box;width:100%;max-width:none;overflow:hidden;background:#fff;color:var(--body);font-family:Geist,system-ui,sans-serif;line-height:1.45}
-  #orbio-flywheel *{box-sizing:border-box}
-  .head{padding:21px 22px 15px;border-bottom:1px solid var(--line)}
-  .kicker{color:var(--v);font:600 9px/1.2 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase}
-  h2{margin:7px 0 5px;color:var(--ink);font-size:25px;line-height:1.06;letter-spacing:-.04em}
-  .dek{max-width:610px;margin:0;color:var(--muted);font-size:12px;line-height:1.45}
-  .tabs{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line)}
-  .tab{position:relative;padding:11px 8px;border:0;border-right:1px solid var(--line);background:#fff;color:var(--muted);cursor:pointer;font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase}
-  .tab:last-child{border-right:0}.tab:hover{color:var(--v)}.tab[aria-selected="true"]{background:var(--lav);color:var(--v)}
-  .tab[aria-selected="true"]:after{content:"";position:absolute;right:0;bottom:-1px;left:0;height:2px;background:var(--v)}
-  .stage{padding:16px 17px 0;background:linear-gradient(#fff,#fdfdfe)}
-  .panel{display:none}.panel.active{display:block}
-  .panel-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:10px}
-  .panel-title{margin:0;color:var(--ink);font-size:14px;line-height:1.2;letter-spacing:-.02em}
-  .panel-note{color:var(--muted);font:500 8px/1.25 'IBM Plex Mono',monospace;text-align:right;text-transform:uppercase;letter-spacing:.06em}
-  .flow{display:grid;grid-template-columns:1fr 18px 1fr 18px 1fr 18px 1fr 18px 1fr;align-items:stretch}
-  .node{min-width:0;min-height:76px;padding:10px 9px;border:1px solid var(--line);background:#fff;color:var(--body);text-align:left;cursor:pointer;font:500 10px/1.28 Geist,sans-serif;transition:background .15s,border-color .15s,transform .15s}
-  .node:hover,.node.on{border-color:var(--v);background:var(--lav)}.node:active{transform:translateY(1px)}
-  .node b{display:block;margin-top:4px;color:var(--ink);font-size:12px;line-height:1.15;letter-spacing:-.02em}
-  .node small{display:block;margin-top:6px;color:var(--muted);font-size:8.8px;line-height:1.25}
-  .node .tag{color:var(--v);font:600 7px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
-  .node.allocated{border-color:#a9dac6;background:var(--green-soft)}.node.allocated .tag{color:var(--green)}
-  .node.thesis{border-style:dashed;border-color:#dfbd76;background:var(--amber-soft)}.node.thesis .tag{color:var(--amber)}
-  .arr{display:grid;place-items:center;color:var(--v);font:600 14px/1 'IBM Plex Mono',monospace}
-  .arr.thesis{color:var(--amber)}
-  .launch-top{grid-template-columns:1fr 28px 1fr 28px 1fr;max-width:455px;margin:0 auto}
-  .split-stem{height:18px;width:1px;margin:0 auto;background:var(--v)}
-  .split-grid{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:7px;padding-top:12px}
-  .split-grid:before{content:"";position:absolute;top:0;right:12.5%;left:12.5%;height:1px;background:var(--v)}
-  .split-grid .node{position:relative;min-height:70px}.split-grid .node:before{content:"";position:absolute;top:-13px;left:50%;width:1px;height:12px;background:var(--v)}
-  .share{display:block;color:var(--v);font-size:17px;font-weight:700;line-height:1;letter-spacing:-.04em}
-  .loop{display:flex;align-items:center;justify-content:center;gap:7px;margin:8px 0 0;padding:7px 10px;border:1px dashed #dfbd76;background:var(--amber-soft);color:var(--amber);font:600 8px/1.25 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.05em}
-  .loop .return{font-size:14px}
-  .detail{display:grid;grid-template-columns:128px 1fr;gap:12px;margin-top:12px;padding:11px 12px;border-left:2px solid var(--v);background:var(--lav);min-height:61px}
-  .detail-label{color:var(--v);font:600 8px/1.25 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
-  .detail-label span{display:block;margin-top:5px;color:var(--muted);font-size:7px;letter-spacing:.05em}
-  .detail p{margin:0;color:var(--body);font-size:10.5px;line-height:1.4}.detail strong{color:var(--ink)}
-  .metrics{display:grid;grid-template-columns:repeat(3,1fr);margin-top:13px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .metric{padding:11px 12px;border-right:1px solid var(--line);background:#fff}.metric:last-child{border-right:0}
-  .metric b{display:block;color:var(--ink);font-size:16px;line-height:1;letter-spacing:-.03em}.metric span{display:block;margin-top:5px;color:var(--muted);font:500 7.5px/1.25 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.04em}
-  .metric.next{background:var(--amber-soft)}.metric.next b{color:var(--amber);font-size:12px;line-height:1.15}
-  .legend{display:flex;flex-wrap:wrap;gap:13px;padding:9px 17px;color:var(--muted);font:500 7.5px/1.2 'IBM Plex Mono',monospace}
-  .legend span{display:flex;align-items:center;gap:5px}.sw{width:14px;height:7px;border:1px solid var(--v);background:var(--lav)}.sw.allocated{border-color:var(--green);background:var(--green-soft)}.sw.thesis{border-style:dashed;border-color:var(--amber);background:var(--amber-soft)}
-  .sources-band{padding:0 17px 8px;color:var(--muted);font:500 7.5px/1.25 'IBM Plex Mono',monospace}.sources-band a{color:inherit;text-decoration:none}.sources-band a:hover{color:var(--v)}
-  .ft{min-height:34px;padding:7px 17px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:flex-end}
-  .brand{display:flex;align-items:center;gap:4px;color:var(--v);font-size:12px;font-weight:600;white-space:nowrap}.eye{width:15px;height:15px;display:block;flex:0 0 15px}.brand i{color:var(--ink);font:600 italic 12px Geist,sans-serif}
-  @media(max-width:520px){.head{padding:18px 16px 14px}h2{font-size:22px}.stage{padding:14px 12px 0}.flow{grid-template-columns:1fr 13px 1fr 13px 1fr 13px 1fr 13px 1fr}.arr{font-size:11px}.node{padding:8px 6px;min-height:72px;font-size:9px}.node b{font-size:10px}.node small{display:none}.launch-top{grid-template-columns:1fr 20px 1fr 20px 1fr}.split-grid{gap:4px}.share{font-size:14px}.detail{grid-template-columns:100px 1fr}.metrics{grid-template-columns:1fr 1fr}.metric:nth-child(2){border-right:0}.metric.next{grid-column:1/-1;border-top:1px solid var(--line)}.panel-note{display:none}}
-  @media(max-width:459px){.flow,.launch-top{display:flex;flex-direction:column}.arr{height:16px;transform:rotate(90deg)}.node{min-height:0}.split-grid{grid-template-columns:1fr 1fr}.split-grid:before,.split-grid .node:before,.split-stem{display:none}.detail{grid-template-columns:1fr;gap:5px}.tabs .tab{font-size:8px}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Orbio and Beyond · system map</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--v:#6c42eb;--ink:#14151a;--body:#3b4049;--muted:#8b8f99;--line:#e8e8ed;--soft:#fafafb;--lav:#f6f3ff;--blue:#5279a3;--teal:#0f9d8a;--amber:#b47d20;--green:#0f9f67;--slate:#747982}
+    *{box-sizing:border-box}html,body{margin:0;padding:0;background:transparent}body{font-family:Geist,system-ui,sans-serif;color:var(--ink)}
+    #orbio-system{width:100%;max-width:none;overflow:hidden;background:#fff}.inner{padding:20px 22px 17px}.kicker{margin:0 0 6px;color:var(--v);font:600 9px/1.2 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase}.title{margin:0;font-size:25px;line-height:1.04;letter-spacing:-.04em}.dek{max-width:610px;margin:7px 0 0;color:var(--body);font-size:12.5px;line-height:1.43}
+    .map-shell{position:relative;margin-top:14px;border:1px solid var(--line);overflow:hidden;background:#fff}.map-shell svg{display:block;width:100%;height:auto}.grid-bg{fill:url(#grid)}
+    .zone{fill:#fff;stroke:#d9dbe0;stroke-width:1}.zone-accent{fill:var(--lav);stroke:var(--v);stroke-width:1.2}.zone-soft{fill:#fcfcfd;stroke:#d9dbe0;stroke-width:1}.zone-funded{fill:#f1faf6;stroke:#9dd6bd;stroke-width:1}.zone-thesis{fill:#fff9ed;stroke:#d6b56d;stroke-width:1;stroke-dasharray:4 3}.divider{stroke:#e9e9ee;stroke-width:1}
+    .eyebrow{fill:var(--v);font:600 7.2px 'IBM Plex Mono',monospace;letter-spacing:.09em}.eyebrow.teal{fill:var(--teal)}.eyebrow.amber{fill:var(--amber)}.heading{fill:var(--ink);font:700 12px Geist,sans-serif;letter-spacing:-.025em}.heading-accent{fill:var(--v)}.body{fill:var(--body);font:500 8px Geist,sans-serif}.muted{fill:var(--muted)}.metric{fill:var(--ink);font:700 12.2px Geist,sans-serif;letter-spacing:-.03em}.share{fill:var(--v);font:700 15px Geist,sans-serif;letter-spacing:-.04em}
+    .route{fill:none;stroke-width:1.35;stroke-linecap:square;stroke-linejoin:miter}.route.violet{stroke:var(--v)}.route.blue{stroke:var(--blue)}.route.teal{stroke:var(--teal)}.route.green{stroke:var(--green)}.route.amber{stroke:var(--amber)}.route.slate{stroke:var(--slate)}.route.dashed{stroke-dasharray:4 4}.route-label{fill:var(--body);font:500 6.6px 'IBM Plex Mono',monospace;paint-order:stroke;stroke:#fff;stroke-width:5;stroke-linejoin:round}.route-label.violet{fill:var(--v)}.route-label.teal{fill:var(--teal)}.route-label.amber{fill:var(--amber)}
+    .node{transition:filter .2s ease}.node.active{filter:drop-shadow(0 2px 5px rgba(108,66,235,.17))}.node.active .zone,.node.active .zone-soft,.node.active .zone-funded,.node.active .zone-thesis{stroke:var(--v);fill:#fbf9ff}
+    .phase{fill:var(--amber);font:600 6.8px 'IBM Plex Mono',monospace;letter-spacing:.08em}
+    .legend{display:flex;flex-wrap:wrap;justify-content:center;gap:13px;padding:8px 10px 9px;border-top:1px solid var(--line);color:var(--muted);font:500 8px 'IBM Plex Mono',monospace}.legend span{display:flex;align-items:center;gap:5px}.legend i{width:14px;height:2px;background:var(--v)}.legend .trade{background:var(--slate)}.legend .fund{background:var(--teal)}.legend .thesis{height:0;border-top:2px dashed var(--amber);background:none}
+    .take{display:grid;grid-template-columns:114px 1fr;gap:10px;margin-top:10px;padding:10px 11px;border-left:2px solid var(--v);background:var(--lav)}.take span{color:var(--v);font:600 8px/1.3 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}.take p{margin:0;color:var(--body);font-size:10.5px;line-height:1.4}.take b{color:var(--ink)}.source{margin:8px 0 0;color:var(--muted);font:500 7.5px/1.3 'IBM Plex Mono',monospace}.source a{color:inherit;text-decoration:none}.source a:hover{color:var(--v)}
+    .mobile-map{display:none}.ft{height:31px;padding:0 17px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:flex-end}.brand{display:flex;align-items:center;gap:4px;color:var(--v);font-size:12px;font-weight:600}.eye{width:15px;height:15px;display:block;flex:0 0 15px}.brand i{color:var(--ink);font:600 italic 12px Geist,sans-serif}
+    @media(max-width:520px){.inner{padding:18px 16px 16px}.title{font-size:23px}.dek{font-size:12px}.map-shell .desktop-map{display:none}.mobile-map{display:block;padding:12px;background-image:linear-gradient(#f4f4f7 1px,transparent 1px),linear-gradient(90deg,#f4f4f7 1px,transparent 1px);background-size:16px 16px}.m-section{padding:10px;border:1px solid var(--line);background:#fff}.m-section+.m-section{margin-top:8px}.m-section.accent{border-color:var(--v);background:var(--lav)}.m-section.thesis{border:1px dashed #d6b56d;background:#fff9ed}.m-kicker{color:var(--v);font:600 7.5px 'IBM Plex Mono',monospace;letter-spacing:.08em}.m-section.thesis .m-kicker{color:var(--amber)}.m-section h3{margin:4px 0 0;font-size:13px;line-height:1.15}.m-section p{margin:4px 0 0;color:var(--body);font-size:9.5px;line-height:1.35}.m-arrow{height:15px;margin-left:19px;border-left:1px solid var(--v)}.m-split{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}.m-mini{padding:8px;border:1px solid var(--line);background:#fff}.m-mini b{display:block;color:var(--v);font-size:11px}.m-mini span{display:block;margin-top:3px;color:var(--muted);font-size:8.5px;line-height:1.3}.m-loop{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:8px}.m-step{padding:7px 5px;border:1px dashed #d6b56d;background:#fff;text-align:center}.m-step b{display:block;color:var(--amber);font-size:8px}.m-step span{display:block;margin-top:2px;color:var(--muted);font-size:7px;line-height:1.2}.take{grid-template-columns:1fr;gap:4px}.ft{padding:0 13px}}
+    @media(prefers-reduced-motion:reduce){.particle{display:none}}
+  </style>
 </head>
 <body>
-<section id="orbio-flywheel">
-  <header class="head">
-    <div class="kicker">Orbio · protocol flywheel</div>
-    <h2>Orbio &amp; Beyond</h2>
-    <p class="dek">Three layers of one mechanism: the live core, launchpad fee routing, and the still unproven loop of external demand.</p>
-  </header>
+  <div id="orbio-system">
+    <div class="inner">
+      <p class="kicker">Orbio · protocol and application map</p>
+      <h2 class="title">Trading funds the next unit of work</h2>
+      <p class="dek">CREDIT powers the AI gateway. The launchpad routes project-token fees into ORBIO principal and prepaid compute, giving applications a budget after launch.</p>
 
-  <nav class="tabs" aria-label="Protocol layers">
-    <button class="tab" type="button" data-tab="core" aria-selected="true">01 · Core rail</button>
-    <button class="tab" type="button" data-tab="launchpad" aria-selected="false">02 · Launchpad</button>
-    <button class="tab" type="button" data-tab="beyond" aria-selected="false">03 · Beyond</button>
-  </nav>
+      <div class="map-shell">
+        <svg class="desktop-map" viewBox="0 0 640 560" role="img" aria-labelledby="mapTitle mapDesc">
+          <title id="mapTitle">Orbio protocol and application system map</title>
+          <desc id="mapDesc">Users acquire and activate CREDIT to access models and tools. Builders launch project tokens against ORBIO. Trading fees split into ORBIO principal, CREDIT, gateway balance and treasury. CREDIT and gateway balance fund live applications. External users and recurring revenue would close the still unproven demand loop.</desc>
+          <defs>
+            <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="#f3f3f6" stroke-width="1"/></pattern>
+            <marker id="av" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path fill="#6c42eb" d="M0 0L7 3.5L0 7Z"/></marker>
+            <marker id="ab" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path fill="#5279a3" d="M0 0L7 3.5L0 7Z"/></marker>
+            <marker id="at" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path fill="#0f9d8a" d="M0 0L7 3.5L0 7Z"/></marker>
+            <marker id="ag" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path fill="#0f9f67" d="M0 0L7 3.5L0 7Z"/></marker>
+            <marker id="aa" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path fill="#b47d20" d="M0 0L7 3.5L0 7Z"/></marker>
+            <marker id="as" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path fill="#747982" d="M0 0L7 3.5L0 7Z"/></marker>
+          </defs>
+          <rect class="grid-bg" width="640" height="560"/>
 
-  <div class="stage">
-    <section class="panel active" data-panel="core">
-      <div class="panel-head"><h3 class="panel-title">A token becomes access to AI services</h3><span class="panel-note">live mechanism</span></div>
-      <div class="flow">
-        <button class="node on" data-title="ORBIO activity" data-status="Confirmed" data-copy="Trading, staking and protocol activity share one monetary rail. The market gives the mechanism liquidity and attention."><span class="tag">Market rail</span><b>ORBIO activity</b><small>attention + liquidity</small></button>
-        <span class="arr">→</span>
-        <button class="node" data-title="Protocol flows" data-status="Confirmed" data-copy="Fees and rewards connect the token to the product, keeping part of the value flow inside the protocol."><span class="tag">Value flow</span><b>Protocol fees</b><small>rewards + staking</small></button>
-        <span class="arr">→</span>
-        <button class="node" data-title="CREDIT" data-status="Confirmed" data-copy="One CREDIT provides $1 of Orbio service balance. It is neither cash nor a redeemable stablecoin."><span class="tag">Service claim</span><b>CREDIT</b><small>$1 face value</small></button>
-        <span class="arr">→</span>
-        <button class="node" data-title="Activation" data-status="Confirmed" data-copy="Activation burns CREDIT and creates a non-transferable gateway balance. A tradable asset becomes an operating budget."><span class="tag">Conversion</span><b>Activate &amp; burn</b><small>non-transferable balance</small></button>
-        <span class="arr">→</span>
-        <button class="node" data-title="AI gateway" data-status="Confirmed" data-copy="The balance pays for models and external tools, including inference, data, crawling and automation APIs."><span class="tag">Product</span><b>Models + tools</b><small>inference and APIs</small></button>
+          <path id="p-user-credit" class="route violet" marker-end="url(#av)" d="M154 72H178"/>
+          <path id="p-credit-activate" class="route violet" marker-end="url(#av)" d="M310 72H334"/>
+          <path id="p-activate-gateway" class="route violet" marker-end="url(#av)" d="M466 72H490"/>
+          <text class="route-label violet" x="166" y="61" text-anchor="middle">acquire</text>
+          <text class="route-label violet" x="322" y="61" text-anchor="middle">burn</text>
+          <text class="route-label violet" x="478" y="61" text-anchor="middle">spend</text>
+
+          <path id="p-builder-market" class="route slate" marker-end="url(#as)" d="M154 207H178"/>
+          <path id="p-market-fees" class="route slate" marker-end="url(#as)" d="M310 207H334"/>
+          <path id="p-fees-router" class="route slate" marker-end="url(#as)" d="M466 207H490"/>
+          <text class="route-label" x="166" y="196" text-anchor="middle">launch</text>
+          <text class="route-label" x="322" y="196" text-anchor="middle">trade</text>
+          <text class="route-label" x="478" y="196" text-anchor="middle">route</text>
+
+          <path id="p-router-principal" class="route blue" marker-end="url(#ab)" d="M558 252V274H86V312"/>
+          <path id="p-router-credit" class="route violet" marker-end="url(#av)" d="M558 252V284H242V312"/>
+          <path id="p-router-balance" class="route teal" marker-end="url(#at)" d="M558 252V294H398V312"/>
+          <path id="p-router-treasury" class="route slate" marker-end="url(#as)" d="M558 252V312"/>
+
+          <path id="p-principal-market" class="route blue" marker-end="url(#ab)" d="M86 312V264H244V252"/>
+          <text class="route-label" x="151" y="259">ORBIO principal</text>
+          <path id="p-credit-app" class="route violet" marker-end="url(#av)" d="M242 386V412H554V435"/>
+          <path id="p-balance-app" class="route teal" marker-end="url(#at)" d="M398 386V402H570V435"/>
+          <text class="route-label teal" x="433" y="398">funds compute</text>
+          <path id="p-gateway-app" class="route violet" marker-end="url(#av)" d="M626 72H634V474H626"/>
+
+          <path id="p-app-users" class="route amber dashed" marker-end="url(#aa)" d="M482 474H392"/>
+          <path id="p-users-demand" class="route amber dashed" marker-end="url(#aa)" d="M248 474H158"/>
+          <path id="p-demand-market" class="route amber dashed" marker-end="url(#aa)" d="M86 435H6V145H244V159"/>
+          <text class="route-label amber" x="437" y="462" text-anchor="middle">use</text>
+          <text class="route-label amber" x="203" y="462" text-anchor="middle">revenue</text>
+          <text class="route-label amber" x="9" y="326" transform="rotate(-90 9 326)" text-anchor="middle">fresh demand</text>
+
+          <g id="n-user" class="node"><rect class="zone" x="14" y="34" width="140" height="76"/><text class="eyebrow" x="26" y="50">USER / BUILDER</text><text class="heading" x="26" y="70">Acquire CREDIT</text><line class="divider" x1="26" y1="80" x2="142" y2="80"/><text class="body" x="26" y="97">Buy, earn or receive it</text></g>
+          <g id="n-credit" class="node"><rect class="zone-accent" x="178" y="24" width="132" height="96"/><text class="eyebrow" x="190" y="42">SERVICE CLAIM</text><text class="metric" x="244" y="66" text-anchor="middle">1 CREDIT = $1</text><line class="divider" x1="190" y1="76" x2="298" y2="76"/><text class="body" x="190" y="94">Transferable before use</text><text class="body muted" x="190" y="108">Not redeemable for cash</text></g>
+          <g id="n-activate" class="node"><rect class="zone" x="334" y="34" width="132" height="76"/><text class="eyebrow" x="346" y="50">ACTIVATION</text><text class="heading" x="346" y="70">Burn into balance</text><line class="divider" x1="346" y1="80" x2="454" y2="80"/><text class="body" x="346" y="97">Non-transferable credit</text></g>
+          <g id="n-gateway" class="node"><rect class="zone-accent" x="490" y="24" width="136" height="96"/><text class="eyebrow" x="502" y="42">AI GATEWAY</text><text class="heading heading-accent" x="502" y="64">Models + tools</text><line class="divider" x1="502" y1="74" x2="614" y2="74"/><text class="body" x="502" y="92">Inference · data · APIs</text><text class="body muted" x="502" y="106">One balance, one endpoint</text></g>
+
+          <g id="n-builder" class="node"><rect class="zone" x="14" y="169" width="140" height="76"/><text class="eyebrow" x="26" y="185">PROJECT BUILDER</text><text class="heading" x="26" y="205">Launch project token</text><line class="divider" x1="26" y1="215" x2="142" y2="215"/><text class="body" x="26" y="232">Distribution + token market</text></g>
+          <g id="n-market" class="node"><rect class="zone-accent" x="178" y="159" width="132" height="96"/><text class="eyebrow" x="190" y="177">COMMON RAIL</text><text class="heading heading-accent" x="190" y="199">Trade vs ORBIO</text><line class="divider" x1="190" y1="209" x2="298" y2="209"/><text class="body" x="190" y="227">Every project uses ORBIO</text><text class="body muted" x="190" y="241">Volume starts the fee loop</text></g>
+          <g id="n-fees" class="node"><rect class="zone" x="334" y="169" width="132" height="76"/><text class="eyebrow" x="346" y="185">CREATOR FEES</text><text class="heading" x="346" y="205">Every trade pays</text><line class="divider" x1="346" y1="215" x2="454" y2="215"/><text class="body" x="346" y="232">Budget grows with activity</text></g>
+          <g id="n-router" class="node"><rect class="zone-accent" x="490" y="159" width="136" height="96"/><text class="eyebrow" x="502" y="177">FEE ROUTER</text><text class="metric" x="558" y="204" text-anchor="middle">50 / 30 / 10 / 10</text><line class="divider" x1="502" y1="214" x2="614" y2="214"/><text class="body" x="502" y="232">Capital + service budget</text><text class="body muted" x="502" y="246">Current launchpad terms</text></g>
+
+          <g id="n-principal" class="node"><rect class="zone-funded" x="14" y="312" width="144" height="74"/><text class="share" x="26" y="335">50%</text><text class="heading" x="26" y="354">ORBIO principal</text><text class="body muted" x="26" y="373">Withdrawable · earns CREDIT</text></g>
+          <g id="n-credit-budget" class="node"><rect class="zone-funded" x="170" y="312" width="144" height="74"/><text class="share" x="182" y="335">30%</text><text class="heading" x="182" y="354">CREDIT</text><text class="body muted" x="182" y="373">Transferable service reserve</text></g>
+          <g id="n-balance" class="node"><rect class="zone-funded" x="326" y="312" width="144" height="74"/><text class="share" x="338" y="335">10%</text><text class="heading" x="338" y="354">Gateway balance</text><text class="body muted" x="338" y="373">Ready to spend on compute</text></g>
+          <g id="n-treasury" class="node"><rect class="zone-soft" x="482" y="312" width="144" height="74"/><text class="share" x="494" y="335">10%</text><text class="heading" x="494" y="354">Treasury</text><text class="body muted" x="494" y="373">Protocol-controlled share</text></g>
+
+          <g id="n-demand" class="node"><rect class="zone-thesis" x="14" y="435" width="144" height="78"/><text class="eyebrow amber" x="26" y="452">FRESH DEMAND</text><text class="heading" x="26" y="472">Buy CREDIT / ORBIO</text><line class="divider" x1="26" y1="482" x2="146" y2="482"/><text class="body" x="26" y="500">Capital from outside launches</text></g>
+          <g id="n-users" class="node"><rect class="zone-thesis" x="248" y="427" width="144" height="94"/><text class="eyebrow amber" x="260" y="445">EXTERNAL USERS</text><text class="heading" x="260" y="465">Return and pay</text><line class="divider" x1="260" y1="475" x2="380" y2="475"/><text class="body" x="260" y="493">Repeat usage + revenue</text><text class="body muted" x="260" y="507">The unproven conversion</text></g>
+          <g id="n-apps" class="node"><rect class="zone-funded" x="482" y="435" width="144" height="78"/><text class="eyebrow teal" x="494" y="452">LIVE APPLICATIONS</text><text class="heading" x="494" y="472">Spend compute runway</text><line class="divider" x1="494" y1="482" x2="614" y2="482"/><text class="body" x="494" y="500">Inference + tools + data</text></g>
+          <text class="phase" x="320" y="544" text-anchor="middle">BEYOND LOOP · RETENTION AND EXTERNAL REVENUE ARE NOT YET PROVEN</text>
+
+          <circle id="flow-particle" class="particle" cx="154" cy="72" r="4.2" fill="#6c42eb" opacity="0" stroke="#fff" stroke-width="2"/>
+        </svg>
+
+        <div class="mobile-map">
+          <div class="m-section"><span class="m-kicker">01 · CORE RAIL</span><h3>Acquire CREDIT, then burn it into balance</h3><p>One CREDIT represents $1 of Orbio service. Activation creates a non-transferable balance for models, data and external tools.</p></div>
+          <div class="m-arrow"></div>
+          <div class="m-section accent"><span class="m-kicker">02 · BUILD + LAUNCH</span><h3>Launch a project token against ORBIO</h3><p>Trading creates creator fees and ties every launch to the same base asset.</p></div>
+          <div class="m-arrow"></div>
+          <div class="m-section"><span class="m-kicker">03 · ROUTE FEES</span><h3>Split market activity into capital and runway</h3><div class="m-split"><div class="m-mini"><b>50%</b><span>ORBIO principal</span></div><div class="m-mini"><b>30%</b><span>CREDIT reserve</span></div><div class="m-mini"><b>10%</b><span>gateway balance</span></div><div class="m-mini"><b>10%</b><span>treasury</span></div></div></div>
+          <div class="m-arrow"></div>
+          <div class="m-section thesis"><span class="m-kicker">04 · BEYOND</span><h3>Turn prepaid compute into external demand</h3><p>Applications must spend the runway, retain users and generate revenue that returns as fresh CREDIT or ORBIO demand.</p><div class="m-loop"><div class="m-step"><b>Product</b><span>use compute</span></div><div class="m-step"><b>Users</b><span>return + pay</span></div><div class="m-step"><b>Demand</b><span>close the loop</span></div></div></div>
+        </div>
+        <div class="legend"><span><i></i> CREDIT / service flow</span><span><i class="trade"></i> token trading</span><span><i class="fund"></i> funded runway</span><span><i class="thesis"></i> unproven demand loop</span></div>
       </div>
-    </section>
 
-    <section class="panel" data-panel="launchpad">
-      <div class="panel-head"><h3 class="panel-title">Every launch gets a built-in compute runway</h3><span class="panel-note">fee split · current terms</span></div>
-      <div class="flow launch-top">
-        <button class="node" data-title="Project-token trading" data-status="Confirmed" data-copy="Attention creates volume around a new project. Creator fees do more than pay the creator."><span class="tag">Input</span><b>Token trades</b><small>market attention</small></button>
-        <span class="arr">→</span>
-        <button class="node" data-title="Creator fees" data-status="Confirmed" data-copy="Creator fees automatically become capital and operating budget for the project."><span class="tag">Cash flow</span><b>Creator fees</b><small>automatic allocation</small></button>
-        <span class="arr">→</span>
-        <button class="node on" data-title="50 / 30 / 10 / 10" data-status="Confirmed" data-copy="Current terms route 50% to ORBIO principal, 30% to CREDIT, 10% to gateway balance and 10% to treasury."><span class="tag">Split</span><b>50 / 30 / 10 / 10</b><small>four destinations</small></button>
-      </div>
-      <div class="split-stem"></div>
-      <div class="split-grid">
-        <button class="node allocated" data-title="50% · ORBIO principal" data-status="Allocated" data-copy="Half of creator fees buys ORBIO principal. The creator can withdraw it, so this is capital alignment rather than a permanent lock."><span class="share">50%</span><b>ORBIO principal</b></button>
-        <button class="node allocated" data-title="30% · CREDIT" data-status="Allocated" data-copy="CREDIT forms a service reserve for the project. Its value is proven only when the balance is activated and spent."><span class="share">30%</span><b>CREDIT</b></button>
-        <button class="node allocated" data-title="10% · Gateway balance" data-status="Allocated" data-copy="A non-transferable balance is immediately available for models and tools. This is the most direct compute runway."><span class="share">10%</span><b>Gateway balance</b></button>
-        <button class="node allocated" data-title="10% · Treasury" data-status="Allocated" data-copy="The treasury keeps part of the flow inside the ecosystem for protocol development."><span class="share">10%</span><b>Treasury</b></button>
-      </div>
-    </section>
-
-    <section class="panel" data-panel="beyond">
-      <div class="panel-head"><h3 class="panel-title">The next market starts after launch</h3><span class="panel-note">thesis · requires proof</span></div>
-      <div class="flow">
-        <button class="node thesis" data-title="Attention + builders" data-status="Thesis" data-copy="Liquid ORBIO and grants lower the cost of a first experiment and attract builders to the same rail."><span class="tag">Acquire</span><b>Builders</b><small>attention + grants</small></button>
-        <span class="arr thesis">→</span>
-        <button class="node thesis" data-title="Project launch" data-status="Thesis" data-copy="The team gets a token, market and distribution. The launch is the start of the cycle, not a product outcome."><span class="tag">Launch</span><b>Project token</b><small>distribution</small></button>
-        <span class="arr thesis">→</span>
-        <button class="node thesis on" data-title="Fee-funded runway" data-status="Thesis" data-copy="Trading fees become ORBIO, CREDIT and gateway balance. Speculative demand leaves behind resources for the project."><span class="tag">Fund</span><b>Compute runway</b><small>stake + CREDIT + balance</small></button>
-        <span class="arr thesis">→</span>
-        <button class="node thesis" data-title="Agent product" data-status="Thesis" data-copy="Inference and tools must become a live application that remains useful after the first trading wave fades."><span class="tag">Build</span><b>Live product</b><small>inference + tools</small></button>
-        <span class="arr thesis">→</span>
-        <button class="node thesis" data-title="External demand" data-status="Kill condition" data-copy="The decisive test is repeat external users and revenue. Without them, balances accumulate and the economy stays dependent on new launches."><span class="tag">Validate</span><b>Users + revenue</b><small>fresh outside demand</small></button>
-      </div>
-      <div class="loop"><span class="return">↺</span> external demand brings capital and new builders back to ORBIO / CREDIT</div>
-    </section>
-
-    <aside class="detail" aria-live="polite">
-      <div class="detail-label" id="detail-title">ORBIO activity<span id="detail-status">Confirmed</span></div>
-      <p id="detail-copy"><strong>Select any block.</strong> The map separates the live mechanism, allocated budget and the part of the thesis that still needs proof.</p>
-    </aside>
-
-    <div class="metrics" aria-label="Launchpad snapshot">
-      <div class="metric"><b>665</b><span>launch records · 2 Oct 2026</span></div>
-      <div class="metric"><b>$87.9K</b><span>gateway budget created</span></div>
-      <div class="metric next"><b>30 / 60 / 90d</b><span>next proof · retained apps + usage</span></div>
+      <div class="take"><span>The thesis</span><p><b>The launchpad pre-funds application operations.</b> The next proof is whether applications convert that budget into repeat external usage and revenue.</p></div>
+      <p class="source">Static snapshot · 2 Oct 2026 · Sources: <a href="https://www.orbio.so/launchpad/whitepaper" target="_blank" rel="noopener">launchpad terms</a> · <a href="https://www.orbio.so/api/protocol/agents/analytics" target="_blank" rel="noopener">analytics</a></p>
     </div>
+    <div class="ft"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><span>moni</span><i>research</i></span></div>
   </div>
 
-  <div class="legend"><span><i class="sw"></i>confirmed mechanism</span><span><i class="sw allocated"></i>allocated budget</span><span><i class="sw thesis"></i>thesis / needs proof</span></div>
-  <div class="sources-band">Sources: <a href="https://www.orbio.so/launchpad/whitepaper" target="_blank" rel="noopener">Orbio terms</a> · <a href="https://www.orbio.so/api/protocol/agents/analytics" target="_blank" rel="noopener">analytics</a></div>
-  <footer class="ft"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><span>moni</span><i>research</i></span></footer>
-</section>
-<script>
-(()=>{
-  const root=document.getElementById('orbio-flywheel');
-  const title=document.getElementById('detail-title');
-  const status=document.getElementById('detail-status');
-  const copy=document.getElementById('detail-copy');
-  function selectNode(node){
-    root.querySelectorAll('.node').forEach(n=>n.classList.remove('on'));
-    node.classList.add('on');
-    title.childNodes[0].nodeValue=node.dataset.title;
-    status.textContent=node.dataset.status;
-    copy.textContent=node.dataset.copy;
-  }
-  root.querySelectorAll('.node').forEach(node=>node.addEventListener('click',()=>selectNode(node)));
-  root.querySelectorAll('.tab').forEach(tab=>tab.addEventListener('click',()=>{
-    root.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',String(t===tab)));
-    root.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.dataset.panel===tab.dataset.tab));
-    const first=root.querySelector(`[data-panel="${tab.dataset.tab}"] .node.on`)||root.querySelector(`[data-panel="${tab.dataset.tab}"] .node`);
-    if(first)selectNode(first);
-  }));
-  if(window.parent!==window){
-    const reportHeight=()=>{const rootBox=root.getBoundingClientRect();const lastBox=root.lastElementChild?.getBoundingClientRect();const height=Math.max(1,Math.floor((lastBox?.bottom??rootBox.bottom)-rootBox.top)-2);window.parent.postMessage({type:'moni-widget:resize',height},'https://research.moni.ai')};
-    new ResizeObserver(reportHeight).observe(root);
-    window.addEventListener('load',reportHeight,{once:true});window.addEventListener('resize',reportHeight);
-    window.addEventListener('message',event=>{if(event.origin==='https://research.moni.ai'&&event.data?.type==='moni-widget:request-resize')reportHeight()});
-    [0,100,500,1500].forEach(delay=>setTimeout(reportHeight,delay));
-  }
-})();
-</script>
+  <script>
+    (()=>{
+      if(window.matchMedia('(prefers-reduced-motion: reduce)').matches||window.innerWidth<=520)return;
+      const particle=document.getElementById('flow-particle');
+      const routes=[
+        ['p-user-credit','n-user','#6c42eb'],['p-credit-activate','n-credit','#6c42eb'],['p-activate-gateway','n-activate','#6c42eb'],
+        ['p-builder-market','n-builder','#747982'],['p-market-fees','n-market','#747982'],['p-fees-router','n-fees','#747982'],
+        ['p-router-principal','n-router','#5279a3'],['p-principal-market','n-principal','#5279a3'],['p-router-credit','n-router','#6c42eb'],
+        ['p-credit-app','n-credit-budget','#6c42eb'],['p-router-balance','n-router','#0f9d8a'],['p-balance-app','n-balance','#0f9d8a'],
+        ['p-gateway-app','n-gateway','#6c42eb'],['p-app-users','n-apps','#b47d20'],['p-users-demand','n-users','#b47d20'],['p-demand-market','n-demand','#b47d20']
+      ];
+      let routeIndex=0,start=0,raf=0,visible=true;const duration=950,pause=150;
+      const setActive=id=>document.querySelectorAll('.node').forEach(node=>node.classList.toggle('active',node.id===id));
+      const frame=now=>{if(!visible)return;if(!start)start=now;const[pathId,nodeId,color]=routes[routeIndex],path=document.getElementById(pathId),elapsed=now-start;if(elapsed<pause){particle.setAttribute('opacity','0');raf=requestAnimationFrame(frame);return}const t=Math.min(1,(elapsed-pause)/duration),eased=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2,point=path.getPointAtLength(path.getTotalLength()*eased);particle.setAttribute('cx',point.x);particle.setAttribute('cy',point.y);particle.setAttribute('fill',color);particle.setAttribute('opacity',t>.96?String((1-t)/.04):'1');setActive(nodeId);if(t>=1){routeIndex=(routeIndex+1)%routes.length;start=now}raf=requestAnimationFrame(frame)};
+      const observer=new IntersectionObserver(entries=>{visible=entries[0]?.isIntersecting??true;if(visible){start=0;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}else{cancelAnimationFrame(raf);particle.setAttribute('opacity','0');setActive('')}},{threshold:.12});observer.observe(document.querySelector('.map-shell'));
+    })();
+  </script>
+  <script>
+    (()=>{const root=document.getElementById('orbio-system');if(!root||window.parent===window)return;const reportHeight=()=>{const rootBox=root.getBoundingClientRect();const lastBox=root.lastElementChild?.getBoundingClientRect();const height=Math.max(1,Math.floor((lastBox?.bottom??rootBox.bottom)-rootBox.top)-2);window.parent.postMessage({type:'moni-widget:resize',height},'https://research.moni.ai')};new ResizeObserver(reportHeight).observe(root);window.addEventListener('load',reportHeight,{once:true});window.addEventListener('resize',reportHeight);window.addEventListener('message',event=>{if(event.origin==='https://research.moni.ai'&&event.data?.type==='moni-widget:request-resize')reportHeight()});[0,100,500,1500].forEach(delay=>setTimeout(reportHeight,delay))})();
+  </script>
 </body>
 </html>
