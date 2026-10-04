@@ -49,35 +49,23 @@
           <path id="p-user-credit" class="route violet" marker-end="url(#av)" d="M154 72H178"/>
           <path id="p-credit-activate" class="route violet" marker-end="url(#av)" d="M310 72H334"/>
           <path id="p-activate-gateway" class="route violet" marker-end="url(#av)" d="M466 72H490"/>
-          <text class="route-label violet" x="166" y="61" text-anchor="middle">acquire</text>
-          <text class="route-label violet" x="322" y="61" text-anchor="middle">burn</text>
-          <text class="route-label violet" x="478" y="61" text-anchor="middle">spend</text>
 
           <path id="p-builder-market" class="route slate" marker-end="url(#as)" d="M154 207H178"/>
           <path id="p-market-fees" class="route slate" marker-end="url(#as)" d="M310 207H334"/>
           <path id="p-fees-router" class="route slate" marker-end="url(#as)" d="M466 207H490"/>
-          <text class="route-label" x="166" y="196" text-anchor="middle">launch</text>
-          <text class="route-label" x="322" y="196" text-anchor="middle">trade</text>
-          <text class="route-label" x="478" y="196" text-anchor="middle">route</text>
+          <path class="route slate" d="M558 255V278H86"/>
+          <path id="p-router-principal" class="route blue" marker-end="url(#ab)" d="M86 278V312"/>
+          <path id="p-router-credit" class="route violet" marker-end="url(#av)" d="M242 278V312"/>
+          <path id="p-router-balance" class="route teal" marker-end="url(#at)" d="M398 278V312"/>
+          <path id="p-router-treasury" class="route slate" marker-end="url(#as)" d="M558 278V312"/>
 
-          <path id="p-router-principal" class="route blue" marker-end="url(#ab)" d="M558 252V274H86V312"/>
-          <path id="p-router-credit" class="route violet" marker-end="url(#av)" d="M558 252V284H242V312"/>
-          <path id="p-router-balance" class="route teal" marker-end="url(#at)" d="M558 252V294H398V312"/>
-          <path id="p-router-treasury" class="route slate" marker-end="url(#as)" d="M558 252V312"/>
-
-          <path id="p-principal-market" class="route blue" marker-end="url(#ab)" d="M86 312V264H244V252"/>
-          <text class="route-label" x="151" y="259">ORBIO principal</text>
           <path id="p-credit-app" class="route violet" marker-end="url(#av)" d="M242 386V412H554V435"/>
           <path id="p-balance-app" class="route teal" marker-end="url(#at)" d="M398 386V402H570V435"/>
-          <text class="route-label teal" x="433" y="398">funds compute</text>
           <path id="p-gateway-app" class="route violet" marker-end="url(#av)" d="M626 72H634V474H626"/>
 
           <path id="p-app-users" class="route amber dashed" marker-end="url(#aa)" d="M482 474H392"/>
           <path id="p-users-demand" class="route amber dashed" marker-end="url(#aa)" d="M248 474H158"/>
           <path id="p-demand-market" class="route amber dashed" marker-end="url(#aa)" d="M86 435H6V145H244V159"/>
-          <text class="route-label amber" x="437" y="462" text-anchor="middle">use</text>
-          <text class="route-label amber" x="203" y="462" text-anchor="middle">revenue</text>
-          <text class="route-label amber" x="9" y="326" transform="rotate(-90 9 326)" text-anchor="middle">fresh demand</text>
 
           <g id="n-user" class="node"><rect class="zone" x="14" y="34" width="140" height="76"/><text class="eyebrow" x="26" y="50">USER / BUILDER</text><text class="heading" x="26" y="70">Acquire CREDIT</text><line class="divider" x1="26" y1="80" x2="142" y2="80"/><text class="body" x="26" y="97">Buy, earn or receive it</text></g>
           <g id="n-credit" class="node"><rect class="zone-accent" x="178" y="24" width="132" height="96"/><text class="eyebrow" x="190" y="42">SERVICE CLAIM</text><text class="metric" x="244" y="66" text-anchor="middle">1 CREDIT = $1</text><line class="divider" x1="190" y1="76" x2="298" y2="76"/><text class="body" x="190" y="94">Transferable before use</text><text class="body muted" x="190" y="108">Not redeemable for cash</text></g>
@@ -94,9 +82,9 @@
           <g id="n-balance" class="node"><rect class="zone-funded" x="326" y="312" width="144" height="74"/><text class="share" x="338" y="335">10%</text><text class="heading" x="338" y="354">Gateway balance</text><text class="body muted" x="338" y="373">Ready to spend on compute</text></g>
           <g id="n-treasury" class="node"><rect class="zone-soft" x="482" y="312" width="144" height="74"/><text class="share" x="494" y="335">10%</text><text class="heading" x="494" y="354">Treasury</text><text class="body muted" x="494" y="373">Protocol-controlled share</text></g>
 
-          <g id="n-demand" class="node"><rect class="zone-thesis" x="14" y="435" width="144" height="78"/><text class="eyebrow amber" x="26" y="452">FRESH DEMAND</text><text class="heading" x="26" y="472">Buy CREDIT / ORBIO</text><line class="divider" x1="26" y1="482" x2="146" y2="482"/><text class="body" x="26" y="500">Capital from outside launches</text></g>
+          <g id="n-demand" class="node"><rect class="zone-thesis" x="14" y="435" width="144" height="78"/><text class="eyebrow amber" x="26" y="452">FRESH DEMAND</text><text class="heading" x="26" y="472">Buy CREDIT / ORBIO</text><line class="divider" x1="26" y1="482" x2="146" y2="482"/><text class="body" x="26" y="500">Capital beyond new launches</text></g>
           <g id="n-users" class="node"><rect class="zone-thesis" x="248" y="427" width="144" height="94"/><text class="eyebrow amber" x="260" y="445">EXTERNAL USERS</text><text class="heading" x="260" y="465">Return and pay</text><line class="divider" x1="260" y1="475" x2="380" y2="475"/><text class="body" x="260" y="493">Repeat usage + revenue</text><text class="body muted" x="260" y="507">The unproven conversion</text></g>
-          <g id="n-apps" class="node"><rect class="zone-funded" x="482" y="435" width="144" height="78"/><text class="eyebrow teal" x="494" y="452">LIVE APPLICATIONS</text><text class="heading" x="494" y="472">Spend compute runway</text><line class="divider" x1="494" y1="482" x2="614" y2="482"/><text class="body" x="494" y="500">Inference + tools + data</text></g>
+          <g id="n-apps" class="node"><rect class="zone-funded" x="482" y="435" width="144" height="78"/><text class="eyebrow teal" x="494" y="452">LIVE APPLICATIONS</text><text class="heading" x="494" y="472">Use compute runway</text><line class="divider" x1="494" y1="482" x2="614" y2="482"/><text class="body" x="494" y="500">Inference + tools + data</text></g>
           <text class="phase" x="320" y="544" text-anchor="middle">BEYOND LOOP · RETENTION AND EXTERNAL REVENUE ARE NOT YET PROVEN</text>
 
           <circle id="flow-particle" class="particle" cx="154" cy="72" r="4.2" fill="#6c42eb" opacity="0" stroke="#fff" stroke-width="2"/>
@@ -114,7 +102,7 @@
         <div class="legend"><span><i></i> CREDIT / service flow</span><span><i class="trade"></i> token trading</span><span><i class="fund"></i> funded runway</span><span><i class="thesis"></i> unproven demand loop</span></div>
       </div>
 
-      <div class="take"><span>The thesis</span><p><b>The launchpad pre-funds application operations.</b> The next proof is whether applications convert that budget into repeat external usage and revenue.</p></div>
+      <div class="take"><span>The thesis</span><p><b>Fees pre-fund app operations.</b> Proof comes from repeat external usage and revenue.</p></div>
       <p class="source">Static snapshot · 2 Oct 2026 · Sources: <a href="https://www.orbio.so/launchpad/whitepaper" target="_blank" rel="noopener">launchpad terms</a> · <a href="https://www.orbio.so/api/protocol/agents/analytics" target="_blank" rel="noopener">analytics</a></p>
     </div>
     <div class="ft"><span class="brand"><img class="eye" src="https://research.moni.ai/assets/logo-eye.svg" alt=""><span>moni</span><i>research</i></span></div>
@@ -127,7 +115,7 @@
       const routes=[
         ['p-user-credit','n-user','#6c42eb'],['p-credit-activate','n-credit','#6c42eb'],['p-activate-gateway','n-activate','#6c42eb'],
         ['p-builder-market','n-builder','#747982'],['p-market-fees','n-market','#747982'],['p-fees-router','n-fees','#747982'],
-        ['p-router-principal','n-router','#5279a3'],['p-principal-market','n-principal','#5279a3'],['p-router-credit','n-router','#6c42eb'],
+        ['p-router-principal','n-router','#5279a3'],['p-router-credit','n-router','#6c42eb'],
         ['p-credit-app','n-credit-budget','#6c42eb'],['p-router-balance','n-router','#0f9d8a'],['p-balance-app','n-balance','#0f9d8a'],
         ['p-gateway-app','n-gateway','#6c42eb'],['p-app-users','n-apps','#b47d20'],['p-users-demand','n-users','#b47d20'],['p-demand-market','n-demand','#b47d20']
       ];
